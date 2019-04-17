@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "jsx": "react",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "build"
+  }
+}

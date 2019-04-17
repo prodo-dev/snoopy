@@ -1,0 +1,30 @@
+{
+  "name": "twenty-four-example-01-cow-clicker-react-state",
+  "version": "1.0.0",
+  "description": "Click the cow.",
+  "main": "index.tsx",
+  "author": "Samir Talwar <samir@prodo.ai>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "jest",
+    "lint": "set -ex; tsc --build; tslint --project ."
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "@types/react": "^16.8.13",
+    "@types/react-dom": "^16.8.4",
+    "jest": "^24.7.1",
+    "jest-dom": "^3.1.3",
+    "react-testing-library": "^6.1.2",
+    "ts-jest": "^24.0.2"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
+  }
+}
