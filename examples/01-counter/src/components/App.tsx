@@ -7,7 +7,7 @@ import Increment from "./Increment";
 export default () => {
   const [count, setCount] = React.useState(0);
   return (
-    <div>
+    <div className="app">
       <Decrement setCount={setCount} />
       <Counter count={count} />
       <Increment setCount={setCount} />
