@@ -1,4 +1,6 @@
 .cache
+.DS_Store
 .tern-port
 dist
+lib
 node_modules

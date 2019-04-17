@@ -1,10 +1,15 @@
 {
   "name": "@prodo/snoopy-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build": "tsc --build",
+    "clean": "rm -rf lib"
   },
   "dependencies": {
     "express": "^4.16.4",

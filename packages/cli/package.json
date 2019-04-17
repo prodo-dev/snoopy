@@ -1,0 +1,18 @@
+{
+  "name": "@prodo/snoopy-cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc -b"
+  },
+  "dependencies": {
+    "@prodo/snoopy-server": "1.0.0",
+    "yargs": "^13.2.2"
+  },
+  "devDependencies": {
+    "@types/yargs": "^13.0.0",
+    "ts-node": "^8.1.0"
+  }
+}

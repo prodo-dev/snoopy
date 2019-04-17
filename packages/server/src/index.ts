@@ -30,6 +30,3 @@ export const start = async (port: number = 3000) => {
   // tslint:disable-next-line:no-console
   console.log(`Starting server on port ${port}`);
 };
-
-// tslint:disable-next-line:no-console
-start().catch(console.error);
