@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "yarn workspace @prodo/snoopy-server start"
+  },
   "workspaces": [
     "packages/*"
   ],
