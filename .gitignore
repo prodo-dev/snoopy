@@ -1,5 +1,6 @@
-.cache
+*.tsbuildinfo
 .DS_Store
+.cache
 .tern-port
 dist
 lib
