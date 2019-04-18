@@ -1,0 +1,8 @@
+button {
+  appearance: none;
+  border: none;
+  padding: 0.5rem;
+  width: 64px;
+  background-color: hotpink;
+  font-size: 3em;
+}

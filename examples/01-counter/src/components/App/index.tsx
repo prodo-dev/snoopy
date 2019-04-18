@@ -1,8 +1,9 @@
 import * as React from "react";
+import Counter from "../Counter";
+import Decrement from "../Decrement";
+import Increment from "../Increment";
 
-import Counter from "./Counter";
-import Decrement from "./Decrement";
-import Increment from "./Increment";
+import "./index.css";
 
 export default () => {
   const [count, setCount] = React.useState(0);

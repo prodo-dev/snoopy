@@ -3,14 +3,20 @@
 import {start} from "@prodo/snoopy-server";
 import * as yargs from "yargs";
 
-const startServer = async () => {
-  await start();
+const startServer = async (path: string) => {
+  if (!path) {
+    // tslint:disable-next-line: no-console
+    console.error("Need to provide path to components");
+    process.exit(1);
+  }
+
+  await start(path);
 };
 
 yargs.command({
-  command: "start",
+  command: "start <path>",
   describe: "Start the local server",
-  handler: startServer,
+  handler: (argv: any) => startServer(argv.path),
 });
 
 yargs.command("*", false, {}, args => {
@@ -36,5 +42,5 @@ export const run = async () => {
   yargs.demandCommand().argv;
 };
 
-// tslint:disable-next-line:no-console
+// tslint:disable-next-line: no-console
 run().catch(e => console.log(e));

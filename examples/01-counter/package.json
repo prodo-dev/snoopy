@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
+    "@types/parcel-env": "^0.0.0",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
     "jest": "^24.7.1",
@@ -25,6 +26,10 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    }
   }
 }

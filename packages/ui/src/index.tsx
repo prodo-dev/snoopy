@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import {components} from "./component-list";
-console.log(components);
+const render = () => {
+  const App = require("./App").default;
+  ReactDOM.render(<App />, document.getElementById("root"));
+};
 
-const App = () => (
-  <div>
-    <h1>Hello, World!</h1>
-  </div>
-);
+if (module.hot) {
+  module.hot.accept("./components-generated", render);
+}
 
-ReactDOM.render(<App />, document.getElementById("root"));
+render();

@@ -1038,6 +1038,11 @@
   dependencies:
     "@types/express-serve-static-core" "*"
 
+"@types/parcel-env@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/parcel-env/-/parcel-env-0.0.0.tgz#c8ed2c06cd70c9cb89d50bbb1688404fc2a93f33"
+  integrity sha512-GcmAgBcg/SG5Hy3MVvcTRXf4PUIxQoNUMCjTvG6DSWAfoFwd1FKG0HxVZqHgRE4JuusR6DTrNetKi2WliIiY/g==
+
 "@types/prop-types@*":
   version "15.7.0"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.0.tgz#4c48fed958d6dcf9487195a0ef6456d5f6e0163a"

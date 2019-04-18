@@ -5,3 +5,4 @@
 dist
 lib
 node_modules
+packages/ui/components-generated.ts
