@@ -5,7 +5,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "yarn workspace @prodo/snoopy-cli start"
+    "start": "yarn workspace @prodo/snoopy-cli start",
+    "build": "tsc -b",
+    "build:watch": "tsc -b -w"
   },
   "workspaces": [
     "packages/*",
