@@ -9,7 +9,8 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
-    "clean": "rm -rf lib"
+    "clean": "rm -rf .cache lib",
+    "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
     "express": "^4.16.4",

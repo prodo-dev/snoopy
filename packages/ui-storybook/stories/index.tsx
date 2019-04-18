@@ -1,6 +1,8 @@
+// tslint:disable-next-line:no-submodule-imports
+import Component from "@prodo/snoopy-ui/src/components/Component";
+
 import {storiesOf} from "@storybook/react";
 import * as React from "react";
-import Component from "@prodo/snoopy-ui/src/components/Component";
 
 const TestComponent = () => <div>This is a Test</div>;
 

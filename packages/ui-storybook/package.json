@@ -4,12 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf lib",
     "test": "jest",
+    "lint": "set -ex; tsc --build; tslint --project .",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@prodo/snoopy-ui": "1.0.0"
+    "@prodo/snoopy-ui": "1.0.0",
+    "react": "^16.8.6"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

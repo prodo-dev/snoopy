@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "build": "tsc -b"
+    "build": "tsc --build",
+    "clean": "rm -rf lib",
+    "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
     "@prodo/snoopy-server": "1.0.0",

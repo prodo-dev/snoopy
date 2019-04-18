@@ -5,7 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel public/index.html",
-    "test": "jest"
+    "build": "tsc --build",
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
     "react": "^16.8.6",
