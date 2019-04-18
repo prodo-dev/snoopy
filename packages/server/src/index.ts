@@ -14,6 +14,7 @@ export const start = async (port: number = 3000) => {
     outDir,
     outFile,
     watch: true,
+    cache: false,
     minify: false,
     scopeHoist: false,
     hmr: true,
@@ -22,6 +23,9 @@ export const start = async (port: number = 3000) => {
   };
 
   const bundler = new Bundler(entryFile, options);
+
+  // bundler.addPackager("tsx", require.resolve("./component-packager"));
+  bundler.addAssetType("template", require.resolve("./component-asset"));
   bundler.bundle();
 
   app.use(bundler.middleware());
