@@ -5,8 +5,8 @@ import Component from "../components/Component";
 const App = () => (
   <div>
     <h1>Snoopy</h1>
-    {components.map((C, i) => (
-      <Component key={i} component={C} />
+    {components.map(({name, component}) => (
+      <Component key={name} name={name} component={component} />
     ))}
   </div>
 );

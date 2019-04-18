@@ -9,7 +9,9 @@ afterEach(cleanup);
 const TestComponent = () => <div>test</div>;
 
 test("displays a component", async () => {
-  const {container} = render(<Component component={TestComponent} />);
+  const {container} = render(
+    <Component name="TestComponent" component={TestComponent} />,
+  );
 
   expect(container).toHaveTextContent("test");
 });

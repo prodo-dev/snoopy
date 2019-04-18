@@ -2,8 +2,11 @@
 
 exports[`Storyshots Component base 1`] = `
 <div
-  className="sc-bdVaJa diLWyN"
+  className="sc-bdVaJa gfhgIF"
 >
+  <h2>
+    TestComponent
+  </h2>
   <div>
     This is a Test
   </div>
