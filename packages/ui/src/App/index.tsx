@@ -1,11 +1,12 @@
 import * as React from "react";
 import {components} from "../../components-generated";
+import Component from "../components/Component";
 
 const App = () => (
   <div>
-    <h1>Hello, World!</h1>
+    <h1>Snoopy</h1>
     {components.map((C, i) => (
-      <C key={i} />
+      <Component key={i} component={C} />
     ))}
   </div>
 );
