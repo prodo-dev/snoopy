@@ -1,7 +1,7 @@
 {
-  "name": "twenty-four-example-01-cow-clicker-react-state",
+  "name": "@prodo/snoopy-examples-01-counter",
   "version": "1.0.0",
-  "description": "Click the cow.",
+  "description": "Click the buttons.",
   "main": "index.tsx",
   "author": "Samir Talwar <samir@prodo.ai>",
   "license": "MIT",
@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
-    "@types/parcel-env": "^0.0.0",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
     "jest": "^24.7.1",

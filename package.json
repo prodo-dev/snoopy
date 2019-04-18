@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "start": "yarn workspace @prodo/snoopy-cli start",
+    "test": "wsrun --exclude-missing --serial test",
     "build": "tsc -b",
     "build:watch": "tsc -b -w"
   },
@@ -17,6 +18,7 @@
     "prettier": "^1.17.0",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.3",
+    "wsrun": "^3.6.4"
   }
 }

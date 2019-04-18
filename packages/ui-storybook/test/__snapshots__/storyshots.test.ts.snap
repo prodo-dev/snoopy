@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Component base 1`] = `
+<div
+  className="sc-bdVaJa diLWyN"
+>
+  <div>
+    This is a Test
+  </div>
+</div>
+`;
