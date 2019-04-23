@@ -1,5 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
+import {Component} from "../../models";
 
 const StyledComponent = styled.div`
   margin: 1rem;
@@ -8,16 +9,14 @@ const StyledComponent = styled.div`
 `;
 
 interface Props {
-  name: string;
-  component: React.ComponentType<any>;
+  component: Component;
 }
 
 const Component = (props: Props) => {
-  const UserComponent = props.component;
+  const UserComponent = props.component.component;
 
   return (
     <StyledComponent>
-      <h2>{props.name}</h2>
       <UserComponent />
     </StyledComponent>
   );
