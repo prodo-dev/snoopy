@@ -1,14 +1,19 @@
 import "jest-dom/extend-expect"; // tslint:disable-line no-submodule-imports
 import * as React from "react";
-import {cleanup, render} from "react-testing-library";
+import {cleanup, render as renderRaw} from "react-testing-library";
 
+import {ThemeProvider} from "styled-components";
 import Component from "../../src/components/Component";
 import {
   Component as ComponentModel,
   Example as ExampleModel,
 } from "../../src/models";
+import {darkTheme} from "../../src/styles/theme";
 
 afterEach(cleanup);
+
+const render = (component: React.ReactElement) =>
+  renderRaw(<ThemeProvider theme={darkTheme}>{component}</ThemeProvider>);
 
 const TestComponent: React.ComponentType<any> & {examples?: ExampleModel[]} = ({
   name,
