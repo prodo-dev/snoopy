@@ -16,6 +16,8 @@ interface Props {
 const Component = (props: Props) => {
   const examples: ExampleModel[] | undefined = (props.component
     .component as any).examples;
+
+  const Comp = props.component.component;
   return (
     <StyledComponent>
       {examples && examples.length > 0 ? (
@@ -23,7 +25,7 @@ const Component = (props: Props) => {
           <Example key={example.name} example={example} />
         ))
       ) : (
-        <h1>CREATE AN EXAMPLE</h1>
+        <Example example={{name: "Default", jsx: <Comp />}} />
       )}
     </StyledComponent>
   );

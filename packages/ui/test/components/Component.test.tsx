@@ -3,24 +3,51 @@ import * as React from "react";
 import {cleanup, render} from "react-testing-library";
 
 import Component from "../../src/components/Component";
-import {Component as ComponentModel} from "../../src/models";
+import {
+  Component as ComponentModel,
+  Example as ExampleModel,
+} from "../../src/models";
 
 afterEach(cleanup);
 
-const TestComponent = ({name}: {name: string}) => <div>{name}</div>;
-
-TestComponent.examples = [
-  {name: "Example 1", jsx: <TestComponent name="Tom" />},
-];
+const TestComponent: React.ComponentType<any> & {examples?: ExampleModel[]} = ({
+  name,
+}: {
+  name?: string;
+}) => <div>hello {name || "you"}</div>;
 
 const Test: ComponentModel = {
   name: "TestComponent",
   component: TestComponent,
 };
 
-test("displays a component", async () => {
+test("renders component with no examples", async () => {
+  const {container} = render(<Component component={Test} />);
+  expect(container.querySelector("h2")).toHaveTextContent("Default");
+  expect(container).toHaveTextContent("hello you");
+});
+
+test("renders component with single example", async () => {
+  TestComponent.examples = [
+    {name: "Example 1", jsx: <TestComponent name="Tom" />},
+  ];
+
+  const {container} = render(<Component component={Test} />);
+  expect(container.querySelector("h2")).toHaveTextContent("Example 1");
+  expect(container).toHaveTextContent("hello Tom");
+});
+
+test("renders component with multiple examples", async () => {
+  TestComponent.examples = [
+    {name: "Example 1", jsx: <TestComponent name="Tom" />},
+    {name: "Example 2", jsx: <TestComponent name="Andreja" />},
+  ];
+
   const {container} = render(<Component component={Test} />);
 
   expect(container.querySelector("h2")).toHaveTextContent("Example 1");
-  expect(container).toHaveTextContent("Tom");
+  expect(container).toHaveTextContent("hello Tom");
+
+  expect(container.querySelectorAll("h2")[1]).toHaveTextContent("Example 2");
+  expect(container).toHaveTextContent("hello Andreja");
 });

@@ -16,7 +16,7 @@ const components = componentsUntyped as Component[];
 
 const ComponentPageWithProps = (props: RouteComponentProps<{name: string}>) => {
   const component = components.filter(
-    c => c.name === props.match.params.name,
+    c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
   )[0];
   return <ComponentPage component={component} />;
 };
