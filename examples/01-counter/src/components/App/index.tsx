@@ -5,7 +5,7 @@ import Increment from "../Increment";
 
 import "./index.css";
 
-export default () => {
+const App = () => {
   const [count, setCount] = React.useState(0);
   return (
     <div className="app">
@@ -15,3 +15,5 @@ export default () => {
     </div>
   );
 };
+
+export default App;

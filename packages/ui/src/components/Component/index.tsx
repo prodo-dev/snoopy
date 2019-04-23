@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Component} from "../../models";
+import {Component, Example as ExampleModel} from "../../models";
+import Example from "../Example";
 
 const StyledComponent = styled.div`
   margin: 1rem;
@@ -13,11 +14,17 @@ interface Props {
 }
 
 const Component = (props: Props) => {
-  const UserComponent = props.component.component;
-
+  const examples: ExampleModel[] | undefined = (props.component
+    .component as any).examples;
   return (
     <StyledComponent>
-      <UserComponent />
+      {examples && examples.length > 0 ? (
+        examples.map(example => (
+          <Example key={example.name} example={example} />
+        ))
+      ) : (
+        <h1>CREATE AN EXAMPLE</h1>
+      )}
     </StyledComponent>
   );
 };

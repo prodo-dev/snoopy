@@ -10,6 +10,8 @@ import {Component} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 
+import "./index.css";
+
 const components = componentsUntyped as Component[];
 
 const ComponentPageWithProps = (props: RouteComponentProps<{name: string}>) => {

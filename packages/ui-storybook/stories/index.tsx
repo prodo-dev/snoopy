@@ -6,11 +6,17 @@ import {Component as ComponentModel} from "@prodo/snoopy-ui/src/models";
 import {storiesOf} from "@storybook/react";
 import * as React from "react";
 
-const TestComponent: ComponentModel = {
+const TestComponent = ({name}: {name: string}) => <div>{name}</div>;
+
+TestComponent.examples = [
+  {name: "Example 1", jsx: <TestComponent name="Tom" />},
+];
+
+const Test: ComponentModel = {
   name: "TestComponent",
-  component: () => <div>test</div>,
+  component: TestComponent,
 };
 
 storiesOf("Component", module).add("base", () => (
-  <Component component={TestComponent} />
+  <Component component={Test} />
 ));

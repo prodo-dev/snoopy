@@ -7,13 +7,20 @@ import {Component as ComponentModel} from "../../src/models";
 
 afterEach(cleanup);
 
-const TestComponent: ComponentModel = {
+const TestComponent = ({name}: {name: string}) => <div>{name}</div>;
+
+TestComponent.examples = [
+  {name: "Example 1", jsx: <TestComponent name="Tom" />},
+];
+
+const Test: ComponentModel = {
   name: "TestComponent",
-  component: () => <div>test</div>,
+  component: TestComponent,
 };
 
 test("displays a component", async () => {
-  const {container} = render(<Component component={TestComponent} />);
+  const {container} = render(<Component component={Test} />);
 
-  expect(container).toHaveTextContent("test");
+  expect(container.querySelector("h2")).toHaveTextContent("Example 1");
+  expect(container).toHaveTextContent("Tom");
 });
