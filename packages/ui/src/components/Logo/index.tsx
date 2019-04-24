@@ -6,9 +6,9 @@ import {LogoWidth, margins} from "../../styles/theme";
 
 const StyledLogo = styled.img`
   width: ${LogoWidth};
-  margin-right: ${margins.small};
-  vertical-align: bottom;
+  margin: ${margins.small};
+  vertical-align: middle;
   cursor: pointer;
 `;
 
-export default () => <StyledLogo src={logo} alt="Home" />;
+export default () => <StyledLogo src={logo} alt="" />;

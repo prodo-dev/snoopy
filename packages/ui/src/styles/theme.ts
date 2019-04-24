@@ -1,3 +1,5 @@
+import {css} from "styled-components";
+
 export type Color = string;
 export type Font = string;
 export type Size = string;
@@ -50,5 +52,22 @@ export const paddings = {
 };
 export const margins = paddings;
 
-export const MinSidebarWidth = "200px";
+export const SidebarWidth = "200px";
+export const MinSidebarWidth = "40px";
 export const LogoWidth = "20px";
+
+export const narrowScreenWidth = 768;
+export const forNarrowScreen = (
+  first: any,
+  ...interpolations: any[]
+) => `@media only screen ${narrowScreenWidth != null &&
+  ` and (max-width: ${narrowScreenWidth}px)`} {
+  ${css(first, ...interpolations)}
+}`;
+export const forWideScreen = (
+  first: any,
+  ...interpolations: any[]
+) => `@media only screen ${narrowScreenWidth != null &&
+  ` and (min-width: ${narrowScreenWidth}px)`} {
+  ${css(first, ...interpolations)}
+}`;
