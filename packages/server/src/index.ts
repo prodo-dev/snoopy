@@ -3,7 +3,6 @@ import * as Express from "express";
 import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
 import * as path from "path";
-import * as watch from "watch";
 
 const clientDir = path.resolve(__dirname, "../../ui");
 const entryFile = path.resolve(clientDir, "./public/index.html");
@@ -57,7 +56,7 @@ export const start = async (port: number = 3000) => {
 
   generateComponentListFile();
 
-  watch.watchTree(process.cwd(), () => {
+  fs.watch(process.cwd(), {recursive: true}, () => {
     generateComponentListFile();
   });
 
