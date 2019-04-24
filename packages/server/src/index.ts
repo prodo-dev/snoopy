@@ -2,29 +2,67 @@ import * as Express from "express";
 import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
 import * as path from "path";
+import {findComponentImports} from "@prodo/snoopy-component-search";
 
 const clientDir = path.resolve(__dirname, "../../ui");
 const entryFile = path.resolve(clientDir, "./public/index.html");
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
+const generateComponentFileContents = async (
+  componentsPath: string,
+): Promise<string> => {
+  const componentImports = await findComponentImports(
+    clientDir,
+    componentsPath,
+  );
+
+  const importString = componentImports
+    .map(
+      componentImport =>
+        `import { ${componentImport.exportNames.join(", ")} } from "${
+          componentImport.filepath
+        }"`,
+    )
+    .join("\n");
+
+  const componentsArrayString = componentImports
+    .map(componentImport =>
+      componentImport.exportNames
+        .map(name => `{name: "${name}", component: ${name}}`)
+        .join(","),
+    )
+    .join(",\n  ");
+
+  return `
+${importString};
+
+export const components = [
+  ${componentsArrayString}
+];
+`.trimLeft();
+};
+
 export const start = async (componentsPath: string, port: number = 3000) => {
   const app = Express();
 
-  const componentsOutDir = path.resolve(clientDir);
+  // const componentsOutDir = path.resolve(clientDir);
   const componentsGeneratedPath = path.resolve(
     clientDir,
     "components-generated.ts",
   );
-  const importPath = path.relative(
-    componentsOutDir,
-    path.resolve(process.cwd(), componentsPath),
+  // const importPath = path.relative(
+  //   componentsOutDir,
+  //   path.resolve(process.cwd(), componentsPath),
+  // );
+
+  const generatedFileContents = await generateComponentFileContents(
+    componentsPath,
   );
 
-  fs.writeFileSync(
-    componentsGeneratedPath,
-    `export { components } from "${importPath}";`,
-  );
+  console.log(generatedFileContents);
+
+  fs.writeFileSync(componentsGeneratedPath, generatedFileContents);
 
   const options = {
     outDir,
@@ -40,8 +78,6 @@ export const start = async (componentsPath: string, port: number = 3000) => {
 
   const bundler = new Bundler(entryFile, options);
 
-  // bundler.addPackager("tsx", require.resolve("./component-packager"));
-  // bundler.addAssetType("template", require.resolve("./component-asset"));
   bundler.bundle();
 
   app.use(bundler.middleware());
