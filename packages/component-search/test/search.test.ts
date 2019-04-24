@@ -135,3 +135,39 @@ export default () => {};
     componentExports: [{name: "Button", defaultExport: true}],
   });
 });
+
+test("gets component imports with an underscore in the name", () => {
+  const contents = `
+// @prodo
+export const O______ne = () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file",
+    componentExports: [{name: "O______ne", defaultExport: false}],
+  });
+});
+
+test("gets component imports with a number in the name", () => {
+  const contents = `
+// @prodo
+export const One111 = () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file",
+    componentExports: [{name: "One111", defaultExport: false}],
+  });
+});
