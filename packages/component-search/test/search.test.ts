@@ -27,11 +27,11 @@ export default App;
   const componentImport = getComponentImportsForFile(
     "/cwd",
     contents,
-    "/path/to/file",
+    "/path/to/file.ts",
   );
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "../path/to/file.ts",
     exportNames: ["App"],
   });
 });
@@ -50,11 +50,29 @@ export const Three = () => {};
   const componentImport = getComponentImportsForFile(
     "/cwd",
     contents,
-    "/path/to/file",
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file.ts",
+    exportNames: ["One", "Three"],
+  });
+});
+
+test("gets component imports for single named export in index.ts file", () => {
+  const contents = `
+// @prodo
+export const One = () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
   );
 
   expect(componentImport).toEqual({
     filepath: "../path/to/file",
-    exportNames: ["One", "Three"],
+    exportNames: ["One"],
   });
 });
