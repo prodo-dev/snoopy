@@ -9,7 +9,7 @@ interface Props {
 
 const StyledExample = styled.div`
   padding: ${paddings.medium};
-  margin-right: ${margins.medium};
+  margin: ${margins.none} ${margins.medium} ${margins.medium} ${margins.none};
   border: 1px solid ${props => props.theme.colors.fg};
   border-radius: 4px;
 `;

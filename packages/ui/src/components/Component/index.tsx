@@ -10,6 +10,7 @@ const StyledComponent = styled.div`
 
 const ExamplesContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 interface Props {
