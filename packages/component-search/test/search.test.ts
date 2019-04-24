@@ -80,6 +80,26 @@ export const One = () => {};
   });
 });
 
+test("gets component imports for a predeclared export", () => {
+  const contents = `
+const One = () => {};
+
+// @prodo
+export One;
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file.ts",
+    componentExports: [{name: "One", defaultExport: false}],
+  });
+});
+
 test("gets component imports for default export", () => {
   const contents = `
 // @prodo
