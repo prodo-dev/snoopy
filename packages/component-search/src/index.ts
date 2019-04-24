@@ -36,11 +36,36 @@ const getExportName = (contents: string, lineNumber: number): string => {
   return exportName;
 };
 
+export const findExportNames = (contents: string): string[] => {
+  const found = findProdoCommentLines(contents);
+  const exportNames = found.map(lineNumber =>
+    getExportName(contents, lineNumber),
+  );
+
+  return exportNames;
+};
+
 const indexFileRegex = new RegExp(`/\index.(${fileExtensions.join("|")})$`);
 const getImportPath = (cwd: string, filepath: string): string => {
   const newPath = filepath.replace(indexFileRegex, "");
   const relativePath = path.relative(cwd, newPath);
   return relativePath;
+};
+
+export const getComponentImportsForFile = (
+  cwd: string,
+  contents: string,
+  filepath: string,
+): ComponentImport | null => {
+  const exportNames = findExportNames(contents);
+  if (exportNames.length > 0) {
+    return {
+      filepath: getImportPath(cwd, filepath),
+      exportNames,
+    };
+  }
+
+  return null;
 };
 
 export const findComponentImports = async (
@@ -51,25 +76,13 @@ export const findComponentImports = async (
     cwd: searchPath,
   });
 
-  const imports: ComponentImport[] = [];
-  for (const file of result) {
-    const filepath = path.resolve(searchPath, file);
-    const contents = await readFileContents(filepath);
+  const imports = await Promise.all(
+    result.map(async file => {
+      const filepath = path.resolve(searchPath, file);
+      const contents = await readFileContents(filepath);
+      return getComponentImportsForFile(cwd, contents, filepath);
+    }),
+  );
 
-    const found = findProdoCommentLines(contents);
-    const exportNames = found.map(lineNumber =>
-      getExportName(contents, lineNumber),
-    );
-
-    if (exportNames.length > 0) {
-      const componentImport: ComponentImport = {
-        filepath: getImportPath(cwd, filepath),
-        exportNames,
-      };
-
-      imports.push(componentImport);
-    }
-  }
-
-  return imports;
+  return imports.filter(i => i != null) as ComponentImport[];
 };
