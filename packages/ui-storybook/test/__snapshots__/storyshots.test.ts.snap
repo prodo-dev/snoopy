@@ -2,18 +2,26 @@
 
 exports[`Storyshots Component base 1`] = `
 <div
-  className="sc-htpNat fVfMMN"
+  className="sc-bxivhb hWTdfY"
 >
   <div
-    className="sc-bdVaJa bDWFJH"
+    className="sc-ifAKCX WOpjk"
   >
-    <h2
-      className="sc-bwzfXH kYeaIi"
+    <div
+      className="sc-bdVaJa fgzxbk"
     >
-      Example 1
-    </h2>
-    <div>
-      Tom
+      <div
+        className="example-title sc-htpNat ftxkKe"
+      >
+        Example 1
+      </div>
+      <div
+        className="sc-bwzfXH gThQMU"
+      >
+        <div>
+          Tom
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -24,10 +24,10 @@ export interface Theme {
 
 export const darkTheme: Theme = {
   colors: {
-    bg: "black",
-    fg: "grey",
-    text: "white",
-    textSecondary: "hotpink",
+    bg: "#282c34",
+    fg: "#444851",
+    text: "#f8f8f2",
+    textSecondary: "#00e3a0",
   },
   fonts: {
     text: "sans-serif",
@@ -41,3 +41,14 @@ export const darkTheme: Theme = {
     detail: "8pt",
   },
 };
+
+export const paddings = {
+  none: "0",
+  small: "0.5rem",
+  medium: "1rem",
+  large: "2rem",
+};
+export const margins = paddings;
+
+export const MinSidebarWidth = "200px";
+export const LogoWidth = "20px";

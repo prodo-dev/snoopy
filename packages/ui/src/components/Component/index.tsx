@@ -1,12 +1,15 @@
 import * as React from "react";
 import styled from "styled-components";
 import {Component, Example as ExampleModel} from "../../models";
+import {paddings} from "../../styles/theme";
 import Example from "../Example";
 
 const StyledComponent = styled.div`
-  margin: 1rem;
-  padding: 1rem;
-  border: solid 1px black;
+  padding-top: ${paddings.medium};
+`;
+
+const ExamplesContainer = styled.div`
+  display: flex;
 `;
 
 interface Props {
@@ -20,13 +23,15 @@ const Component = (props: Props) => {
   const Comp = props.component.component;
   return (
     <StyledComponent>
-      {examples && examples.length > 0 ? (
-        examples.map(example => (
-          <Example key={example.name} example={example} />
-        ))
-      ) : (
-        <Example example={{name: "Default", jsx: <Comp />}} />
-      )}
+      <ExamplesContainer>
+        {examples && examples.length > 0 ? (
+          examples.map(example => (
+            <Example key={example.name} example={example} />
+          ))
+        ) : (
+          <Example example={{name: "Default", jsx: <Comp />}} />
+        )}
+      </ExamplesContainer>
     </StyledComponent>
   );
 };
