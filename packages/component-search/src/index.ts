@@ -11,7 +11,7 @@ export const fileFilter = (filepath: string): boolean =>
   fileExtensions.includes(path.extname(filepath));
 
 const readFileContents = (filepath: string): Promise<string> =>
-  promisify(fs.readFile)(filepath).then(buffer => buffer.toString());
+  promisify(fs.readFile)(filepath, "utf8");
 
 const isProdoComponentLine = (line: string): boolean =>
   line.indexOf(prodoCommentString) >= 0;
@@ -107,7 +107,18 @@ export const findComponentImports = async (
   const imports = await Promise.all(
     result.map(async file => {
       const filepath = path.resolve(searchPath, file);
-      const contents = await readFileContents(filepath);
+
+      let contents: string;
+      try {
+        contents = await readFileContents(filepath);
+      } catch (e) {
+        return {
+          filepath,
+          componentExports: [],
+          errors: [new FileError(filepath, "Could not read the file.")],
+        };
+      }
+
       return getComponentImportsForFile(cwd, contents, filepath);
     }),
   );
