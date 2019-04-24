@@ -1,9 +1,9 @@
-import * as glob from "glob";
-import {promisify} from "util";
-import * as path from "path";
 import * as fs from "fs";
+import * as glob from "glob";
+import * as path from "path";
+import {promisify} from "util";
 import {matchAll} from "./regex";
-import {ComponentImport} from "./types";
+import {ComponentImport, Export} from "./types";
 
 const prodoCommentString = "// @prodo";
 const fileExtensions = ["ts", "tsx", "js", "jsx"];
@@ -27,29 +27,41 @@ const findProdoCommentLines = (contents: string): number[] =>
     );
 
 const exportMatch = matchAll(/export const ([A-Z]\w+)/gm);
-const getExportName = (contents: string, lineNumber: number): string => {
-  const lines = contents.split("\n");
-
-  const lineAfter = lines[lineNumber + 1];
-  const exportName = exportMatch(lineAfter)[1];
-
-  return exportName;
-};
-
-export const findExportNames = (contents: string): string[] => {
-  const found = findProdoCommentLines(contents);
-  const exportNames = found.map(lineNumber =>
-    getExportName(contents, lineNumber),
-  );
-
-  return exportNames;
-};
-
 const indexFileRegex = new RegExp(`/\index.(${fileExtensions.join("|")})$`);
+
+const getExport = (
+  filepath: string,
+  contents: string,
+  lineNumber: number,
+): Export => {
+  const lines = contents.split("\n");
+  const lineAfter = lines[lineNumber + 1];
+
+  if (!lineAfter.match(/\bdefault\b/)) {
+    return {
+      name: exportMatch(lineAfter)[1],
+      defaultExport: false,
+    };
+  }
+
+  if (filepath.match(indexFileRegex)) {
+    return {name: path.basename(path.dirname(filepath)), defaultExport: true};
+  }
+
+  return {
+    name: path.basename(filepath, path.extname(filepath)),
+    defaultExport: true,
+  };
+};
+
+export const findExports = (filepath: string, contents: string): Export[] => {
+  const found = findProdoCommentLines(contents);
+  return found.map(lineNumber => getExport(filepath, contents, lineNumber));
+};
+
 const getImportPath = (cwd: string, filepath: string): string => {
   const newPath = filepath.replace(indexFileRegex, "");
-  const relativePath = path.relative(cwd, newPath);
-  return relativePath;
+  return path.relative(cwd, newPath);
 };
 
 export const getComponentImportsForFile = (
@@ -57,11 +69,11 @@ export const getComponentImportsForFile = (
   contents: string,
   filepath: string,
 ): ComponentImport | null => {
-  const exportNames = findExportNames(contents);
-  if (exportNames.length > 0) {
+  const componentExports = findExports(filepath, contents);
+  if (componentExports.length > 0) {
     return {
       filepath: getImportPath(cwd, filepath),
-      exportNames,
+      componentExports,
     };
   }
 

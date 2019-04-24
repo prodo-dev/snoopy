@@ -32,7 +32,7 @@ export default App;
 
   expect(componentImport).toEqual({
     filepath: "../path/to/file.ts",
-    exportNames: ["App"],
+    componentExports: [{name: "App", defaultExport: false}],
   });
 });
 
@@ -55,7 +55,10 @@ export const Three = () => {};
 
   expect(componentImport).toEqual({
     filepath: "../path/to/file.ts",
-    exportNames: ["One", "Three"],
+    componentExports: [
+      {name: "One", defaultExport: false},
+      {name: "Three", defaultExport: false},
+    ],
   });
 });
 
@@ -73,6 +76,42 @@ export const One = () => {};
 
   expect(componentImport).toEqual({
     filepath: "../path/to/file",
-    exportNames: ["One"],
+    componentExports: [{name: "One", defaultExport: false}],
+  });
+});
+
+test("gets component imports for default export", () => {
+  const contents = `
+// @prodo
+export default () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/Button.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file/Button.ts",
+    componentExports: [{name: "Button", defaultExport: true}],
+  });
+});
+
+test("gets component imports for default export in index.ts file", () => {
+  const contents = `
+// @prodo
+export default () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/Button/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file/Button",
+    componentExports: [{name: "Button", defaultExport: true}],
   });
 });

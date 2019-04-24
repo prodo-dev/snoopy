@@ -1,4 +1,9 @@
 export interface ComponentImport {
   filepath: string;
-  exportNames: string[];
+  componentExports: Export[];
+}
+
+export interface Export {
+  name: string;
+  defaultExport: boolean;
 }

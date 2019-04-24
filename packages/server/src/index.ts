@@ -1,8 +1,8 @@
+import {findComponentImports} from "@prodo/snoopy-component-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
 import * as path from "path";
-import {findComponentImports} from "@prodo/snoopy-component-search";
 import * as watch from "watch";
 
 const clientDir = path.resolve(__dirname, "../../ui");
@@ -10,22 +10,24 @@ const entryFile = path.resolve(clientDir, "./public/index.html");
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
+const flat = Array.prototype.concat.bind([]);
+
 const generateComponentFileContents = async (): Promise<string> => {
   const componentImports = await findComponentImports(clientDir, process.cwd());
 
-  const importString = componentImports
-    .map(
-      componentImport =>
-        `import { ${componentImport.exportNames.join(", ")} } from "${
-          componentImport.filepath
-        }"`,
-    )
-    .join("\n");
+  const importString = flat(
+    componentImports.map(({filepath, componentExports}) =>
+      componentExports.map(({name, defaultExport}) => {
+        const importName = defaultExport ? name : `{ ${name} }`;
+        return `import ${importName} from "${filepath}"`;
+      }),
+    ),
+  ).join("\n");
 
   const componentsArrayString = componentImports
-    .map(componentImport =>
-      componentImport.exportNames
-        .map(name => `{name: "${name}", component: ${name}}`)
+    .map(({componentExports}) =>
+      componentExports
+        .map(({name}) => `{name: "${name}", component: ${name}}`)
         .join(","),
     )
     .join(",\n  ");
