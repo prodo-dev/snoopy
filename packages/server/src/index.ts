@@ -10,13 +10,8 @@ const entryFile = path.resolve(clientDir, "./public/index.html");
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
-const generateComponentFileContents = async (
-  componentsPath: string,
-): Promise<string> => {
-  const componentImports = await findComponentImports(
-    clientDir,
-    componentsPath,
-  );
+const generateComponentFileContents = async (): Promise<string> => {
+  const componentImports = await findComponentImports(clientDir, process.cwd());
 
   const importString = componentImports
     .map(
@@ -44,24 +39,24 @@ export const components = [
 `.trimLeft();
 };
 
-const generateComponentListFile = async (srcPath: string) => {
+const generateComponentListFile = async () => {
   const componentsGeneratedPath = path.resolve(
     clientDir,
     "components-generated.ts",
   );
 
-  const generatedFileContents = await generateComponentFileContents(srcPath);
+  const generatedFileContents = await generateComponentFileContents();
 
   fs.writeFileSync(componentsGeneratedPath, generatedFileContents);
 };
 
-export const start = async (srcPath: string, port: number = 3000) => {
+export const start = async (port: number = 3000) => {
   const app = Express();
 
-  generateComponentListFile(srcPath);
+  generateComponentListFile();
 
-  watch.watchTree(srcPath, () => {
-    generateComponentListFile(srcPath);
+  watch.watchTree(process.cwd(), () => {
+    generateComponentListFile();
   });
 
   const options = {

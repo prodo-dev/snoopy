@@ -8,6 +8,9 @@ import {ComponentImport} from "./types";
 const prodoCommentString = "// @prodo";
 const fileExtensions = ["ts", "tsx", "js", "jsx"];
 
+export const fileFilter = (filepath: string): boolean =>
+  fileExtensions.includes(path.extname(filepath));
+
 const readFileContents = (filepath: string): Promise<string> =>
   promisify(fs.readFile)(filepath).then(buffer => buffer.toString());
 
