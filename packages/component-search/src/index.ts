@@ -2,8 +2,7 @@ import * as fs from "fs";
 import * as glob from "glob";
 import * as path from "path";
 import {promisify} from "util";
-import {matchAll} from "./regex";
-import {ComponentImport, Export} from "./types";
+import {ComponentImport, Export, FileError} from "./types";
 
 const prodoCommentString = "// @prodo";
 const fileExtensions = ["ts", "tsx", "js", "jsx"];
@@ -26,35 +25,47 @@ const findProdoCommentLines = (contents: string): number[] =>
       [],
     );
 
-const exportMatch = matchAll(/\bexport\s+(?:const\s+)?([A-Z]\w+)/g);
+const exportRegex = /\bexport\s+(?:const\s+)?([A-Z]\w+)/;
+const exportDefaultRegex = /\bexport\s+default\b/;
 const indexFileRegex = new RegExp(`/\index.(${fileExtensions.join("|")})$`);
 
 const getExport = (
   filepath: string,
   contents: string,
   lineNumber: number,
-): Export => {
+): Export | FileError => {
   const lines = contents.split("\n");
   const lineAfter = lines[lineNumber + 1];
 
-  if (!lineAfter.match(/\bdefault\b/)) {
+  const match = exportRegex.exec(lineAfter);
+  if (match) {
     return {
-      name: exportMatch(lineAfter)[1],
+      name: match[1],
       defaultExport: false,
     };
   }
 
-  if (filepath.match(indexFileRegex)) {
-    return {name: path.basename(path.dirname(filepath)), defaultExport: true};
+  if (exportDefaultRegex.test(lineAfter)) {
+    if (filepath.match(indexFileRegex)) {
+      return {name: path.basename(path.dirname(filepath)), defaultExport: true};
+    }
+
+    return {
+      name: path.basename(filepath, path.extname(filepath)),
+      defaultExport: true,
+    };
   }
 
-  return {
-    name: path.basename(filepath, path.extname(filepath)),
-    defaultExport: true,
-  };
+  return new FileError(
+    filepath,
+    "The `@prodo` tag must be directly above an exported React component.",
+  );
 };
 
-export const findExports = (filepath: string, contents: string): Export[] => {
+export const findExports = (
+  filepath: string,
+  contents: string,
+): Array<Export | FileError> => {
   const found = findProdoCommentLines(contents);
   return found.map(lineNumber => getExport(filepath, contents, lineNumber));
 };
@@ -69,11 +80,16 @@ export const getComponentImportsForFile = (
   contents: string,
   filepath: string,
 ): ComponentImport | null => {
-  const componentExports = findExports(filepath, contents);
-  if (componentExports.length > 0) {
+  const result = findExports(filepath, contents);
+  if (result.length > 0) {
+    const componentExports = result.filter(
+      e => !(e instanceof FileError),
+    ) as Export[];
+    const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
       filepath: getImportPath(cwd, filepath),
       componentExports,
+      errors,
     };
   }
 

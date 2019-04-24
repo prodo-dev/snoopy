@@ -1,4 +1,5 @@
 import {getComponentImportsForFile} from "../src";
+import {FileError} from "../src/types";
 
 test("gets component imports for single named export", () => {
   const contents = `
@@ -33,6 +34,7 @@ export default App;
   expect(componentImport).toEqual({
     filepath: "../path/to/file.ts",
     componentExports: [{name: "App", defaultExport: false}],
+    errors: [],
   });
 });
 
@@ -59,6 +61,7 @@ export const Three = () => {};
       {name: "One", defaultExport: false},
       {name: "Three", defaultExport: false},
     ],
+    errors: [],
   });
 });
 
@@ -77,6 +80,7 @@ export const One = () => {};
   expect(componentImport).toEqual({
     filepath: "../path/to/file",
     componentExports: [{name: "One", defaultExport: false}],
+    errors: [],
   });
 });
 
@@ -97,6 +101,7 @@ export One;
   expect(componentImport).toEqual({
     filepath: "../path/to/file.ts",
     componentExports: [{name: "One", defaultExport: false}],
+    errors: [],
   });
 });
 
@@ -115,6 +120,7 @@ export default () => {};
   expect(componentImport).toEqual({
     filepath: "../path/to/file/Button.ts",
     componentExports: [{name: "Button", defaultExport: true}],
+    errors: [],
   });
 });
 
@@ -133,6 +139,7 @@ export default () => {};
   expect(componentImport).toEqual({
     filepath: "../path/to/file/Button",
     componentExports: [{name: "Button", defaultExport: true}],
+    errors: [],
   });
 });
 
@@ -151,6 +158,7 @@ export const O______ne = () => {};
   expect(componentImport).toEqual({
     filepath: "../path/to/file",
     componentExports: [{name: "O______ne", defaultExport: false}],
+    errors: [],
   });
 });
 
@@ -169,5 +177,30 @@ export const One111 = () => {};
   expect(componentImport).toEqual({
     filepath: "../path/to/file",
     componentExports: [{name: "One111", defaultExport: false}],
+    errors: [],
+  });
+});
+
+test("catch error when prodo comment is on non-export", () => {
+  const contents = `
+// @prodo
+const foo = "bar"
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file",
+    componentExports: [],
+    errors: [
+      new FileError(
+        "/path/to/file/index.ts",
+        "The `@prodo` tag must be directly above an exported React component.",
+      ),
+    ],
   });
 });
