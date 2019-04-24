@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
 import * as path from "path";
 import {findComponentImports} from "@prodo/snoopy-component-search";
+import * as watch from "watch";
 
 const clientDir = path.resolve(__dirname, "../../ui");
 const entryFile = path.resolve(clientDir, "./public/index.html");
@@ -43,26 +44,25 @@ export const components = [
 `.trimLeft();
 };
 
-export const start = async (componentsPath: string, port: number = 3000) => {
-  const app = Express();
-
-  // const componentsOutDir = path.resolve(clientDir);
+const generateComponentListFile = async (srcPath: string) => {
   const componentsGeneratedPath = path.resolve(
     clientDir,
     "components-generated.ts",
   );
-  // const importPath = path.relative(
-  //   componentsOutDir,
-  //   path.resolve(process.cwd(), componentsPath),
-  // );
 
-  const generatedFileContents = await generateComponentFileContents(
-    componentsPath,
-  );
-
-  console.log(generatedFileContents);
+  const generatedFileContents = await generateComponentFileContents(srcPath);
 
   fs.writeFileSync(componentsGeneratedPath, generatedFileContents);
+};
+
+export const start = async (srcPath: string, port: number = 3000) => {
+  const app = Express();
+
+  generateComponentListFile(srcPath);
+
+  watch.watchTree(srcPath, () => {
+    generateComponentListFile(srcPath);
+  });
 
   const options = {
     outDir,
