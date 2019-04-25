@@ -19,6 +19,7 @@
   "references": [
     {"path": "packages/cli"},
     {"path": "packages/server"},
-    {"path": "packages/ui"}
+    {"path": "packages/ui"},
+    {"path": "packages/component-search"}
   ]
 }

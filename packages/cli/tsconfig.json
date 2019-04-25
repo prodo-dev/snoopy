@@ -4,5 +4,6 @@
     "outDir": "lib",
     "rootDir": "src"
   },
+  "include": ["src", "typings"],
   "references": [{"path": "../server/tsconfig.json"}]
 }
