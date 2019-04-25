@@ -19,7 +19,9 @@ const StyledSidebar = styled.div<{isOpen: boolean}>`
   position: sticky;
   top: 0;
   left: 0;
-  ${props => props.isOpen && `width: ${SidebarWidth};`};
+  ${props =>
+    props.isOpen &&
+    `width: ${SidebarWidth}; min-width: ${SidebarWidth}; max-width: ${SidebarWidth};`};
   height: 100vh;
   z-index: 1000;
   background-color: ${props => props.theme.colors.fg};
@@ -29,8 +31,10 @@ const StyledSidebar = styled.div<{isOpen: boolean}>`
   ${forNarrowScreen`transition: transform 100ms ease-in`};
   ${props => !props.isOpen && forNarrowScreen`transform: translateX(-100%)`};
 
-  ${forWideScreen`transition: width 100ms`};
-  ${props => !props.isOpen && forWideScreen`width: 55px`};
+  ${forWideScreen`transition: width 100ms, min-width 100ms, max-width 100ms`};
+  ${props =>
+    !props.isOpen &&
+    forWideScreen`width: 55px; min-width: 55px; max-width: 55px`};
 `;
 
 const StyledOverlay = styled.div<{isSidebarOpen: boolean}>`
