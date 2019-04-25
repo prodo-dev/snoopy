@@ -34,7 +34,7 @@ const StyledTitle = styled.div`
 
 const SidebarIcon = styled.span`
   cursor: pointer;
-  margin-right: ${margins.small}
+  margin-right: ${margins.medium}
 
   &:hover {
     color: ${props => props.theme.colors.textSecondary};

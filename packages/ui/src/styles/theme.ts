@@ -32,7 +32,7 @@ export const darkTheme: Theme = {
     textSecondary: "#00e3a0",
   },
   fonts: {
-    text: "sans-serif",
+    text: "'Ubuntu', sans-serif",
     code: "Ubuntu, mononspace",
   },
   fontSizes: {
@@ -57,6 +57,7 @@ export const MinSidebarWidth = "40px";
 export const LogoWidth = "20px";
 
 export const narrowScreenWidth = 768;
+
 export const forNarrowScreen = (
   first: any,
   ...interpolations: any[]
@@ -64,6 +65,7 @@ export const forNarrowScreen = (
   ` and (max-width: ${narrowScreenWidth}px)`} {
   ${css(first, ...interpolations)}
 }`;
+
 export const forWideScreen = (
   first: any,
   ...interpolations: any[]

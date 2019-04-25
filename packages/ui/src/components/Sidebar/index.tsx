@@ -15,22 +15,39 @@ import ComponentList from "../ComponentList";
 import Logo from "../Logo";
 import {NarrowScreen, WideScreen} from "../Responsive";
 
+// TODO: smooth transition?
 const StyledSidebar = styled.div<{isOpen: boolean}>`
   position: sticky;
   top: 0;
   left: 0;
-  ${props =>
-    props.isOpen
-      ? `min-width: ${SidebarWidth}; max-width: ${SidebarWidth};`
-      : forWideScreen`min-width: ${MinSidebarWidth}; max-width: ${MinSidebarWidth};`};
+  ${props => props.isOpen && `width: ${SidebarWidth}`};
   height: 100vh;
   z-index: 1000;
   background-color: ${props => props.theme.colors.fg};
   padding-top: ${paddings.small};
 
-  transition: transform 150ms ease-in;
-  ${props => !props.isOpen && forNarrowScreen`transform: translateX(-100%)`};
   ${forNarrowScreen`position: fixed`}
+  ${forNarrowScreen`transition: transform 100ms ease-in`};
+  ${props => !props.isOpen && forNarrowScreen`transform: translateX(-100%)`};
+
+  ${forWideScreen`transition: width 100ms`};
+  ${props => !props.isOpen && forWideScreen`width: 55px`};
+`;
+
+const StyledOverlay = styled.div<{isSidebarOpen: boolean}>`
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  transition: opacity 100ms ease-in;
+
+  transform: translateX(-100%);
+  ${props => props.isSidebarOpen && forNarrowScreen`transform: translateX(0);`};
+
+  opacity: ${props => (props.isSidebarOpen ? 0.5 : 0)};
 `;
 
 const StyledLink = styled(Link)`
@@ -39,7 +56,11 @@ const StyledLink = styled(Link)`
 
 const Title = styled.div`
   flex-grow: 1;
+  margin-top: ${margins.small};
   padding-left: ${paddings.small};
+  min-height: 45px;
+  min-width: 120px;
+
   text-decoration: none;
   font-size: ${props => props.theme.fontSizes.title};
   color: ${props => props.theme.colors.text};
@@ -51,22 +72,6 @@ const Title = styled.div`
 
 const Separator = styled.hr`
   margin: ${margins.none};
-`;
-
-const StyledOverlay = styled.div<{isSidebarOpen: boolean}>`
-  background-color: black;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
-  transition: opacity 150ms ease-in;
-
-  transform: translateX(-100%);
-  ${props => props.isSidebarOpen && forNarrowScreen`transform: translateX(0);`};
-
-  opacity: ${props => (props.isSidebarOpen ? 0.5 : 0)};
 `;
 
 const Flex = styled.div`
@@ -81,7 +86,8 @@ const SidebarIcon = styled.span`
     color: ${props => props.theme.colors.textSecondary};
   }
 
-  margin: ${margins.small} ${margins.medium};
+  // Custom margin for alignment with the header and logo
+  margin: 0.75rem ${margins.medium};
 `;
 
 interface Props {
@@ -121,31 +127,31 @@ const Header = () => (
 
 export default (props: Props) => (
   <React.Fragment>
-    <NarrowScreen>
-      <StyledSidebar isOpen={props.isOpen}>
+    <StyledSidebar isOpen={props.isOpen}>
+      <NarrowScreen>
         <Header />
         <Separator />
         <ComponentList selected={props.selected} />
-      </StyledSidebar>
+      </NarrowScreen>
+      <WideScreen>
+        {props.isOpen ? (
+          <React.Fragment>
+            <Flex>
+              <Header />
+              <SidebarToggle {...props} />
+            </Flex>
+            <Separator />
+            <ComponentList selected={props.selected} />
+          </React.Fragment>
+        ) : (
+          <Flex>
+            <SidebarToggle {...props} />
+          </Flex>
+        )}
+      </WideScreen>
+    </StyledSidebar>
+    <NarrowScreen>
       <Overlay {...props} />
     </NarrowScreen>
-    <WideScreen>
-      {props.isOpen ? (
-        <StyledSidebar isOpen={props.isOpen}>
-          <Flex>
-            <Header />
-            <SidebarToggle {...props} />
-          </Flex>
-          <Separator />
-          <ComponentList selected={props.selected} />
-        </StyledSidebar>
-      ) : (
-        <StyledSidebar isOpen={props.isOpen}>
-          <Flex>
-            <SidebarToggle {...props} />
-          </Flex>
-        </StyledSidebar>
-      )}
-    </WideScreen>
   </React.Fragment>
 );

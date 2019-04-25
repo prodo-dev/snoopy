@@ -6,8 +6,8 @@ import {LogoWidth, margins} from "../../styles/theme";
 
 const StyledLogo = styled.img`
   width: ${LogoWidth};
-  margin: ${margins.small};
-  vertical-align: middle;
+  margin: ${margins.none} ${margins.small};
+  vertical-align: sub;
   cursor: pointer;
 `;
 
