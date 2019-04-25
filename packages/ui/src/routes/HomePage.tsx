@@ -1,16 +1,22 @@
 import * as React from "react";
-import {Link} from "react-router-dom";
-import {components} from "../../components-generated";
+import ComponentList from "../components/ComponentList";
+import {StyledPage} from "../components/Page";
+import {Component} from "../models";
 
-const HomePage = () => (
-  <div>
+interface Props {
+  components: Component[];
+}
+
+const HomePage = (props: Props) => (
+  <StyledPage>
     <h1>Snoopy</h1>
-    {components.map(({name, component}) => (
-      <h2 key={name}>
-        <Link to={`/${name}`}>{name}</Link>
-      </h2>
-    ))}
-  </div>
+    <p>
+      Add <code>// @prodo</code> in the line above your exported components to
+      see them with Snoopy.
+    </p>
+    <h2>Your components</h2>
+    <ComponentList components={props.components} />
+  </StyledPage>
 );
 
 export default HomePage;

@@ -28,7 +28,9 @@ const Test: ComponentModel = {
 
 test("renders component with no examples", async () => {
   const {container} = render(<Component component={Test} />);
-  expect(container.querySelector("h2")).toHaveTextContent("Default");
+  expect(container.querySelector(".example-title")).toHaveTextContent(
+    "Default",
+  );
   expect(container).toHaveTextContent("hello you");
 });
 
@@ -38,7 +40,9 @@ test("renders component with single example", async () => {
   ];
 
   const {container} = render(<Component component={Test} />);
-  expect(container.querySelector("h2")).toHaveTextContent("Example 1");
+  expect(container.querySelector(".example-title")).toHaveTextContent(
+    "Example 1",
+  );
   expect(container).toHaveTextContent("hello Tom");
 });
 
@@ -50,9 +54,13 @@ test("renders component with multiple examples", async () => {
 
   const {container} = render(<Component component={Test} />);
 
-  expect(container.querySelector("h2")).toHaveTextContent("Example 1");
+  expect(container.querySelector(".example-title")).toHaveTextContent(
+    "Example 1",
+  );
   expect(container).toHaveTextContent("hello Tom");
 
-  expect(container.querySelectorAll("h2")[1]).toHaveTextContent("Example 2");
+  expect(container.querySelectorAll(".example-title")[1]).toHaveTextContent(
+    "Example 2",
+  );
   expect(container).toHaveTextContent("hello Andreja");
 });
