@@ -2,7 +2,7 @@ import * as React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {components} from "../../../components-generated";
-import {paddings} from "../../styles/theme";
+import {paddings} from "../../styles";
 
 const StyledComponentList = styled.div`
   display: flex;

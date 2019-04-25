@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import {Example} from "../../models";
-import {margins, paddings} from "../../styles/theme";
+import {margins, paddings} from "../../styles";
 
 interface Props {
   example: Example;

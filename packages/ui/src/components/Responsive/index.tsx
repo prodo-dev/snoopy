@@ -1,6 +1,6 @@
 import * as React from "react";
 import MediaQuery from "react-responsive";
-import {NarrowScreenWidth} from "../../styles/theme";
+import {NarrowScreenWidth} from "../../styles";
 
 export interface Props {
   children?: React.ReactNode;

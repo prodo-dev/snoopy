@@ -1,20 +1,18 @@
 import {faList} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
-// tslint:disable-next-line:no-duplicate-imports
-import {useState} from "react";
 import styled from "styled-components";
 import Component from "../components/Component";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar from "../components/Sidebar";
 import {Component as ComponentModel} from "../models";
-import {margins, paddings} from "../styles/theme";
+import {margins, paddings} from "../styles";
 
 interface Props {
   component: ComponentModel;
 }
 
-const Flex = styled.div`
+const StyledComponentPage = styled.div`
   display: flex;
   padding: ${paddings.none};
   margin: ${margins.none};
@@ -24,7 +22,7 @@ const Flex = styled.div`
   color: ${props => props.theme.colors.text};
 `;
 
-const StyledComponentPage = styled.div`
+const ComponentContainer = styled.div`
   padding: ${paddings.medium} ${paddings.large};
 `;
 
@@ -42,16 +40,16 @@ const SidebarIcon = styled.span`
 `;
 
 const ComponentPage = (props: Props) => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
   return (
-    <Flex>
+    <StyledComponentPage>
       <Sidebar
         selected={props.component.name}
         isOpen={isSidebarOpen}
         setSidebarOpen={setSidebarOpen}
       />
-      <StyledComponentPage>
+      <ComponentContainer>
         <StyledTitle>
           <NarrowScreen>
             <SidebarIcon onClick={() => setSidebarOpen(!isSidebarOpen)}>
@@ -61,8 +59,8 @@ const ComponentPage = (props: Props) => {
           {props.component.name}
         </StyledTitle>
         <Component key={props.component.name} component={props.component} />
-      </StyledComponentPage>
-    </Flex>
+      </ComponentContainer>
+    </StyledComponentPage>
   );
 };
 

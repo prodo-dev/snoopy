@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import {Component, Example as ExampleModel} from "../../models";
-import {paddings} from "../../styles/theme";
+import {paddings} from "../../styles";
 import Example from "../Example";
 
 const StyledComponent = styled.div`

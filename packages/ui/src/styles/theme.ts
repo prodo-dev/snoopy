@@ -1,5 +1,3 @@
-import {css} from "styled-components";
-
 export type Color = string;
 export type Font = string;
 export type Size = string;
@@ -43,32 +41,3 @@ export const darkTheme: Theme = {
     detail: "8pt",
   },
 };
-
-export const paddings = {
-  none: "0",
-  small: "0.5rem",
-  medium: "1rem",
-  large: "2rem",
-};
-export const margins = paddings;
-
-export const SidebarWidth = "200px";
-export const LogoWidth = "20px";
-
-export const NarrowScreenWidth = 768;
-
-export const forNarrowScreen = (
-  first: any,
-  ...interpolations: any[]
-) => `@media only screen ${NarrowScreenWidth != null &&
-  ` and (max-width: ${NarrowScreenWidth}px)`} {
-  ${css(first, ...interpolations)}
-}`;
-
-export const forWideScreen = (
-  first: any,
-  ...interpolations: any[]
-) => `@media only screen ${NarrowScreenWidth != null &&
-  ` and (min-width: ${NarrowScreenWidth}px)`} {
-  ${css(first, ...interpolations)}
-}`;
