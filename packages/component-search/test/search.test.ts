@@ -239,3 +239,22 @@ export const Five = () => {};
     errors: [],
   });
 });
+
+test("component name is capitalized when directory name is not", () => {
+  const contents = `
+// @prodo
+export default () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file",
+    componentExports: [{name: "File", defaultExport: true}],
+    errors: [],
+  });
+});

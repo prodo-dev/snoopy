@@ -7,23 +7,22 @@ import {ComponentImport, Export, FileError} from "./types";
 const prodoCommentRegex = /^\/\/\s*@prodo\b/;
 const fileExtensions = ["ts", "tsx", "js", "jsx"];
 
-export const fileFilter = (filepath: string): boolean =>
-  fileExtensions.includes(path.extname(filepath));
+const capitalize = (str: string): string =>
+  `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 
+const readFile = promisify(fs.readFile);
 const readFileContents = (filepath: string): Promise<string> =>
-  promisify(fs.readFile)(filepath, "utf8");
+  readFile(filepath, "utf8");
 
 const isProdoComponentLine = (line: string): boolean =>
-  line.match(prodoCommentRegex) != null;
+  prodoCommentRegex.test(line);
 
 const findProdoCommentLines = (contents: string): number[] =>
   contents
     .split("\n")
-    .reduce(
-      (found: number[], line: string, idx: number) =>
-        isProdoComponentLine(line) ? found.concat(idx) : found,
-      [],
-    );
+    .map((line, idx) => ({line, idx}))
+    .filter(({line}) => isProdoComponentLine(line))
+    .map(({idx}) => idx);
 
 const exportRegex = /\bexport\s+(?:const\s+)?([A-Z]\w+)/;
 const exportDefaultRegex = /\bexport\s+default\b/;
@@ -46,12 +45,15 @@ const getExport = (
   }
 
   if (exportDefaultRegex.test(lineAfter)) {
-    if (filepath.match(indexFileRegex)) {
-      return {name: path.basename(path.dirname(filepath)), defaultExport: true};
+    if (indexFileRegex.test(filepath)) {
+      return {
+        name: capitalize(path.basename(path.dirname(filepath))),
+        defaultExport: true,
+      };
     }
 
     return {
-      name: path.basename(filepath, path.extname(filepath)),
+      name: capitalize(path.basename(filepath, path.extname(filepath))),
       defaultExport: true,
     };
   }
