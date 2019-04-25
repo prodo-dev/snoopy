@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 
+// @prodo
 export default (props: Props) => (
   <button
     onClick={event => {
