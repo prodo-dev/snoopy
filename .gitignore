@@ -1,8 +1,12 @@
-*.tsbuildinfo
-.DS_Store
-.cache
-.tern-port
+# Output
 dist
 lib
-node_modules
 packages/ui/components-generated.ts
+
+# JavaScript
+*.tsbuildinfo
+.tern-port
+node_modules
+
+# Parcel
+.cache
