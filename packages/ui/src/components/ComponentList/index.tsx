@@ -30,7 +30,7 @@ interface Props {
 }
 
 export default (props: Props) => (
-  <StyledComponentList>
+  <StyledComponentList className="component-list">
     {components.map(({name, component}) => (
       <StyledLink to={`/${name}`} key={name}>
         <ComponentName selected={props.selected === name}>{name}</ComponentName>

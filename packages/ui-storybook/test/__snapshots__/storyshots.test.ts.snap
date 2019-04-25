@@ -5,10 +5,10 @@ exports[`Storyshots Component base 1`] = `
   className="sc-bxivhb hWTdfY"
 >
   <div
-    className="sc-ifAKCX WOpjk"
+    className="sc-ifAKCX cZFrkc"
   >
     <div
-      className="sc-bdVaJa fgzxbk"
+      className="sc-bdVaJa hLhmaC"
     >
       <div
         className="example-title sc-htpNat ftxkKe"
@@ -16,7 +16,7 @@ exports[`Storyshots Component base 1`] = `
         Example 1
       </div>
       <div
-        className="sc-bwzfXH gThQMU"
+        className="example-contents sc-bwzfXH gThQMU"
       >
         <div>
           Tom

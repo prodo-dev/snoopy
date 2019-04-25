@@ -27,6 +27,8 @@ const Title = styled.div`
 export default (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.name}</Title>
-    <JsxContainer>{props.example.jsx}</JsxContainer>
+    <JsxContainer className="example-contents">
+      {props.example.jsx}
+    </JsxContainer>
   </StyledExample>
 );

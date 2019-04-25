@@ -7,7 +7,6 @@ import {
   forNarrowScreen,
   forWideScreen,
   margins,
-  MinSidebarWidth,
   paddings,
   SidebarWidth,
 } from "../../styles/theme";
@@ -20,7 +19,7 @@ const StyledSidebar = styled.div<{isOpen: boolean}>`
   position: sticky;
   top: 0;
   left: 0;
-  ${props => props.isOpen && `width: ${SidebarWidth}`};
+  ${props => props.isOpen && `width: ${SidebarWidth};`};
   height: 100vh;
   z-index: 1000;
   background-color: ${props => props.theme.colors.fg};
@@ -111,14 +110,17 @@ const Overlay = (props: Props) => (
 );
 
 const SidebarToggle = (props: Props) => (
-  <SidebarIcon onClick={() => props.setSidebarOpen(!props.isOpen)}>
+  <SidebarIcon
+    onClick={() => props.setSidebarOpen(!props.isOpen)}
+    className="sidebar-toggle"
+  >
     <FontAwesomeIcon icon={props.isOpen ? faCaretLeft : faList} size="lg" />
   </SidebarIcon>
 );
 
 const Header = () => (
   <StyledLink to="/">
-    <Title>
+    <Title className="title">
       <Logo />
       Snoopy
     </Title>
@@ -127,7 +129,7 @@ const Header = () => (
 
 export default (props: Props) => (
   <React.Fragment>
-    <StyledSidebar isOpen={props.isOpen}>
+    <StyledSidebar isOpen={props.isOpen} className="sidebar">
       <NarrowScreen>
         <Header />
         <Separator />

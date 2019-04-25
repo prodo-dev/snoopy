@@ -53,23 +53,22 @@ export const paddings = {
 export const margins = paddings;
 
 export const SidebarWidth = "200px";
-export const MinSidebarWidth = "40px";
 export const LogoWidth = "20px";
 
-export const narrowScreenWidth = 768;
+export const NarrowScreenWidth = 768;
 
 export const forNarrowScreen = (
   first: any,
   ...interpolations: any[]
-) => `@media only screen ${narrowScreenWidth != null &&
-  ` and (max-width: ${narrowScreenWidth}px)`} {
+) => `@media only screen ${NarrowScreenWidth != null &&
+  ` and (max-width: ${NarrowScreenWidth}px)`} {
   ${css(first, ...interpolations)}
 }`;
 
 export const forWideScreen = (
   first: any,
   ...interpolations: any[]
-) => `@media only screen ${narrowScreenWidth != null &&
-  ` and (min-width: ${narrowScreenWidth}px)`} {
+) => `@media only screen ${NarrowScreenWidth != null &&
+  ` and (min-width: ${NarrowScreenWidth}px)`} {
   ${css(first, ...interpolations)}
 }`;
