@@ -6,6 +6,7 @@ export interface Theme {
   colors: {
     bg: Color;
     fg: Color;
+    border: Color;
     text: Color;
     textSecondary: Color;
   };
@@ -25,7 +26,8 @@ export interface Theme {
 export const darkTheme: Theme = {
   colors: {
     bg: "#282c34",
-    fg: "#444851",
+    fg: "#31353f",
+    border: "#444851",
     text: "#f8f8f2",
     textSecondary: "#00e3a0",
   },
@@ -34,7 +36,7 @@ export const darkTheme: Theme = {
     code: "Ubuntu, mononspace",
   },
   fontSizes: {
-    title: "16pt",
+    title: "18pt",
     subtitle: "14pt",
     normal: "11pt",
     code: "11pt",

@@ -79,6 +79,7 @@ const Title = styled.div`
 
 const Separator = styled.hr`
   margin: ${margins.none};
+  color: ${props => props.theme.colors.border};
 `;
 
 const HeaderContainer = styled.div`

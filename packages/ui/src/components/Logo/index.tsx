@@ -6,7 +6,7 @@ import {LogoWidth, margins} from "../../styles";
 
 const StyledLogo = styled.img`
   width: ${LogoWidth};
-  margin: ${margins.none} ${margins.small};
+  margin: ${margins.none} ${margins.medium} ${margins.none} ${margins.small};
   vertical-align: sub;
   cursor: pointer;
 `;

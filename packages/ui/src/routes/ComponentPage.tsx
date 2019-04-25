@@ -28,6 +28,7 @@ const ComponentContainer = styled.div`
 
 const StyledTitle = styled.div`
   font-size: ${props => props.theme.fontSizes.title};
+  font-weight: bold;
 `;
 
 const SidebarIcon = styled.span`
