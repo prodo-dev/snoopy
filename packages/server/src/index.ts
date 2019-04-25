@@ -74,11 +74,8 @@ export const start = async (port: number = 3000) => {
 
   const bundler = new Bundler(entryFile, options);
 
+  process.stdout.write(`Starting server on port ${port}...\n`);
   bundler.bundle();
-
   app.use(bundler.middleware());
   app.listen(3000);
-
-  // tslint:disable-next-line:no-console
-  console.log(`Starting server on port ${port}`);
 };
