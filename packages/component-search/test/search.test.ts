@@ -215,6 +215,12 @@ export const Two = () => {};
 
 //     @prodo
 export const Three = () => {};
+
+    // @prodo
+export const Four = () => {};
+
+// @prodobot
+export const Five = () => {};
 `.trim();
 
   const componentImport = getComponentImportsForFile(

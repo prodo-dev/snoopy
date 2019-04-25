@@ -4,7 +4,7 @@ import * as path from "path";
 import {promisify} from "util";
 import {ComponentImport, Export, FileError} from "./types";
 
-const prodoCommentRegex = /\/\/\s*@prodo/;
+const prodoCommentRegex = /^\/\/\s*@prodo\b/;
 const fileExtensions = ["ts", "tsx", "js", "jsx"];
 
 export const fileFilter = (filepath: string): boolean =>
