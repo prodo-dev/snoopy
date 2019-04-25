@@ -3,6 +3,9 @@ dist
 lib
 packages/ui/components-generated.ts
 
+# Development
+.envrc
+
 # JavaScript
 *.tsbuildinfo
 .tern-port
