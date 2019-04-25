@@ -20,15 +20,24 @@ const ComponentPageWithProps = (props: RouteComponentProps<{name: string}>) => {
   const component = components.filter(
     c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
   )[0];
-  return <ComponentPage component={component} />;
+  return <ComponentPage component={component} {...props} />;
 };
+
+// tslint:disable-next-line:no-shadowed-variable
+const WithComponents = (Component: React.ComponentType<any>) => (
+  props: any,
+) => <Component components={components} {...props} />;
 
 const App = () => (
   <ThemeProvider theme={darkTheme}>
     <Router>
       <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/:name" exact component={ComponentPageWithProps} />
+        <Route path="/" exact component={WithComponents(HomePage)} />
+        <Route
+          path="/:name"
+          exact
+          component={WithComponents(ComponentPageWithProps)}
+        />
       </Switch>
     </Router>
   </ThemeProvider>

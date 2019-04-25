@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import {components} from "../../../components-generated";
+import {Component} from "../../models";
 import {paddings} from "../../styles";
 
 const StyledComponentList = styled.div`
@@ -27,11 +27,12 @@ const StyledLink = styled(Link)`
 
 interface Props {
   selected?: string;
+  components: Component[];
 }
 
 export default (props: Props) => (
   <StyledComponentList className="component-list">
-    {components.map(({name, component}) => (
+    {props.components.map(({name}) => (
       <StyledLink to={`/${name}`} key={name}>
         <ComponentName selected={props.selected === name}>{name}</ComponentName>
       </StyledLink>

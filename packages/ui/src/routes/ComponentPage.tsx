@@ -10,6 +10,7 @@ import {margins, paddings} from "../styles";
 
 interface Props {
   component: ComponentModel;
+  components: CompnentModel[];
 }
 
 const StyledComponentPage = styled.div`
@@ -49,6 +50,7 @@ const ComponentPage = (props: Props) => {
         selected={props.component.name}
         isOpen={isSidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        components={props.components}
       />
       <ComponentContainer>
         <StyledTitle>

@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
+import {Component} from "../../models";
 import {
   forNarrowScreen,
   forWideScreen,
@@ -66,7 +67,7 @@ const Title = styled.div`
   margin-top: ${margins.small};
   padding-left: ${paddings.small};
   min-height: 45px;
-  min-width: 120px;
+  min-width: 150px;
 
   text-decoration: none;
   font-size: ${props => props.theme.fontSizes.title};
@@ -90,6 +91,7 @@ const HeaderContainer = styled.div`
 const SidebarIcon = styled.span`
   cursor: pointer;
 
+  color: ${props => props.theme.colors.text};
   &:hover {
     color: ${props => props.theme.colors.textSecondary};
   }
@@ -102,6 +104,7 @@ interface Props {
   isOpen: boolean;
   selected?: string;
   setSidebarOpen: (open: boolean) => any;
+  components: Component[];
 }
 
 const Overlay = (props: Props) => (
@@ -148,7 +151,10 @@ export default (props: Props) => (
             </WideScreen>
           </HeaderContainer>
           <Separator />
-          <ComponentList selected={props.selected} />
+          <ComponentList
+            selected={props.selected}
+            components={props.components}
+          />
         </React.Fragment>
       ) : (
         <HeaderContainer>
