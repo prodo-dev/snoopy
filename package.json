@@ -8,8 +8,8 @@
     "start": "yarn workspace @prodo/snoopy-cli start",
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
-    "test": "wsrun --exclude-missing --serial --no-prefix test",
-    "lint": "wsrun --exclude-missing --serial --no-prefix lint"
+    "test": "wsrun --exclude-missing --serial test",
+    "lint": "wsrun --exclude-missing --serial lint"
   },
   "workspaces": [
     "packages/*",
@@ -20,6 +20,6 @@
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.4.3",
-    "wsrun": "^3.6.4"
+    "wsrun": "^3.6.5"
   }
 }
