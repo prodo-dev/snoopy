@@ -4,7 +4,7 @@ import * as path from "path";
 import {promisify} from "util";
 import {ComponentImport, Export, FileError} from "./types";
 
-const prodoCommentString = "// @prodo";
+const prodoCommentRegex = /\/\/\s*@prodo/;
 const fileExtensions = ["ts", "tsx", "js", "jsx"];
 
 export const fileFilter = (filepath: string): boolean =>
@@ -14,7 +14,7 @@ const readFileContents = (filepath: string): Promise<string> =>
   promisify(fs.readFile)(filepath, "utf8");
 
 const isProdoComponentLine = (line: string): boolean =>
-  line.indexOf(prodoCommentString) >= 0;
+  line.match(prodoCommentRegex) != null;
 
 const findProdoCommentLines = (contents: string): number[] =>
   contents

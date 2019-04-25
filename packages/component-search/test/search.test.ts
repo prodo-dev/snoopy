@@ -204,3 +204,32 @@ const foo = "bar"
     ],
   });
 });
+
+test("gets component with various types of prodo comments", () => {
+  const contents = `
+// @prodo
+export const One = () => {};
+
+//@prodo
+export const Two = () => {};
+
+//     @prodo
+export const Three = () => {};
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file",
+    componentExports: [
+      {name: "One", defaultExport: false},
+      {name: "Two", defaultExport: false},
+      {name: "Three", defaultExport: false},
+    ],
+    errors: [],
+  });
+});
