@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test:
     docker:
-      - image: circleci/node
+      - image: circleci/node:11
 
     steps:
       - checkout
