@@ -1,6 +1,5 @@
 import * as React from "react";
 import styled from "styled-components";
-
 import logo from "../../media/logo_small.svg";
 import {LogoWidth, margins} from "../../styles";
 

@@ -2,24 +2,28 @@
 
 exports[`Storyshots Component base 1`] = `
 <div
-  className="sc-bxivhb hWTdfY"
+  className="sc-ifAKCX keGVmf"
 >
   <div
-    className="sc-ifAKCX cZFrkc"
+    className="sc-EHOje fwuUJE"
   >
     <div
       className="sc-bdVaJa hLhmaC"
     >
       <div
-        className="example-title sc-htpNat ftxkKe"
+        className="example-title sc-bxivhb gblRRH"
       >
         Example 1
       </div>
       <div
-        className="example-contents sc-bwzfXH gThQMU"
+        className="sc-bwzfXH eqVgEE"
       >
-        <div>
-          Tom
+        <div
+          className="example-contents sc-htpNat gZyIoC"
+        >
+          <div>
+            Tom
+          </div>
         </div>
       </div>
     </div>
@@ -29,13 +33,13 @@ exports[`Storyshots Component base 1`] = `
 
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-dnqmqq eZQgbs"
+  className="sidebar sc-iwsKbI ftanjX"
 >
   <div
-    className="sc-jTzLTM gArCnl"
+    className="sc-fjdhpX gddroE"
   >
     <span
-      className="sidebar-toggle sc-fjdhpX kmpZsN"
+      className="sidebar-toggle sc-jzJRlG bGoKof"
       onClick={[Function]}
     >
       <svg
@@ -62,40 +66,40 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open 1`] = `
 <div
-  className="sidebar sc-dnqmqq chMGV"
+  className="sidebar sc-iwsKbI gSIGHZ"
 >
   <div
-    className="sc-jTzLTM gArCnl"
+    className="sc-fjdhpX gddroE"
   >
     <a
-      className="sc-gZMcBi cqlAIU"
+      className="sc-gqjmRU eYqZJu"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-gqjmRU hqonMf"
+        className="title sc-VigVT jFCsNF"
       >
         <img
           alt=""
-          className="logo sc-htoDjs bqkGJk"
+          className="logo sc-dnqmqq cnjRDI"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-VigVT jCKRFH"
+    className="sc-jTzLTM jEoeNn"
   />
   <div
-    className="component-list sc-EHOje fpqoIO"
+    className="component-list sc-bZQynM AMncx"
   >
     <a
-      className="sc-gzVnrw frFvIN"
+      className="sc-htoDjs jssEWI"
       href="/App"
       onClick={[Function]}
     >
       <div
-        className="sc-bZQynM IlDkx"
+        className="sc-gzVnrw kXGagn"
         selected={false}
       >
         App

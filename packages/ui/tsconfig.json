@@ -4,6 +4,5 @@
     "target": "es2015",
     "lib": ["esnext", "dom"],
     "jsx": "react"
-  },
-  "typings": ["./typings"]
+  }
 }
