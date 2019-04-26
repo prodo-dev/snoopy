@@ -5,5 +5,10 @@
     "lib": ["esnext", "dom"],
     "jsx": "react"
   },
-  "typings": ["./typings"]
+  "include": [
+    "typings/**/*",
+    "src/**/*",
+    "test/**/*",
+    "components-generated.ts"
+  ]
 }

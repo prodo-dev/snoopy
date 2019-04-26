@@ -10,7 +10,7 @@ import {margins, paddings} from "../styles";
 
 interface Props {
   component: ComponentModel;
-  components: CompnentModel[];
+  components: ComponentModel[];
 }
 
 const StyledComponentPage = styled.div`
