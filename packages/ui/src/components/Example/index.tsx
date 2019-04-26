@@ -17,7 +17,7 @@ const StyledExample = styled.div`
 
 const Container = styled.div`
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-    url(${backgroundImage});
+    url(${backgroundImage}) repeat;
   padding: ${paddings.medium};
 `;
 
