@@ -11,7 +11,7 @@ import {margins, paddings} from "../styles";
 
 interface Props {
   component: ComponentModel;
-  components: CompnentModel[];
+  components: ComponentModel[];
 }
 
 const StyledComponentPage = styled.div`
@@ -53,7 +53,7 @@ const ComponentPage = (props: Props) => {
           <StyledTitle>
             <NarrowScreen>
               <SidebarIcon onClick={() => setSidebarOpen(!isSidebarOpen)}>
-                StyledPagetAwesomeIcon icon={faList} />
+                <FontAwesomeIcon icon={faList} />
               </SidebarIcon>
             </NarrowScreen>
             {props.component.name}

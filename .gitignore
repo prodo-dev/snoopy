@@ -1,10 +1,9 @@
 # Output
 dist
 lib
-packages/ui/components-generated.ts
 
 # Development
-.envrc
+.envrc.local
 
 # JavaScript
 *.tsbuildinfo

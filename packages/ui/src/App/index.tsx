@@ -16,7 +16,9 @@ import "./index.css";
 
 const components = componentsUntyped as Component[];
 
-const ComponentPageWithProps = (props: RouteComponentProps<{name: string}>) => {
+const ComponentPageWithProps = (
+  props: {components: Component[]} & RouteComponentProps<{name: string}>,
+) => {
   const component = components.filter(
     c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
   )[0];

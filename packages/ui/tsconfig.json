@@ -4,5 +4,11 @@
     "target": "es2015",
     "lib": ["esnext", "dom"],
     "jsx": "react"
-  }
+  },
+  "include": [
+    "typings/**/*",
+    "src/**/*",
+    "test/**/*",
+    "components-generated.ts"
+  ]
 }
