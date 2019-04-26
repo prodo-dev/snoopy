@@ -1,20 +1,28 @@
-import {generateComponentsFileContents} from "./generate";
 import * as path from "path";
+import {generateComponentsFileContents} from "./generate";
 
+// tslint:disable-next-line:no-submodule-imports
 import TypeScriptAsset = require("parcel-bundler/lib/assets/TypeScriptAsset");
 
-class MyAsset extends TypeScriptAsset {
-  public async generate() {
-    if (this.basename === "components.ts") {
+const COMPONENTS_FILE = "components.ts";
+
+class ComponentAsset extends TypeScriptAsset {
+  public async load() {
+    if (this.basename === COMPONENTS_FILE) {
       const fileDir = path.dirname(this.name);
-      console.log("Getting file contents");
-      const fileContents = await generateComponentsFileContents(fileDir);
-      this.contents = fileContents;
-      return [{type: "js", value: fileContents}];
+      this.contents = await generateComponentsFileContents(fileDir);
+      return this.contents;
     }
 
-    return super.generate();
+    return super.load();
   }
+
+  // public collectDependencies() {
+  //   if (this.basename === COMPONENTS_FILE) {
+  //     const watchPath = `${process.cwd()}/**/*.(ts|tsx|js|jsx)`;
+  //     this.addDependency(watchPath, {includedInParent: true});
+  //   }
+  // }
 }
 
-module.exports = MyAsset;
+module.exports = ComponentAsset;

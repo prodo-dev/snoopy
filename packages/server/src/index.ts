@@ -1,6 +1,5 @@
 import * as Express from "express";
 import * as Bundler from "parcel-bundler";
-import * as fs from "fs";
 import * as path from "path";
 
 const clientDir = path.resolve(__dirname, "../../ui");
@@ -26,10 +25,9 @@ export const start = async (port: number = 3000) => {
   const bundler = new Bundler(entryFile, options);
   bundler.addAssetType(".ts", require.resolve("./component-asset"));
 
-  fs.watch(process.cwd(), {recursive: true}, () => {
-    console.log("\nBUNDLE\n");
-    bundler.bundle();
-  });
+  // fs.watch(process.cwd(), {recursive: true}, () => {
+  //   bundler.bundle();
+  // });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
   app.use(bundler.middleware());
