@@ -56,9 +56,9 @@ export const start = async (port: number = 3000) => {
 
   generateComponentListFile();
 
-  fs.watch(process.cwd(), {recursive: true}, () => {
-    generateComponentListFile();
-  });
+  // fs.watch(process.cwd(), {recursive: true}, () => {
+  //   generateComponentListFile();
+  // });
 
   const options = {
     outDir,
@@ -73,9 +73,9 @@ export const start = async (port: number = 3000) => {
   };
 
   const bundler = new Bundler(entryFile, options);
+  bundler.addAssetType(".ts", require.resolve("./component-asset"));
 
   process.stdout.write(`Starting server on port ${port}...\n`);
-  bundler.bundle();
   app.use(bundler.middleware());
   app.listen(3000);
 };

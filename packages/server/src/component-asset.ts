@@ -1,35 +1,65 @@
-import * as fs from "fs";
-import {Asset} from "parcel-bundler";
-import * as path from "path";
+import TypeScriptAsset = require("parcel-bundler/lib/assets/TypeScriptAsset");
+// import JSAsset = require("parcel-bundler/lib/assets/JSAsset");
 
-class MyAsset extends Asset {
-  public type = "template"; // set the main output type.
+const code = `
+module.exports = require("./foo")
+
+module.exports.components = [10000]
+`.trim();
+
+class MyAsset extends TypeScriptAsset {
+  public async load() {
+    if (this.basename === "components.ts") {
+      console.log("Loading components.ts");
+      return code;
+    }
+
+    return super.load();
+  }
+
+  // constructor(name: string, pkg: any, options: any) {
+  //   super(name, pkg, options);
+  //   // process.stderr.write(`\n${JSON.stringify(this.options, null, 2)}\n`);
+
+  //   this.contents = 'export * from "./foo"';
+  //   this.contents = `
+  //   const foo = require("./foo.ts");
+  //   module.exports = foo;
+  //   `.trim();
+  // }
+
+  public async collectDependencies() {
+    // console.log("\nCOLLECT DEPS\n");
+    this.addDependency("./foo.ts");
+  }
+
+  public async parse(code: string) {
+    process.stderr.write(`\nCODE: ${code}\n`);
+    super.parse(code);
+  }
 
   public async generate() {
-    const componentPath = this.getComponentPath();
-    return [
-      {
-        type: "js",
-        value: `export * from "${componentPath}";`, // main output
-      },
-    ];
+    if (this.basename === "components.ts") {
+      this.contents = code;
+      this.opts = {
+        ...this.opts,
+        sourceMaps: false,
+      };
+      return [{type: "js", value: code}];
+    }
+
+    return super.generate();
   }
 
-  public readConfig(): any {
-    const configFile = fs.readFileSync(
-      path.resolve(process.cwd(), "prodo.json"),
-      "utf-8",
-    );
-    return JSON.parse(configFile);
-  }
-
-  public getComponentPath(): string {
-    const config = this.readConfig();
-    return path.relative(
-      path.dirname(this.name),
-      path.join(process.cwd(), config.components),
-    );
-  }
+  // public async generate() {
+  //   console.log(this.contents);
+  //   return [
+  //     {
+  //       type: "js",
+  //       value: this.contents,
+  //     },
+  //   ];
+  // }
 }
 
 module.exports = MyAsset;
