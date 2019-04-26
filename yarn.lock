@@ -1989,14 +1989,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@*":
-  version "0.57.45"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.45.tgz#bc341b2fbe879aec6d52f799f7342f674e045c4f"
-  integrity sha512-XHo3buFjgCs5WmycCBoc71QAa+mayQgDf+igRKgt3rle8rxW/fKtQny6quSabR+YcT55PsOE2qBQ4S5ra9ds2g==
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/react" "*"
-
 "@types/react-router-dom@^4.3.2":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@types/react-router-dom/-/react-router-dom-4.3.2.tgz#52c17c3682597638f31c17c42620403dc5c2a3f5"
@@ -2057,13 +2049,13 @@
     "@types/react" "*"
     "@types/webpack-env" "*"
 
-"@types/styled-components@^4.1.14":
-  version "4.1.14"
-  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.14.tgz#fe029b0bfb2d26af7f9bd4dd4811b31961ff6d49"
-  integrity sha512-X5t+uomPU9vxWNnfEpw2W7RtJDpsWCsBizQq95gB2QXrG5qsALV1/H7tfv4xYhTmiG5CGtcbfp4nU4yhhEqTsw==
+"@types/styled-components@4.1.8":
+  version "4.1.8"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.8.tgz#15c8a53bb4b9066e528fafb7558963dee5690ae0"
+  integrity sha512-NrG0wmB9Rafy5i00GFxUM/uEge148bX2QPr+Q/MI2fXrew6WOp1hN2A3YEG0AeT45z47CMdJ3BEffPsdQCWayA==
   dependencies:
+    "@types/node" "*"
     "@types/react" "*"
-    "@types/react-native" "*"
     csstype "^2.2.0"
 
 "@types/unist@*", "@types/unist@^2.0.0", "@types/unist@^2.0.2":
