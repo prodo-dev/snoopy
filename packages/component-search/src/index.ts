@@ -28,7 +28,7 @@ const findProdoCommentLines = (contents: string): number[] =>
     .filter(({line}) => isProdoComponentLine(line))
     .map(({idx}) => idx);
 
-const exportRegex = /\bexport\s+(?:const\s+)?([A-Z]\w+)/;
+const exportRegex = /\bexport\s+(?:(?:const|class)\s+)?([A-Z]\w+)/;
 const exportDefaultRegex = /\bexport\s+default\b/;
 const indexFileRegex = new RegExp(`/\index.(${fileExtensions.join("|")})$`);
 
