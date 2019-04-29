@@ -6,5 +6,5 @@
     "jsx": "react",
     "outDir": "build"
   },
-  "include": ["typings/**/*", "src/**/*", "test/**/*"]
+  "include": ["src", "test", "typings"]
 }

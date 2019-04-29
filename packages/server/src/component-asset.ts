@@ -2,7 +2,7 @@ import * as path from "path";
 import {generateComponentsFileContents} from "./generate";
 
 // tslint:disable-next-line:no-submodule-imports
-import TypeScriptAsset = require("parcel-bundler/lib/assets/TypeScriptAsset");
+import TypeScriptAsset = require("parcel-bundler/src/assets/TypeScriptAsset");
 
 const COMPONENTS_FILE = "components.ts";
 
