@@ -1,4 +1,5 @@
 import * as Express from "express";
+import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
 import * as path from "path";
 
@@ -25,9 +26,11 @@ export const start = async (port: number = 3000) => {
   const bundler = new Bundler(entryFile, options);
   bundler.addAssetType(".ts", require.resolve("./component-asset"));
 
-  // fs.watch(process.cwd(), {recursive: true}, () => {
-  //   bundler.bundle();
-  // });
+  const componentsFile = path.resolve(clientDir, "src/components.ts");
+  fs.watch(process.cwd(), {recursive: true}, () => {
+    const contents = fs.readFileSync(componentsFile);
+    fs.writeFileSync(componentsFile, contents);
+  });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
   app.use(bundler.middleware());

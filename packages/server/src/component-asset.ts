@@ -11,18 +11,12 @@ class ComponentAsset extends TypeScriptAsset {
     if (this.basename === COMPONENTS_FILE) {
       const fileDir = path.dirname(this.name);
       this.contents = await generateComponentsFileContents(fileDir);
+
       return this.contents;
     }
 
     return super.load();
   }
-
-  // public collectDependencies() {
-  //   if (this.basename === COMPONENTS_FILE) {
-  //     const watchPath = `${process.cwd()}/**/*.(ts|tsx|js|jsx)`;
-  //     this.addDependency(watchPath, {includedInParent: true});
-  //   }
-  // }
 }
 
 module.exports = ComponentAsset;

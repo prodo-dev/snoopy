@@ -11,7 +11,7 @@ export const generateComponentsFileContents = async (
     componentImports.map(({filepath, componentExports}) =>
       componentExports.map(({name, defaultExport}) => {
         const importName = defaultExport ? name : `{ ${name} }`;
-        return `import ${importName} from "${filepath}"`;
+        return `import ${importName} from "${filepath}";`;
       }),
     ),
   ).join("\n");
