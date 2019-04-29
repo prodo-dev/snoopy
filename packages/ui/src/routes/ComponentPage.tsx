@@ -12,6 +12,7 @@ import {margins, paddings} from "../styles";
 interface Props {
   component: ComponentModel;
   components: ComponentModel[];
+  themes?: any[];
 }
 
 const StyledComponentPage = styled.div`
@@ -39,6 +40,8 @@ const SidebarIcon = styled.span`
 
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+  const selectedUserTheme =
+    props.themes && props.themes.length > 0 && props.themes[0].theme;
 
   return (
     <StyledPage>
@@ -58,7 +61,11 @@ const ComponentPage = (props: Props) => {
             </NarrowScreen>
             {props.component.name}
           </StyledTitle>
-          <Component key={props.component.name} component={props.component} />
+          <Component
+            key={props.component.name}
+            component={props.component}
+            userTheme={selectedUserTheme}
+          />
         </ComponentContainer>
       </StyledComponentPage>
     </StyledPage>

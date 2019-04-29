@@ -6,7 +6,10 @@ import {
   Switch,
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
-import {components as componentsUntyped} from "../../components-generated";
+import {
+  components as componentsUntyped,
+  themes,
+} from "../../components-generated";
 import {Component} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
@@ -22,7 +25,7 @@ const ComponentPageWithProps = (
   const component = components.filter(
     c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
   )[0];
-  return <ComponentPage component={component} {...props} />;
+  return <ComponentPage component={component} {...props} themes={themes} />;
 };
 
 // tslint:disable-next-line:no-shadowed-variable
