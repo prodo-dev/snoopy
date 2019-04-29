@@ -1,6 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Component base 1`] = `
+exports[`Storyshots Component List multiple items 1`] = `
+<div
+  className="component-list sc-bZQynM AMncx"
+>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/One"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      One
+    </div>
+  </a>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/Two"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      Two
+    </div>
+  </a>
+</div>
+`;
+
+exports[`Storyshots Component List single item 1`] = `
+<div
+  className="component-list sc-bZQynM AMncx"
+>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/One"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      One
+    </div>
+  </a>
+</div>
+`;
+
+exports[`Storyshots Component default example 1`] = `
+<div
+  className="sc-ifAKCX keGVmf"
+>
+  <div
+    className="sc-EHOje fwuUJE"
+  >
+    <div
+      className="sc-bdVaJa hLhmaC"
+    >
+      <div
+        className="example-title sc-bxivhb gblRRH"
+      >
+        Default
+      </div>
+      <div
+        className="sc-bwzfXH kwAnTY"
+      >
+        <div
+          className="example-contents sc-htpNat gZyIoC"
+        >
+          <div
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Hello 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Component examples provided 1`] = `
 <div
   className="sc-ifAKCX keGVmf"
 >
@@ -21,10 +108,119 @@ exports[`Storyshots Component base 1`] = `
         <div
           className="example-contents sc-htpNat gZyIoC"
         >
-          <div>
-            Tom
+          <div
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Hello 
+            Jake
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      className="sc-bdVaJa hLhmaC"
+    >
+      <div
+        className="example-title sc-bxivhb gblRRH"
+      >
+        Example 2
+      </div>
+      <div
+        className="sc-bwzfXH kwAnTY"
+      >
+        <div
+          className="example-contents sc-htpNat gZyIoC"
+        >
+          <div
+            style={
+              Object {
+                "color": "white",
+              }
+            }
+          >
+            Hello 
+            Andreja
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Component with react state 1`] = `
+<div
+  className="sc-ifAKCX keGVmf"
+>
+  <div
+    className="sc-EHOje fwuUJE"
+  >
+    <div
+      className="sc-bdVaJa hLhmaC"
+    >
+      <div
+        className="example-title sc-bxivhb gblRRH"
+      >
+        Counter
+      </div>
+      <div
+        className="sc-bwzfXH kwAnTY"
+      >
+        <div
+          className="example-contents sc-htpNat gZyIoC"
+        >
+          <div
+            onClick={[Function]}
+            style={
+              Object {
+                "backgroundColor": "snow",
+                "color": "violet",
+                "padding": "2rem",
+              }
+            }
+          >
+            <h2>
+              0
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Example base 1`] = `
+<div
+  className="sc-bdVaJa hLhmaC"
+>
+  <div
+    className="example-title sc-bxivhb gblRRH"
+  >
+    Example 1
+  </div>
+  <div
+    className="sc-bwzfXH kwAnTY"
+  >
+    <div
+      className="example-contents sc-htpNat gZyIoC"
+    >
+      <div
+        style={
+          Object {
+            "backgroundColor": "peachpuff",
+            "color": "magneta",
+            "padding": "1rem",
+          }
+        }
+      >
+        <h1>
+          This is an example
+        </h1>
       </div>
     </div>
   </div>

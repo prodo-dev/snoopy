@@ -1,15 +1,13 @@
-// tslint:disable-next-line:no-submodule-imports
-import {darkTheme} from "@prodo/snoopy-ui/src/styles/theme";
+const {configure, addParameters} = require("@storybook/react");
+const {create} = require("@storybook/theming");
 
-import {configure, addParameters} from "@storybook/react";
-import {create} from "@storybook/theming";
-
+const bgColour = "#282c34";
 const theme = create({
   base: "dark",
 
-  appBg: darkTheme.colors.bg,
-  appContentBg: darkTheme.colors.bg,
-  barBg: darkTheme.colors.bg,
+  appBg: bgColour,
+  appContentBg: bgColour,
+  barBg: bgColour,
 });
 
 addParameters({

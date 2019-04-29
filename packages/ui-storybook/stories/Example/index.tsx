@@ -1,6 +1,6 @@
 // tslint:disable:no-submodule-imports
 import Example from "@prodo/snoopy-ui/src/components/Example";
-import {Example as ComponentModel} from "@prodo/snoopy-ui/src/models";
+import {Example as ExampleModel} from "@prodo/snoopy-ui/src/models";
 import {darkTheme} from "@prodo/snoopy-ui/src/styles/theme";
 // tslint:enable
 
@@ -8,7 +8,7 @@ import {storiesOf} from "@storybook/react";
 import * as React from "react";
 import {ThemeProvider} from "styled-components";
 
-const testExample = {
+const testExample: ExampleModel = {
   name: "Example 1",
   jsx: (
     <div
