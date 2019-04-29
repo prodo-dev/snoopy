@@ -6,11 +6,11 @@ import {
   Switch,
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
+import {components} from "../components";
 import {Component} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import {darkTheme} from "../styles/theme";
-import {components} from "../components";
 
 import "./index.css";
 
