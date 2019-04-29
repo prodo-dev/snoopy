@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import styled from "styled-components";
 import Component from "../components/Component";
+import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar from "../components/Sidebar";
 import {Component as ComponentModel} from "../models";
@@ -15,12 +16,6 @@ interface Props {
 
 const StyledComponentPage = styled.div`
   display: flex;
-  padding: ${paddings.none};
-  margin: ${margins.none};
-  width: 100%;
-  height: 100%;
-  background-color: ${props => props.theme.colors.bg};
-  color: ${props => props.theme.colors.text};
 `;
 
 const ComponentContainer = styled.div`
@@ -30,6 +25,7 @@ const ComponentContainer = styled.div`
 const StyledTitle = styled.div`
   font-size: ${props => props.theme.fontSizes.title};
   font-weight: bold;
+  color: ${props => props.theme.colors.text};
 `;
 
 const SidebarIcon = styled.span`
@@ -45,25 +41,27 @@ const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
   return (
-    <StyledComponentPage>
-      <Sidebar
-        selected={props.component.name}
-        isOpen={isSidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        components={props.components}
-      />
-      <ComponentContainer>
-        <StyledTitle>
-          <NarrowScreen>
-            <SidebarIcon onClick={() => setSidebarOpen(!isSidebarOpen)}>
-              <FontAwesomeIcon icon={faList} />
-            </SidebarIcon>
-          </NarrowScreen>
-          {props.component.name}
-        </StyledTitle>
-        <Component key={props.component.name} component={props.component} />
-      </ComponentContainer>
-    </StyledComponentPage>
+    <StyledPage>
+      <StyledComponentPage>
+        <Sidebar
+          selected={props.component.name}
+          isOpen={isSidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          components={props.components}
+        />
+        <ComponentContainer>
+          <StyledTitle>
+            <NarrowScreen>
+              <SidebarIcon onClick={() => setSidebarOpen(!isSidebarOpen)}>
+                <FontAwesomeIcon icon={faList} />
+              </SidebarIcon>
+            </NarrowScreen>
+            {props.component.name}
+          </StyledTitle>
+          <Component key={props.component.name} component={props.component} />
+        </ComponentContainer>
+      </StyledComponentPage>
+    </StyledPage>
   );
 };
 

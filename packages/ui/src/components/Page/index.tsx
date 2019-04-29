@@ -7,6 +7,9 @@ export const StyledPage = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${props => props.theme.colors.bg};
-  color: ${props => props.theme.colors.text};
+`;
+
+export const StyledPageContents = styled.div`
   padding: ${paddings.large};
+  color: ${props => props.theme.colors.text};
 `;
