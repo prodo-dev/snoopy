@@ -1,6 +1,7 @@
 # Output
 dist
 lib
+build
 
 # Development
 .envrc.local

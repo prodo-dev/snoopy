@@ -3,12 +3,8 @@
   "compilerOptions": {
     "target": "es2015",
     "lib": ["esnext", "dom"],
-    "jsx": "react"
+    "jsx": "react",
+    "outDir": "build"
   },
-  "include": [
-    "typings/**/*",
-    "src/**/*",
-    "test/**/*",
-    "components-generated.ts"
-  ]
+  "include": ["typings/**/*", "src/**/*", "test/**/*"]
 }
