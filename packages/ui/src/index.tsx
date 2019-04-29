@@ -7,7 +7,7 @@ const render = () => {
 };
 
 if (module.hot) {
-  module.hot.accept("./components-generated", render);
+  module.hot.accept("./App", render);
 }
 
 render();
