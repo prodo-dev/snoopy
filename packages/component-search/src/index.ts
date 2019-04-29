@@ -1,11 +1,15 @@
 import * as fs from "fs";
 import * as glob from "glob";
+import * as minimatch from "minimatch";
 import * as path from "path";
 import {promisify} from "util";
 import {ComponentImport, Export, FileError} from "./types";
 
 const prodoCommentRegex = /^\/\/\s*@prodo\b/;
-const fileExtensions = ["ts", "tsx", "js", "jsx"];
+export const fileExtensions = ["ts", "tsx", "js", "jsx"];
+export const fileGlob = `**/!(flycheck_*).{ts,tsx,js,jsx}`;
+export const checkMatch = (filepath: string): boolean =>
+  minimatch(filepath, fileGlob);
 
 const capitalize = (str: string): string =>
   `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
@@ -102,7 +106,7 @@ export const findComponentImports = async (
   cwd: string,
   searchPath: string,
 ): Promise<ComponentImport[]> => {
-  const result = await promisify(glob)(`**/*.{${fileExtensions.join(",")}}`, {
+  const result = await promisify(glob)(fileGlob, {
     cwd: searchPath,
   });
 

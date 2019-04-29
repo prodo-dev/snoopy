@@ -1,3 +1,4 @@
+import {checkMatch} from "@prodo/snoopy-component-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
@@ -27,9 +28,11 @@ export const start = async (port: number = 3000) => {
   bundler.addAssetType(".ts", require.resolve("./component-asset"));
 
   const componentsFile = path.resolve(clientDir, "src/components.ts");
-  fs.watch(process.cwd(), {recursive: true}, () => {
-    const contents = fs.readFileSync(componentsFile);
-    fs.writeFileSync(componentsFile, contents);
+  fs.watch(process.cwd(), {recursive: true}, (_, filename) => {
+    if (checkMatch(filename)) {
+      const contents = fs.readFileSync(componentsFile);
+      fs.writeFileSync(componentsFile, contents);
+    }
   });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
