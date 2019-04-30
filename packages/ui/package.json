@@ -19,6 +19,7 @@
     "react-responsive": "^6.1.1",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
+    "react-select": "^2.4.3",
     "src": "^1.1.2",
     "styled-components": "^4.2.0"
   },

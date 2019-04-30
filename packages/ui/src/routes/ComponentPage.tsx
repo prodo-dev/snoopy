@@ -1,6 +1,7 @@
 import {faList} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import Select from "react-select";
 import styled from "styled-components";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
@@ -23,10 +24,16 @@ const ComponentContainer = styled.div`
   padding: ${paddings.medium} ${paddings.large};
 `;
 
+const StyledTitleContainer = styled.div`
+  display: flex;
+`;
+
+const selectHeight = "38px";
 const StyledTitle = styled.div`
   font-size: ${props => props.theme.fontSizes.title};
   font-weight: bold;
   color: ${props => props.theme.colors.text};
+  line-height: ${selectHeight};
 `;
 
 const SidebarIcon = styled.span`
@@ -38,16 +45,20 @@ const SidebarIcon = styled.span`
   }
 `;
 
+const StyledSelect = styled(Select)`
+  font-size: ${props => props.theme.fontSizes.normal}
+  color: ${props => props.theme.colors.bg}
+  width: 150px;
+  margin-left: ${margins.large}
+`;
+
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const [selectedTheme, setSelectedTheme] = React.useState(0);
   const themes = props.themes || [];
-  const selectTheme = () => {
-    const el = document.getElementById("temp-select");
-    if (el) {
-      setSelectedTheme((el as any).value);
-    }
-  };
+  const options = themes.map((theme, idx) => {
+    return {value: idx, label: theme.name};
+  });
 
   return (
     <StyledPage>
@@ -59,26 +70,27 @@ const ComponentPage = (props: Props) => {
           components={props.components}
         />
         <ComponentContainer>
-          <StyledTitle>
+          <StyledTitleContainer>
             <NarrowScreen>
               <SidebarIcon onClick={() => setSidebarOpen(!isSidebarOpen)}>
                 <FontAwesomeIcon icon={faList} />
               </SidebarIcon>
             </NarrowScreen>
-            {props.component.name}{" "}
-            <select id="temp-select" onChange={() => selectTheme()}>
-              {" "}
-              {themes.map((theme, idx) => (
-                <option value={idx} key={idx}>
-                  {theme.name}
-                </option>
-              ))}
-            </select>
-          </StyledTitle>
+            <StyledTitle>{props.component.name}</StyledTitle>
+            {themes.length > 0 && (
+              <StyledSelect
+                defaultValue={options[0]}
+                onChange={(selectedOption: any) =>
+                  setSelectedTheme(selectedOption.value)
+                }
+                options={options}
+              />
+            )}
+          </StyledTitleContainer>
           <Component
             key={props.component.name}
             component={props.component}
-            userTheme={themes[selectedTheme].theme}
+            userTheme={themes.length > 0 && themes[selectedTheme].theme}
           />
         </ComponentContainer>
       </StyledComponentPage>

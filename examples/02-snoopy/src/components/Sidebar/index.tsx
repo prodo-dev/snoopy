@@ -185,7 +185,7 @@ Sidebar.examples = [
     ),
   },
   {
-    name: "Open And Empty",
+    name: "Open and Empty",
     jsx: (
       <Sidebar
         isOpen={true}
@@ -195,7 +195,7 @@ Sidebar.examples = [
     ),
   },
   {
-    name: "Open With Components",
+    name: "Open with Components",
     jsx: (
       <Sidebar
         isOpen={true}
