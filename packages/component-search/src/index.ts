@@ -76,13 +76,11 @@ export const findExports = (
   return found.map(lineNumber => getExport(filepath, contents, lineNumber));
 };
 
-const getImportPath = (cwd: string, filepath: string): string => {
-  const newPath = filepath.replace(indexFileRegex, "");
-  return path.relative(cwd, newPath);
-};
+// Removes unnecessary "/index" prefixes
+const getImportPath = (filepath: string): string =>
+  filepath.replace(indexFileRegex, "");
 
 export const getComponentImportsForFile = (
-  cwd: string,
   contents: string,
   filepath: string,
 ): ComponentImport | null => {
@@ -93,7 +91,7 @@ export const getComponentImportsForFile = (
     ) as Export[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
-      filepath: getImportPath(cwd, filepath),
+      filepath: getImportPath(filepath),
       componentExports,
       errors,
     };
@@ -103,7 +101,6 @@ export const getComponentImportsForFile = (
 };
 
 export const findComponentImports = async (
-  cwd: string,
   searchPath: string,
 ): Promise<ComponentImport[]> => {
   const result = await promisify(glob)(fileGlob, {
@@ -125,7 +122,7 @@ export const findComponentImports = async (
         };
       }
 
-      return getComponentImportsForFile(cwd, contents, filepath);
+      return getComponentImportsForFile(contents, filepath);
     }),
   );
 

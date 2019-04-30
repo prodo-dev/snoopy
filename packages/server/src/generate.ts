@@ -1,17 +1,21 @@
 import {findComponentImports} from "@prodo/snoopy-component-search";
+import * as path from "path";
 
 const flat = Array.prototype.concat.bind([]);
 
 export const generateComponentsFileContents = async (
   clientDir: string,
 ): Promise<string> => {
-  const componentImports = await findComponentImports(clientDir, process.cwd());
+  const componentImports = await findComponentImports(process.cwd());
 
   const importString = flat(
     componentImports.map(({filepath, componentExports}) =>
       componentExports.map(({name, defaultExport}) => {
         const importName = defaultExport ? name : `{ ${name} }`;
-        return `import ${importName} from "${filepath}";`;
+        return `import ${importName} from "${path.relative(
+          clientDir,
+          filepath,
+        )}";`;
       }),
     ),
   ).join("\n");
