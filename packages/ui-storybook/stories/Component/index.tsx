@@ -28,7 +28,7 @@ const CounterModel: ComponentModel = {
 };
 
 const Simple = ({name}: {name: string}) => (
-  <div style={{color: "white"}}>Hello {name}</div>
+  <div style={{color: "red"}}>Hello {name}</div>
 );
 
 Simple.examples = [];

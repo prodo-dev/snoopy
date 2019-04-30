@@ -33,11 +33,23 @@ const Example = (props: Props) => (
   </StyledExample>
 );
 
+const testExample: ExampleModel = {
+  name: "Example 1",
+  jsx: (
+    <div
+      style={{backgroundColor: "peachpuff", color: "magneta", padding: "1rem"}}
+    >
+      <h1>This is an example</h1>
+    </div>
+  ),
+};
+
 Example.examples = [
   {
     name: "Basic",
     jsx: <Example example={{name: "Title", jsx: <div>Hello World</div>}} />,
   },
+  testExample,
 ];
 
 // @prodo

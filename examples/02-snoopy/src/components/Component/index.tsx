@@ -40,17 +40,56 @@ const Component = (props: Props) => {
   );
 };
 
-const ExampleComponent = () => <div>Hello World</div>;
-ExampleComponent.examples = [{name: "Default", jsx: <ExampleComponent />}];
-const exampleComponent: ComponentModel = {
-  name: "Hello World",
-  component: ExampleComponent,
+const Hello = ({name}: {name?: string}) => (
+  <div style={{color: "red"}}>Hello {name}</div>
+);
+Hello.examples = [{name: "Default", jsx: <Hello />}];
+const ExampleModel: ComponentModel = {
+  name: "Hello",
+  component: Hello,
+};
+
+const Simple = ({name}: {name?: string}) => (
+  <div style={{color: "red"}}>Hello {name}</div>
+);
+Simple.examples = [
+  {name: "Example 1", jsx: <Simple name="Jake" />},
+  {name: "Example 2", jsx: <Simple name="Andreja" />},
+];
+const SimpleModel: ComponentModel = {
+  name: "SimpleComponent",
+  component: Simple,
+};
+
+const Counter = () => {
+  const [count, setCount] = React.useState(0);
+  return (
+    <div
+      style={{backgroundColor: "snow", color: "violet", padding: "2rem"}}
+      onClick={() => setCount(count + 1)}
+    >
+      <h2>{count}</h2>
+    </div>
+  );
+};
+Counter.examples = [{name: "Counter", jsx: <Counter />}];
+const CounterModel: ComponentModel = {
+  name: "Counter",
+  component: Counter,
 };
 
 Component.examples = [
   {
-    name: "Basic",
-    jsx: <Component component={exampleComponent} />,
+    name: "Default",
+    jsx: <Component component={ExampleModel} />,
+  },
+  {
+    name: "Examples Provided",
+    jsx: <Component component={SimpleModel} />,
+  },
+  {
+    name: "With React State",
+    jsx: <Component component={CounterModel} />,
   },
 ];
 

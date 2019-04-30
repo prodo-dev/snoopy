@@ -54,7 +54,7 @@ const exampleComponent3: Component = {
 };
 ComponentList.examples = [
   {
-    name: "Empty component list",
+    name: "Empty",
     jsx: <ComponentList components={[]} selected={""} />,
   },
   {
@@ -62,7 +62,7 @@ ComponentList.examples = [
     jsx: <ComponentList components={[exampleComponent1]} selected={""} />,
   },
   {
-    name: "Single Item Selected",
+    name: "Single Item with Selection",
     jsx: (
       <ComponentList
         components={[exampleComponent1]}
@@ -80,7 +80,7 @@ ComponentList.examples = [
     ),
   },
   {
-    name: "Multiple Items With Selection",
+    name: "Multiple Items with Selection",
     jsx: (
       <ComponentList
         components={[exampleComponent1, exampleComponent2, exampleComponent3]}

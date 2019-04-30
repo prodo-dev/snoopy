@@ -16,15 +16,24 @@ const StyledExample = styled.div`
   border-radius: 4px;
 `;
 
+// linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))
 const Container = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
     url(${backgroundImage}) repeat;
   padding: ${paddings.medium};
 `;
 
+// background-image: url(${backgroundImage});
+// background-repeat: repeat;
 const JsxContainer = styled.div`
-  background-image: url(${backgroundImage});
-  background-repeat: repeat;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.7)
+    ),
+    url(${backgroundImage}) repeat;
 `;
 
 const Title = styled.div`
