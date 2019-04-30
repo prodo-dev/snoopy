@@ -258,3 +258,22 @@ export default () => {};
     errors: [],
   });
 });
+
+test("gets component name from class component", () => {
+  const contents = `
+// @prodo
+export class Button extends React.Component {}
+`.trim();
+
+  const componentImport = getComponentImportsForFile(
+    "/cwd",
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "../path/to/file",
+    fileExports: [{name: "Button", defaultExport: false}],
+    errors: [],
+  });
+});

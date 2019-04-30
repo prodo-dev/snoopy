@@ -13,7 +13,7 @@ const prodoCommentRegex = /^\/\/\s*@prodo\b/;
 const isProdoComponentLine = (line: string): boolean =>
   prodoCommentRegex.test(line);
 
-const exportComponentRegex = /\bexport\s+(?:const\s+)?([A-Z]\w+)/;
+const exportComponentRegex = /\bexport\s+(?:(?:const|class)\s+)?([A-Z]\w+)/;
 
 const getProdoExport = (
   filepath: string,
