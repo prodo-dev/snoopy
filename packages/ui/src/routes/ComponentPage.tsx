@@ -40,8 +40,14 @@ const SidebarIcon = styled.span`
 
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
-  const selectedUserTheme =
-    props.themes && props.themes.length > 0 && props.themes[0].theme;
+  const [selectedTheme, setSelectedTheme] = React.useState(0);
+  const themes = props.themes || [];
+  const selectTheme = () => {
+    const el = document.getElementById("temp-select");
+    if (el) {
+      setSelectedTheme((el as any).value);
+    }
+  };
 
   return (
     <StyledPage>
@@ -59,12 +65,20 @@ const ComponentPage = (props: Props) => {
                 <FontAwesomeIcon icon={faList} />
               </SidebarIcon>
             </NarrowScreen>
-            {props.component.name}
+            {props.component.name}{" "}
+            <select id="temp-select" onChange={() => selectTheme()}>
+              {" "}
+              {themes.map((theme, idx) => (
+                <option value={idx} key={idx}>
+                  {theme.name}
+                </option>
+              ))}
+            </select>
           </StyledTitle>
           <Component
             key={props.component.name}
             component={props.component}
-            userTheme={selectedUserTheme}
+            userTheme={themes[selectedTheme].theme}
           />
         </ComponentContainer>
       </StyledComponentPage>
