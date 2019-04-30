@@ -1,6 +1,11 @@
 import * as path from "path";
 import {Export, FileError, Import} from "./types";
-import {findProdoCommentLines} from "./utils";
+import {
+  exportDefaultRegex,
+  findProdoCommentLines,
+  getImportPath,
+  indexFileRegex,
+} from "./utils";
 
 const prodoThemeCommentRegex = /^\/\/\s*@prodo:theme\b/;
 
@@ -17,6 +22,20 @@ const getThemeExport = (
   const lines = contents.split("\n");
   const lineAfter = lines[lineNumber + 1];
 
+  if (exportDefaultRegex.test(lineAfter)) {
+    if (indexFileRegex.test(filepath)) {
+      return {
+        name: path.basename(path.dirname(filepath)),
+        defaultExport: true,
+      };
+    }
+
+    return {
+      name: path.basename(filepath, path.extname(filepath)),
+      defaultExport: true,
+    };
+  }
+
   const match = exportAnyRegex.exec(lineAfter);
   if (match) {
     return {
@@ -27,7 +46,7 @@ const getThemeExport = (
 
   return new FileError(
     filepath,
-    "The `@prodo:theme` tag must be directly above an exported React component.",
+    "The `@prodo:theme` tag must be directly above an exported theme.",
   );
 };
 
@@ -39,14 +58,6 @@ export const findThemeExports = (
   return found.map(lineNumber =>
     getThemeExport(filepath, contents, lineNumber),
   );
-};
-
-const getThemeImportPath = (cwd: string, filepath: string): string => {
-  const newPath = path.join(
-    path.dirname(filepath),
-    path.basename(filepath, path.extname(filepath)),
-  );
-  return path.relative(cwd, newPath);
 };
 
 export const getThemeImportsForFile = (
@@ -61,7 +72,7 @@ export const getThemeImportsForFile = (
     ) as Export[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
-      filepath: getThemeImportPath(cwd, filepath),
+      filepath: getImportPath(cwd, filepath),
       fileExports: themeExports,
       errors,
     };

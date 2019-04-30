@@ -1,6 +1,12 @@
 import * as path from "path";
 import {Export, FileError, Import} from "./types";
-import {capitalize, fileExtensions, findProdoCommentLines} from "./utils";
+import {
+  capitalize,
+  exportDefaultRegex,
+  findProdoCommentLines,
+  getImportPath,
+  indexFileRegex,
+} from "./utils";
 
 const prodoCommentRegex = /^\/\/\s*@prodo\b/;
 
@@ -8,8 +14,6 @@ const isProdoComponentLine = (line: string): boolean =>
   prodoCommentRegex.test(line);
 
 const exportComponentRegex = /\bexport\s+(?:const\s+)?([A-Z]\w+)/;
-const exportDefaultRegex = /\bexport\s+default\b/;
-const indexFileRegex = new RegExp(`/\index.(${fileExtensions.join("|")})$`);
 
 const getProdoExport = (
   filepath: string,
@@ -57,11 +61,6 @@ export const findComponentExports = (
   );
 };
 
-const getComponentImportPath = (cwd: string, filepath: string): string => {
-  const newPath = filepath.replace(indexFileRegex, "");
-  return path.relative(cwd, newPath);
-};
-
 export const getComponentImportsForFile = (
   cwd: string,
   contents: string,
@@ -74,7 +73,7 @@ export const getComponentImportsForFile = (
     ) as Export[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
-      filepath: getComponentImportPath(cwd, filepath),
+      filepath: getImportPath(cwd, filepath),
       fileExports: componentExports,
       errors,
     };
