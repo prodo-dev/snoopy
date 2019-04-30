@@ -16,16 +16,23 @@ storiesOf("Sidebar", module)
     <ThemeProvider theme={darkTheme}>{storyFn()}</ThemeProvider>
   ))
   .addDecorator((storyFn: any) => <Router>{storyFn()}</Router>)
-  .add("open", () => (
+  .add("closed", () => (
     <Sidebar
-      isOpen={true}
+      isOpen={false}
       setSidebarOpen={action("setSidebarOpen")}
       components={components}
     />
   ))
-  .add("closed", () => (
+  .add("open and empty", () => (
     <Sidebar
-      isOpen={false}
+      isOpen={true}
+      setSidebarOpen={action("setSidebarOpen")}
+      components={[]}
+    />
+  ))
+  .add("open with components", () => (
+    <Sidebar
+      isOpen={true}
       setSidebarOpen={action("setSidebarOpen")}
       components={components}
     />

@@ -5,7 +5,7 @@ export const StyledPage = styled.div`
   padding: ${paddings.none};
   margin: ${margins.none};
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   background-color: ${props => props.theme.colors.bg};
 `;
 

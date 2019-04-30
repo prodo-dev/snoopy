@@ -168,6 +168,11 @@ const Sidebar = (props: Props) => (
   </React.Fragment>
 );
 
+const components = [
+  {name: "App", component: () => <div />},
+  {name: "ComponentA", component: () => <div />,
+  {name: "ComponentB", component: () => <div />},
+];
 Sidebar.examples = [
   {
     name: "Closed",
@@ -180,11 +185,21 @@ Sidebar.examples = [
     ),
   },
   {
-    name: "Open",
+    name: "Open And Empty",
     jsx: (
       <Sidebar
         isOpen={true}
         components={[]}
+        setSidebarOpen={() => alert("Toggle Sidebar")}
+      />
+    ),
+  },
+  {
+    name: "Open With Components",
+    jsx: (
+      <Sidebar
+        isOpen={true}
+        components={components}
         setSidebarOpen={() => alert("Toggle Sidebar")}
       />
     ),
