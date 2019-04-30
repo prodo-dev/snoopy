@@ -69,11 +69,13 @@ export const getComponentImportsForFile = (
 ): Import | null => {
   const result = findComponentExports(filepath, contents);
   if (result.length > 0) {
-    const exports = result.filter(e => !(e instanceof FileError)) as Export[];
+    const componentExports = result.filter(
+      e => !(e instanceof FileError),
+    ) as Export[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
       filepath: getComponentImportPath(cwd, filepath),
-      exports,
+      fileExports: componentExports,
       errors,
     };
   }

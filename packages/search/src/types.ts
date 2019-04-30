@@ -5,7 +5,7 @@ export interface Imports {
 
 export interface Import {
   filepath: string;
-  exports: Export[];
+  fileExports: Export[];
   errors: FileError[];
 }
 

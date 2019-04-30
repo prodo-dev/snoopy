@@ -42,9 +42,10 @@ export const findThemeExports = (
 };
 
 const getThemeImportPath = (cwd: string, filepath: string): string => {
-  // const newPath = path.basename(filepath, path.extname(filepath));
-  const newPath = filepath.split(".")[0];
-  console.log(newPath);
+  const newPath = path.join(
+    path.dirname(filepath),
+    path.basename(filepath, path.extname(filepath)),
+  );
   return path.relative(cwd, newPath);
 };
 
@@ -55,11 +56,13 @@ export const getThemeImportsForFile = (
 ): Import | null => {
   const result = findThemeExports(filepath, contents);
   if (result.length > 0) {
-    const exports = result.filter(e => !(e instanceof FileError)) as Export[];
+    const themeExports = result.filter(
+      e => !(e instanceof FileError),
+    ) as Export[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
       filepath: getThemeImportPath(cwd, filepath),
-      exports,
+      fileExports: themeExports,
       errors,
     };
   }

@@ -28,7 +28,7 @@ export const findImports = async (
       } catch (e) {
         const erroredImport = {
           filepath,
-          exports: [],
+          fileExports: [],
           errors: [new FileError(filepath, "Could not read the file.")],
         };
         return {
