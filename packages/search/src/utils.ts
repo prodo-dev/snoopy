@@ -18,12 +18,12 @@ export const readFileContents = (filepath: string): Promise<string> =>
 
 export const findProdoCommentLines = (
   contents: string,
-  testFunction: (line: string) => boolean,
+  regex: RegExp,
 ): number[] =>
   contents
     .split("\n")
     .map((line, idx) => ({line, idx}))
-    .filter(({line}) => testFunction(line))
+    .filter(({line}) => regex.test(line))
     .map(({idx}) => idx);
 
 export const getImportPath = (cwd: string, filepath: string): string => {

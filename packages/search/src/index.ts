@@ -2,25 +2,25 @@ import * as glob from "glob";
 import * as minimatch from "minimatch";
 import * as path from "path";
 import {promisify} from "util";
-import {getComponentImportsForFile} from "./components";
-import {getThemeImportsForFile} from "./themes";
-import {FileError, Imports} from "./types";
+import {getComponentsFile} from "./components";
+import {getThemesFile} from "./themes";
+import {File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents} from "./utils";
 
 export const checkMatch = (filepath: string): boolean =>
   minimatch(filepath, fileGlob);
 
-export const findImports = async (
-  cwd: string,
-  searchPath: string,
-): Promise<Imports> => {
+export const searchCodebase = async (
+  relativeFrom: string,
+  directoryToSearch: string,
+): Promise<SearchResult> => {
   const result = await promisify(glob)(fileGlob, {
-    cwd: searchPath,
+    cwd: directoryToSearch,
   });
 
-  const imports = await Promise.all(
+  const files = await Promise.all(
     result.map(async file => {
-      const filepath = path.resolve(searchPath, file);
+      const filepath = path.resolve(directoryToSearch, file);
 
       let contents: string;
       try {
@@ -32,21 +32,23 @@ export const findImports = async (
           errors: [new FileError(filepath, "Could not read the file.")],
         };
         return {
-          components: erroredImport,
-          themes: erroredImport,
+          componentFiles: erroredImport,
+          themeFiles: erroredImport,
         };
       }
 
       return {
-        components: getComponentImportsForFile(cwd, contents, filepath),
-        themes: getThemeImportsForFile(cwd, contents, filepath),
+        componentFiles: getComponentsFile(relativeFrom, contents, filepath),
+        themeFiles: getThemesFile(relativeFrom, contents, filepath),
       };
     }),
   );
 
-  const results = {
-    components: imports.map(i => i.components).filter(i => i != null),
-    themes: imports.map(i => i.themes).filter(i => i != null),
+  const results: SearchResult = {
+    componentFiles: files
+      .map(i => i.componentFiles)
+      .filter(i => i != null) as File[],
+    themeFiles: files.map(i => i.themeFiles).filter(i => i != null) as File[],
   };
-  return results as Imports;
+  return results;
 };

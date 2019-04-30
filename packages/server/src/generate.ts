@@ -1,22 +1,24 @@
-import {findImports} from "@prodo/snoopy-search";
+import {searchCodebase} from "@prodo/snoopy-search";
 
 const flat = Array.prototype.concat.bind([]);
 
 export const generateComponentsFileContents = async (
   clientDir: string,
 ): Promise<string> => {
-  const imports = await findImports(clientDir, process.cwd());
+  const imports = await searchCodebase(clientDir, process.cwd());
 
   const importString = flat(
-    imports.components.concat(imports.themes).map(({filepath, fileExports}) =>
-      fileExports.map(({name, defaultExport}) => {
-        const importName = defaultExport ? name : `{ ${name} }`;
-        return `import ${importName} from "${filepath}";`;
-      }),
-    ),
+    imports.componentFiles
+      .concat(imports.themeFiles)
+      .map(({filepath, fileExports}) =>
+        fileExports.map(({name, isDefaultExport}) => {
+          const importName = isDefaultExport ? name : `{ ${name} }`;
+          return `import ${importName} from "${filepath}";`;
+        }),
+      ),
   ).join("\n");
 
-  const componentsArrayString = imports.components
+  const componentsArrayString = imports.componentFiles
     .map(({fileExports}) =>
       fileExports
         .map(({name}) => `{name: "${name}", component: ${name}}`)
@@ -24,7 +26,7 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
-  const themesArrayString = imports.themes
+  const themesArrayString = imports.themeFiles
     .map(({fileExports}) =>
       fileExports
         .map(({name}) => `{name: "${name}", theme: ${name}}`)
