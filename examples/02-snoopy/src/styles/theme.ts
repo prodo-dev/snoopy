@@ -45,6 +45,7 @@ export const pinkTheme: Theme = {
   },
 };
 
+// @prodo:theme
 export const greenTheme: Theme = {
   colors: {
     bg: "#043b25",
@@ -59,6 +60,28 @@ export const greenTheme: Theme = {
   },
   fontSizes: {
     title: "20pt",
+    subtitle: "14pt",
+    normal: "11pt",
+    code: "11pt",
+    detail: "8pt",
+  },
+};
+
+// @prodo:theme
+export const darkTheme: Theme = {
+  colors: {
+    bg: "#282c34",
+    fg: "#31353f",
+    border: "#444851",
+    text: "#f8f8f2",
+    textSecondary: "#00e3a0",
+  },
+  fonts: {
+    text: "'Ubuntu', sans-serif",
+    code: "Ubuntu, mononspace",
+  },
+  fontSizes: {
+    title: "18pt",
     subtitle: "14pt",
     normal: "11pt",
     code: "11pt",
