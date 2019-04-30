@@ -8,19 +8,51 @@ import {storiesOf} from "@storybook/react";
 import * as React from "react";
 import {ThemeProvider} from "styled-components";
 
-const TestComponent = ({name}: {name: string}) => <div>{name}</div>;
+const Counter = () => {
+  const [count, setCount] = React.useState(0);
+  return (
+    <div
+      style={{backgroundColor: "snow", color: "violet", padding: "2rem"}}
+      onClick={() => setCount(count + 1)}
+    >
+      <h2>{count}</h2>
+    </div>
+  );
+};
 
-TestComponent.examples = [
-  {name: "Example 1", jsx: <TestComponent name="Tom" />},
-];
+Counter.examples = [{name: "Counter", jsx: <Counter />}];
 
-const Test: ComponentModel = {
-  name: "TestComponent",
-  component: TestComponent,
+const CounterModel: ComponentModel = {
+  name: "Counter",
+  component: Counter,
+};
+
+const Simple = ({name}: {name: string}) => (
+  <div style={{color: "white"}}>Hello {name}</div>
+);
+
+Simple.examples = [];
+
+const SimpleModel: ComponentModel = {
+  name: "SimpleComponent",
+  component: Simple,
 };
 
 storiesOf("Component", module)
   .addDecorator((storyFn: any) => (
     <ThemeProvider theme={darkTheme}>{storyFn()}</ThemeProvider>
   ))
-  .add("base", () => <Component component={Test} />);
+  .add("default example", () => {
+    Simple.examples = [];
+
+    return <Component component={SimpleModel} />;
+  })
+  .add("examples provided", () => {
+    Simple.examples = [
+      {name: "Example 1", jsx: <Simple name="Jake" />},
+      {name: "Example 2", jsx: <Simple name="Andreja" />},
+    ];
+
+    return <Component component={SimpleModel} />;
+  })
+  .add("with react state", () => <Component component={CounterModel} />);
