@@ -1,16 +1,20 @@
 import * as glob from "glob";
+import * as minimatch from "minimatch";
 import * as path from "path";
 import {promisify} from "util";
 import {getComponentImportsForFile} from "./components";
 import {getThemeImportsForFile} from "./themes";
 import {FileError, Imports} from "./types";
-import {fileExtensions, readFileContents} from "./utils";
+import {fileGlob, readFileContents} from "./utils";
+
+export const checkMatch = (filepath: string): boolean =>
+  minimatch(filepath, fileGlob);
 
 export const findImports = async (
   cwd: string,
   searchPath: string,
 ): Promise<Imports> => {
-  const result = await promisify(glob)(`**/*.{${fileExtensions.join(",")}}`, {
+  const result = await promisify(glob)(fileGlob, {
     cwd: searchPath,
   });
 

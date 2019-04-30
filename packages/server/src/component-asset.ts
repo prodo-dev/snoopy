@@ -1,35 +1,22 @@
-import * as fs from "fs";
-import {Asset} from "parcel-bundler";
 import * as path from "path";
+import {generateComponentsFileContents} from "./generate";
 
-class MyAsset extends Asset {
-  public type = "template"; // set the main output type.
+// tslint:disable-next-line:no-submodule-imports
+import TypeScriptAsset = require("parcel-bundler/src/assets/TypeScriptAsset");
 
-  public async generate() {
-    const componentPath = this.getComponentPath();
-    return [
-      {
-        type: "js",
-        value: `export * from "${componentPath}";`, // main output
-      },
-    ];
-  }
+const COMPONENTS_FILE = "components.ts";
 
-  public readConfig(): any {
-    const configFile = fs.readFileSync(
-      path.resolve(process.cwd(), "prodo.json"),
-      "utf-8",
-    );
-    return JSON.parse(configFile);
-  }
+class ComponentAsset extends TypeScriptAsset {
+  public async load() {
+    if (this.basename === COMPONENTS_FILE) {
+      const fileDir = path.dirname(this.name);
+      this.contents = await generateComponentsFileContents(fileDir);
 
-  public getComponentPath(): string {
-    const config = this.readConfig();
-    return path.relative(
-      path.dirname(this.name),
-      path.join(process.cwd(), config.components),
-    );
+      return this.contents;
+    }
+
+    return super.load();
   }
 }
 
-module.exports = MyAsset;
+module.exports = ComponentAsset;

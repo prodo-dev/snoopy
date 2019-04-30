@@ -2,6 +2,7 @@ import * as fs from "fs";
 import {promisify} from "util";
 
 export const fileExtensions = ["ts", "tsx", "js", "jsx"];
+export const fileGlob = `**/!(flycheck_*).{ts,tsx,js,jsx}`;
 
 export const capitalize = (str: string): string =>
   `${str.charAt(0).toUpperCase()}${str.slice(1)}`;

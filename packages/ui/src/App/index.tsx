@@ -6,18 +6,13 @@ import {
   Switch,
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
-import {
-  components as componentsUntyped,
-  themes,
-} from "../../components-generated";
+import {components, themes} from "../components";
 import {Component} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import {darkTheme} from "../styles/theme";
 
 import "./index.css";
-
-const components = componentsUntyped as Component[];
 
 const ComponentPageWithProps = (
   props: {components: Component[]} & RouteComponentProps<{name: string}>,
