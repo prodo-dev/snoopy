@@ -5,5 +5,5 @@
     "rootDir": "src"
   },
   "include": ["src", "typings"],
-  "references": [{"path": "../component-search/tsconfig.json"}]
+  "references": [{"path": "../search/tsconfig.json"}]
 }

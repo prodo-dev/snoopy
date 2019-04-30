@@ -1,4 +1,4 @@
-import {findComponentImports} from "@prodo/snoopy-component-search";
+import {findImports} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as Bundler from "parcel-bundler";
@@ -12,30 +12,56 @@ const outFile = path.resolve(outDir, "index.html");
 const flat = Array.prototype.concat.bind([]);
 
 const generateComponentFileContents = async (): Promise<string> => {
-  const componentImports = await findComponentImports(clientDir, process.cwd());
+  const imports = await findImports(clientDir, process.cwd());
+  console.log(imports);
 
-  const importString = flat(
-    componentImports.map(({filepath, componentExports}) =>
-      componentExports.map(({name, defaultExport}) => {
+  const componentsImportString = flat(
+    imports.components.map(({filepath, exports}) =>
+      exports.map(({name, defaultExport}) => {
         const importName = defaultExport ? name : `{ ${name} }`;
         return `import ${importName} from "${filepath}"`;
       }),
     ),
   ).join("\n");
 
-  const componentsArrayString = componentImports
-    .map(({componentExports}) =>
-      componentExports
+  // TODO clean this up
+  const themesImportString = imports.themes
+    .map(({filepath, exports}) =>
+      exports
+        .map(({name, defaultExport}) => {
+          const importName = defaultExport ? name : `{ ${name} }`;
+          return `import ${importName} from "${filepath}";`;
+        })
+        .join("\n"),
+    )
+    .join("\n");
+  console.log(themesImportString);
+
+  const componentsArrayString = imports.components
+    .map(({exports}) =>
+      exports
         .map(({name}) => `{name: "${name}", component: ${name}}`)
         .join(","),
     )
     .join(",\n  ");
 
+  const themesArrayString = imports.themes
+    .map(({exports}) =>
+      exports.map(({name}) => `{name: "${name}", theme: ${name}}`).join(","),
+    )
+    .join(",\n  ");
+
   return `
-${importString};
+${componentsImportString};
+
+${themesImportString};
 
 export const components = [
   ${componentsArrayString}
+];
+
+export const themes = [
+  ${themesArrayString}
 ];
 `.trimLeft();
 };

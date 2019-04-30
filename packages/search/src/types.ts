@@ -1,6 +1,11 @@
-export interface ComponentImport {
+export interface Imports {
+  components: Import[];
+  themes: Import[];
+}
+
+export interface Import {
   filepath: string;
-  componentExports: Export[];
+  exports: Export[];
   errors: FileError[];
 }
 
