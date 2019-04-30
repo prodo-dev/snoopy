@@ -170,7 +170,7 @@ const Sidebar = (props: Props) => (
 
 const components = [
   {name: "App", component: () => <div />},
-  {name: "ComponentA", component: () => <div />,
+  {name: "ComponentA", component: () => <div />},
   {name: "ComponentB", component: () => <div />},
 ];
 Sidebar.examples = [
