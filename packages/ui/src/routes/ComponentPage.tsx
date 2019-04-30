@@ -7,13 +7,13 @@ import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar from "../components/Sidebar";
-import {Component as ComponentModel} from "../models";
+import {Component as ComponentModel, Theme} from "../models";
 import {margins, paddings} from "../styles";
 
 interface Props {
   component: ComponentModel;
   components: ComponentModel[];
-  themes?: any[];
+  themes: Theme[];
 }
 
 const StyledComponentPage = styled.div`
@@ -55,8 +55,7 @@ const StyledSelect = styled(Select)`
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const [selectedTheme, setSelectedTheme] = React.useState(0);
-  const themes = props.themes || [];
-  const options = themes.map((theme, idx) => {
+  const options = props.themes.map((theme, idx) => {
     return {value: idx, label: theme.name};
   });
 
@@ -77,7 +76,7 @@ const ComponentPage = (props: Props) => {
               </SidebarIcon>
             </NarrowScreen>
             <StyledTitle>{props.component.name}</StyledTitle>
-            {themes.length > 0 && (
+            {props.themes.length > 0 && (
               <StyledSelect
                 defaultValue={options[0]}
                 onChange={(selectedOption: any) =>
@@ -90,7 +89,9 @@ const ComponentPage = (props: Props) => {
           <Component
             key={props.component.name}
             component={props.component}
-            userTheme={themes.length > 0 && themes[selectedTheme].theme}
+            userTheme={
+              props.themes.length > 0 && props.themes[selectedTheme].theme
+            }
           />
         </ComponentContainer>
       </StyledComponentPage>

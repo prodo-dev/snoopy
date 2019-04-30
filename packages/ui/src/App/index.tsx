@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 import {components, themes} from "../components";
-import {Component} from "../models";
+import {Component, Theme} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import {darkTheme} from "../styles/theme";
@@ -15,12 +15,14 @@ import {darkTheme} from "../styles/theme";
 import "./index.css";
 
 const ComponentPageWithProps = (
-  props: {components: Component[]} & RouteComponentProps<{name: string}>,
+  props: {components: Component[]; themes: Theme[]} & RouteComponentProps<{
+    name: string;
+  }>,
 ) => {
   const component = components.filter(
     c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
   )[0];
-  return <ComponentPage component={component} {...props} themes={themes} />;
+  return <ComponentPage component={component} themes={themes} {...props} />;
 };
 
 // tslint:disable-next-line:no-shadowed-variable

@@ -1,5 +1,5 @@
-import {Component} from "./models";
+import {Component, Theme} from "./models";
 
 export const components: Component[] = [];
 
-export const themes = [];
+export const themes: Theme[] = [];
