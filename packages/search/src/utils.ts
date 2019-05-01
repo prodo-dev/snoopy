@@ -3,7 +3,11 @@ import * as path from "path";
 import {promisify} from "util";
 
 export const fileExtensions = ["ts", "tsx", "js", "jsx"];
-export const fileGlob = `**/!(flycheck_*).{ts,tsx,js,jsx}`;
+export const fileGlob = [
+  `**/*.{${fileExtensions.join(",")}}`,
+  "!flycheck_*.*",
+  "!node_modules/**/*",
+];
 export const indexFileRegex = new RegExp(
   `/\index.(${fileExtensions.join("|")})$`,
 );
