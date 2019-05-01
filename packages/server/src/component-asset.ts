@@ -10,7 +10,10 @@ class ComponentAsset extends TypeScriptAsset {
   public async load() {
     if (this.basename === COMPONENTS_FILE) {
       const fileDir = path.dirname(this.name);
-      this.contents = await generateComponentsFileContents(fileDir);
+      this.contents = await generateComponentsFileContents(
+        fileDir,
+        this.options.env.PRODO_SEARCH_DIRECTORY,
+      );
 
       return this.contents;
     }

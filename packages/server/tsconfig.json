@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "lib",
-    "rootDir": "src",
-    "typeRoots": ["./typings", "node_modules/@types"]
+    "rootDir": "src"
   },
   "include": ["src", "typings"],
   "references": [{"path": "../search/tsconfig.json"}]

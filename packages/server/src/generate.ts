@@ -5,8 +5,9 @@ const flat = Array.prototype.concat.bind([]);
 
 export const generateComponentsFileContents = async (
   clientDir: string,
+  searchDir: string,
 ): Promise<string> => {
-  const imports = await searchCodebase(process.cwd());
+  const imports = await searchCodebase(searchDir);
 
   const importString = flat(
     imports.componentFiles
