@@ -1,4 +1,4 @@
-import {checkMatch} from "@prodo/snoopy-component-search";
+import {checkMatch} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as Bundler from "parcel-bundler";

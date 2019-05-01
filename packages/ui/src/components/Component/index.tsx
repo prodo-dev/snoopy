@@ -15,6 +15,7 @@ const ExamplesContainer = styled.div`
 
 interface Props {
   component: Component;
+  userTheme?: any;
 }
 
 const Component = (props: Props) => {
@@ -27,10 +28,17 @@ const Component = (props: Props) => {
       <ExamplesContainer>
         {examples && examples.length > 0 ? (
           examples.map(example => (
-            <Example key={example.name} example={example} />
+            <Example
+              key={example.name}
+              userTheme={props.userTheme}
+              example={example}
+            />
           ))
         ) : (
-          <Example example={{name: "Default", jsx: <Comp />}} />
+          <Example
+            userTheme={props.userTheme}
+            example={{name: "Default", jsx: <Comp />}}
+          />
         )}
       </ExamplesContainer>
     </StyledComponent>

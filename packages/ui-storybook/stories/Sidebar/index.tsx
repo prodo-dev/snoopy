@@ -9,23 +9,34 @@ import * as React from "react";
 import {BrowserRouter as Router} from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 
-const components = [{name: "App", component: () => <div />}];
+const components = [
+  {name: "App", component: () => <div />},
+  {name: "ComponentA", component: () => <div />},
+  {name: "ComponentB", component: () => <div />},
+];
 
 storiesOf("Sidebar", module)
   .addDecorator((storyFn: any) => (
     <ThemeProvider theme={darkTheme}>{storyFn()}</ThemeProvider>
   ))
   .addDecorator((storyFn: any) => <Router>{storyFn()}</Router>)
-  .add("open", () => (
+  .add("closed", () => (
     <Sidebar
-      isOpen={true}
+      isOpen={false}
       setSidebarOpen={action("setSidebarOpen")}
       components={components}
     />
   ))
-  .add("closed", () => (
+  .add("open and empty", () => (
     <Sidebar
-      isOpen={false}
+      isOpen={true}
+      setSidebarOpen={action("setSidebarOpen")}
+      components={[]}
+    />
+  ))
+  .add("open with components", () => (
+    <Sidebar
+      isOpen={true}
       setSidebarOpen={action("setSidebarOpen")}
       components={components}
     />

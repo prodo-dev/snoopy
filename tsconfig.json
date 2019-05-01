@@ -20,6 +20,6 @@
     {"path": "packages/cli"},
     {"path": "packages/server"},
     {"path": "packages/ui"},
-    {"path": "packages/component-search"}
+    {"path": "packages/search"}
   ]
 }
