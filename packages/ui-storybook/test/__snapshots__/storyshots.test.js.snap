@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Component List empty 1`] = `
+<div
+  className="component-list sc-bZQynM AMncx"
+/>
+`;
+
 exports[`Storyshots Component List multiple items 1`] = `
 <div
   className="component-list sc-bZQynM AMncx"
@@ -28,10 +34,84 @@ exports[`Storyshots Component List multiple items 1`] = `
       Two
     </div>
   </a>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/Three"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      Three
+    </div>
+  </a>
+</div>
+`;
+
+exports[`Storyshots Component List multiple items with selection 1`] = `
+<div
+  className="component-list sc-bZQynM AMncx"
+>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/One"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      One
+    </div>
+  </a>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/Two"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw jBsNpZ"
+      selected={true}
+    >
+      Two
+    </div>
+  </a>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/Three"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      Three
+    </div>
+  </a>
 </div>
 `;
 
 exports[`Storyshots Component List single item 1`] = `
+<div
+  className="component-list sc-bZQynM AMncx"
+>
+  <a
+    className="sc-htoDjs jssEWI"
+    href="/One"
+    onClick={[Function]}
+  >
+    <div
+      className="sc-gzVnrw kXGagn"
+      selected={false}
+    >
+      One
+    </div>
+  </a>
+</div>
+`;
+
+exports[`Storyshots Component List single item with selection 1`] = `
 <div
   className="component-list sc-bZQynM AMncx"
 >
@@ -66,15 +146,15 @@ exports[`Storyshots Component default example 1`] = `
         Default
       </div>
       <div
-        className="sc-bwzfXH kwAnTY"
+        className="sc-bwzfXH kWRhKE"
       >
         <div
-          className="example-contents sc-htpNat gZyIoC"
+          className="example-contents sc-htpNat krJdEa"
         >
           <div
             style={
               Object {
-                "color": "white",
+                "color": "red",
               }
             }
           >
@@ -103,15 +183,15 @@ exports[`Storyshots Component examples provided 1`] = `
         Example 1
       </div>
       <div
-        className="sc-bwzfXH kwAnTY"
+        className="sc-bwzfXH kWRhKE"
       >
         <div
-          className="example-contents sc-htpNat gZyIoC"
+          className="example-contents sc-htpNat krJdEa"
         >
           <div
             style={
               Object {
-                "color": "white",
+                "color": "red",
               }
             }
           >
@@ -130,15 +210,15 @@ exports[`Storyshots Component examples provided 1`] = `
         Example 2
       </div>
       <div
-        className="sc-bwzfXH kwAnTY"
+        className="sc-bwzfXH kWRhKE"
       >
         <div
-          className="example-contents sc-htpNat gZyIoC"
+          className="example-contents sc-htpNat krJdEa"
         >
           <div
             style={
               Object {
-                "color": "white",
+                "color": "red",
               }
             }
           >
@@ -168,10 +248,10 @@ exports[`Storyshots Component with react state 1`] = `
         Counter
       </div>
       <div
-        className="sc-bwzfXH kwAnTY"
+        className="sc-bwzfXH kWRhKE"
       >
         <div
-          className="example-contents sc-htpNat gZyIoC"
+          className="example-contents sc-htpNat krJdEa"
         >
           <div
             onClick={[Function]}
@@ -194,7 +274,30 @@ exports[`Storyshots Component with react state 1`] = `
 </div>
 `;
 
-exports[`Storyshots Example base 1`] = `
+exports[`Storyshots Example Basic 1`] = `
+<div
+  className="sc-bdVaJa hLhmaC"
+>
+  <div
+    className="example-title sc-bxivhb gblRRH"
+  >
+    Title
+  </div>
+  <div
+    className="sc-bwzfXH kWRhKE"
+  >
+    <div
+      className="example-contents sc-htpNat krJdEa"
+    >
+      <div>
+        Hello World
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Storyshots Example Example 1 1`] = `
 <div
   className="sc-bdVaJa hLhmaC"
 >
@@ -204,10 +307,10 @@ exports[`Storyshots Example base 1`] = `
     Example 1
   </div>
   <div
-    className="sc-bwzfXH kwAnTY"
+    className="sc-bwzfXH kWRhKE"
   >
     <div
-      className="example-contents sc-htpNat gZyIoC"
+      className="example-contents sc-htpNat krJdEa"
     >
       <div
         style={
@@ -260,7 +363,39 @@ exports[`Storyshots Sidebar closed 1`] = `
 </div>
 `;
 
-exports[`Storyshots Sidebar open 1`] = `
+exports[`Storyshots Sidebar open and empty 1`] = `
+<div
+  className="sidebar sc-iwsKbI gSIGHZ"
+>
+  <div
+    className="sc-fjdhpX gddroE"
+  >
+    <a
+      className="sc-gqjmRU eYqZJu"
+      href="/"
+      onClick={[Function]}
+    >
+      <div
+        className="title sc-VigVT jFCsNF"
+      >
+        <img
+          alt=""
+          className="logo sc-dnqmqq cnjRDI"
+        />
+        Snoopy
+      </div>
+    </a>
+  </div>
+  <hr
+    className="sc-jTzLTM jEoeNn"
+  />
+  <div
+    className="component-list sc-bZQynM AMncx"
+  />
+</div>
+`;
+
+exports[`Storyshots Sidebar open with components 1`] = `
 <div
   className="sidebar sc-iwsKbI gSIGHZ"
 >
@@ -299,6 +434,30 @@ exports[`Storyshots Sidebar open 1`] = `
         selected={false}
       >
         App
+      </div>
+    </a>
+    <a
+      className="sc-htoDjs jssEWI"
+      href="/ComponentA"
+      onClick={[Function]}
+    >
+      <div
+        className="sc-gzVnrw kXGagn"
+        selected={false}
+      >
+        ComponentA
+      </div>
+    </a>
+    <a
+      className="sc-htoDjs jssEWI"
+      href="/ComponentB"
+      onClick={[Function]}
+    >
+      <div
+        className="sc-gzVnrw kXGagn"
+        selected={false}
+      >
+        ComponentB
       </div>
     </a>
   </div>

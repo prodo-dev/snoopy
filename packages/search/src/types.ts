@@ -1,12 +1,17 @@
-export interface ComponentImport {
+export interface SearchResult {
+  componentFiles: File[];
+  themeFiles: File[];
+}
+
+export interface File {
   filepath: string;
-  componentExports: Export[];
+  fileExports: FileExport[];
   errors: FileError[];
 }
 
-export interface Export {
+export interface FileExport {
   name: string;
-  defaultExport: boolean;
+  isDefaultExport: boolean;
 }
 
 export class FileError extends Error {

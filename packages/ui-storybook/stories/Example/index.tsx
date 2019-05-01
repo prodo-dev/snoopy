@@ -8,6 +8,7 @@ import {storiesOf} from "@storybook/react";
 import * as React from "react";
 import {ThemeProvider} from "styled-components";
 
+const basicExample: ExampleModel = {name: "Title", jsx: <div>Hello World</div>};
 const testExample: ExampleModel = {
   name: "Example 1",
   jsx: (
@@ -23,4 +24,5 @@ storiesOf("Example", module)
   .addDecorator((storyFn: any) => (
     <ThemeProvider theme={darkTheme}>{storyFn()}</ThemeProvider>
   ))
-  .add("base", () => <Example example={testExample} />);
+  .add("Basic", () => <Example example={basicExample} />)
+  .add("Example 1", () => <Example example={testExample} />);
