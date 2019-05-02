@@ -1,12 +1,10 @@
-import {faList} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import Select from "react-select";
 import styled from "styled-components";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
-import Sidebar from "../components/Sidebar";
+import Sidebar, {SidebarToggle} from "../components/Sidebar";
 import {Component as ComponentModel, Theme} from "../models";
 import {margins, paddings} from "../styles";
 
@@ -36,15 +34,6 @@ const StyledTitle = styled.div`
   line-height: ${selectHeight};
 `;
 
-const SidebarIcon = styled.span`
-  cursor: pointer;
-  margin-right: ${margins.medium}
-
-  &:hover {
-    color: ${props => props.theme.colors.textSecondary};
-  }
-`;
-
 const StyledSelect = styled(Select)`
   font-size: ${props => props.theme.fontSizes.normal}
   color: ${props => props.theme.colors.bg}
@@ -71,14 +60,14 @@ const ComponentPage = (props: Props) => {
         <ComponentContainer>
           <StyledTitleContainer>
             <NarrowScreen>
-              <SidebarIcon onClick={() => setSidebarOpen(!isSidebarOpen)}>
-                <FontAwesomeIcon icon={faList} />
-              </SidebarIcon>
+              <SidebarToggle
+                isOpen={isSidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+              />
             </NarrowScreen>
             <StyledTitle>{props.component.name}</StyledTitle>
             {props.themes.length > 0 && (
               <StyledSelect
-                defaultValue={options[0]}
                 onChange={(selectedOption: any) =>
                   setSelectedTheme(selectedOption.value)
                 }

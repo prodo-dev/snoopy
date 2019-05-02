@@ -10,6 +10,8 @@ const StyledComponentList = styled.div`
 `;
 
 const ComponentName = styled.div<{selected?: boolean}>`
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   text-decoration: none;
   padding: ${paddings.small} ${paddings.medium};
   ${props => props.selected && `background-color: ${props.theme.colors.bg}`}
