@@ -21,10 +21,11 @@ const StyledSidebar = styled.div<{isOpen: boolean}>`
   top: 0;
   left: 0;
 
+  color: ${props => props.theme.colors.text};
   background-color: ${props => props.theme.colors.fg};
   padding-top: ${paddings.small};
   z-index: 1000;
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100vh;
   ${props =>
     props.isOpen
@@ -96,8 +97,7 @@ const SidebarIcon = styled.span`
     color: ${props => props.theme.colors.textSecondary};
   }
 
-  // Custom margin for alignment with the header and logo
-  margin: 0.75rem ${margins.medium};
+  margin: ${margins.small} ${margins.medium};
 `;
 
 interface Props {
@@ -107,26 +107,38 @@ interface Props {
   components: Component[];
 }
 
-const Overlay = (props: Props) => (
+const Overlay = ({
+  isOpen,
+  setSidebarOpen,
+}: {
+  isOpen: boolean;
+  setSidebarOpen: (open: boolean) => any;
+}) => (
   <StyledOverlay
     className="sidebar-overlay"
-    isSidebarOpen={props.isOpen}
+    isSidebarOpen={isOpen}
     onClick={e => {
-      if (props.isOpen && props.setSidebarOpen) {
+      if (isOpen) {
         e.preventDefault();
         e.stopPropagation();
-        props.setSidebarOpen(false);
+        setSidebarOpen(false);
       }
     }}
   />
 );
 
-const SidebarToggle = (props: Props) => (
+export const SidebarToggle = ({
+  isOpen,
+  setSidebarOpen,
+}: {
+  isOpen: boolean;
+  setSidebarOpen: (open: boolean) => any;
+}) => (
   <SidebarIcon
-    onClick={() => props.setSidebarOpen(!props.isOpen)}
+    onClick={() => setSidebarOpen(!isOpen)}
     className="sidebar-toggle"
   >
-    <FontAwesomeIcon icon={props.isOpen ? faCaretLeft : faList} size="lg" />
+    <FontAwesomeIcon icon={isOpen ? faCaretLeft : faList} size="lg" />
   </SidebarIcon>
 );
 
@@ -147,7 +159,10 @@ export default (props: Props) => (
           <HeaderContainer>
             <Header />
             <WideScreen>
-              <SidebarToggle {...props} />
+              <SidebarToggle
+                isOpen={props.isOpen}
+                setSidebarOpen={props.setSidebarOpen}
+              />
             </WideScreen>
           </HeaderContainer>
           <Separator />
@@ -158,12 +173,15 @@ export default (props: Props) => (
         </React.Fragment>
       ) : (
         <HeaderContainer>
-          <SidebarToggle {...props} />
+          <SidebarToggle
+            isOpen={props.isOpen}
+            setSidebarOpen={props.setSidebarOpen}
+          />
         </HeaderContainer>
       )}
     </StyledSidebar>
     <NarrowScreen>
-      <Overlay {...props} />
+      <Overlay isOpen={props.isOpen} setSidebarOpen={props.setSidebarOpen} />
     </NarrowScreen>
   </React.Fragment>
 );
