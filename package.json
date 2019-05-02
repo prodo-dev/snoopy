@@ -9,13 +9,16 @@
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
     "test": "wsrun --exclude-missing --serial test",
-    "lint": "wsrun --exclude-missing --serial lint"
+    "lint": "wsrun --exclude-missing --serial lint",
+    "postinstall": "patch-package"
   },
   "workspaces": [
     "packages/*",
     "examples/*"
   ],
   "devDependencies": {
+    "patch-package": "^6.1.2",
+    "postinstall-postinstall": "^2.0.0",
     "prettier": "^1.17.0",
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
