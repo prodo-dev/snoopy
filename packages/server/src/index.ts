@@ -1,33 +1,20 @@
 import {checkMatch} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
-import * as Bundler from "parcel-bundler";
 import * as path from "path";
+import createBundler from "./bundler";
 
 const clientDir = path.resolve(__dirname, "../../ui");
-const entryFile = path.resolve(clientDir, "./public/index.html");
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
 const MAGIC_NUMBER = 300;
 
-export const start = async (port: number = 3000) => {
+export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   const app = Express();
 
-  const options = {
-    outDir,
-    outFile,
-    watch: true,
-    cache: false,
-    minify: false,
-    scopeHoist: false,
-    hmr: true,
-    detailedReport: false,
-    bundleNodeModules: true,
-  };
-
-  const bundler = new Bundler(entryFile, options);
-  bundler.addAssetType(".ts", require.resolve("./component-asset"));
+  const bundler = createBundler(outDir, outFile, searchDir);
+  app.use(bundler.middleware());
 
   const componentsFile = path.resolve(clientDir, "src/components.ts");
   fs.watch(process.cwd(), {recursive: true}, (_, filename) => {
@@ -40,6 +27,5 @@ export const start = async (port: number = 3000) => {
   });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
-  app.use(bundler.middleware());
   app.listen(3000);
 };

@@ -6,8 +6,9 @@ const flat = <T>(arrayOfArrays: T[][]): T[] =>
 
 export const generateComponentsFileContents = async (
   clientDir: string,
+  searchDir: string,
 ): Promise<string> => {
-  const imports = await searchCodebase(process.cwd());
+  const imports = await searchCodebase(searchDir);
 
   const importLines = flat(
     imports.componentFiles

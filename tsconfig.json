@@ -3,7 +3,7 @@
     "composite": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["esnext"],
+    "lib": ["es6", "dom"],
     "target": "es2018",
     "declaration": true,
     "declarationMap": true,
