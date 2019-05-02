@@ -9,8 +9,6 @@ const entryFile = path.resolve(clientDir, "./public/index.html");
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
-const MAGIC_NUMBER = 300;
-
 export const start = async (port: number = 3000) => {
   const app = Express();
 
@@ -27,19 +25,21 @@ export const start = async (port: number = 3000) => {
   };
 
   const bundler = new Bundler(entryFile, options);
+
   bundler.addAssetType(".ts", require.resolve("./component-asset"));
 
   const componentsFile = path.resolve(clientDir, "src/components.ts");
-  fs.watch(process.cwd(), {recursive: true}, (_, filename) => {
+  fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
+    // TODO: Try/catch?
     if (checkMatch(filename)) {
-      setTimeout(() => {
-        const contents = fs.readFileSync(componentsFile);
-        fs.writeFileSync(componentsFile, contents);
-      }, MAGIC_NUMBER);
+      // We need to do this to avoid compiling and pushing `filename` at the
+      // same time as `componentsFile`.
+      await (bundler as any).onChange(componentsFile);
     }
   });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
   app.use(bundler.middleware());
+
   app.listen(3000);
 };

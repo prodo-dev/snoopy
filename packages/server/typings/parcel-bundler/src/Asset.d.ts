@@ -17,6 +17,7 @@ declare module "parcel-bundler/src/Asset" {
     public transform(): Promise<void>;
     public generate(): Promise<any>;
     public postProcess(generated: any): Promise<any>;
+    public shouldInvalidate(cacheData: any): boolean;
   }
 
   export = Asset;
