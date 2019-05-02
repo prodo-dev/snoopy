@@ -4,6 +4,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["src", "typings"],
-  "references": [{"path": "../api"}, {"path": "../search"}]
+  "include": ["src"]
 }
