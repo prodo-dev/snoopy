@@ -12,7 +12,13 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   const app = Express();
 
   const bundler = createBundler(outDir, outFile, searchDir);
-  app.use(bundler.middleware());
+  await bundler.bundle();
+
+  app.use(Express.static(outDir));
+
+  app.get("/*", (_request, response) => {
+    response.sendFile((bundler as any).mainBundle.name);
+  });
 
   const componentsFile = path.resolve(clientDir, "src/components.ts");
   fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
