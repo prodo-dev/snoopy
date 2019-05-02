@@ -86,7 +86,7 @@ export default {
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/pinkTheme.ts",
-    fileExports: [{name: "pinkTheme", isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true}],
     errors: [],
   });
 });
@@ -104,7 +104,7 @@ export default {}
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/pinkTheme",
-    fileExports: [{name: "pinkTheme", isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true}],
     errors: [],
   });
 });

@@ -23,6 +23,7 @@ const Counter = () => {
 Counter.examples = [{name: "Counter", jsx: <Counter />}];
 
 const CounterModel: ComponentModel = {
+  path: "foo/bar",
   name: "Counter",
   component: Counter,
 };
@@ -34,6 +35,7 @@ const Simple = ({name}: {name: string}) => (
 Simple.examples = [];
 
 const SimpleModel: ComponentModel = {
+  path: "foo/bar",
   name: "SimpleComponent",
   component: Simple,
 };
