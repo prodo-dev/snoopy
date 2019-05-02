@@ -24,18 +24,33 @@ export const generateComponentsFileContents = async (
     })),
   }));
 
-  const importLines = componentFiles
-    .concat(themeFiles)
-    .map(({filepath, fileExports}) => {
-      let defaultImport: string | undefined;
-      const namedImports: Array<{from: string; to: string}> = [];
-      fileExports.forEach(ex => {
-        if (ex.isDefaultExport) {
-          defaultImport = ex.id;
-        } else {
-          namedImports.push({from: ex.name, to: ex.id});
+  const importsByFile: {
+    [path: string]: {
+      defaultImport?: string;
+      namedImports: Array<{from: string; to: string}>;
+    };
+  } = {};
+  componentFiles.concat(themeFiles).forEach(({filepath, fileExports}) => {
+    if (importsByFile[filepath] == null) {
+      importsByFile[filepath] = {
+        namedImports: [] as Array<{from: string; to: string}>,
+      };
+    }
+    fileExports.forEach(ex => {
+      if (ex.isDefaultExport) {
+        if (importsByFile[filepath].defaultImport) {
+          throw new Error("Duplicate default import detected.");
         }
-      });
+        importsByFile[filepath].defaultImport = ex.id;
+      } else {
+        importsByFile[filepath].namedImports.push({from: ex.name, to: ex.id});
+      }
+    });
+  });
+
+  const importLines = Object.keys(importsByFile)
+    .map(filepath => {
+      const {defaultImport, namedImports} = importsByFile[filepath];
       return `import ${[
         defaultImport,
         namedImports.length > 0

@@ -18,3 +18,11 @@ export default (props: Props) => (
     {props.children}
   </button>
 );
+
+// @prodo
+export const Button = () => <div>Test</div>;
+
+// @prodo:theme
+export const MyTheme = {
+  foo: "bar",
+};
