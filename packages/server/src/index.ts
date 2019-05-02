@@ -9,6 +9,8 @@ const entryFile = path.resolve(clientDir, "./public/index.html");
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
+const MAGIC_NUMBER = 300;
+
 export const start = async (port: number = 3000) => {
   const app = Express();
 
@@ -30,8 +32,10 @@ export const start = async (port: number = 3000) => {
   const componentsFile = path.resolve(clientDir, "src/components.ts");
   fs.watch(process.cwd(), {recursive: true}, (_, filename) => {
     if (checkMatch(filename)) {
-      const contents = fs.readFileSync(componentsFile);
-      fs.writeFileSync(componentsFile, contents);
+      setTimeout(() => {
+        const contents = fs.readFileSync(componentsFile);
+        fs.writeFileSync(componentsFile, contents);
+      }, MAGIC_NUMBER);
     }
   });
 
