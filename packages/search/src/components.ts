@@ -37,12 +37,10 @@ const extractComponent: ExtractFunction = (line, filepath) => {
 };
 
 export const getComponentsFile = (
-  cwd: string,
   contents: string,
   filepath: string,
 ): File | null => {
   return getFile({
-    cwd,
     filepath,
     contents,
     annotationRegex: prodoCommentRegex,

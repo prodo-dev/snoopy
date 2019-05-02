@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import * as path from "path";
 import {promisify} from "util";
 
 export const fileExtensions = ["ts", "tsx", "js", "jsx"];
@@ -26,7 +25,5 @@ export const findProdoCommentLines = (
     .filter(({line}) => regex.test(line))
     .map(({idx}) => idx);
 
-export const getImportPath = (cwd: string, filepath: string): string => {
-  const newPath = filepath.replace(indexFileRegex, "");
-  return path.relative(cwd, newPath);
-};
+export const getImportPath = (filepath: string): string =>
+  filepath.replace(indexFileRegex, "");

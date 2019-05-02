@@ -30,13 +30,11 @@ export const findFileExports = (
 };
 
 export const getFile = ({
-  cwd,
   contents,
   filepath,
   annotationRegex,
   extractExport,
 }: {
-  cwd: string;
   contents: string;
   filepath: string;
   annotationRegex: RegExp;
@@ -54,7 +52,7 @@ export const getFile = ({
     ) as FileExport[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
-      filepath: getImportPath(cwd, filepath),
+      filepath: getImportPath(filepath),
       fileExports,
       errors,
     };

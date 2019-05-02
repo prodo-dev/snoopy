@@ -7,10 +7,10 @@ test("gets theme imports for single named export", () => {
   export const pinkTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file.ts",
+    filepath: "/path/to/file.ts",
     fileExports: [{name: "pinkTheme", isDefaultExport: false}],
     errors: [],
   });
@@ -27,10 +27,10 @@ export const greenTheme = {}
 export const darkTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file.ts",
+    filepath: "/path/to/file.ts",
     fileExports: [
       {name: "pinkTheme", isDefaultExport: false},
       {name: "darkTheme", isDefaultExport: false},
@@ -45,10 +45,10 @@ test("gets theme imports for single named export in index.ts file", () => {
 export const pinkTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file/index.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "pinkTheme", isDefaultExport: false}],
     errors: [],
   });
@@ -62,10 +62,10 @@ const pinkTheme = {}
 export pinkTheme;
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file.ts",
+    filepath: "/path/to/file.ts",
     fileExports: [{name: "pinkTheme", isDefaultExport: false}],
     errors: [],
   });
@@ -82,14 +82,10 @@ export default {
   }
 `.trim();
 
-  const themeImport = getThemesFile(
-    "/cwd",
-    contents,
-    "/path/to/file/pinkTheme.ts",
-  );
+  const themeImport = getThemesFile(contents, "/path/to/file/pinkTheme.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file/pinkTheme.ts",
+    filepath: "/path/to/file/pinkTheme.ts",
     fileExports: [{name: "pinkTheme", isDefaultExport: true}],
     errors: [],
   });
@@ -102,13 +98,12 @@ export default {}
 `.trim();
 
   const themeImport = getThemesFile(
-    "/cwd",
     contents,
     "/path/to/file/pinkTheme/index.ts",
   );
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file/pinkTheme",
+    filepath: "/path/to/file/pinkTheme",
     fileExports: [{name: "pinkTheme", isDefaultExport: true}],
     errors: [],
   });
@@ -120,10 +115,10 @@ test("gets theme imports with an underscore in the name", () => {
 export const pink_theme = {}
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file/index.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "pink_theme", isDefaultExport: false}],
     errors: [],
   });
@@ -135,10 +130,10 @@ test("gets theme imports with a number in the name", () => {
 export const pink1Theme1 = {}
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file/index.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "pink1Theme1", isDefaultExport: false}],
     errors: [],
   });
@@ -150,10 +145,10 @@ test("catch error when prodo theme comment is on non-export", () => {
 const foo = "bar"
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file/index.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [],
     errors: [
       new FileError(
@@ -182,10 +177,10 @@ export const lightTheme = {}
 export const otherTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile("/cwd", contents, "/path/to/file/index.ts");
+  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [
       {name: "pinkTheme", isDefaultExport: false},
       {name: "greenTheme", isDefaultExport: false},

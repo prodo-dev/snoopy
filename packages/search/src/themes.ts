@@ -37,12 +37,10 @@ const extractTheme: ExtractFunction = (line, filepath) => {
 };
 
 export const getThemesFile = (
-  cwd: string,
   contents: string,
   filepath: string,
 ): File | null => {
   return getFile({
-    cwd,
     filepath,
     contents,
     annotationRegex: prodoThemeCommentRegex,

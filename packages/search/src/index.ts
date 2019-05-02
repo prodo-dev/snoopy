@@ -11,7 +11,6 @@ export const checkMatch = (filepath: string): boolean =>
   minimatch(filepath, fileGlob);
 
 export const searchCodebase = async (
-  relativeFrom: string,
   directoryToSearch: string,
 ): Promise<SearchResult> => {
   const result = await promisify(glob)(fileGlob, {
@@ -38,8 +37,8 @@ export const searchCodebase = async (
       }
 
       return {
-        componentFiles: getComponentsFile(relativeFrom, contents, filepath),
-        themeFiles: getThemesFile(relativeFrom, contents, filepath),
+        componentFiles: getComponentsFile(contents, filepath),
+        themeFiles: getThemesFile(contents, filepath),
       };
     }),
   );
