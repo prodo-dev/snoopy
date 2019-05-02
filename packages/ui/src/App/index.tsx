@@ -6,7 +6,6 @@ import {
   Switch,
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
-import {components, themes} from "../components";
 import {Component, Theme} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
@@ -19,16 +18,19 @@ const ComponentPageWithProps = (
     name: string;
   }>,
 ) => {
-  const component = components.filter(
+  const component = props.components.filter(
     c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
   )[0];
-  return <ComponentPage component={component} themes={themes} {...props} />;
+  return <ComponentPage component={component} {...props} />;
 };
 
 // tslint:disable-next-line:no-shadowed-variable
 const WithComponents = (Component: React.ComponentType<any>) => (
   props: any,
-) => <Component components={components} {...props} />;
+) => {
+  const {components, themes} = require(process.env.PRODO_COMPONENTS_FILE!);
+  return <Component components={components} themes={themes} {...props} />;
+};
 
 const App = () => (
   <ThemeProvider theme={darkTheme}>
