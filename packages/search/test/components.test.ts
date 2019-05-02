@@ -25,14 +25,10 @@ export const App = () => {
 export default App;
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file.ts",
+    filepath: "/path/to/file.ts",
     fileExports: [{name: "App", isDefaultExport: false}],
     errors: [],
   });
@@ -49,14 +45,10 @@ export const Two = () => {};
 export const Three = () => {};
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file.ts",
+    filepath: "/path/to/file.ts",
     fileExports: [
       {name: "One", isDefaultExport: false},
       {name: "Three", isDefaultExport: false},
@@ -71,14 +63,10 @@ test("gets component imports for single named export in index.ts file", () => {
 export const One = () => {};
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "One", isDefaultExport: false}],
     errors: [],
   });
@@ -92,14 +80,10 @@ const One = () => {};
 export One;
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file.ts",
+    filepath: "/path/to/file.ts",
     fileExports: [{name: "One", isDefaultExport: false}],
     errors: [],
   });
@@ -112,13 +96,12 @@ export default () => {};
 `.trim();
 
   const componentImport = getComponentsFile(
-    "/cwd",
     contents,
     "/path/to/file/Button.ts",
   );
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file/Button.ts",
+    filepath: "/path/to/file/Button.ts",
     fileExports: [{name: "Button", isDefaultExport: true}],
     errors: [],
   });
@@ -131,13 +114,12 @@ export default () => {};
 `.trim();
 
   const componentImport = getComponentsFile(
-    "/cwd",
     contents,
     "/path/to/file/Button/index.ts",
   );
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file/Button",
+    filepath: "/path/to/file/Button",
     fileExports: [{name: "Button", isDefaultExport: true}],
     errors: [],
   });
@@ -149,14 +131,10 @@ test("gets component imports with an underscore in the name", () => {
 export const O______ne = () => {};
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "O______ne", isDefaultExport: false}],
     errors: [],
   });
@@ -168,14 +146,10 @@ test("gets component imports with a number in the name", () => {
 export const One111 = () => {};
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "One111", isDefaultExport: false}],
     errors: [],
   });
@@ -187,14 +161,10 @@ test("catch error when prodo comment is on non-export", () => {
 const foo = "bar"
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [],
     errors: [
       new FileError(
@@ -223,14 +193,10 @@ export const Four = () => {};
 export const Five = () => {};
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [
       {name: "One", isDefaultExport: false},
       {name: "Two", isDefaultExport: false},
@@ -246,14 +212,10 @@ test("component name is capitalized when directory name is not", () => {
 export default () => {};
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "File", isDefaultExport: true}],
     errors: [],
   });
@@ -265,14 +227,10 @@ test("gets component name from class component", () => {
 export class Button extends React.Component {}
 `.trim();
 
-  const componentImport = getComponentsFile(
-    "/cwd",
-    contents,
-    "/path/to/file/index.ts",
-  );
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
 
   expect(componentImport).toEqual({
-    filepath: "../path/to/file",
+    filepath: "/path/to/file",
     fileExports: [{name: "Button", isDefaultExport: false}],
     errors: [],
   });

@@ -1,12 +1,14 @@
 import {searchCodebase} from "@prodo/snoopy-search";
+import * as path from "path";
 
 const flat = <T>(arrayOfArrays: T[][]): T[] =>
   ([] as T[]).concat(...arrayOfArrays);
 
 export const generateComponentsFileContents = async (
   clientDir: string,
+  searchDir: string,
 ): Promise<string> => {
-  const imports = await searchCodebase(clientDir, process.cwd());
+  const imports = await searchCodebase(searchDir);
 
   const importLines = flat(
     imports.componentFiles
@@ -14,7 +16,10 @@ export const generateComponentsFileContents = async (
       .map(({filepath, fileExports}) =>
         fileExports.map(({name, isDefaultExport}) => {
           const importName = isDefaultExport ? name : `{ ${name} }`;
-          return `import ${importName} from "${filepath}";`;
+          return `import ${importName} from "${path.relative(
+            clientDir,
+            filepath,
+          )}";`;
         }),
       ),
   ).join("\n");

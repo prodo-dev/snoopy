@@ -18,7 +18,11 @@ test("matches valid filepaths", () => {
 });
 
 test("does not match invalid filepaths", () => {
-  const invalidPaths = [".env.tsx", "flycheck_index.tsx"];
+  const invalidPaths = [
+    ".env.tsx",
+    "node_modules/Hello.tsx",
+    "flycheck_index.tsx",
+  ];
 
   invalidPaths.forEach(p => {
     expect(`${p}: ${checkMatch(p)}`).toBe(`${p}: false`);

@@ -16,7 +16,7 @@ exports[`Storyshots Component List multiple items 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       One
@@ -28,7 +28,7 @@ exports[`Storyshots Component List multiple items 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       Two
@@ -40,7 +40,7 @@ exports[`Storyshots Component List multiple items 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       Three
@@ -59,7 +59,7 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       One
@@ -71,7 +71,7 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw jBsNpZ"
+      className="sc-gzVnrw bmyZst"
       selected={true}
     >
       Two
@@ -83,7 +83,7 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       Three
@@ -102,7 +102,7 @@ exports[`Storyshots Component List single item 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       One
@@ -121,7 +121,7 @@ exports[`Storyshots Component List single item with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw kXGagn"
+      className="sc-gzVnrw jWWqnZ"
       selected={false}
     >
       One
@@ -332,13 +332,13 @@ exports[`Storyshots Example Example 1 1`] = `
 
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-iwsKbI ftanjX"
+  className="sidebar sc-iwsKbI jTZNmv"
 >
   <div
     className="sc-fjdhpX gddroE"
   >
     <span
-      className="sidebar-toggle sc-jzJRlG bGoKof"
+      className="sidebar-toggle sc-jzJRlG dCmEID"
       onClick={[Function]}
     >
       <svg
@@ -365,7 +365,7 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open and empty 1`] = `
 <div
-  className="sidebar sc-iwsKbI gSIGHZ"
+  className="sidebar sc-iwsKbI eLGZGE"
 >
   <div
     className="sc-fjdhpX gddroE"
@@ -397,7 +397,7 @@ exports[`Storyshots Sidebar open and empty 1`] = `
 
 exports[`Storyshots Sidebar open with components 1`] = `
 <div
-  className="sidebar sc-iwsKbI gSIGHZ"
+  className="sidebar sc-iwsKbI eLGZGE"
 >
   <div
     className="sc-fjdhpX gddroE"
@@ -430,7 +430,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-gzVnrw kXGagn"
+        className="sc-gzVnrw jWWqnZ"
         selected={false}
       >
         App
@@ -442,7 +442,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-gzVnrw kXGagn"
+        className="sc-gzVnrw jWWqnZ"
         selected={false}
       >
         ComponentA
@@ -454,7 +454,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-gzVnrw kXGagn"
+        className="sc-gzVnrw jWWqnZ"
         selected={false}
       >
         ComponentB
