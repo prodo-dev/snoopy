@@ -1,21 +1,18 @@
-import * as glob from "glob";
-import * as minimatch from "minimatch";
+import * as globby from "globby";
+import * as multimatch from "multimatch";
 import * as path from "path";
-import {promisify} from "util";
 import {getComponentsFile} from "./components";
 import {getThemesFile} from "./themes";
 import {File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents} from "./utils";
 
 export const checkMatch = (filepath: string): boolean =>
-  minimatch(filepath, fileGlob);
+  multimatch(filepath, fileGlob).length > 0;
 
 export const searchCodebase = async (
   directoryToSearch: string,
 ): Promise<SearchResult> => {
-  const result = await promisify(glob)(fileGlob, {
-    cwd: directoryToSearch,
-  });
+  const result = await globby(fileGlob, {cwd: directoryToSearch});
 
   const files = await Promise.all(
     result.map(async file => {
