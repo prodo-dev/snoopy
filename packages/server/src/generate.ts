@@ -73,7 +73,7 @@ export const generateComponentsFileContents = async (
               ex.isDefaultExport ? "default" : ex.name
             }", component: ${ex.id}}`,
         )
-        .join(","),
+        .join(",\n  "),
     )
     .join(",\n  ");
 
@@ -86,7 +86,7 @@ export const generateComponentsFileContents = async (
               ex.isDefaultExport ? "default" : ex.name
             }", theme: ${ex.id}}`,
         )
-        .join(","),
+        .join(",\n  "),
     )
     .join(",\n  ");
 
