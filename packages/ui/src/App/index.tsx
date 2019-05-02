@@ -16,11 +16,13 @@ import "./index.css";
 
 const ComponentPageWithProps = (
   props: {components: Component[]; themes: Theme[]} & RouteComponentProps<{
+    path: string;
     name: string;
   }>,
 ) => {
   const component = components.filter(
-    c => c.name.toLowerCase() === props.match.params.name.toLowerCase(),
+    c =>
+      c.path === props.match.params.path && c.name === props.match.params.name,
   )[0];
   return <ComponentPage component={component} themes={themes} {...props} />;
 };
@@ -36,7 +38,7 @@ const App = () => (
       <Switch>
         <Route path="/" exact component={WithComponents(HomePage)} />
         <Route
-          path="/:name"
+          path="/:path+/:name"
           exact
           component={WithComponents(ComponentPageWithProps)}
         />

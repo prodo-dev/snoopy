@@ -19,7 +19,6 @@ const extractComponent: ExtractFunction = (line, filepath) => {
   if (exportDefaultRegex.test(line)) {
     if (indexFileRegex.test(filepath)) {
       return {
-        name: capitalize(path.basename(path.dirname(filepath))),
         isDefaultExport: true,
       };
     }

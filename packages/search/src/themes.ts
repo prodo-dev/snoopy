@@ -17,7 +17,7 @@ const extractTheme: ExtractFunction = (line, filepath) => {
     }
 
     return {
-      name: path.basename(filepath, path.extname(filepath)),
+      name: "default",
       isDefaultExport: true,
     };
   }
