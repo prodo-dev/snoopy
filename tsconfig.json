@@ -20,6 +20,7 @@
     {"path": "packages/cli"},
     {"path": "packages/server"},
     {"path": "packages/ui"},
-    {"path": "packages/search"}
+    {"path": "packages/search"},
+    {"path": "packages/vscode-plugin"}
   ]
 }
