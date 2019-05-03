@@ -43,6 +43,12 @@ export const generateComponentsFileContents = async (
   return `
 ${importLines}
 
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+
+export const UserReact = React;
+export const UserReactDOM = ReactDOM;
+
 export const components = [
   ${componentsArrayString}
 ];

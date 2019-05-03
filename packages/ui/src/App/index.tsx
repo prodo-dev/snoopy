@@ -10,6 +10,7 @@ import {Component, Theme} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import {darkTheme} from "../styles/theme";
+import {components, themes} from "./userImport";
 
 import "./index.css";
 
@@ -28,7 +29,6 @@ const ComponentPageWithProps = (
 const WithComponents = (Component: React.ComponentType<any>) => (
   props: any,
 ) => {
-  const {components, themes} = require(process.env.PRODO_COMPONENTS_FILE!);
   return <Component components={components} themes={themes} {...props} />;
 };
 
