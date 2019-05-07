@@ -15,6 +15,7 @@ const StyledExample = styled.div`
   margin: ${margins.none} ${margins.medium} ${margins.medium} ${margins.none};
   border: 1px solid ${props => props.theme.colors.border};
   border-radius: 4px;
+  height: 100%;
 `;
 
 const Container = styled.div`

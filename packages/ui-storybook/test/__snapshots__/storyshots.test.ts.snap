@@ -138,7 +138,7 @@ exports[`Storyshots Component default example 1`] = `
     className="sc-bZQynM HQzKM"
   >
     <div
-      className="sc-bdVaJa hLhmaC"
+      className="sc-bdVaJa eNmidS"
     >
       <div
         className="example-title sc-bxivhb gblRRH"
@@ -175,7 +175,7 @@ exports[`Storyshots Component examples provided 1`] = `
     className="sc-bZQynM HQzKM"
   >
     <div
-      className="sc-bdVaJa hLhmaC"
+      className="sc-bdVaJa eNmidS"
     >
       <div
         className="example-title sc-bxivhb gblRRH"
@@ -202,7 +202,7 @@ exports[`Storyshots Component examples provided 1`] = `
       </div>
     </div>
     <div
-      className="sc-bdVaJa hLhmaC"
+      className="sc-bdVaJa eNmidS"
     >
       <div
         className="example-title sc-bxivhb gblRRH"
@@ -240,7 +240,7 @@ exports[`Storyshots Component with react state 1`] = `
     className="sc-bZQynM HQzKM"
   >
     <div
-      className="sc-bdVaJa hLhmaC"
+      className="sc-bdVaJa eNmidS"
     >
       <div
         className="example-title sc-bxivhb gblRRH"
@@ -276,7 +276,7 @@ exports[`Storyshots Component with react state 1`] = `
 
 exports[`Storyshots Example Basic 1`] = `
 <div
-  className="sc-bdVaJa hLhmaC"
+  className="sc-bdVaJa eNmidS"
 >
   <div
     className="example-title sc-bxivhb gblRRH"
@@ -299,7 +299,7 @@ exports[`Storyshots Example Basic 1`] = `
 
 exports[`Storyshots Example Example 1 1`] = `
 <div
-  className="sc-bdVaJa hLhmaC"
+  className="sc-bdVaJa eNmidS"
 >
   <div
     className="example-title sc-bxivhb gblRRH"
