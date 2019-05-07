@@ -41,16 +41,15 @@ const Title = styled.div`
 `;
 
 const randId = () =>
-  "_" +
   Math.random()
     .toString(36)
     .substr(2, 9);
 
 class NoUpdate extends React.Component<Props> {
-  private id: string = randId();
+  private id: string = `example-${randId()}`;
 
   public componentDidMount() {
-    renderExample(this.props.example, this.id);
+    renderExample(this.props.example, this.props.userTheme, this.id);
   }
 
   public shouldComponentUpdate() {

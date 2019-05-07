@@ -1,14 +1,29 @@
-import "react";
 import {Component, Example, Theme} from "../models";
+import {ThemeProvider} from "styled-components";
 
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
 
+const {UserReact, UserReactDOM} = userImport;
+const React = UserReact;
+
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
-const {UserReactDOM} = userImport;
 
 export {components, themes};
 
-export const renderExample = (example: Example, divId: string) => {
-  UserReactDOM.render(example.jsx, document.getElementById(divId));
+export const renderExample = (
+  example: Example,
+  theme: Theme,
+  divId: string,
+) => {
+  const UserComponent = () =>
+    theme ? (
+      <ThemeProvider theme={theme as any}>
+        <>{example.jsx}</>
+      </ThemeProvider>
+    ) : (
+      <>{example.jsx}</>
+    );
+
+  UserReactDOM.render(<UserComponent />, document.getElementById(divId));
 };
