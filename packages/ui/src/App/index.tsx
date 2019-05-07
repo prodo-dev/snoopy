@@ -25,10 +25,10 @@ const ComponentPageWithProps = (
   return <ComponentPage component={component} {...props} />;
 };
 
-// tslint:disable-next-line:no-shadowed-variable
-const WithComponents = (Component: React.ComponentType<any>) => (
-  props: any,
-) => {
+const WithComponents = <Props extends {}>(
+  // tslint:disable-next-line:no-shadowed-variable
+  Component: React.ComponentType<Props>,
+) => (props: Props) => {
   return <Component components={components} themes={themes} {...props} />;
 };
 
