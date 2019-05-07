@@ -48,6 +48,13 @@ import * as ReactDOM from "react-dom";
 
 export { React as UserReact, ReactDOM as UserReactDOM };
 
+export let StyledComponents;
+try {
+  StyledComponents = require("styled-components");
+} catch (e) {
+  StyledComponents = null;
+}
+
 export const components = [
   ${componentsArrayString}
 ];
