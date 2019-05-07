@@ -31,7 +31,7 @@ export const darkTheme: Theme = {
     border: "#444851",
     text: "#f8f8f2",
     textSecondary: "#00e3a0",
-    error: "#d41717",
+    error: "#E00700",
   },
   fonts: {
     text: "'Ubuntu', sans-serif",
