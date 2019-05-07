@@ -1,7 +1,9 @@
-import {Component, Example, Theme} from "../models";
 import {ThemeProvider} from "styled-components";
+import {Component, Example, Theme} from "../models";
 
-const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
+// tslint:disable-next-line:no-var-requires
+const userImport = require(process.env.PRODO_COMPONENTS_FILE ||
+  "componentsFile");
 
 const {UserReact, UserReactDOM} = userImport;
 const React = UserReact;
@@ -25,5 +27,9 @@ export const renderExample = (
       <>{example.jsx}</>
     );
 
-  UserReactDOM.render(<UserComponent />, document.getElementById(divId));
+  setTimeout(
+    () =>
+      UserReactDOM.render(<UserComponent />, document.getElementById(divId)),
+    0,
+  );
 };
