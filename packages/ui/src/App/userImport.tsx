@@ -2,8 +2,7 @@ import {ThemeProvider} from "styled-components";
 import {Component, Example, Theme} from "../models";
 
 // tslint:disable-next-line:no-var-requires
-const userImport = require(process.env.PRODO_COMPONENTS_FILE ||
-  "componentsFile");
+const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
 
 const {UserReact, UserReactDOM} = userImport;
 const React = UserReact;
