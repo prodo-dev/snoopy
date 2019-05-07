@@ -26,9 +26,5 @@ export const renderExample = (
       <>{example.jsx}</>
     );
 
-  setTimeout(
-    () =>
-      UserReactDOM.render(<UserComponent />, document.getElementById(divId)),
-    0,
-  );
+  UserReactDOM.render(<UserComponent />, document.getElementById(divId));
 };

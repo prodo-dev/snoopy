@@ -1,10 +1,6 @@
 import "jest-dom/extend-expect"; // tslint:disable-line no-submodule-imports
 import * as React from "react";
-import {
-  cleanup,
-  render as renderRaw,
-  waitForDomChange,
-} from "react-testing-library";
+import {cleanup, render as renderRaw} from "react-testing-library";
 
 import {ThemeProvider} from "styled-components";
 import Component from "../../src/components/Component";
@@ -32,7 +28,6 @@ const Test: ComponentModel = {
 
 test("renders component with no examples", async () => {
   const {container} = render(<Component component={Test} />);
-  await waitForDomChange({container});
 
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Default",
@@ -46,7 +41,6 @@ test("renders component with single example", async () => {
   ];
 
   const {container} = render(<Component component={Test} />);
-  await waitForDomChange({container});
 
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Example 1",
@@ -61,7 +55,6 @@ test("renders component with multiple examples", async () => {
   ];
 
   const {container} = render(<Component component={Test} />);
-  await waitForDomChange({container});
 
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Example 1",
