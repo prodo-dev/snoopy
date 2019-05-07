@@ -11,10 +11,26 @@ const outFile = path.resolve(outDir, "index.html");
 export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   const app = Express();
 
-  const bundler = createBundler(outDir, outFile, searchDir);
-  app.use(bundler.middleware());
+  const componentsFile = path.join(
+    searchDir,
+    "node_modules",
+    "@prodo",
+    "components",
+    "index.ts",
+  );
 
-  const componentsFile = path.resolve(clientDir, "src/components.ts");
+  await fs.promises.mkdir(path.dirname(componentsFile), {recursive: true});
+  await fs.promises.writeFile(componentsFile, "");
+
+  const bundler = createBundler(outDir, outFile, searchDir, componentsFile);
+  await bundler.bundle();
+
+  app.use(Express.static(outDir));
+
+  app.get("/*", (_, response) => {
+    response.sendFile((bundler as any).mainBundle.name);
+  });
+
   fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
     // TODO: Try/catch?
     if (checkMatch(filename)) {
