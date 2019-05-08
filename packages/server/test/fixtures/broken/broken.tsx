@@ -1,0 +1,2 @@
+// @prodo
+cnst foo = () => <div>
