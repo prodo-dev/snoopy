@@ -8,9 +8,14 @@ export default (
   outDir: string,
   outFile: string,
   searchDir: string,
+  componentsFile: string,
   options: Bundler.ParcelOptions = {},
 ) => {
   process.env.PRODO_SEARCH_DIRECTORY = searchDir;
+  process.env.PRODO_COMPONENTS_FILE = path.relative(
+    path.join(clientDir, "src", "App"),
+    componentsFile,
+  );
 
   options = {
     outDir,

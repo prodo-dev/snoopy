@@ -1,5 +1,6 @@
 import * as React from "react";
-import styled, {ThemeProvider} from "styled-components";
+import styled from "styled-components";
+import {renderExample} from "../../App/userImport";
 import backgroundImage from "../../media/transparent_background.png";
 import {Example} from "../../models";
 import {margins, paddings} from "../../styles";
@@ -53,27 +54,36 @@ const renderExampleError = (error: Error) => (
   </ExampleError>
 );
 
+const randId = () =>
+  Math.random()
+    .toString(36)
+    .substr(2, 9);
+
+class NoUpdate extends React.Component<Props> {
+  private id: string = `example-${randId()}`;
+
+  public componentDidMount() {
+    renderExample(this.props.example, this.props.userTheme, this.id);
+  }
+
+  public shouldComponentUpdate() {
+    return false;
+  }
+
+  public render() {
+    return <div id={this.id} />;
+  }
+}
+
 export default (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.name}</Title>
-    {props.userTheme ? (
+    <Container>
       <ErrorBoundary renderError={renderExampleError}>
-        <ThemeProvider theme={props.userTheme}>
-          <Container>
-            <JsxContainer className="example-contents">
-              {props.example.jsx}
-            </JsxContainer>
-          </Container>
-        </ThemeProvider>
+        <JsxContainer className="example-contents">
+          <NoUpdate {...props} />
+        </JsxContainer>
       </ErrorBoundary>
-    ) : (
-      <ErrorBoundary renderError={renderExampleError}>
-        <Container>
-          <JsxContainer className="example-contents">
-            {props.example.jsx}
-          </JsxContainer>
-        </Container>
-      </ErrorBoundary>
-    )}
+    </Container>
   </StyledExample>
 );
