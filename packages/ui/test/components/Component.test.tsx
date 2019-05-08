@@ -22,6 +22,7 @@ const TestComponent: React.ComponentType<any> & {examples?: ExampleModel[]} = ({
 }) => <div>hello {name || "you"}</div>;
 
 const Test: ComponentModel = {
+  path: "src/TestComponent.js",
   name: "TestComponent",
   component: TestComponent,
 };

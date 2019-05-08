@@ -9,10 +9,12 @@ export interface File {
   errors: FileError[];
 }
 
-export interface FileExport {
-  name: string;
-  isDefaultExport: boolean;
-}
+export type FileExport =
+  | {isDefaultExport: true}
+  | {
+      isDefaultExport: false;
+      name: string;
+    };
 
 export class FileError extends Error {
   public readonly filepath: string;

@@ -10,9 +10,9 @@ import {BrowserRouter as Router} from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 
 const components = [
-  {name: "App", component: () => <div />},
-  {name: "ComponentA", component: () => <div />},
-  {name: "ComponentB", component: () => <div />},
+  {path: "foo/bar", name: "App", component: () => <div />},
+  {path: "foo/bar", name: "ComponentA", component: () => <div />},
+  {path: "foo/bar", name: "ComponentB", component: () => <div />},
 ];
 
 storiesOf("Sidebar", module)

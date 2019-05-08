@@ -1,7 +1,6 @@
-import * as path from "path";
 import {ExtractFunction, getFile} from "./file";
 import {File, FileError} from "./types";
-import {capitalize, exportDefaultRegex, indexFileRegex} from "./utils";
+import {exportDefaultRegex} from "./utils";
 
 const prodoCommentRegex = /^\/\/\s*@prodo(\s|$)/;
 
@@ -17,15 +16,7 @@ const extractComponent: ExtractFunction = (line, filepath) => {
   }
 
   if (exportDefaultRegex.test(line)) {
-    if (indexFileRegex.test(filepath)) {
-      return {
-        name: capitalize(path.basename(path.dirname(filepath))),
-        isDefaultExport: true,
-      };
-    }
-
     return {
-      name: capitalize(path.basename(filepath, path.extname(filepath))),
       isDefaultExport: true,
     };
   }

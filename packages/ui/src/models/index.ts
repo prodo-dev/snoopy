@@ -1,6 +1,7 @@
 import * as React from "react";
 
 export interface Component {
+  path: string;
   name: string;
   component: React.ComponentType<any>;
 }
