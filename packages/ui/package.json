@@ -1,5 +1,5 @@
 {
-  "name": "@prodo/snoopy-ui",
+  "name": "@prodo-ai/snoopy-ui",
   "version": "1.0.0",
   "main": "public/index.html",
   "license": "MIT",
@@ -11,14 +11,14 @@
     "start": "parcel public/index.html",
     "build": "tsc --build",
     "clean": "rm -rf dist",
-    "test": "PRODO_COMPONENTS_FILE=@prodo/components jest",
+    "test": "PRODO_COMPONENTS_FILE=@prodo-ai/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@prodo/snoopy-api": "^1.0.0",
+    "@prodo-ai/snoopy-api": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-responsive": "^6.1.1",
@@ -51,7 +51,7 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
-      "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
+      "@prodo-ai/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
   },
   "alias": {

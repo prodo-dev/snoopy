@@ -1,4 +1,4 @@
-import {checkMatch} from "@prodo/snoopy-search";
+import {checkMatch} from "@prodo-ai/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
@@ -11,7 +11,7 @@ import registerWebsockets from "./websockets";
 const writeFile = promisify(fs.writeFile);
 
 const clientDir = path.dirname(
-  path.dirname(require.resolve("@prodo/snoopy-ui")),
+  path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
 );
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");

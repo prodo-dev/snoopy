@@ -1,5 +1,5 @@
 {
-  "name": "@prodo/snoopy-server",
+  "name": "@prodo-ai/snoopy-server",
   "version": "1.0.0",
   "main": "lib/index.js",
   "license": "MIT",
@@ -14,9 +14,9 @@
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
-    "@prodo/snoopy-api": "1.0.0",
-    "@prodo/snoopy-search": "1.0.0",
-    "@prodo/snoopy-ui": "1.0.0",
+    "@prodo-ai/snoopy-api": "1.0.0",
+    "@prodo-ai/snoopy-search": "1.0.0",
+    "@prodo-ai/snoopy-ui": "1.0.0",
     "express": "^4.16.4",
     "make-dir": "^3.0.0",
     "parcel-bundler": "^1.12.3",

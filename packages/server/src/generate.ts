@@ -1,4 +1,4 @@
-import {searchCodebase} from "@prodo/snoopy-search";
+import {searchCodebase} from "@prodo-ai/snoopy-search";
 import * as path from "path";
 
 export const generateComponentsFileContents = async (

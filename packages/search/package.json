@@ -1,5 +1,5 @@
 {
-  "name": "@prodo/snoopy-search",
+  "name": "@prodo-ai/snoopy-search",
   "version": "1.0.0",
   "main": "lib/index.js",
   "license": "MIT",

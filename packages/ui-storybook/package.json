@@ -1,5 +1,5 @@
 {
-  "name": "@prodo/snoopy-ui-storybook",
+  "name": "@prodo-ai/snoopy-ui-storybook",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@prodo/snoopy-ui": "1.0.0",
+    "@prodo-ai/snoopy-ui": "1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",

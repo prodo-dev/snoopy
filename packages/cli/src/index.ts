@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {start} from "@prodo/snoopy-server";
+import {start} from "@prodo-ai/snoopy-server";
 import * as yargs from "yargs";
 
 const startServer = async () => {
