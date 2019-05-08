@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsc --build",
     "clean": "rm -rf lib",
@@ -12,7 +13,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@prodo-ai/snoopy-ui": "1.0.0",
+    "@prodo-ai/snoopy-ui": "0.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",

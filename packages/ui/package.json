@@ -1,6 +1,6 @@
 {
   "name": "@prodo-ai/snoopy-ui",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "public/index.html",
   "license": "MIT",
   "files": [
@@ -18,7 +18,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@prodo-ai/snoopy-api": "^1.0.0",
+    "@prodo-ai/snoopy-api": "0.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-responsive": "^6.1.1",

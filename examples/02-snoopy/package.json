@@ -2,6 +2,7 @@
   "name": "@prodo/snoopy-ui-example",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "license": "MIT",
   "scripts": {
     "start": "parcel public/index.html",

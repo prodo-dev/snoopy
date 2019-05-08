@@ -1,4 +1,4 @@
-import {WebSocketEvents} from "@prodo/snoopy-api";
+import {WebSocketEvents} from "@prodo-ai/snoopy-api";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
