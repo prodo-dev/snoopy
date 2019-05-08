@@ -16,6 +16,36 @@ test("gets theme imports for single named export", () => {
   });
 });
 
+test("gets component imports for 'export var'", () => {
+  const contents = `
+// @prodo:theme
+export var pinkTheme = {}
+`.trim();
+
+  const componentImport = getThemesFile(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [{name: "pinkTheme", isDefaultExport: false}],
+    errors: [],
+  });
+});
+
+test("gets component imports for 'export let'", () => {
+  const contents = `
+// @prodo:theme
+export let pinkTheme = {}
+`.trim();
+
+  const componentImport = getThemesFile(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [{name: "pinkTheme", isDefaultExport: false}],
+    errors: [],
+  });
+});
+
 test("gets theme imports for multiple named exports", () => {
   const contents = `
 // @prodo:theme
