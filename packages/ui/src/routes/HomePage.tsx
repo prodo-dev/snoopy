@@ -1,4 +1,5 @@
 import * as React from "react";
+import {testComponents} from "../../test/fixtures";
 import ComponentList from "../components/ComponentList";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {Component} from "../models";
@@ -21,4 +22,16 @@ const HomePage = (props: Props) => (
   </StyledPage>
 );
 
+HomePage.examples = [
+  {
+    name: "No components",
+    jsx: <HomePage components={[]} />,
+  },
+  {
+    name: "With components",
+    jsx: <HomePage components={testComponents} />,
+  },
+];
+
+// @prodo
 export default HomePage;

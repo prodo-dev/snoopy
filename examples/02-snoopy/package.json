@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "parcel public/index.html",
+    "build": "tsc --build",
     "clean": "rm -rf dist",
     "test": "jest",
     "lint": "set -ex; tsc --build; tslint --project ."

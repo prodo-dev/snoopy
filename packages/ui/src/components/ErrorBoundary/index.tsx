@@ -29,4 +29,16 @@ class ErrorBoundary extends React.Component<Props> {
   }
 }
 
+(ErrorBoundary as any).examples = [
+  {
+    name: "No error",
+    jsx: (
+      <ErrorBoundary>
+        <div>Hello world</div>
+      </ErrorBoundary>
+    ),
+  },
+];
+
+// @prodo
 export default ErrorBoundary;

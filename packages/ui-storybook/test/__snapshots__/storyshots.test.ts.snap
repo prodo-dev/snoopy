@@ -2,45 +2,45 @@
 
 exports[`Storyshots Component List empty 1`] = `
 <div
-  className="component-list sc-bdVaJa bPGLpq"
+  className="component-list sc-bwzfXH kulSxP"
 />
 `;
 
 exports[`Storyshots Component List multiple items 1`] = `
 <div
-  className="component-list sc-bdVaJa bPGLpq"
+  className="component-list sc-bwzfXH kulSxP"
 >
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/One"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       One
     </div>
   </a>
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/Two"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       Two
     </div>
   </a>
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/Three"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       Three
@@ -51,39 +51,39 @@ exports[`Storyshots Component List multiple items 1`] = `
 
 exports[`Storyshots Component List multiple items with selection 1`] = `
 <div
-  className="component-list sc-bdVaJa bPGLpq"
+  className="component-list sc-bwzfXH kulSxP"
 >
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/One"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       One
     </div>
   </a>
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/Two"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kbXlZN"
+      className="sc-htpNat gqeYsV"
       selected={true}
     >
       Two
     </div>
   </a>
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/Three"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       Three
@@ -94,15 +94,15 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
 
 exports[`Storyshots Component List single item 1`] = `
 <div
-  className="component-list sc-bdVaJa bPGLpq"
+  className="component-list sc-bwzfXH kulSxP"
 >
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/One"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       One
@@ -113,15 +113,15 @@ exports[`Storyshots Component List single item 1`] = `
 
 exports[`Storyshots Component List single item with selection 1`] = `
 <div
-  className="component-list sc-bdVaJa bPGLpq"
+  className="component-list sc-bwzfXH kulSxP"
 >
   <a
-    className="sc-htpNat jZGOfu"
+    className="sc-bxivhb jqxlnH"
     href="/One"
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-htpNat fmLBeK"
       selected={false}
     >
       One
@@ -132,13 +132,13 @@ exports[`Storyshots Component List single item with selection 1`] = `
 
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-ifAKCX gQufWD"
+  className="sidebar sc-EHOje jRoutO"
 >
   <div
-    className="sc-dnqmqq hYQUsn"
+    className="sc-iwsKbI cFpGCb"
   >
     <span
-      className="sidebar-toggle sc-iwsKbI dguIJj"
+      className="sidebar-toggle sc-gZMcBi foRkSn"
       onClick={[Function]}
     >
       <svg
@@ -165,96 +165,96 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open and empty 1`] = `
 <div
-  className="sidebar sc-ifAKCX kWSyEh"
+  className="sidebar sc-EHOje fyashP"
 >
   <div
-    className="sc-dnqmqq hYQUsn"
+    className="sc-iwsKbI cFpGCb"
   >
     <a
-      className="sc-bZQynM cykBRJ"
+      className="sc-gzVnrw frFvIN"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-gzVnrw ksGCqW"
+        className="title sc-htoDjs hFbBHI"
       >
         <img
           alt=""
-          className="logo sc-bxivhb ddmPAr"
+          className="logo sc-ifAKCX gsfjvQ"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-htoDjs iMlsLT"
+    className="sc-dnqmqq fNbSbj"
   />
   <div
-    className="component-list sc-bdVaJa bPGLpq"
+    className="component-list sc-bwzfXH kulSxP"
   />
 </div>
 `;
 
 exports[`Storyshots Sidebar open with components 1`] = `
 <div
-  className="sidebar sc-ifAKCX kWSyEh"
+  className="sidebar sc-EHOje fyashP"
 >
   <div
-    className="sc-dnqmqq hYQUsn"
+    className="sc-iwsKbI cFpGCb"
   >
     <a
-      className="sc-bZQynM cykBRJ"
+      className="sc-gzVnrw frFvIN"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-gzVnrw ksGCqW"
+        className="title sc-htoDjs hFbBHI"
       >
         <img
           alt=""
-          className="logo sc-bxivhb ddmPAr"
+          className="logo sc-ifAKCX gsfjvQ"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-htoDjs iMlsLT"
+    className="sc-dnqmqq fNbSbj"
   />
   <div
-    className="component-list sc-bdVaJa bPGLpq"
+    className="component-list sc-bwzfXH kulSxP"
   >
     <a
-      className="sc-htpNat jZGOfu"
+      className="sc-bxivhb jqxlnH"
       href="/App"
       onClick={[Function]}
     >
       <div
-        className="sc-bwzfXH kkmwXZ"
+        className="sc-htpNat fmLBeK"
         selected={false}
       >
         App
       </div>
     </a>
     <a
-      className="sc-htpNat jZGOfu"
+      className="sc-bxivhb jqxlnH"
       href="/ComponentA"
       onClick={[Function]}
     >
       <div
-        className="sc-bwzfXH kkmwXZ"
+        className="sc-htpNat fmLBeK"
         selected={false}
       >
         ComponentA
       </div>
     </a>
     <a
-      className="sc-htpNat jZGOfu"
+      className="sc-bxivhb jqxlnH"
       href="/ComponentB"
       onClick={[Function]}
     >
       <div
-        className="sc-bwzfXH kkmwXZ"
+        className="sc-htpNat fmLBeK"
         selected={false}
       >
         ComponentB

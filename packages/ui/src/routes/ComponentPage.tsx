@@ -1,6 +1,7 @@
 import * as React from "react";
 import Select from "react-select";
 import styled from "styled-components";
+import {testComponents, testThemes} from "../../test/fixtures";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
@@ -88,4 +89,28 @@ const ComponentPage = (props: Props) => {
   );
 };
 
+ComponentPage.examples = [
+  {
+    name: "No themes",
+    jsx: (
+      <ComponentPage
+        components={testComponents}
+        themes={[]}
+        component={testComponents[0]}
+      />
+    ),
+  },
+  {
+    name: "With themes",
+    jsx: (
+      <ComponentPage
+        components={testComponents}
+        themes={testThemes}
+        component={testComponents[0]}
+      />
+    ),
+  },
+];
+
+// @prodo
 export default ComponentPage;

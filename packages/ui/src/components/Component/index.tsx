@@ -1,6 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Component, Example as ExampleModel} from "../../models";
+import {
+  CounterModel,
+  HelloNameModel,
+  HelloWorldModel,
+} from "../../../test/fixtures";
+import {
+  Component as ComponentModel,
+  Example as ExampleModel,
+} from "../../models";
 import {paddings} from "../../styles";
 import Example from "../Example";
 
@@ -14,7 +22,7 @@ const ExamplesContainer = styled.div`
 `;
 
 interface Props {
-  component: Component;
+  component: ComponentModel;
   userTheme?: any;
 }
 
@@ -45,4 +53,20 @@ const Component = (props: Props) => {
   );
 };
 
+Component.examples = [
+  {
+    name: "Default",
+    jsx: <Component component={HelloWorldModel} />,
+  },
+  {
+    name: "Examples provided",
+    jsx: <Component component={HelloNameModel} />,
+  },
+  {
+    name: "With React state",
+    jsx: <Component component={CounterModel} />,
+  },
+];
+
+// @prodo
 export default Component;
