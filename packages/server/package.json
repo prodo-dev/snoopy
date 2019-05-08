@@ -10,6 +10,7 @@
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
     "clean": "rm -rf .cache lib",
+    "test": "jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
@@ -24,5 +25,8 @@
     "@types/parcel-bundler": "^1.12.0",
     "@types/ws": "^6.0.1",
     "ts-node": "^8.1.0"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }
