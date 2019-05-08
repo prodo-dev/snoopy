@@ -34,6 +34,36 @@ export default App;
   });
 });
 
+test("gets component imports for 'export var'", () => {
+  const contents = `
+// @prodo
+export var One = () => {};
+`.trim();
+
+  const componentImport = getComponentsFile(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [{name: "One", isDefaultExport: false}],
+    errors: [],
+  });
+});
+
+test("gets component imports for 'export let'", () => {
+  const contents = `
+// @prodo
+export let One = () => {};
+`.trim();
+
+  const componentImport = getComponentsFile(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [{name: "One", isDefaultExport: false}],
+    errors: [],
+  });
+});
+
 test("gets component imports for multiple named exports", () => {
   const contents = `
 // @prodo
@@ -238,7 +268,7 @@ export class Button extends React.Component {}
 
 test("doesn't match themes", () => {
   const contents = `
-// @prodo 
+// @prodo
 export const Button = () => {};
 
 // @prodo:theme

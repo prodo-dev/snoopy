@@ -67,8 +67,12 @@ class NoUpdate extends React.Component<Props> {
     renderExample(this.props.example, this.props.userTheme, this.id);
   }
 
-  public shouldComponentUpdate() {
-    return false;
+  public componentDidUpdate() {
+    renderExample(this.props.example, this.props.userTheme, this.id);
+  }
+
+  public shouldComponentUpdate(nextProps: Props) {
+    return this.props.userTheme !== nextProps.userTheme;
   }
 
   public render() {

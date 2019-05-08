@@ -4,7 +4,7 @@ import {exportDefaultRegex} from "./utils";
 
 const prodoCommentRegex = /^\/\/\s*@prodo(\s|$)/;
 
-const exportComponentRegex = /\bexport\s+(?:(?:const|class)\s+)?([A-Z]\w+)/;
+const exportComponentRegex = /\bexport\s+(?:(?:const|class|var|let)\s+)?([A-Z]\w+)/;
 
 const extractComponent: ExtractFunction = (line, filepath) => {
   const match = exportComponentRegex.exec(line);
