@@ -6,6 +6,7 @@ import * as path from "path";
 import {promisify} from "util";
 import createBundler from "./bundler";
 import registerWebsockets from "./websockets";
+import applyAliases from "./aliases";
 
 const mkdir = promisify(fs.mkdir);
 const writeFile = promisify(fs.writeFile);
@@ -37,6 +38,8 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
     searchDir,
     componentsFile,
   });
+  applyAliases(bundler);
+
   await bundler.bundle();
 
   app.use(Express.static(outDir));
