@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import * as React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
@@ -32,14 +33,17 @@ interface Props {
   components: Component[];
 }
 
-export default (props: Props) => (
-  <StyledComponentList className="component-list">
-    {props.components.map(({path, name}) => (
-      <StyledLink to={`/${path}/${name}`} key={`${path}:${name}`}>
-        <ComponentName selected={props.selected === name}>
-          {path}:{name}
-        </ComponentName>
-      </StyledLink>
-    ))}
-  </StyledComponentList>
-);
+export default (props: Props) => {
+  const files = _.uniq(props.components.map(({path}) => path));
+  return (
+    <StyledComponentList className="component-list">
+      {files.map(path => (
+        <StyledLink to={`/${path}`} key={path}>
+          <ComponentName selected={props.selected === path}>
+            {path}
+          </ComponentName>
+        </StyledLink>
+      ))}
+    </StyledComponentList>
+  );
+};
