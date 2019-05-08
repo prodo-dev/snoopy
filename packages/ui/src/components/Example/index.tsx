@@ -44,7 +44,7 @@ const Title = styled.div`
 
 const ExampleError = styled.div`
   color: ${props => props.theme.colors.error};
-  background-color: ${props => props.theme.colors.text};
+  background-color: ${props => props.theme.colors.errorBg};
   padding: ${paddings.small};
 `;
 
