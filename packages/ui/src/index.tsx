@@ -1,7 +1,7 @@
 import {WebSocketEvents} from "@prodo/snoopy-api";
+import {createBrowserHistory} from "history";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {createBrowserHistory} from "history";
 
 const render = () => {
   const App = require("./App").default;

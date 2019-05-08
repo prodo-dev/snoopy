@@ -1,12 +1,12 @@
-import registerEndpoints from "./rest";
-import { checkMatch } from "@prodo/snoopy-search";
+import {checkMatch} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
-import { promisify } from "util";
+import {promisify} from "util";
 import createBundler from "./bundler";
+import registerEndpoints from "./rest";
 import registerWebsockets from "./websockets";
 
 const writeFile = promisify(fs.writeFile);
@@ -42,7 +42,7 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
 
   app.use(Express.static(outDir));
 
-  fs.watch(process.cwd(), { recursive: true }, async (_, filename) => {
+  fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
     // TODO: Try/catch?
     if (checkMatch(filename)) {
       // We need to do this to avoid compiling and pushing `filename` at the
