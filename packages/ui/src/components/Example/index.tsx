@@ -4,6 +4,7 @@ import {renderExample} from "../../App/userImport";
 import backgroundImage from "../../media/transparent_background.png";
 import {Example} from "../../models";
 import {margins, paddings} from "../../styles";
+import ErrorBoundary from "../ErrorBoundary";
 
 interface Props {
   example: Example;
@@ -15,6 +16,7 @@ const StyledExample = styled.div`
   margin: ${margins.none} ${margins.medium} ${margins.medium} ${margins.none};
   border: 1px solid ${props => props.theme.colors.border};
   border-radius: 4px;
+  height: 100%;
 `;
 
 const Container = styled.div`
@@ -39,6 +41,18 @@ const Title = styled.div`
   margin-bottom: ${margins.small};
   color: ${props => props.theme.colors.text};
 `;
+
+const ExampleError = styled.div`
+  color: ${props => props.theme.colors.error};
+  background-color: ${props => props.theme.colors.errorBg};
+  padding: ${paddings.small};
+`;
+
+const renderExampleError = (error: Error) => (
+  <ExampleError>
+    Error: {error && error.message && error.message.split("\n")[0]}
+  </ExampleError>
+);
 
 const randId = () =>
   Math.random()
@@ -65,9 +79,11 @@ export default (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.name}</Title>
     <Container>
-      <JsxContainer className="example-contents">
-        <NoUpdate {...props} />
-      </JsxContainer>
+      <ErrorBoundary renderError={renderExampleError}>
+        <JsxContainer className="example-contents">
+          <NoUpdate {...props} />
+        </JsxContainer>
+      </ErrorBoundary>
     </Container>
   </StyledExample>
 );

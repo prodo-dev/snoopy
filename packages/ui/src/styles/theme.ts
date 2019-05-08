@@ -9,6 +9,8 @@ export interface Theme {
     border: Color;
     text: Color;
     textSecondary: Color;
+    error: Color;
+    errorBg: Color;
   };
   fonts: {
     text: Font;
@@ -30,6 +32,8 @@ export const darkTheme: Theme = {
     border: "#444851",
     text: "#f8f8f2",
     textSecondary: "#00e3a0",
+    error: "#E00700",
+    errorBg: "#f8f8f2",
   },
   fonts: {
     text: "'Ubuntu', sans-serif",
