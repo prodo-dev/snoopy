@@ -10,6 +10,7 @@ export const HelloWorldExample = {name: "Default", jsx: <HelloWorld />};
 HelloWorld.examples = [HelloWorldExample];
 export const HelloWorldModel: Component = {
   name: "HelloWorld",
+  path: "HelloWorld.tsx",
   component: HelloWorld,
 };
 
@@ -22,6 +23,7 @@ HelloName.examples = [
 ];
 export const HelloNameModel: Component = {
   name: "HelloName",
+  path: "HelloName.tsx",
   component: HelloName,
 };
 
@@ -40,6 +42,7 @@ export const CounterExample = {name: "Counter", jsx: <Counter />};
 Counter.examples = [CounterExample];
 export const CounterModel: Component = {
   name: "Counter",
+  path: "Counter.tsx",
   component: Counter,
 };
 

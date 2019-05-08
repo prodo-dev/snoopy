@@ -102,7 +102,7 @@ export default () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/Button.ts",
-    fileExports: [{name: "Button", isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true}],
     errors: [],
   });
 });
@@ -120,7 +120,7 @@ export default () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/Button",
-    fileExports: [{name: "Button", isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true}],
     errors: [],
   });
 });
@@ -216,7 +216,7 @@ export default () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file",
-    fileExports: [{name: "File", isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true}],
     errors: [],
   });
 });

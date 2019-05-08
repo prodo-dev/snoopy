@@ -35,9 +35,11 @@ interface Props {
 
 const ComponentList = (props: Props) => (
   <StyledComponentList className="component-list">
-    {props.components.map(({name}) => (
-      <StyledLink to={`/${name}`} key={name}>
-        <ComponentName selected={props.selected === name}>{name}</ComponentName>
+    {props.components.map(({path, name}) => (
+      <StyledLink to={`/${path}/${name}`} key={`${path}:${name}`}>
+        <ComponentName selected={props.selected === name}>
+          {path}:{name}
+        </ComponentName>
       </StyledLink>
     ))}
   </StyledComponentList>
