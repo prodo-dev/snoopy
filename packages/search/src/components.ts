@@ -2,7 +2,7 @@ import {ExtractFunction, getFile} from "./file";
 import {File, FileError} from "./types";
 import {exportDefaultRegex} from "./utils";
 
-const prodoCommentRegex = /^\/\/\s*@prodo\b/;
+const prodoCommentRegex = /^\/\/\s*@prodo(\s|$)/;
 
 const exportComponentRegex = /\bexport\s+(?:(?:const|class)\s+)?([A-Z]\w+)/;
 

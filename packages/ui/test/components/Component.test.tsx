@@ -29,6 +29,7 @@ const Test: ComponentModel = {
 
 test("renders component with no examples", async () => {
   const {container} = render(<Component component={Test} />);
+
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Default",
   );
@@ -41,6 +42,7 @@ test("renders component with single example", async () => {
   ];
 
   const {container} = render(<Component component={Test} />);
+
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Example 1",
   );

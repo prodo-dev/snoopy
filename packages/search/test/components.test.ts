@@ -235,3 +235,21 @@ export class Button extends React.Component {}
     errors: [],
   });
 });
+
+test("doesn't match themes", () => {
+  const contents = `
+// @prodo 
+export const Button = () => {};
+
+// @prodo:theme
+export const Theme = () => {};
+`.trim();
+
+  const componentImport = getComponentsFile(contents, "/path/to/file/index.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file",
+    fileExports: [{name: "Button", isDefaultExport: false}],
+    errors: [],
+  });
+});

@@ -1,13 +1,17 @@
 {
   "name": "@prodo/snoopy-ui",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "public/index.html",
   "license": "MIT",
+  "files": [
+    "public",
+    "src"
+  ],
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",
     "clean": "rm -rf dist",
-    "test": "jest",
+    "test": "PRODO_COMPONENTS_FILE=@prodo/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
@@ -39,9 +43,14 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/build/"
+    ],
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
-      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js"
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
+      "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
   },
   "alias": {
