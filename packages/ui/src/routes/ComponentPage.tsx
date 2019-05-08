@@ -5,17 +5,24 @@ import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar, {SidebarToggle} from "../components/Sidebar";
-import {Component as ComponentModel, Theme} from "../models";
+import {Context, Component as ComponentModel} from "../models";
 import {margins, paddings} from "../styles";
 
 interface Props {
-  component: ComponentModel;
+  path: string;
   components: ComponentModel[];
-  themes: Theme[];
+  context: Context;
 }
 
 const StyledComponentPage = styled.div`
+  width: 100%;
   display: flex;
+`;
+
+const Components = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 `;
 
 const ComponentContainer = styled.div`
@@ -41,10 +48,15 @@ const StyledSelect = styled(Select)`
   margin-left: ${margins.large}
 `;
 
+const Divider = styled.div`
+  margin: 0 ${margins.large};
+  border-bottom: 1px solid ${props => props.theme.colors.border};
+`;
+
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const [selectedTheme, setSelectedTheme] = React.useState(0);
-  const options = props.themes.map((theme, idx) => {
+  const options = props.context.themes.map((theme, idx) => {
     return {value: idx, label: theme.name};
   });
 
@@ -52,37 +64,44 @@ const ComponentPage = (props: Props) => {
     <StyledPage>
       <StyledComponentPage>
         <Sidebar
-          selected={props.component.name}
+          selected={props.path}
           isOpen={isSidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          components={props.components}
+          components={props.context.components}
         />
-        <ComponentContainer>
-          <StyledTitleContainer>
-            <NarrowScreen>
-              <SidebarToggle
-                isOpen={isSidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
-            </NarrowScreen>
-            <StyledTitle>{props.component.name}</StyledTitle>
-            {props.themes.length > 0 && (
-              <StyledSelect
-                onChange={(selectedOption: any) =>
-                  setSelectedTheme(selectedOption.value)
-                }
-                options={options}
-              />
-            )}
-          </StyledTitleContainer>
-          <Component
-            key={props.component.name}
-            component={props.component}
-            userTheme={
-              props.themes.length > 0 && props.themes[selectedTheme].theme
-            }
-          />
-        </ComponentContainer>
+        <Components>
+          {props.components.map((component, i) => (
+            <React.Fragment>
+              {i > 0 && <Divider />}
+              <ComponentContainer key={component.name}>
+                <StyledTitleContainer>
+                  <NarrowScreen>
+                    <SidebarToggle
+                      isOpen={isSidebarOpen}
+                      setSidebarOpen={setSidebarOpen}
+                    />
+                  </NarrowScreen>
+                  <StyledTitle>{component.name}</StyledTitle>
+                  {props.context.themes.length > 0 && (
+                    <StyledSelect
+                      onChange={(selectedOption: any) =>
+                        setSelectedTheme(selectedOption.value)
+                      }
+                      options={options}
+                    />
+                  )}
+                </StyledTitleContainer>
+                <Component
+                  component={component}
+                  userTheme={
+                    props.context.themes.length > 0 &&
+                    props.context.themes[selectedTheme].theme
+                  }
+                />
+              </ComponentContainer>
+            </React.Fragment>
+          ))}
+        </Components>
       </StyledComponentPage>
     </StyledPage>
   );
