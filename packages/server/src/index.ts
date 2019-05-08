@@ -2,7 +2,11 @@ import {checkMatch} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as path from "path";
+import {promisify} from "util";
 import createBundler from "./bundler";
+
+const mkdir = promisify(fs.mkdir);
+const writeFile = promisify(fs.writeFile);
 
 const clientDir = path.dirname(
   path.dirname(require.resolve("@prodo/snoopy-ui")),
@@ -21,8 +25,8 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
     "index.ts",
   );
 
-  await fs.promises.mkdir(path.dirname(componentsFile), {recursive: true});
-  await fs.promises.writeFile(componentsFile, "");
+  await mkdir(path.dirname(componentsFile), {recursive: true});
+  await writeFile(componentsFile, "");
 
   const bundler = createBundler({
     clientDir,
