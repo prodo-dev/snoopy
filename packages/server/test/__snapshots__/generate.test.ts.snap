@@ -2,17 +2,17 @@
 
 exports[`generateComponentsFileContents snapshot test 1`] = `
 "import {Button as Component0} from \\"example\\";
-import {Button as Component1} from \\"example/javascript.jsx\\";
-import {Button as Component2, theme as Theme0} from \\"example/mixed.tsx\\";
-import {Button as Component3} from \\"example/typescript.tsx\\";
-import Component4 from \\"example/components/DefaultExport.tsx\\";
-import {Button2 as Component5} from \\"example/components/Mixed.tsx\\";
-import Component8, {Button as Component6, Button2 as Component7} from \\"example/components/MultipleExports.tsx\\";
-import {Button as Component9} from \\"example/components/NamedExport.tsx\\";
+import Component1 from \\"example/components/DefaultExport.tsx\\";
+import {Button2 as Component2} from \\"example/components/Mixed.tsx\\";
+import Component5, {Button as Component3, Button2 as Component4} from \\"example/components/MultipleExports.tsx\\";
+import {Button as Component6} from \\"example/components/NamedExport.tsx\\";
+import {Button as Component7} from \\"example/javascript.jsx\\";
+import {Button as Component8, theme as Theme0} from \\"example/mixed.tsx\\";
 import Theme1 from \\"example/themes/default-export.ts\\";
 import {theme2 as Theme2} from \\"example/themes/mixed.ts\\";
 import Theme5, {theme as Theme3, theme2 as Theme4} from \\"example/themes/multiple-exports.ts\\";
 import {theme as Theme6} from \\"example/themes/named-export.ts\\";
+import {Button as Component9} from \\"example/typescript.tsx\\";
 
 import * as React from \\"react\\";
 import * as ReactDOM from \\"react-dom\\";
@@ -28,15 +28,15 @@ try {
 
 export const components = [
   {path: \\"\\", name: \\"Button\\", component: Component0},
-  {path: \\"javascript.jsx\\", name: \\"Button\\", component: Component1},
-  {path: \\"mixed.tsx\\", name: \\"Button\\", component: Component2},
-  {path: \\"typescript.tsx\\", name: \\"Button\\", component: Component3},
-  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component4},
-  {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component5},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"Button\\", component: Component6},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"Button2\\", component: Component7},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"default\\", component: Component8},
-  {path: \\"components/NamedExport.tsx\\", name: \\"Button\\", component: Component9}
+  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component1},
+  {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component2},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"Button\\", component: Component3},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"Button2\\", component: Component4},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"default\\", component: Component5},
+  {path: \\"components/NamedExport.tsx\\", name: \\"Button\\", component: Component6},
+  {path: \\"javascript.jsx\\", name: \\"Button\\", component: Component7},
+  {path: \\"mixed.tsx\\", name: \\"Button\\", component: Component8},
+  {path: \\"typescript.tsx\\", name: \\"Button\\", component: Component9}
 ];
 
 export const themes = [

@@ -4,7 +4,7 @@ import {exportDefaultRegex} from "./utils";
 
 const prodoThemeCommentRegex = /^\/\/\s*@prodo:theme\b/;
 
-const exportAnyRegex = /\bexport\s+(?:const\s+)?(\w+)/;
+const exportAnyRegex = /\bexport\s+(?:(?:const|var|let)\s+)?(\w+)/;
 
 const extractTheme: ExtractFunction = (line, filepath) => {
   if (exportDefaultRegex.test(line)) {
