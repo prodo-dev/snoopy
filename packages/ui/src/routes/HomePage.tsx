@@ -16,7 +16,7 @@ const HomePage = (props: Props) => (
         see them with Snoopy.
       </p>
       <h2>Your components</h2>
-      <ComponentList components={props.context.components} />
+      <ComponentList components={props.context.components} full />
     </StyledPageContents>
   </StyledPage>
 );

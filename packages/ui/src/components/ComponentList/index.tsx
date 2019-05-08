@@ -24,23 +24,33 @@ const ComponentName = styled.div<{selected?: boolean}>`
   }
 `;
 
+const Path = styled.span`
+  font-style: italic;
+  font-weight: lighter;
+  color: ${props => props.theme.colors.textTertiary};
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
 interface Props {
   selected?: string;
+  full?: boolean;
   components: Component[];
 }
 
 export default (props: Props) => {
-  const files = _.uniq(props.components.map(({path}) => path));
+  const files = _.uniq(props.components.map(({path}) => path)).map(path => ({
+    path,
+    name: _.last(path.split("/")),
+  }));
   return (
     <StyledComponentList className="component-list">
-      {files.map(path => (
+      {files.map(({path, name}) => (
         <StyledLink to={`/${path}`} key={path}>
           <ComponentName selected={props.selected === path}>
-            {path}
+            {name} {props.full && <Path>({path})</Path>}
           </ComponentName>
         </StyledLink>
       ))}
