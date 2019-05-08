@@ -17,6 +17,8 @@ export default (bundler: any) => {
   const resolver = bundler.resolver;
   const originalResolve = resolver.resolve;
 
+  // Patching
+  // https://github.com/parcel-bundler/parcel/blob/master/packages/core/parcel-bundler/src/Resolver.js#L32
   resolver.resolve = async (input: string, parent: string) => {
     let filename = input;
 
