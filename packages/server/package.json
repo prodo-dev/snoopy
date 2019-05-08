@@ -18,12 +18,14 @@
     "@prodo-ai/snoopy-search": "0.1.0",
     "@prodo-ai/snoopy-ui": "0.1.0",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "make-dir": "^3.0.0",
     "parcel-bundler": "^1.12.3",
     "ws": "^7.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
+    "@types/lodash": "^4.14.124",
     "@types/parcel-bundler": "^1.12.0",
     "@types/ws": "^6.0.1",
     "ts-node": "^8.1.0"

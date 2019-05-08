@@ -1,4 +1,5 @@
 import {searchCodebase} from "@prodo-ai/snoopy-search";
+import * as _ from "lodash";
 import * as path from "path";
 
 export const generateComponentsFileContents = async (
@@ -8,18 +9,20 @@ export const generateComponentsFileContents = async (
   const imports = await searchCodebase(searchDir);
 
   let componentCounter = 0;
-  const componentFiles = imports.componentFiles.map(file => ({
-    ...file,
-    fileExports: file.fileExports.map(ex => ({
-      ...ex,
-      id: `Component${componentCounter++}`,
-    })),
-  }));
+  const componentFiles = _.sortBy(imports.componentFiles, "filepath").map(
+    file => ({
+      ...file,
+      fileExports: _.sortBy(file.fileExports, "name").map(ex => ({
+        ...ex,
+        id: `Component${componentCounter++}`,
+      })),
+    }),
+  );
 
   let themeCounter = 0;
-  const themeFiles = imports.themeFiles.map(file => ({
+  const themeFiles = _.sortBy(imports.themeFiles, "filepath").map(file => ({
     ...file,
-    fileExports: file.fileExports.map(ex => ({
+    fileExports: _.sortBy(file.fileExports, "name").map(ex => ({
       ...ex,
       id: `Theme${themeCounter++}`,
     })),
@@ -50,8 +53,7 @@ export const generateComponentsFileContents = async (
     });
   });
 
-  const importLines = Object.keys(importsByFile)
-    .sort()
+  const importLines = _.sortBy(Object.keys(importsByFile))
     .map(filepath => {
       const {defaultImport, namedImports} = importsByFile[filepath];
       return `import ${[
