@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateComponentsFileContents snapshot test 1`] = `
+"import  from \\"broken/broken.tsx\\";
+import {Button as Component0} from \\"broken/good.tsx\\";
+
+import * as React from \\"react\\";
+import * as ReactDOM from \\"react-dom\\";
+
+export { React as UserReact, ReactDOM as UserReactDOM };
+
+export let StyledComponents;
+try {
+  StyledComponents = require(\\"styled-components\\");
+} catch (e) {
+  StyledComponents = null;
+}
+
+export const components = [
+  ,
+  {path: \\"good.tsx\\", name: \\"Button\\", component: Component0}
+];
+
+export const themes = [
+  
+];
+"
+`;
