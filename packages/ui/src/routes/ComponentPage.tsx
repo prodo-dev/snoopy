@@ -5,7 +5,7 @@ import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar, {SidebarToggle} from "../components/Sidebar";
-import {Context, Component as ComponentModel} from "../models";
+import {Component as ComponentModel, Context} from "../models";
 import {margins, paddings} from "../styles";
 
 interface Props {

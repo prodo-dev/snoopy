@@ -1,4 +1,4 @@
-import {Context, Component, Example, Theme} from "../models";
+import {Component, Context, Example, Theme} from "../models";
 
 // tslint:disable-next-line:no-var-requires
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
