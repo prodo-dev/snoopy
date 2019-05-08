@@ -1,3 +1,4 @@
+import ErrorBoundary from "../components/ErrorBoundary";
 import {Component, Example, Theme} from "../models";
 
 // tslint:disable-next-line:no-var-requires
@@ -19,14 +20,17 @@ export const renderExample = (
   theme: Theme,
   divId: string,
 ) => {
-  const UserComponent = () =>
-    theme && ThemeProvider ? (
-      <ThemeProvider theme={theme as any}>
+  const UserComponent = () => (
+    <ErrorBoundary>
+      {theme && ThemeProvider ? (
+        <ThemeProvider theme={theme as any}>
+          <>{example.jsx}</>
+        </ThemeProvider>
+      ) : (
         <>{example.jsx}</>
-      </ThemeProvider>
-    ) : (
-      <>{example.jsx}</>
-    );
+      )}
+    </ErrorBoundary>
+  );
 
   UserReactDOM.render(<UserComponent />, document.getElementById(divId));
 };
