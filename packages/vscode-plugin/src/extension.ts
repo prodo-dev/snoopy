@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-
+const fetch = require("node-fetch");
 // const languages = [
 //   "javascript",
 //   "javascriptreact",
@@ -8,16 +8,28 @@ import * as vscode from "vscode";
 // ];
 
 export function activate(context: vscode.ExtensionContext) {
-  context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "snoopy.extension.test",
-      // tslint:disable-next-line:no-console
-      () => console.log("foo"),
-    ),
-  );
+  let port = vscode.workspace.getConfiguration().get("snoopy.server.port");
+
+  context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+    if (e.affectsConfiguration("snoopy.server.port")) {
+      port = vscode.workspace.getConfiguration().get("snoopy.server.port");
+    }
+  }));
+
+  vscode.window.onDidChangeActiveTextEditor(async e => {
+    if (!e) {
+      return;
+    }
+
+    if (!port) {
+      vscode.window.showInformationMessage("Please configure the Snoopy plugin.")
+      return;
+    }
+
+    const newFileName = e.document.fileName;
+    await fetch(`http://localhost:${port}/open-file`, { method: "POST", body: newFileName, headers: { "Content-Type": "text/plain" } });
+  });
 }
 
 export function deactivate() {
-  // tslint:disable-next-line:no-console
-  console.log("Done");
 }

@@ -1,10 +1,11 @@
-import {checkMatch} from "@prodo/snoopy-search";
+import registerEndpoints from "./rest";
+import { checkMatch } from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
-import {promisify} from "util";
+import { promisify } from "util";
 import createBundler from "./bundler";
 import registerWebsockets from "./websockets";
 
@@ -41,11 +42,7 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
 
   app.use(Express.static(outDir));
 
-  app.get("/*", (_, response) => {
-    response.sendFile((bundler as any).mainBundle.name);
-  });
-
-  fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
+  fs.watch(process.cwd(), { recursive: true }, async (_, filename) => {
     // TODO: Try/catch?
     if (checkMatch(filename)) {
       // We need to do this to avoid compiling and pushing `filename` at the
@@ -57,7 +54,12 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   process.stdout.write(`Starting server on port ${port}...\n`);
 
   const server = new http.Server(app);
+  const ws = registerWebsockets(server);
 
-  registerWebsockets(server);
+  registerEndpoints(app, ws, searchDir);
+
+  app.get("/*", (_, response) => {
+    response.sendFile((bundler as any).mainBundle.name);
+  });
   server.listen(3000);
 };

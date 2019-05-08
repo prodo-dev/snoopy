@@ -19,18 +19,16 @@
   ],
   "main": "./build/extension",
   "contributes": {
-    "commands": [
+    "configuration": [
       {
-        "command": "snoopy.extension.test",
-        "title": "Snoopy: Test"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "snoopy.extension.test",
-        "key": "shift+ctrl+v",
-        "mac": "shift+cmd+v",
-        "when": "editorLangId =~ /^javascript|^typescript"
+        "title": "Snoopy",
+        "properties": {
+          "snoopy.server.port": {
+            "type": "number",
+            "description": "The port that Snoopy is running on.",
+            "scope": "window"
+          }
+        }
       }
     ]
   },
@@ -43,9 +41,12 @@
   },
   "devDependencies": {
     "@types/node": "^8.10.25",
+    "@types/node-fetch": "^2.3.3",
     "tslint": "^5.8.0",
     "typescript": "^2.6.1",
     "vscode": "^1.1.21"
   },
-  "dependencies": {}
+  "dependencies": {
+    "node-fetch": "^2.5.0"
+  }
 }

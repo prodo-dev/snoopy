@@ -1,6 +1,7 @@
 import {WebSocketEvents} from "@prodo/snoopy-api";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import {createBrowserHistory} from "history";
 
 const render = () => {
   const App = require("./App").default;
@@ -13,10 +14,12 @@ if (module.hot) {
 
 render();
 
+const history = createBrowserHistory();
+
 const socket = new WebSocket(location.origin.replace(/^http(s?):/, "ws$1:"));
 socket.addEventListener("message", event => {
   const data = JSON.parse(event.data);
   if (data.type === WebSocketEvents.OPEN_FILE) {
-    window.location.href = `/${data.file}`;
+    history.push(`/${data.file}`);
   }
 });
