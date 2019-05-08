@@ -5,8 +5,8 @@ exports[`generateComponentsFileContents snapshot test 1`] = `
 import {Button as Component1} from \\"example/javascript.jsx\\";
 import {Button as Component2, theme as Theme0} from \\"example/mixed.tsx\\";
 import {Button as Component3} from \\"example/typescript.tsx\\";
-import {Button2 as Component4} from \\"example/components/Mixed.tsx\\";
-import Component5 from \\"example/components/DefaultExport.tsx\\";
+import Component4 from \\"example/components/DefaultExport.tsx\\";
+import {Button2 as Component5} from \\"example/components/Mixed.tsx\\";
 import Component8, {Button as Component6, Button2 as Component7} from \\"example/components/MultipleExports.tsx\\";
 import {Button as Component9} from \\"example/components/NamedExport.tsx\\";
 import Theme1 from \\"example/themes/default-export.ts\\";
@@ -31,8 +31,8 @@ export const components = [
   {path: \\"javascript.jsx\\", name: \\"Button\\", component: Component1},
   {path: \\"mixed.tsx\\", name: \\"Button\\", component: Component2},
   {path: \\"typescript.tsx\\", name: \\"Button\\", component: Component3},
-  {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component4},
-  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component5},
+  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component4},
+  {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component5},
   {path: \\"components/MultipleExports.tsx\\", name: \\"Button\\", component: Component6},
   {path: \\"components/MultipleExports.tsx\\", name: \\"Button2\\", component: Component7},
   {path: \\"components/MultipleExports.tsx\\", name: \\"default\\", component: Component8},
