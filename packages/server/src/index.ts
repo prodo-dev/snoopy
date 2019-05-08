@@ -1,9 +1,11 @@
 import {checkMatch} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
+import * as http from "http";
 import * as path from "path";
 import {promisify} from "util";
 import createBundler from "./bundler";
+import registerWebsockets from "./websockets";
 
 const mkdir = promisify(fs.mkdir);
 const writeFile = promisify(fs.writeFile);
@@ -53,5 +55,9 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
-  app.listen(3000);
+
+  const server = new http.Server(app);
+
+  registerWebsockets(server);
+  server.listen(3000);
 };
