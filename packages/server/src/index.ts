@@ -2,12 +2,12 @@ import {checkMatch} from "@prodo/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
+import makeDir = require("make-dir");
 import * as path from "path";
 import {promisify} from "util";
 import createBundler from "./bundler";
 import registerWebsockets from "./websockets";
 
-const mkdir = promisify(fs.mkdir);
 const writeFile = promisify(fs.writeFile);
 
 const clientDir = path.dirname(
@@ -27,7 +27,7 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
     "index.ts",
   );
 
-  await mkdir(path.dirname(componentsFile), {recursive: true});
+  await makeDir(path.dirname(componentsFile));
   await writeFile(componentsFile, "");
 
   const bundler = createBundler({
