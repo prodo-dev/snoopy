@@ -20,7 +20,7 @@ export const renderExample = (
   divId: string,
 ) => {
   const UserComponent = () =>
-    theme != null && ThemeProvider != null ? (
+    theme && ThemeProvider ? (
       <ThemeProvider theme={theme as any}>
         <>{example.jsx}</>
       </ThemeProvider>
