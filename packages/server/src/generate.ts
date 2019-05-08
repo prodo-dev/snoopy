@@ -15,6 +15,7 @@ export const generateComponentsFileContents = async (
       id: `Component${componentCounter++}`,
     })),
   }));
+
   let themeCounter = 0;
   const themeFiles = imports.themeFiles.map(file => ({
     ...file,
@@ -30,6 +31,7 @@ export const generateComponentsFileContents = async (
       namedImports: Array<{from: string; to: string}>;
     };
   } = {};
+
   componentFiles.concat(themeFiles).forEach(({filepath, fileExports}) => {
     if (importsByFile[filepath] == null) {
       importsByFile[filepath] = {
@@ -49,6 +51,7 @@ export const generateComponentsFileContents = async (
   });
 
   const importLines = Object.keys(importsByFile)
+    .sort()
     .map(filepath => {
       const {defaultImport, namedImports} = importsByFile[filepath];
       return `import ${[
