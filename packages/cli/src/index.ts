@@ -3,23 +3,14 @@
 import {start} from "@prodo-ai/snoopy-server";
 import * as yargs from "yargs";
 
+const version = "0.1.0"
+
 const startServer = async () => {
   await start();
 };
 
-yargs.command({
-  command: "start",
-  describe: "Start the local server",
-  handler: startServer,
-});
-
-yargs.command("*", false, {}, args => {
-  // tslint:disable-next-line:no-console
-  console.log(
-    `\n Invalid command ${
-      args._
-    }. See "--help" for a list of available commands.\n`,
-  );
+yargs.command("*", false, {}, () => {
+  startServer();
 });
 
 export const run = async () => {
@@ -27,7 +18,7 @@ export const run = async () => {
     .usage("Usage $0 <command> [options]")
     .help("help")
     .alias("h", "help")
-    .version("version", "0.0.1")
+    .version("version", version)
     .alias("v", "version");
 
   (yargs as any).getOptions().boolean.splice(-2);
