@@ -2,48 +2,25 @@
 
 exports[`Storyshots Component List empty 1`] = `
 <div
-  className="component-list sc-bZQynM AMncx"
+  className="component-list sc-bdVaJa bPGLpq"
 />
 `;
 
 exports[`Storyshots Component List multiple items 1`] = `
 <div
-  className="component-list sc-bZQynM AMncx"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-htoDjs jssEWI"
-    href="/One"
+    className="sc-bxivhb jqxlnH"
+    href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw jWWqnZ"
+      className="sc-bwzfXH kkmwXZ"
       selected={false}
     >
-      One
-    </div>
-  </a>
-  <a
-    className="sc-htoDjs jssEWI"
-    href="/Two"
-    onClick={[Function]}
-  >
-    <div
-      className="sc-gzVnrw jWWqnZ"
-      selected={false}
-    >
-      Two
-    </div>
-  </a>
-  <a
-    className="sc-htoDjs jssEWI"
-    href="/Three"
-    onClick={[Function]}
-  >
-    <div
-      className="sc-gzVnrw jWWqnZ"
-      selected={false}
-    >
-      Three
+      bar
+       
     </div>
   </a>
 </div>
@@ -51,42 +28,19 @@ exports[`Storyshots Component List multiple items 1`] = `
 
 exports[`Storyshots Component List multiple items with selection 1`] = `
 <div
-  className="component-list sc-bZQynM AMncx"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-htoDjs jssEWI"
-    href="/One"
+    className="sc-bxivhb jqxlnH"
+    href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw jWWqnZ"
+      className="sc-bwzfXH kkmwXZ"
       selected={false}
     >
-      One
-    </div>
-  </a>
-  <a
-    className="sc-htoDjs jssEWI"
-    href="/Two"
-    onClick={[Function]}
-  >
-    <div
-      className="sc-gzVnrw bmyZst"
-      selected={true}
-    >
-      Two
-    </div>
-  </a>
-  <a
-    className="sc-htoDjs jssEWI"
-    href="/Three"
-    onClick={[Function]}
-  >
-    <div
-      className="sc-gzVnrw jWWqnZ"
-      selected={false}
-    >
-      Three
+      bar
+       
     </div>
   </a>
 </div>
@@ -94,18 +48,19 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
 
 exports[`Storyshots Component List single item 1`] = `
 <div
-  className="component-list sc-bZQynM AMncx"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-htoDjs jssEWI"
-    href="/One"
+    className="sc-bxivhb jqxlnH"
+    href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw jWWqnZ"
+      className="sc-bwzfXH kkmwXZ"
       selected={false}
     >
-      One
+      bar
+       
     </div>
   </a>
 </div>
@@ -113,232 +68,33 @@ exports[`Storyshots Component List single item 1`] = `
 
 exports[`Storyshots Component List single item with selection 1`] = `
 <div
-  className="component-list sc-bZQynM AMncx"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-htoDjs jssEWI"
-    href="/One"
+    className="sc-bxivhb jqxlnH"
+    href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-gzVnrw jWWqnZ"
+      className="sc-bwzfXH kkmwXZ"
       selected={false}
     >
-      One
+      bar
+       
     </div>
   </a>
 </div>
 `;
 
-exports[`Storyshots Component default example 1`] = `
-<div
-  className="sc-ifAKCX keGVmf"
->
-  <div
-    className="sc-EHOje fwuUJE"
-  >
-    <div
-      className="sc-bdVaJa hLhmaC"
-    >
-      <div
-        className="example-title sc-bxivhb gblRRH"
-      >
-        Default
-      </div>
-      <div
-        className="sc-bwzfXH kWRhKE"
-      >
-        <div
-          className="example-contents sc-htpNat krJdEa"
-        >
-          <div
-            style={
-              Object {
-                "color": "red",
-              }
-            }
-          >
-            Hello 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Component examples provided 1`] = `
-<div
-  className="sc-ifAKCX keGVmf"
->
-  <div
-    className="sc-EHOje fwuUJE"
-  >
-    <div
-      className="sc-bdVaJa hLhmaC"
-    >
-      <div
-        className="example-title sc-bxivhb gblRRH"
-      >
-        Example 1
-      </div>
-      <div
-        className="sc-bwzfXH kWRhKE"
-      >
-        <div
-          className="example-contents sc-htpNat krJdEa"
-        >
-          <div
-            style={
-              Object {
-                "color": "red",
-              }
-            }
-          >
-            Hello 
-            Jake
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="sc-bdVaJa hLhmaC"
-    >
-      <div
-        className="example-title sc-bxivhb gblRRH"
-      >
-        Example 2
-      </div>
-      <div
-        className="sc-bwzfXH kWRhKE"
-      >
-        <div
-          className="example-contents sc-htpNat krJdEa"
-        >
-          <div
-            style={
-              Object {
-                "color": "red",
-              }
-            }
-          >
-            Hello 
-            Andreja
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Component with react state 1`] = `
-<div
-  className="sc-ifAKCX keGVmf"
->
-  <div
-    className="sc-EHOje fwuUJE"
-  >
-    <div
-      className="sc-bdVaJa hLhmaC"
-    >
-      <div
-        className="example-title sc-bxivhb gblRRH"
-      >
-        Counter
-      </div>
-      <div
-        className="sc-bwzfXH kWRhKE"
-      >
-        <div
-          className="example-contents sc-htpNat krJdEa"
-        >
-          <div
-            onClick={[Function]}
-            style={
-              Object {
-                "backgroundColor": "snow",
-                "color": "violet",
-                "padding": "2rem",
-              }
-            }
-          >
-            <h2>
-              0
-            </h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Example Basic 1`] = `
-<div
-  className="sc-bdVaJa hLhmaC"
->
-  <div
-    className="example-title sc-bxivhb gblRRH"
-  >
-    Title
-  </div>
-  <div
-    className="sc-bwzfXH kWRhKE"
-  >
-    <div
-      className="example-contents sc-htpNat krJdEa"
-    >
-      <div>
-        Hello World
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Storyshots Example Example 1 1`] = `
-<div
-  className="sc-bdVaJa hLhmaC"
->
-  <div
-    className="example-title sc-bxivhb gblRRH"
-  >
-    Example 1
-  </div>
-  <div
-    className="sc-bwzfXH kWRhKE"
-  >
-    <div
-      className="example-contents sc-htpNat krJdEa"
-    >
-      <div
-        style={
-          Object {
-            "backgroundColor": "peachpuff",
-            "color": "magneta",
-            "padding": "1rem",
-          }
-        }
-      >
-        <h1>
-          This is an example
-        </h1>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-iwsKbI jTZNmv"
+  className="sidebar sc-EHOje jRoutO"
 >
   <div
-    className="sc-fjdhpX gddroE"
+    className="sc-iwsKbI cFpGCb"
   >
     <span
-      className="sidebar-toggle sc-jzJRlG dCmEID"
+      className="sidebar-toggle sc-gZMcBi foRkSn"
       onClick={[Function]}
     >
       <svg
@@ -365,99 +121,76 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open and empty 1`] = `
 <div
-  className="sidebar sc-iwsKbI eLGZGE"
+  className="sidebar sc-EHOje fyashP"
 >
   <div
-    className="sc-fjdhpX gddroE"
+    className="sc-iwsKbI cFpGCb"
   >
     <a
-      className="sc-gqjmRU eYqZJu"
+      className="sc-gzVnrw frFvIN"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-VigVT jFCsNF"
+        className="title sc-htoDjs hFbBHI"
       >
         <img
           alt=""
-          className="logo sc-dnqmqq cnjRDI"
+          className="logo sc-ifAKCX gsfjvQ"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-jTzLTM jEoeNn"
+    className="sc-dnqmqq fNbSbj"
   />
   <div
-    className="component-list sc-bZQynM AMncx"
+    className="component-list sc-bdVaJa bPGLpq"
   />
 </div>
 `;
 
 exports[`Storyshots Sidebar open with components 1`] = `
 <div
-  className="sidebar sc-iwsKbI eLGZGE"
+  className="sidebar sc-EHOje fyashP"
 >
   <div
-    className="sc-fjdhpX gddroE"
+    className="sc-iwsKbI cFpGCb"
   >
     <a
-      className="sc-gqjmRU eYqZJu"
+      className="sc-gzVnrw frFvIN"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-VigVT jFCsNF"
+        className="title sc-htoDjs hFbBHI"
       >
         <img
           alt=""
-          className="logo sc-dnqmqq cnjRDI"
+          className="logo sc-ifAKCX gsfjvQ"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-jTzLTM jEoeNn"
+    className="sc-dnqmqq fNbSbj"
   />
   <div
-    className="component-list sc-bZQynM AMncx"
+    className="component-list sc-bdVaJa bPGLpq"
   >
     <a
-      className="sc-htoDjs jssEWI"
-      href="/App"
+      className="sc-bxivhb jqxlnH"
+      href="/foo/bar"
       onClick={[Function]}
     >
       <div
-        className="sc-gzVnrw jWWqnZ"
+        className="sc-bwzfXH kkmwXZ"
         selected={false}
       >
-        App
-      </div>
-    </a>
-    <a
-      className="sc-htoDjs jssEWI"
-      href="/ComponentA"
-      onClick={[Function]}
-    >
-      <div
-        className="sc-gzVnrw jWWqnZ"
-        selected={false}
-      >
-        ComponentA
-      </div>
-    </a>
-    <a
-      className="sc-htoDjs jssEWI"
-      href="/ComponentB"
-      onClick={[Function]}
-    >
-      <div
-        className="sc-gzVnrw jWWqnZ"
-        selected={false}
-      >
-        ComponentB
+        bar
+         
       </div>
     </a>
   </div>

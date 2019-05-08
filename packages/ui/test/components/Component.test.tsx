@@ -22,12 +22,14 @@ const TestComponent: React.ComponentType<any> & {examples?: ExampleModel[]} = ({
 }) => <div>hello {name || "you"}</div>;
 
 const Test: ComponentModel = {
+  path: "src/TestComponent.js",
   name: "TestComponent",
   component: TestComponent,
 };
 
 test("renders component with no examples", async () => {
   const {container} = render(<Component component={Test} />);
+
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Default",
   );
@@ -40,6 +42,7 @@ test("renders component with single example", async () => {
   ];
 
   const {container} = render(<Component component={Test} />);
+
   expect(container.querySelector(".example-title")).toHaveTextContent(
     "Example 1",
   );

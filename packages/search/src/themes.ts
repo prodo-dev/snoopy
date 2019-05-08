@@ -1,7 +1,6 @@
-import * as path from "path";
 import {ExtractFunction, getFile} from "./file";
 import {File, FileError} from "./types";
-import {exportDefaultRegex, indexFileRegex} from "./utils";
+import {exportDefaultRegex} from "./utils";
 
 const prodoThemeCommentRegex = /^\/\/\s*@prodo:theme\b/;
 
@@ -9,15 +8,7 @@ const exportAnyRegex = /\bexport\s+(?:const\s+)?(\w+)/;
 
 const extractTheme: ExtractFunction = (line, filepath) => {
   if (exportDefaultRegex.test(line)) {
-    if (indexFileRegex.test(filepath)) {
-      return {
-        name: path.basename(path.dirname(filepath)),
-        isDefaultExport: true,
-      };
-    }
-
     return {
-      name: path.basename(filepath, path.extname(filepath)),
       isDefaultExport: true,
     };
   }

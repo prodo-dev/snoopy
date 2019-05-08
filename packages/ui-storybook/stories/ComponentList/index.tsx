@@ -11,18 +11,21 @@ import {ThemeProvider} from "styled-components";
 
 const One = () => <div />;
 const OneModel: ComponentModel = {
+  path: "foo/bar",
   name: "One",
   component: One,
 };
 
 const Two = () => <div />;
 const TwoModel: ComponentModel = {
+  path: "foo/bar",
   name: "Two",
   component: Two,
 };
 
 const Three = () => <div />;
 const ThreeModel: ComponentModel = {
+  path: "foo/bar",
   name: "Three",
   component: Three,
 };

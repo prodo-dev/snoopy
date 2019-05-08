@@ -6,7 +6,8 @@
     "jsx": "react",
     "rootDir": ".",
     "declarationMap": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "outDir": "build"
   },
   "references": [{"path": "../ui"}],
   "include": ["typings/**/*", "src/**/*", "test/**/*"]

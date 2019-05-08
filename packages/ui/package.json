@@ -1,19 +1,25 @@
 {
   "name": "@prodo/snoopy-ui",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "public/index.html",
   "license": "MIT",
+  "files": [
+    "public",
+    "src"
+  ],
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",
     "clean": "rm -rf dist",
-    "test": "jest",
+    "test": "PRODO_COMPONENTS_FILE=@prodo/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@prodo/snoopy-api": "^1.0.0",
+    "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-responsive": "^6.1.1",
@@ -25,6 +31,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
+    "@types/lodash": "^4.14.124",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
     "@types/react-responsive": "^3.0.3",
@@ -39,9 +46,14 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/build/"
+    ],
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
-      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js"
+      "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
+      "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
   },
   "alias": {

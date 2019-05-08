@@ -10,16 +10,25 @@
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
     "clean": "rm -rf .cache lib",
+    "test": "jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
+    "@prodo/snoopy-api": "1.0.0",
     "@prodo/snoopy-search": "1.0.0",
+    "@prodo/snoopy-ui": "1.0.0",
     "express": "^4.16.4",
-    "parcel-bundler": "^1.12.3"
+    "make-dir": "^3.0.0",
+    "parcel-bundler": "^1.12.3",
+    "ws": "^7.0.0"
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
     "@types/parcel-bundler": "^1.12.0",
+    "@types/ws": "^6.0.1",
     "ts-node": "^8.1.0"
+  },
+  "jest": {
+    "preset": "ts-jest"
   }
 }

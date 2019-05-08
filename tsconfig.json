@@ -17,6 +17,7 @@
   },
   "files": [],
   "references": [
+    {"path": "packages/api"},
     {"path": "packages/cli"},
     {"path": "packages/server"},
     {"path": "packages/ui"},
