@@ -16,6 +16,7 @@
   "dependencies": {
     "@prodo/snoopy-api": "1.0.0",
     "@prodo/snoopy-search": "1.0.0",
+    "@prodo/snoopy-ui": "1.0.0",
     "express": "^4.16.4",
     "parcel-bundler": "^1.12.3",
     "ws": "^7.0.0"
