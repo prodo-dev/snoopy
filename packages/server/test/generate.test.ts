@@ -1,4 +1,4 @@
- import * as path from "path";
+import * as path from "path";
 import {generateComponentsFileContents} from "../src/generate";
 
 const searchDir = path.resolve(__dirname, "fixtures", "example");
@@ -137,7 +137,7 @@ describe("generateComponentsFileContents", () => {
   });
 
   it("snapshot test", async () => {
-    const contents = await generateComponentsFileContents(clientDir, brokenDir);
+    const contents = await generateComponentsFileContents(clientDir, searchDir);
 
     expect(contents).toMatchSnapshot();
   });
