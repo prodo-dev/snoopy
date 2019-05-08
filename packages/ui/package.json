@@ -1,8 +1,12 @@
 {
   "name": "@prodo/snoopy-ui",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "public/index.html",
   "license": "MIT",
+  "files": [
+    "public",
+    "src"
+  ],
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",

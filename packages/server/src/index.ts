@@ -4,7 +4,9 @@ import * as fs from "fs";
 import * as path from "path";
 import createBundler from "./bundler";
 
-const clientDir = path.resolve(__dirname, "../../ui");
+const clientDir = path.dirname(
+  path.dirname(require.resolve("@prodo/snoopy-ui")),
+);
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
 
@@ -22,7 +24,13 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   await fs.promises.mkdir(path.dirname(componentsFile), {recursive: true});
   await fs.promises.writeFile(componentsFile, "");
 
-  const bundler = createBundler(outDir, outFile, searchDir, componentsFile);
+  const bundler = createBundler({
+    clientDir,
+    outDir,
+    outFile,
+    searchDir,
+    componentsFile,
+  });
   await bundler.bundle();
 
   app.use(Express.static(outDir));
