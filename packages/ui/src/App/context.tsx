@@ -1,4 +1,3 @@
-import {RouteComponentProps} from "react-router-dom";
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
@@ -9,7 +8,6 @@ import {paddings} from "../styles";
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
 
 const {UserReact, UserReactDOM, StyledComponents, ReactRouterDOM} = userImport;
-
 const React = UserReact;
 const ThemeProvider =
   StyledComponents != null ? StyledComponents.ThemeProvider : null;
@@ -27,13 +25,10 @@ const Container = styled.div`
   width: min-content;
 `;
 
-const LogRoute = (
-  props: RouteComponentProps<{
-    link: string;
-  }>,
-) => (
+const LogRoute = (props: any) => (
   <StyledLog>
-    This action would have redirected you to /{props.match.params.link}.
+    This action would have redirected you to /
+    {props.match && props.match.params && props.match.params.link}.
   </StyledLog>
 );
 
