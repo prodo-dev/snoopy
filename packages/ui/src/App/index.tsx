@@ -6,43 +6,47 @@ import {
   Switch,
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
-import {Component, Theme} from "../models";
+import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import {darkTheme} from "../styles/theme";
-import {components, themes} from "./userImport";
+import {context} from "./context";
 
 import "./index.css";
 
 const ComponentPageWithProps = (
-  props: {components: Component[]; themes: Theme[]} & RouteComponentProps<{
+  props: {context: Context} & RouteComponentProps<{
     path: string;
-    name: string;
   }>,
 ) => {
-  const component = props.components.filter(
-    c =>
-      c.path === props.match.params.path && c.name === props.match.params.name,
-  )[0];
-  return <ComponentPage component={component} {...props} />;
+  const components = props.context.components.filter(
+    c => c.path === props.match.params.path,
+  );
+  return (
+    <ComponentPage
+      path={props.match.params.path}
+      components={components}
+      {...props}
+    />
+  );
 };
 
-const WithComponents = <Props extends {}>(
+const WithContext = <Props extends {}>(
   // tslint:disable-next-line:no-shadowed-variable
   Component: React.ComponentType<Props>,
 ) => (props: Props) => {
-  return <Component components={components} themes={themes} {...props} />;
+  return <Component context={context} {...props} />;
 };
 
 const App = () => (
   <ThemeProvider theme={darkTheme}>
     <Router>
       <Switch>
-        <Route path="/" exact component={WithComponents(HomePage)} />
+        <Route path="/" exact component={WithContext(HomePage)} />
         <Route
-          path="/:path+/:name"
+          path="/:path+"
           exact
-          component={WithComponents(ComponentPageWithProps)}
+          component={WithContext(ComponentPageWithProps)}
         />
       </Switch>
     </Router>

@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import {renderExample} from "../../App/userImport";
+import {renderExample} from "../../App/context";
 import backgroundImage from "../../media/transparent_background.png";
 import {Example} from "../../models";
 import {margins, paddings} from "../../styles";

@@ -15,3 +15,8 @@ export interface Theme {
   name: string;
   theme: any;
 }
+
+export interface Context {
+  themes: Theme[];
+  components: Component[];
+}
