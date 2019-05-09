@@ -3,7 +3,8 @@
 import {start} from "@prodo-ai/snoopy-server";
 import * as yargs from "yargs";
 
-const { version } = require("../package.json")
+// tslint:disable-next-line:no-var-requires
+const {version} = require("../package.json");
 
 const startServer = async () => {
   await start();
