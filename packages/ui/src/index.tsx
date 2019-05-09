@@ -16,7 +16,7 @@ render();
 const socket = new WebSocket(location.origin.replace(/^http(s?):/, "ws$1:"));
 socket.addEventListener("message", event => {
   const data = JSON.parse(event.data);
-  if (data.type === WebSocketEvents.OPEN_COMPONENT) {
-    socket.send(JSON.stringify({type: "pong"}));
+  if (data.type === WebSocketEvents.OPEN_FILE) {
+    window.location.href = `/${data.file}`;
   }
 });

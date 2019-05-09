@@ -1,4 +1,5 @@
-import {Component, Example, Theme} from "../models";
+import ErrorBoundary from "../components/ErrorBoundary";
+import {Component, Context, Example, Theme} from "../models";
 
 // tslint:disable-next-line:no-var-requires
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
@@ -12,21 +13,24 @@ const ThemeProvider =
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
 
-export {components, themes};
+export const context: Context = {components, themes};
 
 export const renderExample = (
   example: Example,
   theme: Theme,
   divId: string,
 ) => {
-  const UserComponent = () =>
-    theme && ThemeProvider ? (
-      <ThemeProvider theme={theme as any}>
+  const UserComponent = () => (
+    <ErrorBoundary>
+      {theme && ThemeProvider ? (
+        <ThemeProvider theme={theme as any}>
+          <>{example.jsx}</>
+        </ThemeProvider>
+      ) : (
         <>{example.jsx}</>
-      </ThemeProvider>
-    ) : (
-      <>{example.jsx}</>
-    );
+      )}
+    </ErrorBoundary>
+  );
 
   UserReactDOM.render(<UserComponent />, document.getElementById(divId));
 };

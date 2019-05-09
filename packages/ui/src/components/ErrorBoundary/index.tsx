@@ -1,13 +1,28 @@
 import * as React from "react";
+import styled from "styled-components";
+import {paddings} from "../../styles";
+import {darkTheme} from "../../styles/theme";
 
 interface Props {
-  renderError?: (error: Error, errorInfo: any) => React.ReactNode;
+  children: React.ReactNode;
 }
 
 interface State {
   error: Error | null;
   errorInfo?: any;
 }
+
+const StyledError = styled.div`
+  color: ${darkTheme.colors.error};
+  background-color: ${darkTheme.colors.errorBg};
+  padding: ${paddings.small};
+`;
+
+const renderError = (error: Error) => (
+  <StyledError>
+    Error: {error && error.message && error.message.split("\n")[0]}
+  </StyledError>
+);
 
 class ErrorBoundary extends React.Component<Props> {
   public state: State = {error: null};
@@ -21,8 +36,8 @@ class ErrorBoundary extends React.Component<Props> {
   }
 
   public render() {
-    if (this.state.error && this.props.renderError) {
-      return this.props.renderError(this.state.error, this.state.errorInfo);
+    if (this.state.error) {
+      return renderError(this.state.error);
     } else {
       return this.props.children;
     }

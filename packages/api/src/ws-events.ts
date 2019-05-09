@@ -1,1 +1,1 @@
-export const OPEN_COMPONENT = "open-component";
+export const OPEN_FILE = "open-file";
