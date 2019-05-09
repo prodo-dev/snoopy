@@ -12,7 +12,7 @@
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist *.tsbuildinfo",
     "test": "PRODO_COMPONENTS_FILE=@prodo-ai/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
