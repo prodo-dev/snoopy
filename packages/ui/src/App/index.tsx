@@ -1,4 +1,4 @@
-import {WebSocketEvents} from "@prodo/snoopy-api";
+import {WebSocketEvents} from "@prodo-ai/snoopy-api";
 import {createBrowserHistory} from "history";
 import * as React from "react";
 import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
