@@ -12,7 +12,7 @@ interface State {
   errorInfo?: any;
 }
 
-const StyledError = styled.div`
+export const StyledError = styled.div`
   color: ${darkTheme.colors.error};
   background-color: ${darkTheme.colors.errorBg};
   padding: ${paddings.small};
@@ -44,4 +44,16 @@ class ErrorBoundary extends React.Component<Props> {
   }
 }
 
+(ErrorBoundary as any).examples = [
+  {
+    name: "No error",
+    jsx: (
+      <ErrorBoundary>
+        <div>Hello world</div>
+      </ErrorBoundary>
+    ),
+  },
+];
+
+// @prodo
 export default ErrorBoundary;

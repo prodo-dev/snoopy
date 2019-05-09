@@ -1,10 +1,7 @@
+import {WebSocketEvents} from "@prodo/snoopy-api";
+import {createBrowserHistory} from "history";
 import * as React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  RouteComponentProps,
-  Switch,
-} from "react-router-dom";
+import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
@@ -13,6 +10,19 @@ import {darkTheme} from "../styles/theme";
 import {context} from "./context";
 
 import "./index.css";
+
+const history = createBrowserHistory();
+
+const socket = new WebSocket(location.origin.replace(/^http(s?):/, "ws$1:"));
+socket.addEventListener("message", event => {
+  const data = JSON.parse(event.data);
+  if (data.type === WebSocketEvents.OPEN_FILE) {
+    const file = data.file;
+    if (context.components.map(component => component.path).includes(file)) {
+      history.push(`/${file}`);
+    }
+  }
+});
 
 const ComponentPageWithProps = (
   props: {context: Context} & RouteComponentProps<{
@@ -40,7 +50,7 @@ const WithContext = <Props extends {}>(
 
 const App = () => (
   <ThemeProvider theme={darkTheme}>
-    <Router>
+    <Router history={history}>
       <Switch>
         <Route path="/" exact component={WithContext(HomePage)} />
         <Route
@@ -53,4 +63,5 @@ const App = () => (
   </ThemeProvider>
 );
 
+// @prodo
 export default App;

@@ -38,14 +38,14 @@ storiesOf("Component List", module)
   .add("empty", () => <ComponentList components={[]} />)
   .add("single item", () => <ComponentList components={[OneModel]} />)
   .add("single item with selection", () => (
-    <ComponentList selected="one" components={[OneModel]} />
+    <ComponentList selected={OneModel.path} components={[OneModel]} />
   ))
   .add("multiple items", () => (
     <ComponentList components={[OneModel, TwoModel, ThreeModel]} />
   ))
   .add("multiple items with selection", () => (
     <ComponentList
-      selected="Two"
+      selected={TwoModel.path}
       components={[OneModel, TwoModel, ThreeModel]}
     />
   ));

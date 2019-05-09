@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`generateComponentsFileContents snapshot test 1`] = `
-"import {Button as Component0} from \\"example\\";
-import Component1 from \\"example/components/DefaultExport.tsx\\";
-import {Button2 as Component2} from \\"example/components/Mixed.tsx\\";
-import Component5, {Button as Component3, Button2 as Component4} from \\"example/components/MultipleExports.tsx\\";
-import {Button as Component6} from \\"example/components/NamedExport.tsx\\";
+"import Component0 from \\"example/components/DefaultExport.tsx\\";
+import {Button2 as Component1} from \\"example/components/Mixed.tsx\\";
+import Component4, {Button as Component2, Button2 as Component3} from \\"example/components/MultipleExports.tsx\\";
+import {Button as Component5} from \\"example/components/NamedExport.tsx\\";
+import {Button as Component6} from \\"example/index.jsx\\";
 import {Button as Component7} from \\"example/javascript.jsx\\";
 import {Button as Component8, theme as Theme0} from \\"example/mixed.tsx\\";
 import Theme1 from \\"example/themes/default-export.ts\\";
@@ -27,13 +27,13 @@ try {
 }
 
 export const components = [
-  {path: \\"\\", name: \\"Button\\", component: Component0},
-  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component1},
-  {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component2},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"Button\\", component: Component3},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"Button2\\", component: Component4},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"default\\", component: Component5},
-  {path: \\"components/NamedExport.tsx\\", name: \\"Button\\", component: Component6},
+  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component0},
+  {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component1},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"Button\\", component: Component2},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"Button2\\", component: Component3},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"default\\", component: Component4},
+  {path: \\"components/NamedExport.tsx\\", name: \\"Button\\", component: Component5},
+  {path: \\"index.jsx\\", name: \\"Button\\", component: Component6},
   {path: \\"javascript.jsx\\", name: \\"Button\\", component: Component7},
   {path: \\"mixed.tsx\\", name: \\"Button\\", component: Component8},
   {path: \\"typescript.tsx\\", name: \\"Button\\", component: Component9}
