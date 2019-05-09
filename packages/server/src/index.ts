@@ -1,4 +1,4 @@
-import {checkMatch} from "@prodo/snoopy-search";
+import {checkMatch} from "@prodo-ai/snoopy-search";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
@@ -7,12 +7,13 @@ import * as path from "path";
 import {promisify} from "util";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
+import registerEndpoints from "./rest";
 import registerWebsockets from "./websockets";
 
 const writeFile = promisify(fs.writeFile);
 
 const clientDir = path.dirname(
-  path.dirname(require.resolve("@prodo/snoopy-ui")),
+  path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
 );
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
@@ -44,10 +45,6 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
 
   app.use(Express.static(outDir));
 
-  app.get("/*", (_, response) => {
-    response.sendFile((bundler as any).mainBundle.name);
-  });
-
   fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
     // TODO: Try/catch?
     if (checkMatch(filename)) {
@@ -60,7 +57,12 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   process.stdout.write(`Starting server on port ${port}...\n`);
 
   const server = new http.Server(app);
+  const ws = registerWebsockets(server);
 
-  registerWebsockets(server);
+  registerEndpoints(app, ws, searchDir);
+
+  app.get("/*", (_, response) => {
+    response.sendFile((bundler as any).mainBundle.name);
+  });
   server.listen(3000);
 };

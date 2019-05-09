@@ -25,7 +25,9 @@ describe("generateComponentsFileContents", () => {
   it("detects inside index files", async () => {
     const contents = await generateComponentsFileContents(clientDir, searchDir);
     expect(
-      /import {Button as Component\d+} from "example";/.test(contents),
+      /import {Button as Component\d+} from "example\/index.jsx";/.test(
+        contents,
+      ),
     ).toBe(true);
   });
 

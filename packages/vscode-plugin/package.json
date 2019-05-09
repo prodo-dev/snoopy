@@ -1,0 +1,53 @@
+{
+  "name": "@prodo/snoopy-vscode-plugin",
+  "displayName": "Snoopy VSCode Plugin",
+  "description": "Fast feedback for React components.",
+  "version": "0.1.0",
+  "publisher": "prodo-ai",
+  "categories": [
+    "Other"
+  ],
+  "private": true,
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "activationEvents": [
+    "onCommand:snoopy.extension.test",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
+  "main": "./build/extension",
+  "contributes": {
+    "configuration": [
+      {
+        "title": "Snoopy",
+        "properties": {
+          "snoopy.server.port": {
+            "type": "number",
+            "description": "The port that Snoopy is running on.",
+            "scope": "window"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ../../node_modules/vscode/bin/install",
+    "test": "echo 'No tests configured.'"
+  },
+  "devDependencies": {
+    "@types/node": "^8.10.25",
+    "@types/node-fetch": "^2.3.3",
+    "tslint": "^5.8.0",
+    "typescript": "^3.4.3",
+    "vscode": "^1.1.21"
+  },
+  "dependencies": {
+    "node-fetch": "^2.5.0"
+  }
+}
