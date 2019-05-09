@@ -110,6 +110,13 @@ try {
   StyledComponents = null;
 }
 
+export let ReactRouterDOM;
+try {
+  ReactRouterDOM = require("react-router-dom");
+} catch (e) {
+  ReactRouterDOM = null;
+}
+
 export const components = [
   ${componentsArrayString}
 ];

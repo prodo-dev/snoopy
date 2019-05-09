@@ -1,8 +1,4 @@
-import {
-  MemoryRouter as Router,
-  Route,
-  RouteComponentProps,
-} from "react-router-dom";
+import {RouteComponentProps} from "react-router-dom";
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
@@ -12,7 +8,7 @@ import {paddings} from "../styles";
 // tslint:disable-next-line:no-var-requires
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
 
-const {UserReact, UserReactDOM, StyledComponents} = userImport;
+const {UserReact, UserReactDOM, StyledComponents, ReactRouterDOM} = userImport;
 
 const React = UserReact;
 const ThemeProvider =
@@ -66,23 +62,41 @@ export const renderExample = (
 ) => {
   const UserComponent = () => (
     <ErrorBoundary>
-      <Router>
-        <Container>
-          <DarkerJsxContainer>
-            <JsxContainer className="example-contents">
-              {theme && ThemeProvider ? (
-                <ThemeProvider theme={theme as any}>
+      {ReactRouterDOM != null ? (
+        <ReactRouterDOM.MemoryRouter>
+          <Container>
+            <DarkerJsxContainer>
+              <JsxContainer className="example-contents">
+                {theme && ThemeProvider ? (
+                  <ThemeProvider theme={theme as any}>
+                    <>{example.jsx}</>
+                  </ThemeProvider>
+                ) : (
                   <>{example.jsx}</>
-                </ThemeProvider>
-              ) : (
+                )}
+              </JsxContainer>
+            </DarkerJsxContainer>
+            <ReactRouterDOM.Route
+              path="/"
+              exact
+              component={() => <StyledLog />}
+            />
+            <ReactRouterDOM.Route path="/:link+" exact component={LogRoute} />
+          </Container>
+        </ReactRouterDOM.MemoryRouter>
+      ) : (
+        <DarkerJsxContainer>
+          <JsxContainer className="example-contents">
+            {theme && ThemeProvider ? (
+              <ThemeProvider theme={theme as any}>
                 <>{example.jsx}</>
-              )}
-            </JsxContainer>
-          </DarkerJsxContainer>
-          <Route path="/" exact component={() => <StyledLog />} />
-          <Route path="/:link+" exact component={LogRoute} />
-        </Container>
-      </Router>
+              </ThemeProvider>
+            ) : (
+              <>{example.jsx}</>
+            )}
+          </JsxContainer>
+        </DarkerJsxContainer>
+      )}
     </ErrorBoundary>
   );
 
