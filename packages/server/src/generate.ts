@@ -1,6 +1,15 @@
-import {searchCodebase} from "@prodo/snoopy-search";
-import * as _ from "lodash";
+import {FileExport, searchCodebase} from "@prodo/snoopy-search";
 import * as path from "path";
+
+const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
+  transform(a).localeCompare(transform(b));
+
+const sortFileExports = (fileExports: FileExport[]): FileExport[] => {
+  const defaultExports = fileExports.filter(ex => ex.isDefaultExport);
+  const namedExports = fileExports.filter(ex => !ex.isDefaultExport);
+
+  return defaultExports.concat(namedExports.sort(by((ex: any) => ex.name)));
+};
 
 export const generateComponentsFileContents = async (
   clientDir: string,
@@ -9,20 +18,20 @@ export const generateComponentsFileContents = async (
   const imports = await searchCodebase(searchDir);
 
   let componentCounter = 0;
-  const componentFiles = _.sortBy(imports.componentFiles, "filepath").map(
-    file => ({
+  const componentFiles = imports.componentFiles
+    .sort(by(f => f.filepath))
+    .map(file => ({
       ...file,
-      fileExports: _.sortBy(file.fileExports, "name").map(ex => ({
+      fileExports: sortFileExports(file.fileExports).map(ex => ({
         ...ex,
         id: `Component${componentCounter++}`,
       })),
-    }),
-  );
+    }));
 
   let themeCounter = 0;
-  const themeFiles = _.sortBy(imports.themeFiles, "filepath").map(file => ({
+  const themeFiles = imports.themeFiles.sort(by(f => f.filepath)).map(file => ({
     ...file,
-    fileExports: _.sortBy(file.fileExports, "name").map(ex => ({
+    fileExports: sortFileExports(file.fileExports).map(ex => ({
       ...ex,
       id: `Theme${themeCounter++}`,
     })),
@@ -53,7 +62,8 @@ export const generateComponentsFileContents = async (
     });
   });
 
-  const importLines = _.sortBy(Object.keys(importsByFile))
+  const importLines = Object.keys(importsByFile)
+    .sort()
     .map(filepath => {
       const {defaultImport, namedImports} = importsByFile[filepath];
       return `import ${[
