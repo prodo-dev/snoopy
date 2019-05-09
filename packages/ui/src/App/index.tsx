@@ -32,7 +32,6 @@ const ComponentPageWithProps = (
   const components = props.context.components.filter(
     c => c.path === props.match.params.path,
   );
-  console.log("HERE");
   return (
     <ComponentPage
       path={props.match.params.path}
