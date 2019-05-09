@@ -1,13 +1,7 @@
 import {WebSocketEvents} from "@prodo/snoopy-api";
 import {createBrowserHistory} from "history";
 import * as React from "react";
-import {
-  Route,
-  RouteComponentProps,
-  Router,
-  Switch,
-  withRouter,
-} from "react-router-dom";
+import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
