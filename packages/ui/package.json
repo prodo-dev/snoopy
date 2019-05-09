@@ -5,7 +5,9 @@
   "license": "MIT",
   "files": [
     "public",
-    "src"
+    "src",
+    "test",
+    "tsconfig.json"
   ],
   "scripts": {
     "start": "parcel public/index.html",

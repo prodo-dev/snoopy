@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "references": [
+    {"path": "packages/api/tsconfig.prod.json"},
+    {"path": "packages/cli/tsconfig.prod.json"},
+    {"path": "packages/server/tsconfig.prod.json"},
+    {"path": "packages/ui/tsconfig.prod.json"},
+    {"path": "packages/search/tsconfig.prod.json"}
+  ]
+}
