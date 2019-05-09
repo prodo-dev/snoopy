@@ -10,7 +10,7 @@ import {Button as Component7} from \\"example/javascript.jsx\\";
 import {Button as Component8, theme as Theme0} from \\"example/mixed.tsx\\";
 import Theme1 from \\"example/themes/default-export.ts\\";
 import {theme2 as Theme2} from \\"example/themes/mixed.ts\\";
-import Theme5, {theme as Theme3, theme2 as Theme4} from \\"example/themes/multiple-exports.ts\\";
+import Theme3, {theme as Theme4, theme2 as Theme5} from \\"example/themes/multiple-exports.ts\\";
 import {theme as Theme6} from \\"example/themes/named-export.ts\\";
 import {Button as Component9} from \\"example/typescript.tsx\\";
 
@@ -43,9 +43,9 @@ export const themes = [
   {path: \\"mixed.tsx\\", name: \\"theme\\", theme: Theme0},
   {path: \\"themes/default-export.ts\\", name: \\"default\\", theme: Theme1},
   {path: \\"themes/mixed.ts\\", name: \\"theme2\\", theme: Theme2},
-  {path: \\"themes/multiple-exports.ts\\", name: \\"theme\\", theme: Theme3},
-  {path: \\"themes/multiple-exports.ts\\", name: \\"theme2\\", theme: Theme4},
-  {path: \\"themes/multiple-exports.ts\\", name: \\"default\\", theme: Theme5},
+  {path: \\"themes/multiple-exports.ts\\", name: \\"default\\", theme: Theme3},
+  {path: \\"themes/multiple-exports.ts\\", name: \\"theme\\", theme: Theme4},
+  {path: \\"themes/multiple-exports.ts\\", name: \\"theme2\\", theme: Theme5},
   {path: \\"themes/named-export.ts\\", name: \\"theme\\", theme: Theme6}
 ];
 "
