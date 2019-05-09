@@ -6,6 +6,9 @@
   "bin": {
     "snoopy-cli": "./lib/index.js"
   },
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
