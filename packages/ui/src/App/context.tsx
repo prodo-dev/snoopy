@@ -11,6 +11,8 @@ const {UserReact, UserReactDOM, StyledComponents, ReactRouterDOM} = userImport;
 const React = UserReact;
 const ThemeProvider =
   StyledComponents != null ? StyledComponents.ThemeProvider : null;
+const MemoryRouter =
+  ReactRouterDOM != null ? ReactRouterDOM.MemoryRouter : React.Fragment;
 
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
@@ -57,41 +59,31 @@ export const renderExample = (
 ) => {
   const UserComponent = () => (
     <ErrorBoundary>
-      {ReactRouterDOM != null ? (
-        <ReactRouterDOM.MemoryRouter>
-          <Container>
-            <DarkerJsxContainer>
-              <JsxContainer className="example-contents">
-                {theme && ThemeProvider ? (
-                  <ThemeProvider theme={theme as any}>
-                    <>{example.jsx}</>
-                  </ThemeProvider>
-                ) : (
+      <MemoryRouter>
+        <Container>
+          <DarkerJsxContainer>
+            <JsxContainer className="example-contents">
+              {theme && ThemeProvider ? (
+                <ThemeProvider theme={theme as any}>
                   <>{example.jsx}</>
-                )}
-              </JsxContainer>
-            </DarkerJsxContainer>
-            <ReactRouterDOM.Route
-              path="/"
-              exact
-              component={() => <StyledLog />}
-            />
-            <ReactRouterDOM.Route path="/:link+" exact component={LogRoute} />
-          </Container>
-        </ReactRouterDOM.MemoryRouter>
-      ) : (
-        <DarkerJsxContainer>
-          <JsxContainer className="example-contents">
-            {theme && ThemeProvider ? (
-              <ThemeProvider theme={theme as any}>
+                </ThemeProvider>
+              ) : (
                 <>{example.jsx}</>
-              </ThemeProvider>
-            ) : (
-              <>{example.jsx}</>
-            )}
-          </JsxContainer>
-        </DarkerJsxContainer>
-      )}
+              )}
+            </JsxContainer>
+          </DarkerJsxContainer>
+          {ReactRouterDOM != null && (
+            <React.Fragment>
+              <ReactRouterDOM.Route
+                path="/"
+                exact
+                component={() => <StyledLog />}
+              />
+              <ReactRouterDOM.Route path="/:link+" exact component={LogRoute} />
+            </React.Fragment>
+          )}
+        </Container>
+      </MemoryRouter>
     </ErrorBoundary>
   );
 
