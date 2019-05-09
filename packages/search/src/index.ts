@@ -6,6 +6,8 @@ import {getThemesFile} from "./themes";
 import {File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents} from "./utils";
 
+export * from "./types";
+
 export const checkMatch = (filepath: string): boolean =>
   multimatch(filepath, fileGlob).length > 0;
 
