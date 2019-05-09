@@ -16,7 +16,7 @@
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
-    "@prodo-ai/snoopy-server": "0.1.0",
+    "@prodo-ai/snoopy-server": "^0.1.0",
     "yargs": "^13.2.2"
   },
   "devDependencies": {
