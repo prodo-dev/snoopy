@@ -4,7 +4,6 @@ import {renderExample} from "../../App/context";
 import backgroundImage from "../../media/transparent_background.png";
 import {Example} from "../../models";
 import {margins, paddings} from "../../styles";
-import ErrorBoundary from "../ErrorBoundary";
 
 interface Props {
   example: Example;
@@ -42,18 +41,6 @@ const Title = styled.div`
   color: ${props => props.theme.colors.text};
 `;
 
-const ExampleError = styled.div`
-  color: ${props => props.theme.colors.error};
-  background-color: ${props => props.theme.colors.errorBg};
-  padding: ${paddings.small};
-`;
-
-const renderExampleError = (error: Error) => (
-  <ExampleError>
-    Error: {error && error.message && error.message.split("\n")[0]}
-  </ExampleError>
-);
-
 const randId = () =>
   Math.random()
     .toString(36)
@@ -66,8 +53,12 @@ class NoUpdate extends React.Component<Props> {
     renderExample(this.props.example, this.props.userTheme, this.id);
   }
 
-  public shouldComponentUpdate() {
-    return false;
+  public componentDidUpdate() {
+    renderExample(this.props.example, this.props.userTheme, this.id);
+  }
+
+  public shouldComponentUpdate(nextProps: Props) {
+    return this.props.userTheme !== nextProps.userTheme;
   }
 
   public render() {
@@ -79,11 +70,9 @@ export default (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.name}</Title>
     <Container>
-      <ErrorBoundary renderError={renderExampleError}>
-        <JsxContainer className="example-contents">
-          <NoUpdate {...props} />
-        </JsxContainer>
-      </ErrorBoundary>
+      <JsxContainer className="example-contents">
+        <NoUpdate {...props} />
+      </JsxContainer>
     </Container>
   </StyledExample>
 );

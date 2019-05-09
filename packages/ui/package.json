@@ -55,8 +55,5 @@
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
       "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
-  },
-  "alias": {
-    "styled-components": "../../node_modules/styled-components"
   }
 }

@@ -5,6 +5,7 @@ import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
 import {promisify} from "util";
+import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerWebsockets from "./websockets";
 
@@ -37,6 +38,8 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
     searchDir,
     componentsFile,
   });
+  applyAliases(bundler);
+
   await bundler.bundle();
 
   app.use(Express.static(outDir));
