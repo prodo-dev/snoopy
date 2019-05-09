@@ -1,4 +1,4 @@
-import {WebSocketEvents} from "@prodo/snoopy-api";
+import {WebSocketEvents} from "@prodo-ai/snoopy-api";
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as path from "path";

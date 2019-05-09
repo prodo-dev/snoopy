@@ -1,4 +1,4 @@
-import {FileExport, searchCodebase} from "@prodo/snoopy-search";
+import {FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
 import * as path from "path";
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>

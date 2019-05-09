@@ -1,8 +1,11 @@
 {
-  "name": "@prodo/snoopy-cli",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy-cli",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
+  "bin": {
+    "snoopy-cli": "./lib/index.js"
+  },
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
@@ -10,7 +13,7 @@
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
-    "@prodo/snoopy-server": "1.0.0",
+    "@prodo-ai/snoopy-server": "0.1.0",
     "yargs": "^13.2.2"
   },
   "devDependencies": {

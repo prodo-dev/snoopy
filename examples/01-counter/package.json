@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Click the buttons.",
   "main": "index.tsx",
+  "private": true,
   "author": "Samir Talwar <samir@prodo.ai>",
   "license": "MIT",
   "scripts": {
