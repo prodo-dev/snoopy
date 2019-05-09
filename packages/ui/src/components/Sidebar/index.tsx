@@ -247,7 +247,7 @@ Sidebar.examples = [
         isOpen={true}
         setSidebarOpen={() => alert("setSidebarOpen")}
         components={testComponents}
-        selected={testComponents[0].name}
+        selected={testComponents[0].path}
       />
     ),
   },

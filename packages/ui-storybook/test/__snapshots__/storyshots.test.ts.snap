@@ -65,8 +65,8 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat fmLBeK"
-      selected={false}
+      className="sc-htpNat gqeYsV"
+      selected={true}
     >
       foo/bar
       :
@@ -93,8 +93,8 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat fmLBeK"
-      selected={false}
+      className="sc-htpNat gqeYsV"
+      selected={true}
     >
       foo/bar
       :
@@ -135,8 +135,8 @@ exports[`Storyshots Component List single item with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat fmLBeK"
-      selected={false}
+      className="sc-htpNat gqeYsV"
+      selected={true}
     >
       foo/bar
       :

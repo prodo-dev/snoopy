@@ -37,7 +37,7 @@ const ComponentList = (props: Props) => (
   <StyledComponentList className="component-list">
     {props.components.map(({path, name}) => (
       <StyledLink to={`/${path}/${name}`} key={`${path}:${name}`}>
-        <ComponentName selected={props.selected === name}>
+        <ComponentName selected={props.selected === path}>
           {path}:{name}
         </ComponentName>
       </StyledLink>
@@ -59,7 +59,7 @@ ComponentList.examples = [
     jsx: (
       <ComponentList
         components={[testComponents[0]]}
-        selected={testComponents[0].name}
+        selected={testComponents[0].path}
       />
     ),
   },
@@ -72,7 +72,7 @@ ComponentList.examples = [
     jsx: (
       <ComponentList
         components={testComponents}
-        selected={testComponents[0].name}
+        selected={testComponents[0].path}
       />
     ),
   },

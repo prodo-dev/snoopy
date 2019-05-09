@@ -12,7 +12,7 @@ interface State {
   errorInfo?: any;
 }
 
-const StyledError = styled.div`
+export const StyledError = styled.div`
   color: ${darkTheme.colors.error};
   background-color: ${darkTheme.colors.errorBg};
   padding: ${paddings.small};

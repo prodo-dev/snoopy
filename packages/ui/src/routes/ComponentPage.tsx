@@ -45,7 +45,8 @@ const StyledSelect = styled(Select)`
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const [selectedTheme, setSelectedTheme] = React.useState(0);
-  const options = props.themes.map((theme, idx) => {
+  const themes = props.themes && props.themes.filter(x => x != null);
+  const options = themes.map((theme, idx) => {
     return {value: idx, label: theme.name};
   });
 
@@ -53,7 +54,7 @@ const ComponentPage = (props: Props) => {
     <StyledPage>
       <StyledComponentPage>
         <Sidebar
-          selected={props.component.name}
+          selected={props.component.path}
           isOpen={isSidebarOpen}
           setSidebarOpen={setSidebarOpen}
           components={props.components}
@@ -69,6 +70,7 @@ const ComponentPage = (props: Props) => {
             <StyledTitle>{props.component.name}</StyledTitle>
             {props.themes.length > 0 && (
               <StyledSelect
+                defaultValue={options[selectedTheme]}
                 onChange={(selectedOption: any) =>
                   setSelectedTheme(selectedOption.value)
                 }
@@ -80,7 +82,9 @@ const ComponentPage = (props: Props) => {
             key={props.component.name}
             component={props.component}
             userTheme={
-              props.themes.length > 0 && props.themes[selectedTheme].theme
+              themes.length > 0 &&
+              themes[selectedTheme] &&
+              themes[selectedTheme].theme
             }
           />
         </ComponentContainer>

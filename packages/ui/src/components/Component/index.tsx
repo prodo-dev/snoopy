@@ -10,6 +10,7 @@ import {
   Example as ExampleModel,
 } from "../../models";
 import {paddings} from "../../styles";
+import {StyledError} from "../ErrorBoundary";
 import Example from "../Example";
 
 const StyledComponent = styled.div`
@@ -27,10 +28,12 @@ interface Props {
 }
 
 const Component = (props: Props) => {
-  const examples: ExampleModel[] | undefined = (props.component
-    .component as any).examples;
+  const examples: ExampleModel[] | undefined =
+    props.component.component && (props.component.component as any).examples;
 
-  const Comp = props.component.component;
+  const Comp =
+    props.component.component ||
+    (() => <StyledError>props.component.component is undefined</StyledError>);
   return (
     <StyledComponent>
       <ExamplesContainer>
