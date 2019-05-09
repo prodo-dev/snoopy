@@ -78,7 +78,7 @@ export const pinkTheme = {}
   const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "/path/to/file",
+    filepath: "/path/to/file/index.ts",
     fileExports: [{name: "pinkTheme", isDefaultExport: false}],
     errors: [],
   });
@@ -133,7 +133,7 @@ export default {}
   );
 
   expect(themeImport).toEqual({
-    filepath: "/path/to/file/pinkTheme",
+    filepath: "/path/to/file/pinkTheme/index.ts",
     fileExports: [{isDefaultExport: true}],
     errors: [],
   });
@@ -148,7 +148,7 @@ export const pink_theme = {}
   const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "/path/to/file",
+    filepath: "/path/to/file/index.ts",
     fileExports: [{name: "pink_theme", isDefaultExport: false}],
     errors: [],
   });
@@ -163,7 +163,7 @@ export const pink1Theme1 = {}
   const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "/path/to/file",
+    filepath: "/path/to/file/index.ts",
     fileExports: [{name: "pink1Theme1", isDefaultExport: false}],
     errors: [],
   });
@@ -178,7 +178,7 @@ const foo = "bar"
   const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "/path/to/file",
+    filepath: "/path/to/file/index.ts",
     fileExports: [],
     errors: [
       new FileError(
@@ -210,7 +210,7 @@ export const otherTheme = {}
   const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
-    filepath: "/path/to/file",
+    filepath: "/path/to/file/index.ts",
     fileExports: [
       {name: "pinkTheme", isDefaultExport: false},
       {name: "greenTheme", isDefaultExport: false},

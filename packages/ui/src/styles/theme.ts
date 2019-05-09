@@ -26,6 +26,7 @@ export interface Theme {
   };
 }
 
+// @prodo:theme
 export const darkTheme: Theme = {
   colors: {
     bg: "#282c34",

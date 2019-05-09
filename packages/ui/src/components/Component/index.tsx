@@ -1,7 +1,16 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Component, Example as ExampleModel} from "../../models";
+import {
+  CounterModel,
+  HelloNameModel,
+  HelloWorldModel,
+} from "../../../test/fixtures";
+import {
+  Component as ComponentModel,
+  Example as ExampleModel,
+} from "../../models";
 import {paddings} from "../../styles";
+import {StyledError} from "../ErrorBoundary";
 import Example from "../Example";
 
 const StyledComponent = styled.div`
@@ -14,15 +23,17 @@ const ExamplesContainer = styled.div`
 `;
 
 interface Props {
-  component: Component;
+  component: ComponentModel;
   userTheme?: any;
 }
 
 const Component = (props: Props) => {
-  const examples: ExampleModel[] | undefined = (props.component
-    .component as any).examples;
+  const examples: ExampleModel[] | undefined =
+    props.component.component && (props.component.component as any).examples;
 
-  const Comp = props.component.component;
+  const Comp =
+    props.component.component ||
+    (() => <StyledError>props.component.component is undefined</StyledError>);
   return (
     <StyledComponent>
       <ExamplesContainer>
@@ -45,4 +56,20 @@ const Component = (props: Props) => {
   );
 };
 
+Component.examples = [
+  {
+    name: "Default",
+    jsx: <Component component={HelloWorldModel} />,
+  },
+  {
+    name: "Examples provided",
+    jsx: <Component component={HelloNameModel} />,
+  },
+  {
+    name: "With React state",
+    jsx: <Component component={CounterModel} />,
+  },
+];
+
+// @prodo
 export default Component;

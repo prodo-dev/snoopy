@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "lib": ["esnext", "dom"],
+    "outDir": "build",
+    "rootDir": "src"
+  },
+  "include": ["src", "test", "typings"],
+  "exclude": ["node_modules", "fixtures", ".vscode-test"]
+}

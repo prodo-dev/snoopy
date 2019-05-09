@@ -1,12 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
+import {CounterExample, HelloWorldExample} from "../../../test/fixtures";
 import {renderExample} from "../../App/context";
 import backgroundImage from "../../media/transparent_background.png";
-import {Example} from "../../models";
+import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
 
 interface Props {
-  example: Example;
+  example: ExampleModel;
   userTheme?: any;
 }
 
@@ -66,7 +67,7 @@ class NoUpdate extends React.Component<Props> {
   }
 }
 
-export default (props: Props) => (
+const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.name}</Title>
     <Container>
@@ -76,3 +77,8 @@ export default (props: Props) => (
     </Container>
   </StyledExample>
 );
+
+Example.examples = [HelloWorldExample, CounterExample];
+
+// @prodo
+export default Example;
