@@ -2,10 +2,10 @@ import * as React from "react";
 import {testComponents} from "../../test/fixtures";
 import ComponentList from "../components/ComponentList";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Component} from "../models";
+import {Component, Context} from "../models";
 
 interface Props {
-  components: Component[];
+  context: Context;
 }
 
 const HomePage = (props: Props) => (
@@ -17,7 +17,12 @@ const HomePage = (props: Props) => (
         see them with Snoopy.
       </p>
       <h2>Your components</h2>
-      <ComponentList components={props.components} />
+      <ComponentList
+        components={props.context.components.filter(
+          (c: Component) => c != null,
+        )}
+        full
+      />
     </StyledPageContents>
   </StyledPage>
 );
@@ -25,11 +30,11 @@ const HomePage = (props: Props) => (
 HomePage.examples = [
   {
     name: "No components",
-    jsx: <HomePage components={[]} />,
+    jsx: <HomePage context={{components: [], themes: []}} />,
   },
   {
     name: "With components",
-    jsx: <HomePage components={testComponents} />,
+    jsx: <HomePage context={{components: testComponents, themes: []}} />,
   },
 ];
 

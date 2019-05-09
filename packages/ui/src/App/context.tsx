@@ -1,5 +1,5 @@
 import ErrorBoundary from "../components/ErrorBoundary";
-import {Component, Example, Theme} from "../models";
+import {Component, Context, Example, Theme} from "../models";
 
 // tslint:disable-next-line:no-var-requires
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
@@ -13,7 +13,7 @@ const ThemeProvider =
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
 
-export {components, themes};
+export const context: Context = {components, themes};
 
 export const renderExample = (
   example: Example,

@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import * as React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
@@ -24,26 +25,40 @@ const ComponentName = styled.div<{selected?: boolean}>`
   }
 `;
 
+const Path = styled.span`
+  font-style: italic;
+  font-weight: lighter;
+  color: ${props => props.theme.colors.textTertiary};
+`;
+
 const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
 interface Props {
   selected?: string;
+  full?: boolean;
   components: Component[];
 }
 
-const ComponentList = (props: Props) => (
-  <StyledComponentList className="component-list">
-    {props.components.map(({path, name}) => (
-      <StyledLink to={`/${path}/${name}`} key={`${path}:${name}`}>
-        <ComponentName selected={props.selected === path}>
-          {path}:{name}
-        </ComponentName>
-      </StyledLink>
-    ))}
-  </StyledComponentList>
-);
+const ComponentList = (props: Props) => {
+  const files = _.uniq(props.components.map(({path}) => path)).map(path => ({
+    path,
+    name: _.last(path.split("/")),
+  }));
+
+  return (
+    <StyledComponentList className="component-list">
+      {files.map(({path, name}) => (
+        <StyledLink to={`/${path}`} key={path}>
+          <ComponentName selected={props.selected === path}>
+            {name} {props.full && <Path>({path})</Path>}
+          </ComponentName>
+        </StyledLink>
+      ))}
+    </StyledComponentList>
+  );
+};
 
 ComponentList.examples = [
   {
