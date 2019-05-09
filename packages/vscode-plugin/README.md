@@ -1,6 +1,6 @@
-# reaction-time README
+# snoopy README
 
-This is the README for your extension "reaction-time". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "snoopy". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
