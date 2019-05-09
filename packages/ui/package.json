@@ -23,7 +23,6 @@
     "history": "^4.9.0",
     "lodash": "^4.17.11",
     "react": "^16.8.6",
-    "react-dom": "npm:@hot-loader/react-dom",
     "react-hot-loader": "^4.8.4",
     "react-responsive": "^6.1.1",
     "react-router": "^5.0.0",
@@ -58,5 +57,8 @@
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
       "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
+  },
+  "alias": {
+    "react-dom": "@hot-loader/react-dom"
   }
 }
