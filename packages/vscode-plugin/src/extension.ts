@@ -15,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   vscode.window.onDidChangeActiveTextEditor(async e => {
+    console.log(e!.document.languageId);
     if (!e || !languages.includes(e.document.languageId)) {
       return;
     }

@@ -1,9 +1,12 @@
+import {WebSocketEvents} from "@prodo/snoopy-api";
+import {createBrowserHistory} from "history";
 import * as React from "react";
 import {
-  BrowserRouter as Router,
   Route,
   RouteComponentProps,
+  Router,
   Switch,
+  withRouter,
 } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 import {Context} from "../models";
@@ -14,6 +17,19 @@ import {context} from "./context";
 
 import "./index.css";
 
+const history = createBrowserHistory();
+
+const socket = new WebSocket(location.origin.replace(/^http(s?):/, "ws$1:"));
+socket.addEventListener("message", event => {
+  const data = JSON.parse(event.data);
+  if (data.type === WebSocketEvents.OPEN_FILE) {
+    const file = data.file;
+    if (context.components.map(component => component.path).includes(file)) {
+      history.push(`/${file}`);
+    }
+  }
+});
+
 const ComponentPageWithProps = (
   props: {context: Context} & RouteComponentProps<{
     path: string;
@@ -22,6 +38,7 @@ const ComponentPageWithProps = (
   const components = props.context.components.filter(
     c => c.path === props.match.params.path,
   );
+  console.log("HERE");
   return (
     <ComponentPage
       path={props.match.params.path}
@@ -40,7 +57,7 @@ const WithContext = <Props extends {}>(
 
 const App = () => (
   <ThemeProvider theme={darkTheme}>
-    <Router>
+    <Router history={history}>
       <Switch>
         <Route path="/" exact component={WithContext(HomePage)} />
         <Route
