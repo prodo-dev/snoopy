@@ -25,8 +25,6 @@ export const context: Context = {components, themes};
 
 const StyledLog = styled.div`
   padding-top: ${paddings.small};
-  color: #f8f8f2;
-  font-size: 11pt;
 `;
 
 const Container = styled.div`

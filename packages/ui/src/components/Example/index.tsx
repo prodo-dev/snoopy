@@ -16,6 +16,8 @@ const StyledExample = styled.div`
   border: 1px solid ${props => props.theme.colors.border};
   border-radius: 4px;
   height: 100%;
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.fontSizes.normal};
 `;
 
 const Title = styled.div`
