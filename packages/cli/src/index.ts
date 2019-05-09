@@ -3,7 +3,7 @@
 import {start} from "@prodo-ai/snoopy-server";
 import * as yargs from "yargs";
 
-const version = "0.1.0"
+const { version } = require("../package.json")
 
 const startServer = async () => {
   await start();

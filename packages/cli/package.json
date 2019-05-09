@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "bin": {
-    "@prodo-ai/snoopy-cli": "./lib/index.js"
+    "snoopy-cli": "./lib/index.js"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
