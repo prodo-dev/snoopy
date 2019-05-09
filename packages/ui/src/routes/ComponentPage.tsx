@@ -1,6 +1,7 @@
 import * as React from "react";
 import Select from "react-select";
 import styled from "styled-components";
+import {testComponents, testThemes} from "../../test/fixtures";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
@@ -56,7 +57,9 @@ const Divider = styled.div`
 const ComponentPage = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const [selectedTheme, setSelectedTheme] = React.useState(0);
-  const options = props.context.themes.map((theme, idx) => {
+  const themes =
+    props.context.themes && props.context.themes.filter(x => x != null);
+  const options = themes.map((theme, idx) => {
     return {value: idx, label: theme.name};
   });
 
@@ -67,11 +70,13 @@ const ComponentPage = (props: Props) => {
           selected={props.path}
           isOpen={isSidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          components={props.context.components}
+          components={props.context.components.filter(
+            (c: Component) => c != null,
+          )}
         />
         <Components>
           {props.components.map((component, i) => (
-            <React.Fragment>
+            <React.Fragment key={i}>
               {i > 0 && <Divider />}
               <ComponentContainer key={component.name}>
                 <StyledTitleContainer>
@@ -82,8 +87,9 @@ const ComponentPage = (props: Props) => {
                     />
                   </NarrowScreen>
                   <StyledTitle>{component.name}</StyledTitle>
-                  {props.context.themes.length > 0 && (
+                  {themes.length > 0 && (
                     <StyledSelect
+                      defaultValue={options[selectedTheme]}
                       onChange={(selectedOption: any) =>
                         setSelectedTheme(selectedOption.value)
                       }
@@ -94,8 +100,9 @@ const ComponentPage = (props: Props) => {
                 <Component
                   component={component}
                   userTheme={
-                    props.context.themes.length > 0 &&
-                    props.context.themes[selectedTheme].theme
+                    themes.length > 0 &&
+                    themes[selectedTheme] &&
+                    themes[selectedTheme].theme
                   }
                 />
               </ComponentContainer>
@@ -107,4 +114,28 @@ const ComponentPage = (props: Props) => {
   );
 };
 
+ComponentPage.examples = [
+  {
+    name: "No themes",
+    jsx: (
+      <ComponentPage
+        context={{components: testComponents, themes: testThemes}}
+        path={testComponents[0].path}
+        components={[testComponents[0]]}
+      />
+    ),
+  },
+  {
+    name: "With themes",
+    jsx: (
+      <ComponentPage
+        context={{components: testComponents, themes: testThemes}}
+        path={testComponents[0].path}
+        components={[testComponents[0]]}
+      />
+    ),
+  },
+];
+
+// @prodo
 export default ComponentPage;
