@@ -1,4 +1,5 @@
 import {FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
+import * as fs from "fs";
 import * as path from "path";
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
@@ -36,6 +37,15 @@ export const generateComponentsFileContents = async (
       id: `Theme${themeCounter++}`,
     })),
   }));
+
+  // let styleCounter = 0;
+  // const styleFiles = imports.styleFiles.sort(by(f => f.filepath)).map(file => ({
+  //   ...file,
+  //   fileExports: sortFileExports(file.fileExports).map(ex => ({
+  //     ...ex,
+  //     id: `Styles${styleCounter++}`,
+  //   })),
+  // }));
 
   const importsByFile: {
     [path: string]: {
@@ -105,11 +115,29 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
+  const stylesArrayString = imports.styleFiles
+    .map(({filepath, fileExports}) =>
+      fileExports
+        .map(ex => {
+          const contents = fs.readFileSync(
+            path.resolve(path.relative(searchDir, filepath)),
+            "utf8",
+          );
+          return `{path: "${path.relative(searchDir, filepath)}", name: "${
+            ex.isDefaultExport ? "default" : ex.name
+          }", style: \`${contents}\`}`;
+        })
+        .join(",\n  "),
+    )
+    .join(",\n  ");
+
   return `
 ${importLines}
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as fs from "fs";
+import * as path from "path";
 
 export { React as UserReact, ReactDOM as UserReactDOM };
 
@@ -134,5 +162,9 @@ export const components = [
 export const themes = [
   ${themesArrayString}
 ];
+
+export const styles = [
+  ${stylesArrayString}
+]
 `.trimLeft();
 };
