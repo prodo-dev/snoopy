@@ -1,7 +1,7 @@
 import * as React from "react";
 import Select from "react-select";
 import styled from "styled-components";
-import {testComponents, testThemes} from "../../test/fixtures";
+import {testComponents, testContext} from "../../test/fixtures";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
@@ -119,7 +119,7 @@ ComponentPage.examples = [
     name: "No themes",
     jsx: (
       <ComponentPage
-        context={{components: testComponents, themes: testThemes}}
+        context={testContext}
         path={testComponents[0].path}
         components={[testComponents[0]]}
       />
@@ -129,7 +129,7 @@ ComponentPage.examples = [
     name: "With themes",
     jsx: (
       <ComponentPage
-        context={{components: testComponents, themes: testThemes}}
+        context={testContext}
         path={testComponents[0].path}
         components={[testComponents[0]]}
       />

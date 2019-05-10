@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Component} from "../src/models";
+import {Component, Context} from "../src/models";
 
 const StyledDiv = styled.div`
   color: blue;
@@ -52,3 +52,11 @@ export const testThemes = [
   {name: "darkTheme", theme: {}},
   {name: "lightTheme", theme: {}},
 ];
+
+export const emptyContext: Context = {components: [], themes: [], styles: []};
+
+export const testContext: Context = {
+  components: testComponents,
+  themes: testThemes,
+  styles: [],
+};

@@ -16,7 +16,14 @@ export interface Theme {
   theme: any;
 }
 
+export interface Style {
+  name: string;
+  style: any;
+  path: any;
+}
+
 export interface Context {
   themes: Theme[];
   components: Component[];
+  styles: Style[];
 }
