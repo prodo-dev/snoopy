@@ -16,6 +16,8 @@ import {Button as Component9} from \\"example/typescript.tsx\\";
 
 import * as React from \\"react\\";
 import * as ReactDOM from \\"react-dom\\";
+import * as fs from \\"fs\\";
+import * as path from \\"path\\";
 
 export { React as UserReact, ReactDOM as UserReactDOM };
 
@@ -55,5 +57,9 @@ export const themes = [
   {path: \\"themes/multiple-exports.ts\\", name: \\"theme2\\", theme: Theme5},
   {path: \\"themes/named-export.ts\\", name: \\"theme\\", theme: Theme6}
 ];
+
+export const styles = [
+  
+]
 "
 `;

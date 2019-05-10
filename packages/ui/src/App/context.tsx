@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
-import {Component, Context, Example, Theme} from "../models";
+import {Component, Context, Example, Style, Theme} from "../models";
 import {paddings} from "../styles";
 
 // tslint:disable-next-line:no-var-requires
@@ -16,8 +16,9 @@ const MemoryRouter =
 
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
+const styles: Style[] = userImport.styles;
 
-export const context: Context = {components, themes};
+export const context: Context = {components, themes, styles};
 
 const StyledLog = styled.div`
   padding-top: ${paddings.small};
@@ -50,6 +51,15 @@ const JsxContainer = styled.div`
       rgba(255, 255, 255, 0.7)
     ),
     url(${backgroundImage}) repeat;
+  all: initial;
+`;
+
+const userBodyId = "prodo-user-body";
+const allStyles = styles
+  .map(x => x.style.replace(/\bbody\b/, `#${userBodyId}`))
+  .join("\n");
+const ApplyStyles = styled.div`
+  ${allStyles}
 `;
 
 export const renderExample = (
@@ -65,10 +75,18 @@ export const renderExample = (
             <JsxContainer className="example-contents">
               {theme && ThemeProvider ? (
                 <ThemeProvider theme={theme as any}>
-                  <>{example.jsx}</>
+                  <ApplyStyles>
+                    <div id={userBodyId}>
+                      <>{example.jsx}</>
+                    </div>
+                  </ApplyStyles>
                 </ThemeProvider>
               ) : (
-                <>{example.jsx}</>
+                <ApplyStyles>
+                  <div id={userBodyId}>
+                    <>{example.jsx}</>
+                  </div>
+                </ApplyStyles>
               )}
             </JsxContainer>
           </DarkerJsxContainer>
