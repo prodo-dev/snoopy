@@ -9,6 +9,10 @@ interface VisitorState {
   errors: FileError[];
 }
 
+interface VisitorOptions {
+  invalidProdoTagError: string;
+}
+
 type ExportVisitor = Visitor<VisitorState>;
 
 const checkComment = (regex: RegExp, comments: readonly t.Comment[]): boolean =>
@@ -31,7 +35,10 @@ const getExportName = (node: t.ExportNamedDeclaration): string | null => {
   return null;
 };
 
-const mkExportVisitor = (lineRegex: RegExp): ExportVisitor => ({
+const mkExportVisitor = (
+  lineRegex: RegExp,
+  visitorOptions: VisitorOptions,
+): ExportVisitor => ({
   enter(path, state) {
     if (
       path.node.leadingComments != null &&
@@ -46,10 +53,7 @@ const mkExportVisitor = (lineRegex: RegExp): ExportVisitor => ({
         state.fileExports.push({isDefaultExport: true});
       } else {
         state.errors.push(
-          new FileError(
-            state.filepath,
-            "The `@prodo` tag must be directly above an exported React component.",
-          ),
+          new FileError(state.filepath, visitorOptions.invalidProdoTagError),
         );
       }
     }
@@ -57,7 +61,16 @@ const mkExportVisitor = (lineRegex: RegExp): ExportVisitor => ({
 });
 
 const prodoComponentRegex = /^\s*@prodo(\s|$)/;
-const componentVisitor = mkExportVisitor(prodoComponentRegex);
+const componentVisitor = mkExportVisitor(prodoComponentRegex, {
+  invalidProdoTagError:
+    "The `@prodo` tag must be directly above an exported React component.",
+});
+
+const prodoThemeRegex = /^\s*@prodo:theme\b/;
+const themeVisitor = mkExportVisitor(prodoThemeRegex, {
+  invalidProdoTagError:
+    "The `@prodo:theme` tag must be directly above an exported theme.",
+});
 
 const prodoFileRegex = /\/\/\s*@prodo/;
 const isPossibleProdoFile = (code: string): boolean =>
@@ -117,3 +130,6 @@ export const findFileExports = (
 
 export const findComponentExports = (code: string, filepath: string) =>
   findFileExports(componentVisitor, code, filepath);
+
+export const findThemeExports = (code: string, filepath: string) =>
+  findFileExports(themeVisitor, code, filepath);

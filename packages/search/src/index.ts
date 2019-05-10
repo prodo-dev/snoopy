@@ -1,8 +1,7 @@
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
-import {getComponentsFile} from "./components";
-import {getThemesFile} from "./themes";
+import {findComponentExports, findThemeExports} from "./parser";
 import {File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents} from "./utils";
 
@@ -36,8 +35,8 @@ export const searchCodebase = async (
       }
 
       return {
-        componentFiles: getComponentsFile(contents, filepath),
-        themeFiles: getThemesFile(contents, filepath),
+        componentFiles: findComponentExports(contents, filepath),
+        themeFiles: findThemeExports(contents, filepath),
       };
     }),
   );
