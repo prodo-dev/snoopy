@@ -1,5 +1,5 @@
 import ErrorBoundary from "../components/ErrorBoundary";
-import {Component, Context, Example, Theme, FileError} from "../models";
+import {Component, Context, Example, FileError, Theme} from "../models";
 
 // tslint:disable-next-line:no-var-requires
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);

@@ -1,7 +1,7 @@
-import * as t from "@babel/types";
-import traverse, {Visitor} from "@babel/traverse";
 import {parse} from "@babel/parser";
-import {File, FileExport, FileError} from "./types";
+import traverse, {Visitor} from "@babel/traverse";
+import * as t from "@babel/types";
+import {File, FileError, FileExport} from "./types";
 
 interface VisitorState {
   filepath: string;

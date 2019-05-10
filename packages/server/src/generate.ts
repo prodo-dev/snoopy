@@ -1,4 +1,4 @@
-import {FileExport, FileError, searchCodebase} from "@prodo-ai/snoopy-search";
+import {FileError, FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
 import * as path from "path";
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
@@ -125,7 +125,7 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
-  const generate = `
+  return `
 ${importLines}
 
 import * as React from "react";
@@ -152,8 +152,4 @@ export const themes = [
   ${themesArrayString}
 ];
 `.trimLeft();
-
-  console.log(generate);
-
-  return generate;
 };

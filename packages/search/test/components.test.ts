@@ -305,9 +305,5 @@ const s = \`
     "/path/to/file/index.ts",
   );
 
-  expect(componentImport).toEqual({
-    filepath: "/path/to/file/index.ts",
-    fileExports: [],
-    errors: [],
-  });
+  expect(componentImport).toBe(null);
 });

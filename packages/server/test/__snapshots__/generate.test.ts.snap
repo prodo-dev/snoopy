@@ -39,6 +39,17 @@ export const components = [
   {path: \\"typescript.tsx\\", name: \\"Button\\", component: Component9}
 ];
 
+export const errors = [
+  {path: \\"components/DefaultExport.tsx\\": errors: []},
+  {path: \\"components/Mixed.tsx\\": errors: []},
+  {path: \\"components/MultipleExports.tsx\\": errors: []},
+  {path: \\"components/NamedExport.tsx\\": errors: []},
+  {path: \\"index.jsx\\": errors: []},
+  {path: \\"javascript.jsx\\": errors: []},
+  {path: \\"mixed.tsx\\": errors: []},
+  {path: \\"typescript.tsx\\": errors: []}
+];
+
 export const themes = [
   {path: \\"mixed.tsx\\", name: \\"theme\\", theme: Theme0},
   {path: \\"themes/default-export.ts\\", name: \\"default\\", theme: Theme1},
