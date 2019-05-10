@@ -16,8 +16,6 @@ import {Button as Component9} from \\"example/typescript.tsx\\";
 
 import * as React from \\"react\\";
 import * as ReactDOM from \\"react-dom\\";
-import * as fs from \\"fs\\";
-import * as path from \\"path\\";
 
 export { React as UserReact, ReactDOM as UserReactDOM };
 

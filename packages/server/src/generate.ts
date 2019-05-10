@@ -38,15 +38,6 @@ export const generateComponentsFileContents = async (
     })),
   }));
 
-  // let styleCounter = 0;
-  // const styleFiles = imports.styleFiles.sort(by(f => f.filepath)).map(file => ({
-  //   ...file,
-  //   fileExports: sortFileExports(file.fileExports).map(ex => ({
-  //     ...ex,
-  //     id: `Styles${styleCounter++}`,
-  //   })),
-  // }));
-
   const importsByFile: {
     [path: string]: {
       defaultImport?: string;
@@ -136,8 +127,6 @@ ${importLines}
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import * as fs from "fs";
-import * as path from "path";
 
 export { React as UserReact, ReactDOM as UserReactDOM };
 
