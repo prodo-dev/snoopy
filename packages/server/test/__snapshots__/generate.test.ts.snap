@@ -26,6 +26,13 @@ try {
   StyledComponents = null;
 }
 
+export let ReactRouterDOM;
+try {
+  ReactRouterDOM = require(\\"react-router-dom\\");
+} catch (e) {
+  ReactRouterDOM = null;
+}
+
 export const components = [
   {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component0},
   {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component1},
