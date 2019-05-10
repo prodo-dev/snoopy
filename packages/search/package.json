@@ -1,6 +1,6 @@
 {
   "name": "@prodo-ai/snoopy-search",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "lib/index.js",
   "license": "MIT",
   "files": [
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
-    "clean": "rm -rf .cache lib",
+    "clean": "rm -rf .cache lib *.tsbuildinfo",
     "test": "jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },

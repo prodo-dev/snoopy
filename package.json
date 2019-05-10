@@ -6,11 +6,15 @@
   "private": true,
   "scripts": {
     "start": "yarn workspace @prodo-ai/snoopy-cli start",
+    "clean": "wsrun --exclude-missing --serial clean",
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
+    "build:prod": "tsc --build tsconfig.prod.json",
     "test": "wsrun --exclude-missing --serial test",
     "lint": "wsrun --exclude-missing --serial lint",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "prepublish": "yarn clean && yarn build:prod",
+    "publish": "lerna publish"
   },
   "workspaces": [
     "packages/*",
