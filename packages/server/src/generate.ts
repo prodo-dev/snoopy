@@ -1,4 +1,4 @@
-import {FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
+import {FileExport, FileError, searchCodebase} from "@prodo-ai/snoopy-search";
 import * as path from "path";
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
@@ -10,6 +10,9 @@ const sortFileExports = (fileExports: FileExport[]): FileExport[] => {
 
   return defaultExports.concat(namedExports.sort(by((ex: any) => ex.name)));
 };
+
+const sortFileErrors = (fileErrors: FileError[]): FileError[] =>
+  fileErrors.sort(by(err => err.message));
 
 export const generateComponentsFileContents = async (
   clientDir: string,
@@ -26,6 +29,13 @@ export const generateComponentsFileContents = async (
         ...ex,
         id: `Component${componentCounter++}`,
       })),
+    }));
+
+  const componentErrors = imports.componentFiles
+    .sort(by(f => f.filepath))
+    .map(file => ({
+      filepath: file.filepath,
+      errors: sortFileErrors(file.errors),
     }));
 
   let themeCounter = 0;
@@ -92,6 +102,16 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
+  const componentErrorsString = componentErrors
+    .filter(({errors}) => errors.length >= 0)
+    .map(
+      ({filepath, errors}) =>
+        `{path: "${path.relative(searchDir, filepath)}": errors: [${errors
+          .map(e => JSON.stringify(e.message))
+          .join(",\n  ")}]}`,
+    )
+    .join(",\n  ");
+
   const themesArrayString = themeFiles
     .map(({filepath, fileExports}) =>
       fileExports
@@ -105,7 +125,7 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
-  return `
+  const generate = `
 ${importLines}
 
 import * as React from "react";
@@ -124,8 +144,16 @@ export const components = [
   ${componentsArrayString}
 ];
 
+export const errors = [
+  ${componentErrorsString}
+];
+
 export const themes = [
   ${themesArrayString}
 ];
 `.trimLeft();
+
+  console.log(generate);
+
+  return generate;
 };

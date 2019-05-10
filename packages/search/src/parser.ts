@@ -80,13 +80,9 @@ export const findFileExports = (
   visitor: ExportVisitor,
   code: string,
   filepath: string,
-): File => {
+): File | null => {
   if (!isPossibleProdoFile(code)) {
-    return {
-      filepath,
-      fileExports: [],
-      errors: [],
-    };
+    return null;
   }
 
   let ast: t.File;
@@ -119,6 +115,10 @@ export const findFileExports = (
       fileExports: [],
       errors: [new FileError(filepath, `Error traversing file: ${e.message}`)],
     };
+  }
+
+  if (state.fileExports.length === 0 && state.errors.length === 0) {
+    return null;
   }
 
   return {

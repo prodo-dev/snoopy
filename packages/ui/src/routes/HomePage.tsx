@@ -30,11 +30,15 @@ const HomePage = (props: Props) => (
 HomePage.examples = [
   {
     name: "No components",
-    jsx: <HomePage context={{components: [], themes: []}} />,
+    jsx: <HomePage context={{components: [], themes: [], errors: []}} />,
   },
   {
     name: "With components",
-    jsx: <HomePage context={{components: testComponents, themes: []}} />,
+    jsx: (
+      <HomePage
+        context={{components: testComponents, themes: [], errors: []}}
+      />
+    ),
   },
 ];
 
