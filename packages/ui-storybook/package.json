@@ -1,8 +1,9 @@
 {
-  "name": "@prodo/snoopy-ui-storybook",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy-ui-storybook",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "tsc --build",
     "clean": "rm -rf lib",
@@ -12,7 +13,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@prodo/snoopy-ui": "1.0.0",
+    "@prodo-ai/snoopy-ui": "^0.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
@@ -47,6 +48,10 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/build/"
+    ],
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js"

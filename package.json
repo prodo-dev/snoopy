@@ -1,11 +1,11 @@
 {
-  "name": "@prodo/snoopy",
+  "name": "@prodo-ai/snoopy",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "yarn workspace @prodo/snoopy-cli start",
+    "start": "yarn workspace @prodo-ai/snoopy-cli start",
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
     "test": "wsrun --exclude-missing --serial test",
@@ -17,6 +17,7 @@
     "examples/*"
   ],
   "devDependencies": {
+    "lerna": "^3.13.4",
     "patch-package": "^6.1.2",
     "postinstall-postinstall": "^2.0.0",
     "prettier": "^1.17.0",

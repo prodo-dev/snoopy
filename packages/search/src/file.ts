@@ -1,5 +1,5 @@
 import {File, FileError, FileExport} from "./types";
-import {findProdoCommentLines, getImportPath} from "./utils";
+import {findProdoCommentLines} from "./utils";
 
 export type ExtractFunction = (
   line: string,
@@ -52,7 +52,7 @@ export const getFile = ({
     ) as FileExport[];
     const errors = result.filter(e => e instanceof FileError) as FileError[];
     return {
-      filepath: getImportPath(filepath),
+      filepath,
       fileExports,
       errors,
     };
