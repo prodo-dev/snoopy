@@ -55,6 +55,10 @@ export const generateComponentsFileContents = async (
   } = {};
 
   componentFiles.concat(themeFiles).forEach(({filepath, fileExports}) => {
+    if (fileExports.length === 0) {
+      return;
+    }
+
     if (importsByFile[filepath] == null) {
       importsByFile[filepath] = {
         namedImports: [] as Array<{from: string; to: string}>,
@@ -90,6 +94,7 @@ export const generateComponentsFileContents = async (
     .join("\n");
 
   const componentsArrayString = componentFiles
+    .filter(({fileExports}) => fileExports.length > 0)
     .map(({filepath, fileExports}) =>
       fileExports
         .map(
@@ -103,7 +108,7 @@ export const generateComponentsFileContents = async (
     .join(",\n  ");
 
   const componentErrorsString = componentErrors
-    .filter(({errors}) => errors.length >= 0)
+    .filter(({errors}) => errors.length > 0)
     .map(
       ({filepath, errors}) =>
         `{path: "${path.relative(searchDir, filepath)}": errors: [${errors
@@ -113,6 +118,7 @@ export const generateComponentsFileContents = async (
     .join(",\n  ");
 
   const themesArrayString = themeFiles
+    .filter(({fileExports}) => fileExports.length > 0)
     .map(({filepath, fileExports}) =>
       fileExports
         .map(
