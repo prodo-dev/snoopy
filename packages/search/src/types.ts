@@ -1,6 +1,7 @@
 export interface SearchResult {
   componentFiles: File[];
   themeFiles: File[];
+  styleFiles: File[];
 }
 
 export interface File {
