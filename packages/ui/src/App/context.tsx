@@ -54,18 +54,16 @@ const JsxContainer = styled.div`
   all: initial;
 `;
 
-const userBodyId = "prodo-user-body";
-const allStyles = styles
-  .map(x => x.style.replace(/\bbody\b/, `#${userBodyId}`))
-  .join("\n");
-const ApplyStyles = styled.div`
-  ${allStyles}
+export const userBodyId = "prodo-user-body";
+const ApplyStyles = styled.div<{allStyles: string}>`
+  ${props => props.allStyles}
 `;
 
 export const renderExample = (
   example: Example,
   theme: Theme,
   divId: string,
+  allStyles: string,
 ) => {
   const UserComponent = () => (
     <ErrorBoundary>
@@ -73,7 +71,7 @@ export const renderExample = (
         <Container>
           <DarkerJsxContainer>
             <JsxContainer className="example-contents">
-              <ApplyStyles>
+              <ApplyStyles allStyles={allStyles}>
                 <div id={userBodyId}>
                   {theme && ThemeProvider ? (
                     <ThemeProvider theme={theme as any}>

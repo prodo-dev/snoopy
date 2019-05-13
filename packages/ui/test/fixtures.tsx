@@ -53,10 +53,23 @@ export const testThemes = [
   {name: "lightTheme", theme: {}},
 ];
 
+export const testStyles = [
+  {
+    name: "testStyles",
+    path: "index.css",
+    style: `
+/* @prodo:styles */
+body {
+  font-style: italic;
+}
+`,
+  },
+];
+
 export const emptyContext: Context = {components: [], themes: [], styles: []};
 
 export const testContext: Context = {
   components: testComponents,
   themes: testThemes,
-  styles: [],
+  styles: testStyles,
 };
