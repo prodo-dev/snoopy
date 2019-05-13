@@ -9,7 +9,7 @@ import Sidebar, {SidebarToggle} from "../components/Sidebar";
 import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
-import {paddings} from "../styles";
+import {NarrowScreenWidth, paddings} from "../styles";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
 
@@ -48,7 +48,9 @@ const WithContext = <Props extends {}>(
 };
 
 const App = () => {
-  const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+  const [isSidebarOpen, setSidebarOpen] = React.useState(
+    window.innerWidth > NarrowScreenWidth,
+  );
   return (
     <Router history={history}>
       <ThemeProvider theme={darkTheme}>
