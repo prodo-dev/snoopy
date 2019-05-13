@@ -13,3 +13,5 @@ export {
 export const components = [];
 
 export const themes = [];
+
+export const styles = [];

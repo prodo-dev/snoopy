@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
-import {Component, Context, Example, Theme} from "../models";
+import {Component, Context, Example, Style, Theme} from "../models";
 import {paddings} from "../styles";
 
 // tslint:disable-next-line:no-var-requires
@@ -16,8 +16,9 @@ const MemoryRouter =
 
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
+const styles: Style[] = userImport.styles;
 
-export const context: Context = {components, themes};
+export const context: Context = {components, themes, styles};
 
 const StyledLog = styled.div`
   padding-top: ${paddings.small};
@@ -50,12 +51,19 @@ const JsxContainer = styled.div`
       rgba(255, 255, 255, 0.7)
     ),
     url(${backgroundImage}) repeat;
+  all: initial;
+`;
+
+export const userBodyId = "prodo-user-body";
+const ApplyStyles = styled.div<{allStyles: string}>`
+  ${props => props.allStyles}
 `;
 
 export const renderExample = (
   example: Example,
   theme: Theme,
   divId: string,
+  allStyles: string,
 ) => {
   const UserComponent = () => (
     <ErrorBoundary>
@@ -63,13 +71,17 @@ export const renderExample = (
         <Container>
           <DarkerJsxContainer>
             <JsxContainer className="example-contents">
-              {theme && ThemeProvider ? (
-                <ThemeProvider theme={theme as any}>
-                  <>{example.jsx}</>
-                </ThemeProvider>
-              ) : (
-                <>{example.jsx}</>
-              )}
+              <ApplyStyles allStyles={allStyles}>
+                <div id={userBodyId}>
+                  {theme && ThemeProvider ? (
+                    <ThemeProvider theme={theme as any}>
+                      <>{example.jsx}</>
+                    </ThemeProvider>
+                  ) : (
+                    <>{example.jsx}</>
+                  )}
+                </div>
+              </ApplyStyles>
             </JsxContainer>
           </DarkerJsxContainer>
           {ReactRouterDOM != null && (

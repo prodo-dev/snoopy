@@ -1,4 +1,5 @@
 import {FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
+import * as fs from "fs";
 import * as path from "path";
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
@@ -105,6 +106,22 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
+  const stylesArrayString = imports.styleFiles
+    .map(({filepath, fileExports}) =>
+      fileExports
+        .map(ex => {
+          const contents = fs.readFileSync(
+            path.resolve(path.relative(searchDir, filepath)),
+            "utf8",
+          );
+          return `{path: "${path.relative(searchDir, filepath)}", name: "${
+            ex.isDefaultExport ? "default" : ex.name
+          }", style: \`${contents}\`}`;
+        })
+        .join(",\n  "),
+    )
+    .join(",\n  ");
+
   return `
 ${importLines}
 
@@ -134,5 +151,9 @@ export const components = [
 export const themes = [
   ${themesArrayString}
 ];
+
+export const styles = [
+  ${stylesArrayString}
+]
 `.trimLeft();
 };
