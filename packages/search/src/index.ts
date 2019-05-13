@@ -1,9 +1,8 @@
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
-import {getComponentsFile} from "./components";
+import {findComponentExports, findThemeExports} from "./parser";
 import {getStylesFile} from "./styles";
-import {getThemesFile} from "./themes";
 import {ExtractType, File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents, styleFileGlob} from "./utils";
 
@@ -61,8 +60,8 @@ export const searchCodebase = async (
 ): Promise<SearchResult> => {
   const result = await globby(fileGlob, {cwd: directoryToSearch});
   const files = await getFiles(directoryToSearch, result, {
-    componentFiles: getComponentsFile,
-    themeFiles: getThemesFile,
+    componentFiles: findComponentExports,
+    themeFiles: findThemeExports,
   });
 
   const styleResult = await globby(styleFileGlob, {cwd: directoryToSearch});

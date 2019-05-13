@@ -66,10 +66,16 @@ body {
   },
 ];
 
-export const emptyContext: Context = {components: [], themes: [], styles: []};
+export const emptyContext: Context = {
+  components: [],
+  themes: [],
+  styles: [],
+  errors: [],
+};
 
 export const testContext: Context = {
   components: testComponents,
   themes: testThemes,
   styles: testStyles,
+  errors: [],
 };
