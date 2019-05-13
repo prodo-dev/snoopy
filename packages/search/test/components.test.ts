@@ -307,3 +307,24 @@ const s = \`
 
   expect(componentImport).toBe(null);
 });
+
+test("gets component imports for multiple named exports", () => {
+  const contents = `
+const Foo = () => {};
+const Bar = () => {};
+
+// @prodo
+export { Foo as One, Bar }
+`.trim();
+
+  const componentImport = findComponentExports(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {name: "One", isDefaultExport: false},
+      {name: "Bar", isDefaultExport: false},
+    ],
+    errors: [],
+  });
+});

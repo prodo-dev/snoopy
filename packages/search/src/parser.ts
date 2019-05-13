@@ -18,8 +18,10 @@ type ExportVisitor = Visitor<VisitorState>;
 const checkComment = (regex: RegExp, comments: readonly t.Comment[]): boolean =>
   comments.reduce((acc: boolean, c) => acc || regex.test(c.value), false);
 
-const getExportName = (node: t.ExportNamedDeclaration): string | null => {
+const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
   const declaration = node.declaration;
+  const specifiers = node.specifiers;
+
   if (
     declaration != null &&
     (t.isVariableDeclaration(declaration) || t.isClassDeclaration(declaration))
@@ -28,11 +30,21 @@ const getExportName = (node: t.ExportNamedDeclaration): string | null => {
       ? declaration.declarations[0].id
       : declaration.id;
     if (t.isIdentifier(id)) {
-      return id.name;
+      return [id.name];
     }
   }
 
-  return null;
+  if (specifiers) {
+    return specifiers.reduce((names: string[], s) => {
+      if (t.isExportSpecifier(s)) {
+        return [...names, s.exported.name];
+      }
+
+      return names;
+    }, []);
+  }
+
+  return [];
 };
 
 const mkExportVisitor = (
@@ -45,10 +57,17 @@ const mkExportVisitor = (
       checkComment(lineRegex, path.node.leadingComments)
     ) {
       if (t.isExportNamedDeclaration(path.node)) {
-        const exportName = getExportName(path.node);
-        if (exportName) {
-          state.fileExports.push({isDefaultExport: false, name: exportName});
-        }
+        const exportNames = getExportNames(path.node);
+        state.fileExports.push(
+          ...exportNames.map(name => {
+            const fileExport: FileExport = {
+              isDefaultExport: false,
+              name,
+            };
+
+            return fileExport;
+          }),
+        );
       } else if (t.isExportDefaultDeclaration(path.node)) {
         state.fileExports.push({isDefaultExport: true});
       } else {
