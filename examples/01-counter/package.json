@@ -1,8 +1,9 @@
 {
   "name": "@prodo/snoopy-examples-01-counter",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Click the buttons.",
   "main": "index.tsx",
+  "private": true,
   "author": "Samir Talwar <samir@prodo.ai>",
   "license": "MIT",
   "scripts": {

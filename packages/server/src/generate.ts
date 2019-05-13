@@ -1,6 +1,19 @@
-import {searchCodebase} from "@prodo/snoopy-search";
-import * as _ from "lodash";
+import {FileError, FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
+import * as fs from "fs";
 import * as path from "path";
+
+const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
+  transform(a).localeCompare(transform(b));
+
+const sortFileExports = (fileExports: FileExport[]): FileExport[] => {
+  const defaultExports = fileExports.filter(ex => ex.isDefaultExport);
+  const namedExports = fileExports.filter(ex => !ex.isDefaultExport);
+
+  return defaultExports.concat(namedExports.sort(by((ex: any) => ex.name)));
+};
+
+const sortFileErrors = (fileErrors: FileError[]): FileError[] =>
+  fileErrors.sort(by(err => err.message));
 
 export const generateComponentsFileContents = async (
   clientDir: string,
@@ -9,20 +22,27 @@ export const generateComponentsFileContents = async (
   const imports = await searchCodebase(searchDir);
 
   let componentCounter = 0;
-  const componentFiles = _.sortBy(imports.componentFiles, "filepath").map(
-    file => ({
+  const componentFiles = imports.componentFiles
+    .sort(by(f => f.filepath))
+    .map(file => ({
       ...file,
-      fileExports: _.sortBy(file.fileExports, "name").map(ex => ({
+      fileExports: sortFileExports(file.fileExports).map(ex => ({
         ...ex,
         id: `Component${componentCounter++}`,
       })),
-    }),
-  );
+    }));
+
+  const componentErrors = imports.componentFiles
+    .sort(by(f => f.filepath))
+    .map(file => ({
+      filepath: file.filepath,
+      errors: sortFileErrors(file.errors),
+    }));
 
   let themeCounter = 0;
-  const themeFiles = _.sortBy(imports.themeFiles, "filepath").map(file => ({
+  const themeFiles = imports.themeFiles.sort(by(f => f.filepath)).map(file => ({
     ...file,
-    fileExports: _.sortBy(file.fileExports, "name").map(ex => ({
+    fileExports: sortFileExports(file.fileExports).map(ex => ({
       ...ex,
       id: `Theme${themeCounter++}`,
     })),
@@ -36,6 +56,10 @@ export const generateComponentsFileContents = async (
   } = {};
 
   componentFiles.concat(themeFiles).forEach(({filepath, fileExports}) => {
+    if (fileExports.length === 0) {
+      return;
+    }
+
     if (importsByFile[filepath] == null) {
       importsByFile[filepath] = {
         namedImports: [] as Array<{from: string; to: string}>,
@@ -53,7 +77,8 @@ export const generateComponentsFileContents = async (
     });
   });
 
-  const importLines = _.sortBy(Object.keys(importsByFile))
+  const importLines = Object.keys(importsByFile)
+    .sort()
     .map(filepath => {
       const {defaultImport, namedImports} = importsByFile[filepath];
       return `import ${[
@@ -70,6 +95,7 @@ export const generateComponentsFileContents = async (
     .join("\n");
 
   const componentsArrayString = componentFiles
+    .filter(({fileExports}) => fileExports.length > 0)
     .map(({filepath, fileExports}) =>
       fileExports
         .map(
@@ -82,7 +108,18 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
+  const componentErrorsString = componentErrors
+    .filter(({errors}) => errors.length > 0)
+    .map(
+      ({filepath, errors}) =>
+        `{path: "${path.relative(searchDir, filepath)}": errors: [${errors
+          .map(e => JSON.stringify(e.message))
+          .join(",\n  ")}]}`,
+    )
+    .join(",\n  ");
+
   const themesArrayString = themeFiles
+    .filter(({fileExports}) => fileExports.length > 0)
     .map(({filepath, fileExports}) =>
       fileExports
         .map(
@@ -91,6 +128,22 @@ export const generateComponentsFileContents = async (
               ex.isDefaultExport ? "default" : ex.name
             }", theme: ${ex.id}}`,
         )
+        .join(",\n  "),
+    )
+    .join(",\n  ");
+
+  const stylesArrayString = imports.styleFiles
+    .map(({filepath, fileExports}) =>
+      fileExports
+        .map(ex => {
+          const contents = fs.readFileSync(
+            path.resolve(path.relative(searchDir, filepath)),
+            "utf8",
+          );
+          return `{path: "${path.relative(searchDir, filepath)}", name: "${
+            ex.isDefaultExport ? "default" : ex.name
+          }", style: \`${contents}\`}`;
+        })
         .join(",\n  "),
     )
     .join(",\n  ");
@@ -110,12 +163,27 @@ try {
   StyledComponents = null;
 }
 
+export let ReactRouterDOM;
+try {
+  ReactRouterDOM = require("react-router-dom");
+} catch (e) {
+  ReactRouterDOM = null;
+}
+
 export const components = [
   ${componentsArrayString}
+];
+
+export const errors = [
+  ${componentErrorsString}
 ];
 
 export const themes = [
   ${themesArrayString}
 ];
+
+export const styles = [
+  ${stylesArrayString}
+]
 `.trimLeft();
 };

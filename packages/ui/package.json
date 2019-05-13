@@ -1,26 +1,29 @@
 {
-  "name": "@prodo/snoopy-ui",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy-ui",
+  "version": "0.1.1",
   "main": "public/index.html",
   "license": "MIT",
   "files": [
     "public",
-    "src"
+    "src",
+    "test",
+    "tsconfig.json"
   ],
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",
-    "clean": "rm -rf dist",
-    "test": "PRODO_COMPONENTS_FILE=@prodo/components jest",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "test": "PRODO_COMPONENTS_FILE=@prodo-ai/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@prodo/snoopy-api": "^1.0.0",
+    "@prodo-ai/snoopy-api": "^0.1.1",
     "history": "^4.9.0",
     "lodash": "^4.17.11",
+    "prism-react-renderer": "^0.1.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-responsive": "^6.1.1",
@@ -31,6 +34,8 @@
     "styled-components": "^4.2.0"
   },
   "devDependencies": {
+    "@mdx-js/parcel-plugin-mdx": "^1.0.18",
+    "@mdx-js/react": "^1.0.0-rc.5",
     "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.124",
     "@types/react": "^16.8.13",
@@ -54,7 +59,7 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
-      "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
+      "@prodo-ai/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
   }
 }

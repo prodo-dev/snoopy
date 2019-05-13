@@ -1,11 +1,14 @@
 {
-  "name": "@prodo/snoopy-api",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy-api",
+  "version": "0.1.1",
   "main": "lib/index.js",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "tsc --build",
-    "clean": "rm -rf lib",
+    "clean": "rm -rf lib *.tsbuildinfo",
     "lint": "set -ex; tsc --build; tslint --project ."
   }
 }

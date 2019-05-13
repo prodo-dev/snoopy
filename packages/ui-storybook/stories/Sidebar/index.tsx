@@ -1,6 +1,6 @@
 // tslint:disable:no-submodule-imports
-import Sidebar from "@prodo/snoopy-ui/src/components/Sidebar";
-import {darkTheme} from "@prodo/snoopy-ui/src/styles/theme";
+import Sidebar from "@prodo-ai/snoopy-ui/src/components/Sidebar";
+import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
 // tslint:enable
 
 import {action} from "@storybook/addon-actions";

@@ -4,3 +4,8 @@ import * as React from "react";
 export const Button = (props: any) => (
   <button {...props}>{props.children}</button>
 );
+
+// @prodo:theme
+export const theme = {
+  color: "black",
+};

@@ -1,6 +1,6 @@
 {
-  "name": "@prodo/snoopy-search",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy-search",
+  "version": "0.1.1",
   "main": "lib/index.js",
   "license": "MIT",
   "files": [
@@ -9,15 +9,19 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
-    "clean": "rm -rf .cache lib",
+    "clean": "rm -rf .cache lib *.tsbuildinfo",
     "test": "jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
+    "@babel/parser": "^7.4.4",
+    "@babel/traverse": "^7.4.4",
+    "@babel/types": "^7.4.4",
     "globby": "^9.2.0",
     "multimatch": "^4.0.0"
   },
   "devDependencies": {
+    "@types/babel__traverse": "^7.0.6",
     "@types/glob": "^7.1.1",
     "@types/globby": "^9.1.0",
     "@types/jest": "^24.0.11",

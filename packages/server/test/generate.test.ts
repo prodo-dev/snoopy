@@ -127,11 +127,11 @@ describe("generateComponentsFileContents", () => {
   });
 
   // Currently failing
-  it.skip("doesn't fail on directories with broken files", async () => {
+  it("doesn't fail on directories with broken files", async () => {
     const contents = await generateComponentsFileContents(clientDir, brokenDir);
 
     expect(
-      /import {Button as Component\d+, theme as Theme\d+} from "good\.tsx";/.test(
+      /import {Button as Component\d+, theme as Theme\d+} from "broken\/good\.tsx";/.test(
         contents,
       ),
     ).toBe(true);

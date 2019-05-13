@@ -2,13 +2,13 @@ import * as React from "react";
 import styled from "styled-components";
 import {CounterExample, HelloWorldExample} from "../../../test/fixtures";
 import {renderExample} from "../../App/context";
-import backgroundImage from "../../media/transparent_background.png";
 import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
 
 interface Props {
   example: ExampleModel;
   userTheme?: any;
+  allStyles?: string;
 }
 
 const StyledExample = styled.div`
@@ -17,23 +17,8 @@ const StyledExample = styled.div`
   border: 1px solid ${props => props.theme.colors.border};
   border-radius: 4px;
   height: 100%;
-`;
-
-const Container = styled.div`
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.2)
-    ),
-    url(${backgroundImage}) repeat;
-  padding: ${paddings.medium};
-`;
-
-const JsxContainer = styled.div`
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.7)
-    ),
-    url(${backgroundImage}) repeat;
+  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.fontSizes.normal};
 `;
 
 const Title = styled.div`
@@ -51,11 +36,21 @@ class NoUpdate extends React.Component<Props> {
   private id: string = `example-${randId()}`;
 
   public componentDidMount() {
-    renderExample(this.props.example, this.props.userTheme, this.id);
+    renderExample(
+      this.props.example,
+      this.props.userTheme,
+      this.id,
+      this.props.allStyles || "",
+    );
   }
 
   public componentDidUpdate() {
-    renderExample(this.props.example, this.props.userTheme, this.id);
+    renderExample(
+      this.props.example,
+      this.props.userTheme,
+      this.id,
+      this.props.allStyles || "",
+    );
   }
 
   public shouldComponentUpdate(nextProps: Props) {
@@ -70,11 +65,7 @@ class NoUpdate extends React.Component<Props> {
 const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.name}</Title>
-    <Container>
-      <JsxContainer className="example-contents">
-        <NoUpdate {...props} />
-      </JsxContainer>
-    </Container>
+    <NoUpdate {...props} />
   </StyledExample>
 );
 

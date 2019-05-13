@@ -25,6 +25,7 @@ const ExamplesContainer = styled.div`
 interface Props {
   component: ComponentModel;
   userTheme?: any;
+  allStyles?: string;
 }
 
 const Component = (props: Props) => {
@@ -43,12 +44,14 @@ const Component = (props: Props) => {
               key={example.name}
               userTheme={props.userTheme}
               example={example}
+              allStyles={props.allStyles}
             />
           ))
         ) : (
           <Example
             userTheme={props.userTheme}
             example={{name: "Default", jsx: <Comp />}}
+            allStyles={props.allStyles}
           />
         )}
       </ExamplesContainer>

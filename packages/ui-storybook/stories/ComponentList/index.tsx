@@ -1,7 +1,7 @@
 // tslint:disable:no-submodule-imports
-import ComponentList from "@prodo/snoopy-ui/src/components/ComponentList";
-import {Component as ComponentModel} from "@prodo/snoopy-ui/src/models";
-import {darkTheme} from "@prodo/snoopy-ui/src/styles/theme";
+import ComponentList from "@prodo-ai/snoopy-ui/src/components/ComponentList";
+import {Component as ComponentModel} from "@prodo-ai/snoopy-ui/src/models";
+import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
 // tslint:enable
 
 import {storiesOf} from "@storybook/react";
