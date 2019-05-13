@@ -6,7 +6,6 @@ import styled from "styled-components";
 import Readme from "../../../../README.mdx";
 import ComponentList from "../components/ComponentList";
 import Highlighter from "../components/Highlighter";
-import {StyledPage, StyledPageContents} from "../components/Page";
 import {Context} from "../models";
 
 interface Props {
@@ -33,36 +32,34 @@ const HomePage = ({context}: Props) => {
   const mdxComponents = {code: Highlighter};
 
   return (
-    <StyledPage>
-      <StyledPageContents>
-        {showDocs ? (
-          <React.Fragment>
-            {hasComponents && (
-              <StyledDocsToggle onClick={() => setShowDocs(false)}>
-                <FontAwesomeIcon icon={faCaretDown} /> Hide documentation
-              </StyledDocsToggle>
-            )}
-            <MDXProvider components={mdxComponents}>
-              <StyledMarkdown>
-                <Readme />
-              </StyledMarkdown>
-            </MDXProvider>
-          </React.Fragment>
-        ) : (
-          hasComponents && (
-            <StyledDocsToggle onClick={() => setShowDocs(true)}>
-              <FontAwesomeIcon icon={faCaretRight} /> Show documentation
+    <>
+      {showDocs ? (
+        <React.Fragment>
+          {hasComponents && (
+            <StyledDocsToggle onClick={() => setShowDocs(false)}>
+              <FontAwesomeIcon icon={faCaretDown} /> Hide documentation
             </StyledDocsToggle>
-          )
-        )}
-        {hasComponents && (
-          <>
-            <h2>Your components</h2>
-            <ComponentList components={context.components} full />
-          </>
-        )}
-      </StyledPageContents>
-    </StyledPage>
+          )}
+          <MDXProvider components={mdxComponents}>
+            <StyledMarkdown>
+              <Readme />
+            </StyledMarkdown>
+          </MDXProvider>
+        </React.Fragment>
+      ) : (
+        hasComponents && (
+          <StyledDocsToggle onClick={() => setShowDocs(true)}>
+            <FontAwesomeIcon icon={faCaretRight} /> Show documentation
+          </StyledDocsToggle>
+        )
+      )}
+      {hasComponents && (
+        <>
+          <h2>Your components</h2>
+          <ComponentList components={context.components} full />
+        </>
+      )}
+    </>
   );
 };
 

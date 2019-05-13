@@ -3,27 +3,14 @@ import Select from "react-select";
 import styled from "styled-components";
 import {userBodyId} from "../App/context";
 import Component from "../components/Component";
-import {StyledPage} from "../components/Page";
-import {NarrowScreen} from "../components/Responsive";
-import Sidebar, {SidebarToggle} from "../components/Sidebar";
 import {Component as ComponentModel, Context} from "../models";
 import {margins, paddings} from "../styles";
 
 interface Props {
-  path: string;
   components: ComponentModel[];
   errors: string[];
   context: Context;
 }
-
-const StyledComponentPage = styled.div`
-  width: 100%;
-  display: flex;
-`;
-
-const ContentContainer = styled.div`
-  width: 100%;
-`;
 
 const Components = styled.div`
   display: flex;
@@ -61,16 +48,6 @@ const Divider = styled.div`
   border-bottom: 1px solid ${props => props.theme.colors.border};
 `;
 
-const HeaderContainer = styled.div`
-  padding: ${paddings.medium} ${paddings.large};
-  color: ${props => props.theme.colors.text};
-  background-color: ${props => props.theme.colors.fg};
-
-  .sidebar-toggle {
-    margin-left: 0;
-  }
-`;
-
 const StyledError = styled.div`
   padding: ${paddings.large};
   color: ${props => props.theme.colors.error}
@@ -79,7 +56,6 @@ const StyledError = styled.div`
 `;
 
 const ComponentPage = (props: Props) => {
-  const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const [selectedTheme, setSelectedTheme] = React.useState(0);
   const themes =
     props.context.themes && props.context.themes.filter(x => x != null);
@@ -91,66 +67,43 @@ const ComponentPage = (props: Props) => {
     .join("\n");
 
   return (
-    <StyledPage>
-      <StyledComponentPage>
-        <Sidebar
-          selected={props.path}
-          isOpen={isSidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-          components={props.context.components.filter(
-            (c: ComponentModel) => c != null,
-          )}
-        />
-
-        <ContentContainer>
-          <HeaderContainer>
-            <NarrowScreen>
-              <SidebarToggle
-                isOpen={isSidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
-            </NarrowScreen>
-            {props.path}
-          </HeaderContainer>
-
-          <Errors className="errors">
-            {props.errors.map((error, i) => (
-              <StyledError key={i}>{error}</StyledError>
-            ))}
-          </Errors>
-          <Components className="components">
-            {props.components.map((component, i) => (
-              <React.Fragment key={i}>
-                {i > 0 && <Divider />}
-                <ComponentContainer key={component.name}>
-                  <StyledTitleContainer>
-                    <StyledTitle>{component.name}</StyledTitle>
-                    {themes.length > 0 && (
-                      <StyledSelect
-                        defaultValue={options[selectedTheme]}
-                        onChange={(selectedOption: any) =>
-                          setSelectedTheme(selectedOption.value)
-                        }
-                        options={options}
-                      />
-                    )}
-                  </StyledTitleContainer>
-                  <Component
-                    component={component}
-                    userTheme={
-                      themes.length > 0 &&
-                      themes[selectedTheme] &&
-                      themes[selectedTheme].theme
+    <>
+      <Errors className="errors">
+        {props.errors.map((error, i) => (
+          <StyledError key={i}>{error}</StyledError>
+        ))}
+      </Errors>
+      <Components className="components">
+        {props.components.map((component, i) => (
+          <React.Fragment key={i}>
+            {i > 0 && <Divider />}
+            <ComponentContainer key={component.name}>
+              <StyledTitleContainer>
+                <StyledTitle>{component.name}</StyledTitle>
+                {themes.length > 0 && (
+                  <StyledSelect
+                    defaultValue={options[selectedTheme]}
+                    onChange={(selectedOption: any) =>
+                      setSelectedTheme(selectedOption.value)
                     }
-                    allStyles={allStyles}
+                    options={options}
                   />
-                </ComponentContainer>
-              </React.Fragment>
-            ))}
-          </Components>
-        </ContentContainer>
-      </StyledComponentPage>
-    </StyledPage>
+                )}
+              </StyledTitleContainer>
+              <Component
+                component={component}
+                userTheme={
+                  themes.length > 0 &&
+                  themes[selectedTheme] &&
+                  themes[selectedTheme].theme
+                }
+                allStyles={allStyles}
+              />
+            </ComponentContainer>
+          </React.Fragment>
+        ))}
+      </Components>
+    </>
   );
 };
 
