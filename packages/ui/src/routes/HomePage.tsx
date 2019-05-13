@@ -8,7 +8,7 @@ import {emptyContext, testContext} from "../../test/fixtures";
 import ComponentList from "../components/ComponentList";
 import Highlighter from "../components/Highlighter";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Component, Context} from "../models";
+import {Context} from "../models";
 
 interface Props {
   context: Context;
@@ -18,18 +18,19 @@ const StyledMarkdown = styled.div`
   max-width: 70ch;
   line-height: 1.4;
   a {
-    color: ${props => props.theme.colors.textSecondary};
+    color: ${({theme}) => theme.colors.textSecondary};
   }
 `;
 
 const StyledDocsToggle = styled.div`
-  font-size: ${props => props.theme.fontSizes.subtitle};
+  font-size: ${({theme}) => theme.fontSizes.subtitle};
 `;
 
-const HomePage = (props: Props) => {
+const HomePage = ({context}: Props) => {
   const [showDocs, setShowDocs] = React.useState(
-    props.context.components.length === 0,
+    context.components.length === 0,
   );
+  const hasComponents = context.components.length > 0;
   const mdxComponents = {code: Highlighter};
 
   return (
@@ -37,9 +38,11 @@ const HomePage = (props: Props) => {
       <StyledPageContents>
         {showDocs ? (
           <React.Fragment>
-            <StyledDocsToggle onClick={() => setShowDocs(false)}>
-              <FontAwesomeIcon icon={faCaretDown} /> Hide documentation
-            </StyledDocsToggle>
+            {hasComponents && (
+              <StyledDocsToggle onClick={() => setShowDocs(false)}>
+                <FontAwesomeIcon icon={faCaretDown} /> Hide documentation
+              </StyledDocsToggle>
+            )}
             <MDXProvider components={mdxComponents}>
               <StyledMarkdown>
                 <Readme />
@@ -47,17 +50,18 @@ const HomePage = (props: Props) => {
             </MDXProvider>
           </React.Fragment>
         ) : (
-          <StyledDocsToggle onClick={() => setShowDocs(true)}>
-            <FontAwesomeIcon icon={faCaretRight} /> Show documentation
-          </StyledDocsToggle>
+          hasComponents && (
+            <StyledDocsToggle onClick={() => setShowDocs(true)}>
+              <FontAwesomeIcon icon={faCaretRight} /> Show documentation
+            </StyledDocsToggle>
+          )
         )}
-        <h2>Your components</h2>
-        <ComponentList
-          components={props.context.components.filter(
-            (c: Component) => c != null,
-          )}
-          full
-        />
+        {hasComponents && (
+          <>
+            <h2>Your components</h2>
+            <ComponentList components={context.components} full />
+          </>
+        )}
       </StyledPageContents>
     </StyledPage>
   );
