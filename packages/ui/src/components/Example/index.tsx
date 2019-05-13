@@ -8,6 +8,7 @@ import {margins, paddings} from "../../styles";
 interface Props {
   example: ExampleModel;
   userTheme?: any;
+  allStyles?: string;
 }
 
 const StyledExample = styled.div`
@@ -35,11 +36,21 @@ class NoUpdate extends React.Component<Props> {
   private id: string = `example-${randId()}`;
 
   public componentDidMount() {
-    renderExample(this.props.example, this.props.userTheme, this.id);
+    renderExample(
+      this.props.example,
+      this.props.userTheme,
+      this.id,
+      this.props.allStyles || "",
+    );
   }
 
   public componentDidUpdate() {
-    renderExample(this.props.example, this.props.userTheme, this.id);
+    renderExample(
+      this.props.example,
+      this.props.userTheme,
+      this.id,
+      this.props.allStyles || "",
+    );
   }
 
   public shouldComponentUpdate(nextProps: Props) {

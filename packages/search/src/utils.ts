@@ -6,7 +6,16 @@ export const fileGlob = [
   `**/*.{${fileExtensions.join(",")}}`,
   "!flycheck_*.*",
   "!node_modules/**/*",
+  "!dist/**/*",
 ];
+export const styleFileExtensions = ["css", "less"];
+export const styleFileGlob = [
+  `**/*.{${styleFileExtensions.join(",")}}`,
+  "!flycheck_*.*",
+  "!node_modules/**/*",
+  "!dist/**/*",
+];
+
 export const exportDefaultRegex = /\bexport\s+default\b/;
 
 export const capitalize = (str: string): string =>

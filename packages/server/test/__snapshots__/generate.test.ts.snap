@@ -62,5 +62,9 @@ export const themes = [
   {path: \\"themes/multiple-exports.ts\\", name: \\"theme2\\", theme: Theme5},
   {path: \\"themes/named-export.ts\\", name: \\"theme\\", theme: Theme6}
 ];
+
+export const styles = [
+  
+]
 "
 `;

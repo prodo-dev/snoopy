@@ -1,7 +1,8 @@
 import * as React from "react";
 import Select from "react-select";
 import styled from "styled-components";
-import {testComponents, testThemes} from "../../test/fixtures";
+import {testComponents, testContext, testStyles} from "../../test/fixtures";
+import {userBodyId} from "../App/context";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
@@ -86,6 +87,9 @@ const ComponentPage = (props: Props) => {
   const options = themes.map((theme, idx) => {
     return {value: idx, label: theme.name};
   });
+  const allStyles = props.context.styles
+    .map(x => x.style.replace(/\bbody\b/, `#${userBodyId}`))
+    .join("\n");
 
   return (
     <StyledPage>
@@ -139,6 +143,7 @@ const ComponentPage = (props: Props) => {
                       themes[selectedTheme] &&
                       themes[selectedTheme].theme
                     }
+                    allStyles={allStyles}
                   />
                 </ComponentContainer>
               </React.Fragment>
@@ -155,7 +160,12 @@ ComponentPage.examples = [
     name: "No themes",
     jsx: (
       <ComponentPage
-        context={{components: testComponents, themes: testThemes, errors: []}}
+        context={{
+          components: testComponents,
+          themes: [],
+          styles: testStyles,
+          errors: [],
+        }}
         path={testComponents[0].path}
         components={[testComponents[0]]}
         errors={[]}
@@ -166,7 +176,7 @@ ComponentPage.examples = [
     name: "With themes",
     jsx: (
       <ComponentPage
-        context={{components: testComponents, themes: testThemes, errors: []}}
+        context={testContext}
         path={testComponents[0].path}
         components={[testComponents[0]]}
         errors={[]}
