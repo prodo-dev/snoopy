@@ -6,6 +6,11 @@ export interface Component {
   component: React.ComponentType<any>;
 }
 
+export interface FileError {
+  path: string;
+  errors: string[];
+}
+
 export interface Example {
   name: string;
   jsx: React.ReactNode;
@@ -26,4 +31,5 @@ export interface Context {
   themes: Theme[];
   components: Component[];
   styles: Style[];
+  errors: FileError[];
 }

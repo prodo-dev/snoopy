@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
-import {Component, Context, Example, Style, Theme} from "../models";
+import {Component, Context, Example, FileError, Style, Theme} from "../models";
 import {paddings} from "../styles";
 
 // tslint:disable-next-line:no-var-requires
@@ -17,8 +17,9 @@ const MemoryRouter =
 const components: Component[] = userImport.components;
 const themes: Theme[] = userImport.themes;
 const styles: Style[] = userImport.styles;
+const errors: FileError[] = userImport.errors;
 
-export const context: Context = {components, themes, styles};
+export const context: Context = {components, themes, styles, errors};
 
 const StyledLog = styled.div`
   padding-top: ${paddings.small};
