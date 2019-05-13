@@ -55,43 +55,43 @@ const App = () => {
     <Router history={history}>
       <ThemeProvider theme={darkTheme}>
         <StyledPage>
-          <Sidebar
-            isOpen={isSidebarOpen}
-            setSidebarOpen={setSidebarOpen}
-            components={context.components}
-          />
-
-          <ContentContainer>
-            <HeaderContainer>
-              <NarrowScreen>
-                <SidebarToggle
+          <Route
+            path="/:path*"
+            exact
+            component={({match}: RouteComponentProps<{path: string}>) => (
+              <>
+                <Sidebar
+                  selected={match.params.path}
                   isOpen={isSidebarOpen}
                   setSidebarOpen={setSidebarOpen}
+                  components={context.components}
                 />
-              </NarrowScreen>
-              <Switch>
-                <Route path="/" exact component={() => <>Snoopy, by Prodo</>} />
-                <Route
-                  path="/:path+"
-                  exact
-                  component={({match}: RouteComponentProps<{path: string}>) => (
-                    <>{match.params.path}</>
-                  )}
-                />
-              </Switch>
-            </HeaderContainer>
 
-            <StyledPageContents>
-              <Switch>
-                <Route path="/" exact component={WithContext(HomePage)} />
-                <Route
-                  path="/:path+"
-                  exact
-                  component={WithContext(ComponentPageWithProps)}
-                />
-              </Switch>
-            </StyledPageContents>
-          </ContentContainer>
+                <ContentContainer>
+                  <HeaderContainer>
+                    <NarrowScreen>
+                      <SidebarToggle
+                        isOpen={isSidebarOpen}
+                        setSidebarOpen={setSidebarOpen}
+                      />
+                    </NarrowScreen>
+                    {match.params.path || "Snoopy, by Prodo"}
+                  </HeaderContainer>
+
+                  <StyledPageContents>
+                    <Switch>
+                      <Route path="/" exact component={WithContext(HomePage)} />
+                      <Route
+                        path="/:path+"
+                        exact
+                        component={WithContext(ComponentPageWithProps)}
+                      />
+                    </Switch>
+                  </StyledPageContents>
+                </ContentContainer>
+              </>
+            )}
+          />
         </StyledPage>
       </ThemeProvider>
     </Router>
