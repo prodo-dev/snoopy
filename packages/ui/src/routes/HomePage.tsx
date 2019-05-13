@@ -56,7 +56,7 @@ const HomePage = ({context}: Props) => {
       {hasComponents && (
         <>
           <h2>Your components</h2>
-          <ComponentList components={context.components} full />
+          <ComponentList components={context.components} />
         </>
       )}
     </>
