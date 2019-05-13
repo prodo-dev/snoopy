@@ -23,9 +23,7 @@ const getFiles = async (
   directoryToSearch: string,
   result: string[],
   extractors: {
-    [id in ExtractType]:
-      | ((contents: string, filepath: string) => File | null)
-      | null
+    [id in ExtractType]?: (contents: string, filepath: string) => File | null
   },
 ) => {
   const files = await Promise.all(
@@ -48,7 +46,7 @@ const getFiles = async (
       }
 
       for (const id of Object.keys(extractors) as ExtractType[]) {
-        if (extractors[id] != null) {
+        if (extractors[id]) {
           fileResult[id] = extractors[id]!(contents, filepath);
         }
       }
@@ -65,13 +63,10 @@ export const searchCodebase = async (
   const files = await getFiles(directoryToSearch, result, {
     componentFiles: getComponentsFile,
     themeFiles: getThemesFile,
-    styleFiles: null,
   });
 
   const styleResult = await globby(styleFileGlob, {cwd: directoryToSearch});
   const styleFiles = await getFiles(directoryToSearch, styleResult, {
-    componentFiles: null,
-    themeFiles: null,
     styleFiles: getStylesFile,
   });
 
