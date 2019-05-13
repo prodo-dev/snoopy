@@ -18,8 +18,8 @@ export interface Theme {
 
 export interface Style {
   name: string;
-  style: any;
-  path: any;
+  style: string;
+  path: string;
 }
 
 export interface Context {

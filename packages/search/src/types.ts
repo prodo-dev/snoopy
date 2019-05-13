@@ -25,3 +25,5 @@ export class FileError extends Error {
     this.filepath = filepath;
   }
 }
+
+export type ExtractType = "styleFiles" | "componentFiles" | "themeFiles";

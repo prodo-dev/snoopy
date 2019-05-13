@@ -6,6 +6,7 @@ export const fileGlob = [
   `**/*.{${fileExtensions.join(",")}}`,
   "!flycheck_*.*",
   "!node_modules/**/*",
+  "!dist/**/*",
 ];
 export const styleFileExtensions = ["css", "less"];
 export const styleFileGlob = [

@@ -73,21 +73,17 @@ export const renderExample = (
         <Container>
           <DarkerJsxContainer>
             <JsxContainer className="example-contents">
-              {theme && ThemeProvider ? (
-                <ThemeProvider theme={theme as any}>
-                  <ApplyStyles>
-                    <div id={userBodyId}>
+              <ApplyStyles>
+                <div id={userBodyId}>
+                  {theme && ThemeProvider ? (
+                    <ThemeProvider theme={theme as any}>
                       <>{example.jsx}</>
-                    </div>
-                  </ApplyStyles>
-                </ThemeProvider>
-              ) : (
-                <ApplyStyles>
-                  <div id={userBodyId}>
+                    </ThemeProvider>
+                  ) : (
                     <>{example.jsx}</>
-                  </div>
-                </ApplyStyles>
-              )}
+                  )}
+                </div>
+              </ApplyStyles>
             </JsxContainer>
           </DarkerJsxContainer>
           {ReactRouterDOM != null && (

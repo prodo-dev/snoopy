@@ -4,7 +4,7 @@ import * as path from "path";
 import {getComponentsFile} from "./components";
 import {getStylesFile} from "./styles";
 import {getThemesFile} from "./themes";
-import {File, FileError, SearchResult} from "./types";
+import {ExtractType, File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents, styleFileGlob} from "./utils";
 
 export * from "./types";
@@ -12,11 +12,20 @@ export * from "./types";
 export const checkMatch = (filepath: string): boolean =>
   multimatch(filepath, fileGlob).length > 0;
 
+const getNonNullFilesOfGivenType = (
+  files: Array<{[id: string]: File | null}>,
+  type: ExtractType,
+) => {
+  return files.map(i => i[type]).filter(i => i != null) as File[];
+};
+
 const getFiles = async (
   directoryToSearch: string,
   result: string[],
   extractors: {
-    [id: string]: (contents: string, filepath: string) => File | null;
+    [id in ExtractType]:
+      | ((contents: string, filepath: string) => File | null)
+      | null
   },
 ) => {
   const files = await Promise.all(
@@ -38,8 +47,10 @@ const getFiles = async (
         return fileResult;
       }
 
-      for (const id of Object.keys(extractors)) {
-        fileResult[id] = extractors[id](contents, filepath);
+      for (const id of Object.keys(extractors) as ExtractType[]) {
+        if (extractors[id] != null) {
+          fileResult[id] = extractors[id]!(contents, filepath);
+        }
       }
       return fileResult;
     }),
@@ -54,21 +65,21 @@ export const searchCodebase = async (
   const files = await getFiles(directoryToSearch, result, {
     componentFiles: getComponentsFile,
     themeFiles: getThemesFile,
+    styleFiles: null,
   });
 
   const styleResult = await globby(styleFileGlob, {cwd: directoryToSearch});
   const styleFiles = await getFiles(directoryToSearch, styleResult, {
+    componentFiles: null,
+    themeFiles: null,
     styleFiles: getStylesFile,
   });
 
   const results: SearchResult = {
-    componentFiles: files
-      .map(i => i.componentFiles)
-      .filter(i => i != null) as File[],
-    themeFiles: files.map(i => i.themeFiles).filter(i => i != null) as File[],
-    styleFiles: styleFiles
-      .map(i => i.styleFiles)
-      .filter(i => i != null) as File[],
+    componentFiles: getNonNullFilesOfGivenType(files, "componentFiles"),
+    themeFiles: getNonNullFilesOfGivenType(files, "themeFiles"),
+    styleFiles: getNonNullFilesOfGivenType(styleFiles, "styleFiles"),
   };
+
   return results;
 };
