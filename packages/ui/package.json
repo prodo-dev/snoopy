@@ -23,6 +23,7 @@
     "@prodo-ai/snoopy-api": "^0.1.1",
     "history": "^4.9.0",
     "lodash": "^4.17.11",
+    "prism-react-renderer": "^0.1.6",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-responsive": "^6.1.1",
