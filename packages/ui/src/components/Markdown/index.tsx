@@ -1,7 +1,6 @@
 import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
 import styled from "styled-components";
-import ReadmeMarkdown from "../../../../../README.mdx";
 import Highlighter from "../Highlighter";
 
 const StyledMarkdown = styled.div`
@@ -21,11 +20,5 @@ const Markdown = ({children}: {children: React.ReactNode}) => {
     </MDXProvider>
   );
 };
-
-export const Readme = () => (
-  <Markdown>
-    <ReadmeMarkdown />
-  </Markdown>
-);
 
 export default Markdown;

@@ -3,6 +3,7 @@ import Select from "react-select";
 import styled from "styled-components";
 import {userBodyId} from "../App/context";
 import Component from "../components/Component";
+import {Readme, Toggle} from "../components/Docs";
 import {Component as ComponentModel, Context} from "../models";
 import {margins, paddings} from "../styles";
 
@@ -68,6 +69,10 @@ const ComponentPage = (props: Props) => {
 
   return (
     <>
+      <Toggle>
+        <Readme />
+      </Toggle>
+
       <Errors className="errors">
         {props.errors.map((error, i) => (
           <StyledError key={i}>{error}</StyledError>
