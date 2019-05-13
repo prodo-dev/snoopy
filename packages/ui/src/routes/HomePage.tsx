@@ -1,4 +1,6 @@
 import * as React from "react";
+import styled from "styled-components";
+import Readme from "../../../../README.mdx";
 import {emptyContext, testContext} from "../../test/fixtures";
 import ComponentList from "../components/ComponentList";
 import {StyledPage, StyledPageContents} from "../components/Page";
@@ -8,14 +10,18 @@ interface Props {
   context: Context;
 }
 
+const StyledMarkdown = styled.div`
+  a {
+    color: ${props => props.theme.colors.textSecondary};
+  }
+`;
+
 const HomePage = (props: Props) => (
   <StyledPage>
     <StyledPageContents>
-      <h1>Snoopy</h1>
-      <p>
-        Add <code>// @prodo</code> in the line above your exported components to
-        see them with Snoopy.
-      </p>
+      <StyledMarkdown>
+        <Readme />
+      </StyledMarkdown>
       <h2>Your components</h2>
       <ComponentList
         components={props.context.components.filter(
