@@ -22,7 +22,12 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Directory = styled.span<{level: number}>`
+interface FileProps {
+  level: number;
+  selected?: boolean;
+}
+
+const StyledDirectory = styled.span<FileProps>`
   display: block;
   padding: ${paddings.small};
   padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
@@ -34,7 +39,7 @@ const Directory = styled.span<{level: number}>`
   }
 `;
 
-const File = styled.span<{level: number; selected: boolean}>`
+const StyledFile = styled.span<FileProps>`
   display: block;
   padding: ${paddings.small};
   padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
@@ -43,15 +48,17 @@ const File = styled.span<{level: number; selected: boolean}>`
 
 interface Props {
   components: Component[];
-  selected?: string;
+  selected: FilePath[];
+  select: (selection: FilePath[]) => any;
 }
 
-type File = string;
+export type FilePath = string;
+
 interface Directory {
-  [segment: string]: Directory | File;
+  [segment: string]: Directory | FilePath;
 }
 
-const ComponentList = ({components, selected}: Props) => {
+const ComponentList = ({components, selected, select}: Props) => {
   const paths = _.uniq(components.map(({path}) => path));
   const structure: Directory = {};
   for (const path of paths) {
@@ -72,7 +79,12 @@ const ComponentList = ({components, selected}: Props) => {
 
   return (
     <StyledComponentList className="component-list">
-      <FileTree structure={structure} level={0} selected={selected} />
+      <FileTree
+        structure={structure}
+        level={0}
+        selected={selected}
+        select={select}
+      />
     </StyledComponentList>
   );
 };
@@ -81,10 +93,12 @@ const FileTree = ({
   structure,
   level,
   selected,
+  select,
 }: {
   structure: Directory;
   level: number;
-  selected: string | undefined;
+  selected: FilePath[];
+  select: (selection: FilePath[]) => any;
 }) => (
   <StyledFileTree>
     {Object.keys(structure)
@@ -92,10 +106,28 @@ const FileTree = ({
       .map(segment => {
         const child = structure[segment];
         if (typeof child === "string") {
+          const isSelected = selected.includes(child);
+          const add = () => select(selected.concat([child]).sort());
+          const remove = () => select(selected.filter(s => s !== child));
           return (
             <li key={segment}>
               <StyledLink to={child}>
-                <File level={level} selected={child === selected}>
+                <File level={level} selected={isSelected}>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onClick={event => {
+                      event.stopPropagation();
+                    }}
+                    onChange={event => {
+                      event.stopPropagation();
+                      if (event.target.checked) {
+                        add();
+                      } else {
+                        remove();
+                      }
+                    }}
+                  />{" "}
                   {segment}
                 </File>
               </StyledLink>
@@ -109,12 +141,27 @@ const FileTree = ({
                 structure={child}
                 level={level + 1}
                 selected={selected}
+                select={select}
               />
             </li>
           );
         }
       })}
   </StyledFileTree>
+);
+
+const Directory = ({
+  children,
+  ...props
+}: FileProps & {children: React.ReactNode}) => (
+  <StyledDirectory {...props}>{children}</StyledDirectory>
+);
+
+const File = ({
+  children,
+  ...props
+}: FileProps & {children: React.ReactNode}) => (
+  <StyledFile {...props}>{children}</StyledFile>
 );
 
 // @prodo

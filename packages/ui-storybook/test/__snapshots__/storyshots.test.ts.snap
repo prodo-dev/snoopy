@@ -36,6 +36,13 @@ exports[`Storyshots Component List multiple items 1`] = `
               className="sc-ifAKCX hnOSUB"
               selected={false}
             >
+              <input
+                checked={false}
+                onChange={[Function]}
+                onClick={[Function]}
+                type="checkbox"
+              />
+               
               bar
             </span>
           </a>
@@ -72,6 +79,13 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
               className="sc-ifAKCX dzQAzc"
               selected={true}
             >
+              <input
+                checked={true}
+                onChange={[Function]}
+                onClick={[Function]}
+                type="checkbox"
+              />
+               
               bar
             </span>
           </a>
@@ -108,6 +122,13 @@ exports[`Storyshots Component List single item 1`] = `
               className="sc-ifAKCX hnOSUB"
               selected={false}
             >
+              <input
+                checked={false}
+                onChange={[Function]}
+                onClick={[Function]}
+                type="checkbox"
+              />
+               
               bar
             </span>
           </a>
@@ -144,6 +165,13 @@ exports[`Storyshots Component List single item with selection 1`] = `
               className="sc-ifAKCX dzQAzc"
               selected={true}
             >
+              <input
+                checked={true}
+                onChange={[Function]}
+                onClick={[Function]}
+                type="checkbox"
+              />
+               
               bar
             </span>
           </a>
@@ -274,6 +302,13 @@ exports[`Storyshots Sidebar open with components 1`] = `
                 className="sc-ifAKCX hnOSUB"
                 selected={false}
               >
+                <input
+                  checked={false}
+                  onChange={[Function]}
+                  onClick={[Function]}
+                  type="checkbox"
+                />
+                 
                 bar
               </span>
             </a>

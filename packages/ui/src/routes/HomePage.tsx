@@ -21,7 +21,11 @@ const HomePage = ({context}: Props) => {
       </Toggle>
 
       <h2>Your components</h2>
-      <ComponentList components={context.components} />
+      <ComponentList
+        components={context.components}
+        selected={[]}
+        select={() => undefined}
+      />
     </>
   );
 };

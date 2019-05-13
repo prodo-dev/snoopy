@@ -51,6 +51,8 @@ const App = () => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(
     window.innerWidth > NarrowScreenWidth,
   );
+  const [selectedPaths, setSelectedPaths] = React.useState([] as string[]);
+
   return (
     <Router history={history}>
       <ThemeProvider theme={darkTheme}>
@@ -61,10 +63,13 @@ const App = () => {
             component={({match}: RouteComponentProps<{path: string}>) => (
               <>
                 <Sidebar
-                  selected={match.params.path}
+                  components={context.components}
                   isOpen={isSidebarOpen}
                   setSidebarOpen={setSidebarOpen}
-                  components={context.components}
+                  selected={
+                    match.params.path ? [match.params.path] : selectedPaths
+                  }
+                  select={setSelectedPaths}
                 />
 
                 <ContentContainer>
