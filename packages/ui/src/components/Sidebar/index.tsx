@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
-import {testComponents} from "../../../test/fixtures";
 import {Component} from "../../models";
 import {
   forNarrowScreen,
@@ -144,27 +143,6 @@ export const SidebarToggle = ({
   </SidebarIcon>
 );
 
-SidebarToggle.examples = [
-  {
-    name: "Open",
-    jsx: (
-      <SidebarToggle
-        isOpen={true}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-      />
-    ),
-  },
-  {
-    name: "Closed",
-    jsx: (
-      <SidebarToggle
-        isOpen={false}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-      />
-    ),
-  },
-];
-
 const Header = () => (
   <StyledLink to="/">
     <Title className="title">
@@ -208,60 +186,6 @@ const Sidebar = (props: Props) => (
     </NarrowScreen>
   </React.Fragment>
 );
-
-Sidebar.examples = [
-  {
-    name: "Open empty",
-    jsx: (
-      <Sidebar
-        isOpen={true}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-        components={[]}
-      />
-    ),
-  },
-  {
-    name: "Closed empty",
-    jsx: (
-      <Sidebar
-        isOpen={false}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-        components={[]}
-      />
-    ),
-  },
-  {
-    name: "Open with components",
-    jsx: (
-      <Sidebar
-        isOpen={true}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-        components={testComponents}
-      />
-    ),
-  },
-  {
-    name: "Open with components and selection",
-    jsx: (
-      <Sidebar
-        isOpen={true}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-        components={testComponents}
-        selected={testComponents[0].path}
-      />
-    ),
-  },
-  {
-    name: "Closed with components",
-    jsx: (
-      <Sidebar
-        isOpen={false}
-        setSidebarOpen={() => alert("setSidebarOpen")}
-        components={testComponents}
-      />
-    ),
-  },
-];
 
 // @prodo
 export default Sidebar;

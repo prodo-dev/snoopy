@@ -1,7 +1,6 @@
 import * as React from "react";
 import Select from "react-select";
 import styled from "styled-components";
-import {testComponents, testContext, testStyles} from "../../test/fixtures";
 import {userBodyId} from "../App/context";
 import Component from "../components/Component";
 import {StyledPage} from "../components/Page";
@@ -99,7 +98,7 @@ const ComponentPage = (props: Props) => {
           isOpen={isSidebarOpen}
           setSidebarOpen={setSidebarOpen}
           components={props.context.components.filter(
-            (c: Component) => c != null,
+            (c: ComponentModel) => c != null,
           )}
         />
 
@@ -154,36 +153,6 @@ const ComponentPage = (props: Props) => {
     </StyledPage>
   );
 };
-
-ComponentPage.examples = [
-  {
-    name: "No themes",
-    jsx: (
-      <ComponentPage
-        context={{
-          components: testComponents,
-          themes: [],
-          styles: testStyles,
-          errors: [],
-        }}
-        path={testComponents[0].path}
-        components={[testComponents[0]]}
-        errors={[]}
-      />
-    ),
-  },
-  {
-    name: "With themes",
-    jsx: (
-      <ComponentPage
-        context={testContext}
-        path={testComponents[0].path}
-        components={[testComponents[0]]}
-        errors={[]}
-      />
-    ),
-  },
-];
 
 // @prodo
 export default ComponentPage;

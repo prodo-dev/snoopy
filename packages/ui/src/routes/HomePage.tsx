@@ -1,5 +1,4 @@
 import * as React from "react";
-import {emptyContext, testContext} from "../../test/fixtures";
 import ComponentList from "../components/ComponentList";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {Component, Context} from "../models";
@@ -26,17 +25,6 @@ const HomePage = (props: Props) => (
     </StyledPageContents>
   </StyledPage>
 );
-
-HomePage.examples = [
-  {
-    name: "No components",
-    jsx: <HomePage context={emptyContext} />,
-  },
-  {
-    name: "With components",
-    jsx: <HomePage context={testContext} />,
-  },
-];
 
 // @prodo
 export default HomePage;
