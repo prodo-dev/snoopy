@@ -3,11 +3,11 @@ import styled from "styled-components";
 import {Component, Context} from "../src/models";
 
 const Root = () => <p>I am root.</p>;
-Root.examples = [{name: "Default", jsx: <Root />}];
 export const RootModel: Component = {
   name: "Root",
   path: "index.tsx",
   component: Root,
+  examples: [{title: "Default", component: () => <Root />}],
 };
 
 const StyledDiv = styled.div`

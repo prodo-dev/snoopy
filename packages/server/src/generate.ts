@@ -215,7 +215,7 @@ export const generateComponentsFileContents = async (
   const stylesArrayString = generateStylesArray(imports.styleFiles, searchDir);
   const examplesArrayString = generateExamplesArray(exampleFiles);
 
-  const s = `
+  return `
 ${importLines}
 ${exampleImportLines}
 
@@ -258,8 +258,4 @@ export const examples = [
   ${examplesArrayString}
 ];
 `.trimLeft();
-
-  console.log(s);
-
-  return s;
 };
