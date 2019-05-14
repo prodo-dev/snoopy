@@ -1,6 +1,8 @@
-# Prodo
+# Prodo &middot; [![CircleCI Status](https://circleci.com/gh/prodo-ai/snoopy.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/prodo-ai/snoopy)
 
-To get started, run this inside your project's root or source directory:
+To get started, we recommend installing Prodo with `yarn add --dev @prodo-ai/snoopy-cli` or `npm install --save-dev @prodo-ai/snoopy-cli`.
+
+Alternatively, you can simply run this inside your project's root or source directory, but it might be slower:
 
 ```shell
 $ npx @prodo-ai/snoopy-cli
@@ -8,7 +10,11 @@ $ npx @prodo-ai/snoopy-cli
 
 Then go to http://localhost:3000/ to interact with the UI.
 
-You can also install it using `yarn add --dev @prodo-ai/snoopy-cli` or `npm install --save-dev @prodo-ai/snoopy-cli`.
+To run it locally:
+
+```shell
+$ <path to Prodo>/snoopy/node_modules/.bin/ts-node  <path to Prodo>/snoopy/packages/cli/src/index.ts start
+```
 
 ### Components
 
@@ -62,3 +68,7 @@ There are a couple of cases where you may want to tweak something in your code t
 [Here](https://github.com/prodo-ai/snoopy/tree/master/examples/01-counter) is a basic example of a Counter project set up for testing with Prodo. In it, we test the following components: `App`, `Button` and `Counter`.
 
 We also test Prodo with Prodo, so you can check [our source code](https://github.com/prodo-ai/snoopy/tree/master/packages/ui/src) directly.
+
+## Contact
+
+We'd love your feedback! You can reach us at product@prodo.ai.
