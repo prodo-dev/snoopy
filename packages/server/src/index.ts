@@ -17,8 +17,16 @@ const clientDir = path.dirname(
 );
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
+const defaultPort = 3042;
+const startingPort = process.env.PORT
+  ? parseInt(process.env.PORT, 10)
+  : defaultPort;
+const portTriesLimit = 100;
 
-export const start = async (port: number = 3000, searchDir = process.cwd()) => {
+export const start = async (
+  port: number = startingPort,
+  searchDir = process.cwd(),
+) => {
   const app = Express();
 
   const componentsFile = path.join(
@@ -64,5 +72,25 @@ export const start = async (port: number = 3000, searchDir = process.cwd()) => {
   app.get("/*", (_, response) => {
     response.sendFile((bundler as any).mainBundle.name);
   });
-  server.listen(3000);
+
+  const listen = (portNumber: number) => {
+    app
+      .listen(portNumber, () => {
+        process.stdout.write(`Server is running on port ${portNumber}.\n`);
+      })
+      .on("error", e => {
+        if (portNumber - startingPort > portTriesLimit) {
+          process.stdout.write(`Tried ${portTriesLimit} ports, giving up.`);
+        } else if ((e as any).code === "EADDRINUSE") {
+          process.stdout.write(
+            `Port ${portNumber} is busy, trying ${portNumber + 1}...\n`,
+          );
+          listen(portNumber + 1);
+        } else {
+          process.stdout.write(`${e.message}\n`);
+        }
+      });
+  };
+
+  listen(startingPort);
 };

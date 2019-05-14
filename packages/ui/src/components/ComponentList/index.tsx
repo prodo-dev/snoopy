@@ -43,7 +43,7 @@ interface Props {
 const ComponentList = (props: Props) => {
   const files = _.uniq(props.components.map(({path}) => path)).map(path => ({
     path,
-    name: _.last(path.split("/")),
+    name: _.last(path.replace(/\/index\.(t|j)sx?$/, "").split("/")),
   }));
 
   return (

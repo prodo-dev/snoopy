@@ -2,6 +2,14 @@ import * as React from "react";
 import styled from "styled-components";
 import {Component, Context} from "../src/models";
 
+const Root = () => <p>I am root.</p>;
+Root.examples = [{name: "Default", jsx: <Root />}];
+export const RootModel: Component = {
+  name: "Root",
+  path: "index.tsx",
+  component: Root,
+};
+
 const StyledDiv = styled.div`
   color: blue;
 `;
@@ -49,12 +57,17 @@ const Counter = () => {
 export const CounterExample = {title: "Counter", component: () => <Counter />};
 export const CounterModel: Component = {
   name: "Counter",
-  path: "Counter.tsx",
+  path: "Counter/index.tsx",
   component: Counter,
   examples: [CounterExample],
 };
 
-export const testComponents = [HelloWorldModel, HelloNameModel, CounterModel];
+export const testComponents = [
+  RootModel,
+  HelloWorldModel,
+  HelloNameModel,
+  CounterModel,
+];
 
 export const testThemes = [
   {name: "darkTheme", theme: {}},
