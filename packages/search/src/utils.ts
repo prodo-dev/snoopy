@@ -1,6 +1,6 @@
+import * as findUp from "find-up";
 import * as fs from "fs";
 import * as path from "path";
-import * as findUp from "find-up";
 import {promisify} from "util";
 
 export const fileExtensions = ["ts", "tsx", "js", "jsx"];

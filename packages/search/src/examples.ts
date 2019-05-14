@@ -1,10 +1,9 @@
-import {findProjectRoot} from "./utils";
 import * as fs from "fs";
-import {File} from "./types";
 import * as globby from "globby";
 import * as path from "path";
 import {promisify} from "util";
-import {fileGlob} from "./utils";
+import {File} from "./types";
+import {fileGlob, findProjectRoot} from "./utils";
 
 const exists = promisify(fs.exists);
 

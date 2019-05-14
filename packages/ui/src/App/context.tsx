@@ -1,6 +1,6 @@
+import * as _ from "lodash";
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
-import * as _ from "lodash";
 import backgroundImage from "../media/transparent_background.png";
 import {Component, Context, Example, FileError, Style, Theme} from "../models";
 import {paddings} from "../styles";

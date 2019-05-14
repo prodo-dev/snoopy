@@ -1,11 +1,11 @@
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
+import {findExamples} from "./examples";
 import {findComponentExports, findThemeExports} from "./parser";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents, styleFileGlob} from "./utils";
-import {findExamples} from "./examples";
 
 export * from "./types";
 
