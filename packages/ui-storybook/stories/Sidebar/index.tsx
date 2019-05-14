@@ -1,6 +1,7 @@
 // tslint:disable:no-submodule-imports
 import Sidebar from "@prodo-ai/snoopy-ui/src/components/Sidebar";
 import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
+import {Component as ComponentModel} from "@prodo-ai/snoopy-ui/src/models";
 // tslint:enable
 
 import {action} from "@storybook/addon-actions";
@@ -9,10 +10,20 @@ import * as React from "react";
 import {BrowserRouter as Router} from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 
-const components = [
-  {path: "foo/bar", name: "App", component: () => <div />},
-  {path: "foo/bar", name: "ComponentA", component: () => <div />},
-  {path: "foo/bar", name: "ComponentB", component: () => <div />},
+const components: ComponentModel[] = [
+  {path: "foo/bar", name: "App", component: () => <div />, examples: []},
+  {
+    path: "foo/bar",
+    name: "ComponentA",
+    component: () => <div />,
+    examples: [],
+  },
+  {
+    path: "foo/bar",
+    name: "ComponentB",
+    component: () => <div />,
+    examples: [],
+  },
 ];
 
 storiesOf("Sidebar", module)
