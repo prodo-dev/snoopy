@@ -17,10 +17,14 @@ const clientDir = path.dirname(
 );
 const outDir = path.resolve(clientDir, "dist");
 const outFile = path.resolve(outDir, "index.html");
-const startingPortNumber = 3042;
+const defaultPort = 3042;
+const startingPort = process.env.PORT
+  ? parseInt(process.env.PORT, 10)
+  : defaultPort;
+const portTriesLimit = 100;
 
 export const start = async (
-  port: number = startingPortNumber,
+  port: number = startingPort,
   searchDir = process.cwd(),
 ) => {
   const app = Express();
@@ -75,16 +79,18 @@ export const start = async (
         process.stdout.write(`Server is running on port ${portNumber}.\n`);
       })
       .on("error", e => {
-        if ((e as any).code === "EADDRINUSE") {
+        if (portNumber - startingPort > portTriesLimit) {
+          process.stdout.write(`Tried ${portTriesLimit} ports, giving up.`);
+        } else if ((e as any).code === "EADDRINUSE") {
           process.stdout.write(
             `Port ${portNumber} is busy, trying ${portNumber + 1}...\n`,
           );
           listen(portNumber + 1);
         } else {
-          process.stdout.write(e.message);
+          process.stdout.write(`${e.message}\n`);
         }
       });
   };
 
-  listen(startingPortNumber);
+  listen(startingPort);
 };
