@@ -5,6 +5,7 @@ import {findComponentExports, findThemeExports} from "./parser";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents, styleFileGlob} from "./utils";
+import {findExamples} from "./examples";
 
 export * from "./types";
 
@@ -14,19 +15,19 @@ export const checkMatch = (filepath: string): boolean =>
 const getNonNullFilesOfGivenType = (
   files: Array<{[id: string]: File | null}>,
   type: ExtractType,
-) => {
+): File[] => {
   return files.map(i => i[type]).filter(i => i != null) as File[];
 };
 
 const getFiles = async (
   directoryToSearch: string,
-  result: string[],
+  filepaths: string[],
   extractors: {
-    [id in ExtractType]?: (contents: string, filepath: string) => File | null
+    [id: string]: (contents: string, filepath: string) => File | null;
   },
-) => {
+): Promise<Array<{[id: string]: File | null}>> => {
   const files = await Promise.all(
-    result.map(async file => {
+    filepaths.map(async file => {
       const filepath = path.resolve(directoryToSearch, file);
 
       let contents: string;
@@ -52,14 +53,15 @@ const getFiles = async (
       return fileResult;
     }),
   );
+
   return files;
 };
 
 export const searchCodebase = async (
   directoryToSearch: string,
 ): Promise<SearchResult> => {
-  const result = await globby(fileGlob, {cwd: directoryToSearch});
-  const files = await getFiles(directoryToSearch, result, {
+  const filepaths = await globby(fileGlob, {cwd: directoryToSearch});
+  const files = await getFiles(directoryToSearch, filepaths, {
     componentFiles: findComponentExports,
     themeFiles: findThemeExports,
   });
@@ -69,10 +71,13 @@ export const searchCodebase = async (
     styleFiles: getStylesFile,
   });
 
+  const examples = await findExamples(directoryToSearch);
+
   const results: SearchResult = {
     componentFiles: getNonNullFilesOfGivenType(files, "componentFiles"),
     themeFiles: getNonNullFilesOfGivenType(files, "themeFiles"),
     styleFiles: getNonNullFilesOfGivenType(styleFiles, "styleFiles"),
+    examples,
   };
 
   return results;

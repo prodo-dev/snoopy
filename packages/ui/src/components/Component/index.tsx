@@ -29,8 +29,7 @@ interface Props {
 }
 
 const Component = (props: Props) => {
-  const examples: ExampleModel[] | undefined =
-    props.component.component && (props.component.component as any).examples;
+  const examples = props.component.examples;
 
   const Comp =
     props.component.component ||
@@ -41,7 +40,7 @@ const Component = (props: Props) => {
         {examples && examples.length > 0 ? (
           examples.map(example => (
             <Example
-              key={example.name}
+              key={example.title}
               userTheme={props.userTheme}
               example={example}
               allStyles={props.allStyles}
@@ -50,7 +49,7 @@ const Component = (props: Props) => {
         ) : (
           <Example
             userTheme={props.userTheme}
-            example={{name: "Default", jsx: <Comp />}}
+            example={{name: "Default", component: () => <Comp />}}
             allStyles={props.allStyles}
           />
         )}

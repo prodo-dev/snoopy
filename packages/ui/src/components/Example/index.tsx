@@ -64,7 +64,7 @@ class NoUpdate extends React.Component<Props> {
 
 const Example = (props: Props) => (
   <StyledExample>
-    <Title className="example-title">{props.example.name}</Title>
+    <Title className="example-title">{props.example.title}</Title>
     <NoUpdate {...props} />
   </StyledExample>
 );

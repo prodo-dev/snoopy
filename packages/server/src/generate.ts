@@ -1,6 +1,19 @@
-import {FileError, FileExport, searchCodebase} from "@prodo-ai/snoopy-search";
+import {
+  File,
+  FileError,
+  FileExport,
+  searchCodebase,
+} from "@prodo-ai/snoopy-search";
 import * as fs from "fs";
 import * as path from "path";
+
+interface FileWithExportId extends File {
+  fileExports: Array<FileExport & {id: string}>;
+}
+
+interface FileWithId extends File {
+  id: string;
+}
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
   transform(a).localeCompare(transform(b));
@@ -12,42 +25,32 @@ const sortFileExports = (fileExports: FileExport[]): FileExport[] => {
   return defaultExports.concat(namedExports.sort(by((ex: any) => ex.name)));
 };
 
-const sortFileErrors = (fileErrors: FileError[]): FileError[] =>
-  fileErrors.sort(by(err => err.message));
-
-export const generateComponentsFileContents = async (
-  clientDir: string,
-  searchDir: string,
-): Promise<string> => {
-  const imports = await searchCodebase(searchDir);
-
-  let componentCounter = 0;
-  const componentFiles = imports.componentFiles
-    .sort(by(f => f.filepath))
-    .map(file => ({
-      ...file,
-      fileExports: sortFileExports(file.fileExports).map(ex => ({
-        ...ex,
-        id: `Component${componentCounter++}`,
-      })),
-    }));
-
-  const componentErrors = imports.componentFiles
-    .sort(by(f => f.filepath))
-    .map(file => ({
-      filepath: file.filepath,
-      errors: sortFileErrors(file.errors),
-    }));
-
-  let themeCounter = 0;
-  const themeFiles = imports.themeFiles.sort(by(f => f.filepath)).map(file => ({
+const addFileExportIds = (files: File[], name: string): FileWithExportId[] => {
+  let counter = 0;
+  return files.sort(by(f => f.filepath)).map(file => ({
     ...file,
     fileExports: sortFileExports(file.fileExports).map(ex => ({
       ...ex,
-      id: `Theme${themeCounter++}`,
+      id: `${name}${counter++}`,
     })),
   }));
+};
 
+const addFileIds = (files: File[], name: string): FileWithId[] => {
+  let counter = 0;
+  return files.sort(by(f => f.filepath)).map(file => ({
+    ...file,
+    id: `${name}${counter++}`,
+  }));
+};
+
+const sortFileErrors = (fileErrors: FileError[]): FileError[] =>
+  fileErrors.sort(by(err => err.message));
+
+const generateNamedAndDefaultImports = (
+  files: FileWithExportId[],
+  clientDir: string,
+): string => {
   const importsByFile: {
     [path: string]: {
       defaultImport?: string;
@@ -55,7 +58,7 @@ export const generateComponentsFileContents = async (
     };
   } = {};
 
-  componentFiles.concat(themeFiles).forEach(({filepath, fileExports}) => {
+  files.forEach(({filepath, fileExports}) => {
     if (fileExports.length === 0) {
       return;
     }
@@ -94,7 +97,25 @@ export const generateComponentsFileContents = async (
     })
     .join("\n");
 
-  const componentsArrayString = componentFiles
+  return importLines;
+};
+
+const generateStarAsImports = (
+  files: FileWithId[],
+  clientDir: string,
+): string =>
+  files
+    .sort(by(f => f.filepath))
+    .map(
+      f => `import * as ${f.id} from "${path.relative(clientDir, f.filepath)}"`,
+    )
+    .join("\n");
+
+const generateComponentsArray = (
+  files: FileWithExportId[],
+  searchDir: string,
+): string =>
+  files
     .filter(({fileExports}) => fileExports.length > 0)
     .map(({filepath, fileExports}) =>
       fileExports
@@ -108,17 +129,8 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
-  const componentErrorsString = componentErrors
-    .filter(({errors}) => errors.length > 0)
-    .map(
-      ({filepath, errors}) =>
-        `{path: "${path.relative(searchDir, filepath)}": errors: [${errors
-          .map(e => JSON.stringify(e.message))
-          .join(",\n  ")}]}`,
-    )
-    .join(",\n  ");
-
-  const themesArrayString = themeFiles
+const generateThemeArray = (files: FileWithExportId[], searchDir: string) =>
+  files
     .filter(({fileExports}) => fileExports.length > 0)
     .map(({filepath, fileExports}) =>
       fileExports
@@ -132,7 +144,22 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
-  const stylesArrayString = imports.styleFiles
+const generateComponentErrors = (
+  componentErrors: Array<{filepath: string; errors: FileError[]}>,
+  searchDir: string,
+) =>
+  componentErrors
+    .filter(({errors}) => errors.length > 0)
+    .map(
+      ({filepath, errors}) =>
+        `{path: "${path.relative(searchDir, filepath)}": errors: [${errors
+          .map(e => JSON.stringify(e.message))
+          .join(",\n  ")}]}`,
+    )
+    .join(",\n  ");
+
+const generateStylesArray = (files: File[], searchDir: string): string =>
+  files
     .map(({filepath, fileExports}) =>
       fileExports
         .map(ex => {
@@ -148,8 +175,49 @@ export const generateComponentsFileContents = async (
     )
     .join(",\n  ");
 
-  return `
+const generateExamplesArray = (files: FileWithId[]): string =>
+  files.map(({id}) => id).join(",\n  ");
+
+export const generateComponentsFileContents = async (
+  clientDir: string,
+  searchDir: string,
+): Promise<string> => {
+  const imports = await searchCodebase(searchDir);
+
+  // Add unique ids to files and exports
+  const componentFiles = addFileExportIds(imports.componentFiles, "Component");
+  const componentErrors = imports.componentFiles
+    .sort(by(f => f.filepath))
+    .map(file => ({
+      filepath: file.filepath,
+      errors: sortFileErrors(file.errors),
+    }));
+  const themeFiles = addFileExportIds(imports.themeFiles, "Theme");
+  const exampleFiles = addFileIds(imports.examples, "Example");
+
+  // Generate required imports
+  const importLines = generateNamedAndDefaultImports(
+    [...componentFiles, ...themeFiles],
+    clientDir,
+  );
+  const exampleImportLines = generateStarAsImports(exampleFiles, clientDir);
+
+  // Generate exported array content
+  const componentsArrayString = generateComponentsArray(
+    componentFiles,
+    searchDir,
+  );
+  const componentErrorsString = generateComponentErrors(
+    componentErrors,
+    searchDir,
+  );
+  const themesArrayString = generateThemeArray(themeFiles, searchDir);
+  const stylesArrayString = generateStylesArray(imports.styleFiles, searchDir);
+  const examplesArrayString = generateExamplesArray(exampleFiles);
+
+  const s = `
 ${importLines}
+${exampleImportLines}
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -184,6 +252,14 @@ export const themes = [
 
 export const styles = [
   ${stylesArrayString}
-]
+]:
+
+export const examples = [
+  ${examplesArrayString}
+];
 `.trimLeft();
+
+  console.log(s);
+
+  return s;
 };

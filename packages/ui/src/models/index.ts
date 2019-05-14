@@ -4,6 +4,7 @@ export interface Component {
   path: string;
   name: string;
   component: React.ComponentType<any>;
+  examples: Example[];
 }
 
 export interface FileError {
@@ -12,8 +13,8 @@ export interface FileError {
 }
 
 export interface Example {
-  name: string;
-  jsx: React.ReactNode;
+  title: string;
+  component: React.ComponentType<any>;
 }
 
 export interface Theme {

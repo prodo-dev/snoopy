@@ -1,5 +1,6 @@
 import * as path from "path";
-import {findProjectRoot, findExampleFiles} from "../src/pkg";
+import {findProjectRoot} from "../src/utils";
+import {findExampleFilePaths, examplesDirectoryName} from "../src/examples";
 
 const exampleDir = path.resolve(__dirname, "fixtures", "example");
 const noExamplesDir = path.resolve(__dirname, "fixures", "no-examples");
@@ -18,14 +19,14 @@ describe("findProjectRoot", () => {
 
 describe("findExampleFiles", () => {
   it("finds example files", async () => {
-    const files = await findExampleFiles(exampleDir);
+    const files = await findExampleFilePaths(exampleDir);
     expect(files).toEqual([
-      path.resolve(exampleDir, ".prodo/Button.example.tsx"),
+      path.resolve(exampleDir, `${examplesDirectoryName}/Button.example.tsx`),
     ]);
   });
 
-  it("finds no files when .prodo directory does not exist", async () => {
-    const files = await findExampleFiles(noExamplesDir);
+  it("finds no files when examples directory does not exist", async () => {
+    const files = await findExampleFilePaths(noExamplesDir);
     expect(files).toEqual([]);
   });
 });
