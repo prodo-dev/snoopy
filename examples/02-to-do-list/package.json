@@ -1,0 +1,24 @@
+{
+  "name": "@prodo/snoopy-examples-02-to-do-list",
+  "version": "0.1.0",
+  "description": "What needs to be done today?",
+  "main": "index.tsx",
+  "private": true,
+  "author": "Samir Talwar <samir@prodo.ai>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build",
+    "clean": "rm -rf .cache build dist",
+    "test": "echo 'No tests configured.'",
+    "lint": "set -ex; tsc --build; tslint --project ."
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.13",
+    "@types/react-dom": "^16.8.4"
+  }
+}
