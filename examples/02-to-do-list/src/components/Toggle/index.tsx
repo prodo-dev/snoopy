@@ -16,10 +16,5 @@ const Toggle = ({done, toggle}: Props) => (
   />
 );
 
-Toggle.examples = [
-  {name: "not done", jsx: <Toggle done={false} toggle={() => undefined} />},
-  {name: "done", jsx: <Toggle done={true} toggle={() => undefined} />},
-];
-
 // @prodo
 export default Toggle;

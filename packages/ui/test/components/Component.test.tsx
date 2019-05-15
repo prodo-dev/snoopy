@@ -25,6 +25,7 @@ const Test: ComponentModel = {
   path: "src/TestComponent.js",
   name: "TestComponent",
   component: TestComponent,
+  examples: [],
 };
 
 test("renders component with no examples", async () => {
@@ -37,8 +38,8 @@ test("renders component with no examples", async () => {
 });
 
 test("renders component with single example", async () => {
-  TestComponent.examples = [
-    {name: "Example 1", jsx: <TestComponent name="Tom" />},
+  Test.examples = [
+    {title: "Example 1", component: () => <TestComponent name="Tom" />},
   ];
 
   const {container} = render(<Component component={Test} />);
@@ -50,9 +51,9 @@ test("renders component with single example", async () => {
 });
 
 test("renders component with multiple examples", async () => {
-  TestComponent.examples = [
-    {name: "Example 1", jsx: <TestComponent name="Tom" />},
-    {name: "Example 2", jsx: <TestComponent name="Andreja" />},
+  Test.examples = [
+    {title: "Example 1", component: () => <TestComponent name="Tom" />},
+    {title: "Example 2", component: () => <TestComponent name="Andreja" />},
   ];
 
   const {container} = render(<Component component={Test} />);

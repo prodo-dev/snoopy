@@ -4,7 +4,6 @@ import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
 import styled from "styled-components";
 import Readme from "../../../../README.mdx";
-import {emptyContext, testContext} from "../../test/fixtures";
 import ComponentList from "../components/ComponentList";
 import Highlighter from "../components/Highlighter";
 import {StyledPage, StyledPageContents} from "../components/Page";
@@ -66,17 +65,6 @@ const HomePage = ({context}: Props) => {
     </StyledPage>
   );
 };
-
-HomePage.examples = [
-  {
-    name: "No components",
-    jsx: <HomePage context={emptyContext} />,
-  },
-  {
-    name: "With components",
-    jsx: <HomePage context={testContext} />,
-  },
-];
 
 // @prodo
 export default HomePage;

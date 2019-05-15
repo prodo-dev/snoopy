@@ -38,53 +38,5 @@ const TaskItem = ({
   </li>
 );
 
-TaskItem.examples = [
-  {
-    name: "saved",
-    jsx: (
-      <TaskItem
-        id="0"
-        text="I'm not done."
-        done={false}
-        editing={false}
-        toggle={() => undefined}
-        startEditing={() => undefined}
-        edit={() => undefined}
-        remove={() => undefined}
-      />
-    ),
-  },
-  {
-    name: "done",
-    jsx: (
-      <TaskItem
-        id="0"
-        text="I'm done!"
-        done={true}
-        editing={false}
-        toggle={() => undefined}
-        startEditing={() => undefined}
-        edit={() => undefined}
-        remove={() => undefined}
-      />
-    ),
-  },
-  {
-    name: "editing",
-    jsx: (
-      <TaskItem
-        id="0"
-        text="I'm being edited."
-        done={false}
-        editing={true}
-        toggle={() => undefined}
-        startEditing={() => undefined}
-        edit={() => undefined}
-        remove={() => undefined}
-      />
-    ),
-  },
-];
-
 // @prodo
 export default TaskItem;
