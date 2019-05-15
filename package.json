@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://github.com/prodo-ai/snoopy",
+  "repository": "github:prodo-ai/snoopy",
+  "bugs": "https://github.com/prodo-ai/snoopy/issues",
   "private": true,
   "scripts": {
     "clean": "wsrun --exclude-missing --serial clean",
