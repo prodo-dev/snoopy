@@ -1,3 +1,4 @@
+import * as findUp from "find-up";
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
@@ -8,8 +9,12 @@ import {fileGlob, readFileContents, styleFileGlob} from "./utils";
 
 export * from "./types";
 
-export const checkMatch = (filepath: string): boolean =>
-  multimatch(filepath, fileGlob).length > 0;
+export const checkMatch = (filepath: string): boolean => {
+  const gitDirectory = findUp.sync(".git", {type: "directory"});
+  const cwd = gitDirectory && path.dirname(gitDirectory);
+  const inGitIgnore = globby.gitignore.sync({cwd});
+  return !inGitIgnore(filepath) && multimatch(filepath, fileGlob).length > 0;
+};
 
 const getNonNullFilesOfGivenType = (
   files: Array<{[id: string]: File | null}>,
@@ -58,13 +63,19 @@ const getFiles = async (
 export const searchCodebase = async (
   directoryToSearch: string,
 ): Promise<SearchResult> => {
-  const result = await globby(fileGlob, {cwd: directoryToSearch});
+  const result = await globby(fileGlob, {
+    cwd: directoryToSearch,
+    gitignore: true,
+  });
   const files = await getFiles(directoryToSearch, result, {
     componentFiles: findComponentExports,
     themeFiles: findThemeExports,
   });
 
-  const styleResult = await globby(styleFileGlob, {cwd: directoryToSearch});
+  const styleResult = await globby(styleFileGlob, {
+    cwd: directoryToSearch,
+    gitignore: true,
+  });
   const styleFiles = await getFiles(directoryToSearch, styleResult, {
     styleFiles: getStylesFile,
   });

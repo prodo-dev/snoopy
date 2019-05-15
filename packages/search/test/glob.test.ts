@@ -12,9 +12,15 @@ const validPaths = [
 ];
 
 const invalidPaths = [
+  // node_modules
   "node_modules/Hello.tsx",
+  // hidden files
   ".hidden.tsx",
   "directory/.hidden.tsx",
+  // Git-ignored files
+  "dist/foo.ts",
+  "package/name/dist/foo.ts",
+  // emacs temporary files
   "flycheck_index.tsx",
   "directory/flycheck_index.tsx",
 ];
