@@ -44,49 +44,5 @@ const TaskList = ({tasks, editing, setTasks, setEditing}: Props) => (
   </ul>
 );
 
-TaskList.examples = [
-  {
-    name: "no tasks",
-    jsx: (
-      <TaskList
-        tasks={{}}
-        editing={undefined}
-        setTasks={() => undefined}
-        setEditing={() => undefined}
-      />
-    ),
-  },
-  {
-    name: "multiple tasks",
-    jsx: (
-      <TaskList
-        tasks={{
-          "1": {id: "1", text: "a thing", done: true},
-          "2": {id: "2", text: "another thing", done: false},
-          "3": {id: "3", text: "a third thing", done: false},
-        }}
-        editing={undefined}
-        setTasks={() => undefined}
-        setEditing={() => undefined}
-      />
-    ),
-  },
-  {
-    name: "editing a task",
-    jsx: (
-      <TaskList
-        tasks={{
-          "1": {id: "1", text: "a thing", done: true},
-          "2": {id: "2", text: "another thing", done: false},
-          "3": {id: "3", text: "a third thing", done: false},
-        }}
-        editing={"2"}
-        setTasks={() => undefined}
-        setEditing={() => undefined}
-      />
-    ),
-  },
-];
-
 // @prodo
 export default TaskList;
