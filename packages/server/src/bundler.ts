@@ -15,7 +15,7 @@ export default (
     searchDir: string;
     componentsFile: string;
   },
-  options: Bundler.ParcelOptions = {},
+  options: any,
 ) => {
   const entryFile = path.join(clientDir, "public", "index.html");
 
@@ -35,6 +35,7 @@ export default (
     hmr: true,
     detailedReport: false,
     bundleNodeModules: true,
+    auotInstall: false,
     ...options,
   };
 
