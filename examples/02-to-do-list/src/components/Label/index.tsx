@@ -26,44 +26,5 @@ const Label = ({text, done, editing, startEditing, edit}: Props) => (
   </label>
 );
 
-Label.examples = [
-  {
-    name: "saved",
-    jsx: (
-      <Label
-        text="I'm not done."
-        done={false}
-        editing={false}
-        startEditing={() => undefined}
-        edit={() => undefined}
-      />
-    ),
-  },
-  {
-    name: "done",
-    jsx: (
-      <Label
-        text="I'm done!"
-        done={true}
-        editing={false}
-        startEditing={() => undefined}
-        edit={() => undefined}
-      />
-    ),
-  },
-  {
-    name: "editing",
-    jsx: (
-      <Label
-        text="I'm being edited."
-        done={false}
-        editing={true}
-        startEditing={() => undefined}
-        edit={() => undefined}
-      />
-    ),
-  },
-];
-
 // @prodo
 export default Label;
