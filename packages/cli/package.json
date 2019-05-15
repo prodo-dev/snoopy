@@ -1,5 +1,5 @@
 {
-  "name": "@prodo-ai/snoopy-cli",
+  "name": "@prodo-ai/snoopy",
   "version": "0.1.1",
   "main": "index.js",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "directory": "packages/cli"
   },
   "bin": {
-    "snoopy-cli": "./lib/index.js"
+    "snoopy": "./lib/index.js"
   },
   "files": [
     "lib"

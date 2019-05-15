@@ -8,7 +8,6 @@
   "bugs": "https://github.com/prodo-ai/snoopy/issues",
   "private": true,
   "scripts": {
-    "start": "yarn workspace @prodo-ai/snoopy-cli start",
     "clean": "wsrun --exclude-missing --serial clean",
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
