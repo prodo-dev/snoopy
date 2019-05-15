@@ -1,6 +1,6 @@
 {
   "name": "@prodo/snoopy-examples-02-to-do-list",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "What needs to be done today?",
   "main": "index.tsx",
   "private": true,
