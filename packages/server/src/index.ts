@@ -77,7 +77,9 @@ export const start = async (
   const listen = (portNumber: number) => {
     app
       .listen(portNumber, () => {
-        process.stdout.write(`Server is running on port ${portNumber}.\n`);
+        process.stdout.write(
+          `Server is running at http://localhost:${portNumber}.\n`,
+        );
       })
       .on("error", e => {
         if (portNumber - startingPort > portTriesLimit) {
