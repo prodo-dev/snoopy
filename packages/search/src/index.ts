@@ -9,12 +9,28 @@ import {fileGlob, readFileContents, styleFileGlob} from "./utils";
 
 export * from "./types";
 
-export const checkMatch = (filepath: string): boolean => {
-  const gitDirectory = findUp.sync(".git", {type: "directory"});
-  const cwd = gitDirectory && path.dirname(gitDirectory);
-  const inGitIgnore = globby.gitignore.sync({cwd});
-  return !inGitIgnore(filepath) && multimatch(filepath, fileGlob).length > 0;
+export const checkMatch = async (filepath: string): Promise<boolean> => {
+  const fileInGitIgnore = await inGitIgnore(filepath);
+  return !fileInGitIgnore && multimatch(filepath, fileGlob).length > 0;
 };
+
+const inGitIgnore = (() => {
+  const cache: {[gitDirectory: string]: globby.FilterFunction} = {};
+  return async (filepath: string): Promise<boolean> => {
+    const gitDirectory = await findUp(".git", {type: "directory"});
+    if (gitDirectory == null) {
+      return false;
+    }
+    const gitIgnore =
+      cache[gitDirectory] ||
+      (await (async () => {
+        const cwd = gitDirectory && path.dirname(gitDirectory);
+        cache[gitDirectory] = await globby.gitignore({cwd});
+        return cache[gitDirectory];
+      })());
+    return gitIgnore(filepath);
+  };
+})();
 
 const getNonNullFilesOfGivenType = (
   files: Array<{[id: string]: File | null}>,

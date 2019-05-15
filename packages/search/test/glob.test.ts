@@ -26,13 +26,15 @@ const invalidPaths = [
 ];
 
 for (const path of validPaths) {
-  test(`matches valid file path: ${path}`, () => {
-    expect(checkMatch(path)).toBe(true);
+  test(`matches valid file path: ${path}`, async () => {
+    const matches = await checkMatch(path);
+    expect(matches).toBe(true);
   });
 }
 
 for (const path of invalidPaths) {
-  test(`does not match invalid file path: ${path}`, () => {
-    expect(checkMatch(path)).toBe(false);
+  test(`does not match invalid file path: ${path}`, async () => {
+    const matches = await checkMatch(path);
+    expect(matches).toBe(false);
   });
 }
