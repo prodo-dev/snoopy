@@ -15,7 +15,7 @@ const ThemeProvider =
 const MemoryRouter =
   ReactRouterDOM != null ? ReactRouterDOM.MemoryRouter : React.Fragment;
 
-const findExamplesForComponent = (c: any) => {
+const findExamplesForComponent = (c: Component) => {
   const exampleFileExport = userImport.examples.filter(
     (ex: any) => ex.default !== null && ex.default === c.component,
   )[0];

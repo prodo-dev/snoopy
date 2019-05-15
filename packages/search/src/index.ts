@@ -23,7 +23,7 @@ const getFiles = async (
   directoryToSearch: string,
   filepaths: string[],
   extractors: {
-    [id: string]: (contents: string, filepath: string) => File | null;
+    [id in ExtractType]?: (contents: string, filepath: string) => File | null
   },
 ): Promise<Array<{[id: string]: File | null}>> => {
   const files = await Promise.all(
