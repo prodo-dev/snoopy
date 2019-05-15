@@ -2,6 +2,7 @@ export interface SearchResult {
   componentFiles: File[];
   themeFiles: File[];
   styleFiles: File[];
+  examples: File[];
 }
 
 export interface File {
