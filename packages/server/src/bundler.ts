@@ -35,7 +35,7 @@ export default (
     hmr: true,
     detailedReport: false,
     bundleNodeModules: true,
-    auotInstall: false,
+    autoInstall: false,
     ...options,
   };
 
