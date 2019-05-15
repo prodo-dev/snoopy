@@ -1,6 +1,6 @@
 {
   "name": "@prodo/snoopy-examples-01-counter",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Click the buttons.",
   "main": "index.tsx",
   "private": true,
