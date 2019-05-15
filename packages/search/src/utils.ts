@@ -4,7 +4,7 @@ import {promisify} from "util";
 export const fileExtensions = ["ts", "tsx", "js", "jsx"];
 export const fileGlob = [
   `**/*.{${fileExtensions.join(",")}}`,
-  "!flycheck_*.*",
+  "!**/flycheck_*.*",
   "!node_modules/**/*",
   "!dist/**/*",
 ];

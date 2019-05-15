@@ -12,9 +12,11 @@ const validPaths = [
 ];
 
 const invalidPaths = [
-  ".env.tsx",
   "node_modules/Hello.tsx",
+  ".hidden.tsx",
+  "directory/.hidden.tsx",
   "flycheck_index.tsx",
+  "directory/flycheck_index.tsx",
 ];
 
 for (const path of validPaths) {
