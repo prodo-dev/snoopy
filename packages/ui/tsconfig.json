@@ -6,6 +6,6 @@
     "jsx": "react",
     "outDir": "build"
   },
-  "include": ["src", "test", "typings"],
+  "include": ["examples", "src", "test", "typings"],
   "references": [{"path": "../api"}]
 }
