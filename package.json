@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "yarn workspace @prodo-ai/snoopy-cli start",
+    "start": "yarn workspace @prodo-ai/snoopy start",
     "clean": "wsrun --exclude-missing --serial clean",
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",
