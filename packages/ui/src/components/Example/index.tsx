@@ -31,7 +31,7 @@ const randId = () =>
     .toString(36)
     .substr(2, 9);
 
-class NoUpdate extends React.Component<Props> {
+class UserComponentContainer extends React.Component<Props> {
   private id: string = `example-${randId()}`;
 
   public componentDidMount() {
@@ -52,10 +52,6 @@ class NoUpdate extends React.Component<Props> {
     );
   }
 
-  public shouldComponentUpdate(nextProps: Props) {
-    return this.props.userTheme !== nextProps.userTheme;
-  }
-
   public render() {
     return <div id={this.id} />;
   }
@@ -64,7 +60,7 @@ class NoUpdate extends React.Component<Props> {
 const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.title}</Title>
-    <NoUpdate {...props} />
+    <UserComponentContainer {...props} />
   </StyledExample>
 );
 
