@@ -15,7 +15,7 @@ export default (
     searchDir: string;
     componentsFile: string;
   },
-  options: any,
+  options?: any,
 ) => {
   const entryFile = path.join(clientDir, "public", "index.html");
 
