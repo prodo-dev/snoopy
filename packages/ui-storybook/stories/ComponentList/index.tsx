@@ -14,6 +14,7 @@ const OneModel: ComponentModel = {
   path: "foo/bar",
   name: "One",
   component: One,
+  examples: [],
 };
 
 const Two = () => <div />;
@@ -21,6 +22,7 @@ const TwoModel: ComponentModel = {
   path: "foo/bar",
   name: "Two",
   component: Two,
+  examples: [],
 };
 
 const Three = () => <div />;
@@ -28,6 +30,7 @@ const ThreeModel: ComponentModel = {
   path: "foo/bar",
   name: "Three",
   component: Three,
+  examples: [],
 };
 
 storiesOf("Component List", module)

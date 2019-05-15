@@ -55,7 +55,8 @@ export const start = async (
 
   fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
     // TODO: Try/catch?
-    if (checkMatch(filename)) {
+    const matches = await checkMatch(filename);
+    if (matches) {
       // We need to do this to avoid compiling and pushing `filename` at the
       // same time as `componentsFile`.
       await (bundler as any).onChange(componentsFile);
@@ -76,7 +77,9 @@ export const start = async (
   const listen = (portNumber: number) => {
     app
       .listen(portNumber, () => {
-        process.stdout.write(`Server is running on port ${portNumber}.\n`);
+        process.stdout.write(
+          `Server is running at http://localhost:${portNumber}.\n`,
+        );
       })
       .on("error", e => {
         if (portNumber - startingPort > portTriesLimit) {

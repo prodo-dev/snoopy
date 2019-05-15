@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
@@ -14,7 +15,33 @@ const ThemeProvider =
 const MemoryRouter =
   ReactRouterDOM != null ? ReactRouterDOM.MemoryRouter : React.Fragment;
 
-const components: Component[] = userImport.components;
+const findExamplesForComponent = (c: Component) => {
+  const exampleFileExport = userImport.examples.filter(
+    (ex: any) => ex.default !== null && ex.default === c.component,
+  )[0];
+
+  if (!exampleFileExport) {
+    return [];
+  }
+
+  const examples = Object.keys(
+    _.omit(exampleFileExport, "__esModule", "default"),
+  ).map(exportName => {
+    const exampleReactComponent = exampleFileExport[exportName];
+    return {
+      title: exampleReactComponent.title || exportName,
+      component: exampleReactComponent,
+    };
+  });
+
+  return examples;
+};
+
+const components = userImport.components.map((c: Component) => ({
+  ...c,
+  examples: findExamplesForComponent(c),
+}));
+
 const themes: Theme[] = userImport.themes;
 const styles: Style[] = userImport.styles;
 const errors: FileError[] = userImport.errors;
@@ -66,39 +93,47 @@ export const renderExample = (
   divId: string,
   allStyles: string,
 ) => {
-  const UserComponent = () => (
-    <ErrorBoundary>
-      <MemoryRouter>
-        <Container>
-          <DarkerJsxContainer>
-            <JsxContainer className="example-contents">
-              <ApplyStyles allStyles={allStyles}>
-                <div id={userBodyId}>
-                  {theme && ThemeProvider ? (
-                    <ThemeProvider theme={theme as any}>
-                      <>{example.jsx}</>
-                    </ThemeProvider>
-                  ) : (
-                    <>{example.jsx}</>
-                  )}
-                </div>
-              </ApplyStyles>
-            </JsxContainer>
-          </DarkerJsxContainer>
-          {ReactRouterDOM != null && (
-            <React.Fragment>
-              <ReactRouterDOM.Route
-                path="/"
-                exact
-                component={() => <StyledLog />}
-              />
-              <ReactRouterDOM.Route path="/:link+" exact component={LogRoute} />
-            </React.Fragment>
-          )}
-        </Container>
-      </MemoryRouter>
-    </ErrorBoundary>
-  );
+  const UserComponent = () => {
+    const ExampleComponent = example.component;
+
+    return (
+      <ErrorBoundary>
+        <MemoryRouter>
+          <Container>
+            <DarkerJsxContainer>
+              <JsxContainer className="example-contents">
+                <ApplyStyles allStyles={allStyles}>
+                  <div id={userBodyId}>
+                    {theme && ThemeProvider ? (
+                      <ThemeProvider theme={theme as any}>
+                        <ExampleComponent />
+                      </ThemeProvider>
+                    ) : (
+                      <ExampleComponent />
+                    )}
+                  </div>
+                </ApplyStyles>
+              </JsxContainer>
+            </DarkerJsxContainer>
+            {ReactRouterDOM != null && (
+              <React.Fragment>
+                <ReactRouterDOM.Route
+                  path="/"
+                  exact
+                  component={() => <StyledLog />}
+                />
+                <ReactRouterDOM.Route
+                  path="/:link+"
+                  exact
+                  component={LogRoute}
+                />
+              </React.Fragment>
+            )}
+          </Container>
+        </MemoryRouter>
+      </ErrorBoundary>
+    );
+  };
 
   UserReactDOM.render(<UserComponent />, document.getElementById(divId));
 };
