@@ -2120,7 +2120,7 @@
     "@mdx-js/mdx" "^1.0.18"
     parcel-bundler "^1.4.1"
 
-"@mdx-js/react@^1.0.16":
+"@mdx-js/react@^1.0.0-rc.0":
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-1.0.16.tgz#414c3fce49493a4c60e5590cfc0a2a07efc19f38"
   integrity sha512-HJJO8LYogt9UT4TP3+TVeokMj0lgwCONKlcOfr7VMb38Z6DDE3Ydvi+M3iScUea2DfifS4kGztgJ7zH6HXynTw==
