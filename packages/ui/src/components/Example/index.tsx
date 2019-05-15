@@ -1,6 +1,5 @@
 import * as React from "react";
 import styled from "styled-components";
-import {CounterExample, HelloWorldExample} from "../../../test/fixtures";
 import {renderExample} from "../../App/context";
 import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
@@ -64,12 +63,10 @@ class NoUpdate extends React.Component<Props> {
 
 const Example = (props: Props) => (
   <StyledExample>
-    <Title className="example-title">{props.example.name}</Title>
+    <Title className="example-title">{props.example.title}</Title>
     <NoUpdate {...props} />
   </StyledExample>
 );
-
-Example.examples = [HelloWorldExample, CounterExample];
 
 // @prodo
 export default Example;

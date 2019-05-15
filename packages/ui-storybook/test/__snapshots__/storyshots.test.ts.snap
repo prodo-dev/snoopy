@@ -2,21 +2,21 @@
 
 exports[`Storyshots Component List empty 1`] = `
 <div
-  className="component-list sc-bwzfXH kulSxP"
+  className="component-list sc-bdVaJa bPGLpq"
 />
 `;
 
 exports[`Storyshots Component List multiple items 1`] = `
 <div
-  className="component-list sc-bwzfXH kulSxP"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-ifAKCX dwTEKz"
+    className="sc-bxivhb jqxlnH"
     href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat fmLBeK"
+      className="sc-bwzfXH kkmwXZ"
       selected={false}
     >
       bar
@@ -28,15 +28,15 @@ exports[`Storyshots Component List multiple items 1`] = `
 
 exports[`Storyshots Component List multiple items with selection 1`] = `
 <div
-  className="component-list sc-bwzfXH kulSxP"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-ifAKCX dwTEKz"
+    className="sc-bxivhb jqxlnH"
     href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat gqeYsV"
+      className="sc-bwzfXH kbXlZN"
       selected={true}
     >
       bar
@@ -48,15 +48,15 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
 
 exports[`Storyshots Component List single item 1`] = `
 <div
-  className="component-list sc-bwzfXH kulSxP"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-ifAKCX dwTEKz"
+    className="sc-bxivhb jqxlnH"
     href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat fmLBeK"
+      className="sc-bwzfXH kkmwXZ"
       selected={false}
     >
       bar
@@ -68,15 +68,15 @@ exports[`Storyshots Component List single item 1`] = `
 
 exports[`Storyshots Component List single item with selection 1`] = `
 <div
-  className="component-list sc-bwzfXH kulSxP"
+  className="component-list sc-bdVaJa bPGLpq"
 >
   <a
-    className="sc-ifAKCX dwTEKz"
+    className="sc-bxivhb jqxlnH"
     href="/foo/bar"
     onClick={[Function]}
   >
     <div
-      className="sc-htpNat gqeYsV"
+      className="sc-bwzfXH kbXlZN"
       selected={true}
     >
       bar
@@ -88,13 +88,13 @@ exports[`Storyshots Component List single item with selection 1`] = `
 
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-bZQynM eTiRMk"
+  className="sidebar sc-EHOje jRoutO"
 >
   <div
-    className="sc-gZMcBi dcMSXI"
+    className="sc-iwsKbI cFpGCb"
   >
     <span
-      className="sidebar-toggle sc-gqjmRU dHZIyZ"
+      className="sidebar-toggle sc-gZMcBi foRkSn"
       onClick={[Function]}
     >
       <svg
@@ -121,72 +121,72 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open and empty 1`] = `
 <div
-  className="sidebar sc-bZQynM dZUEhg"
+  className="sidebar sc-EHOje fyashP"
 >
   <div
-    className="sc-gZMcBi dcMSXI"
+    className="sc-iwsKbI cFpGCb"
   >
     <a
-      className="sc-htoDjs jssEWI"
+      className="sc-gzVnrw frFvIN"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-dnqmqq cfRcuF"
+        className="title sc-htoDjs hFbBHI"
       >
         <img
           alt=""
-          className="logo sc-EHOje eJwasB"
+          className="logo sc-ifAKCX gsfjvQ"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-iwsKbI cIVfWq"
+    className="sc-dnqmqq fNbSbj"
   />
   <div
-    className="component-list sc-bwzfXH kulSxP"
+    className="component-list sc-bdVaJa bPGLpq"
   />
 </div>
 `;
 
 exports[`Storyshots Sidebar open with components 1`] = `
 <div
-  className="sidebar sc-bZQynM dZUEhg"
+  className="sidebar sc-EHOje fyashP"
 >
   <div
-    className="sc-gZMcBi dcMSXI"
+    className="sc-iwsKbI cFpGCb"
   >
     <a
-      className="sc-htoDjs jssEWI"
+      className="sc-gzVnrw frFvIN"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-dnqmqq cfRcuF"
+        className="title sc-htoDjs hFbBHI"
       >
         <img
           alt=""
-          className="logo sc-EHOje eJwasB"
+          className="logo sc-ifAKCX gsfjvQ"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-iwsKbI cIVfWq"
+    className="sc-dnqmqq fNbSbj"
   />
   <div
-    className="component-list sc-bwzfXH kulSxP"
+    className="component-list sc-bdVaJa bPGLpq"
   >
     <a
-      className="sc-ifAKCX dwTEKz"
+      className="sc-bxivhb jqxlnH"
       href="/foo/bar"
       onClick={[Function]}
     >
       <div
-        className="sc-htpNat fmLBeK"
+        className="sc-bwzfXH kkmwXZ"
         selected={false}
       >
         bar
