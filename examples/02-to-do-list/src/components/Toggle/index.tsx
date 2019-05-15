@@ -7,8 +7,7 @@ export interface Props {
   toggle: (done: boolean) => void;
 }
 
-// @prodo
-export const Toggle = ({done, toggle}: Props) => (
+const Toggle = ({done, toggle}: Props) => (
   <input
     className="toggle"
     type="checkbox"
@@ -22,4 +21,5 @@ Toggle.examples = [
   {name: "done", jsx: <Toggle done={true} toggle={() => undefined} />},
 ];
 
+// @prodo
 export default Toggle;

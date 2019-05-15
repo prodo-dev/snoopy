@@ -6,8 +6,7 @@ export interface Props {
   newTask: (text: string) => void;
 }
 
-// @prodo
-export const NewTask = ({newTask}: Props) => (
+const NewTask = ({newTask}: Props) => (
   <input
     className="new-task"
     placeholder="What needs to be done today?"
@@ -21,4 +20,5 @@ export const NewTask = ({newTask}: Props) => (
   />
 );
 
+// @prodo
 export default NewTask;

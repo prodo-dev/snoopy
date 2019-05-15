@@ -12,8 +12,7 @@ export interface Props {
   setEditing: (editing: Id | undefined) => void;
 }
 
-// @prodo
-export const TaskList = ({tasks, editing, setTasks, setEditing}: Props) => (
+const TaskList = ({tasks, editing, setTasks, setEditing}: Props) => (
   <ul className="task-list">
     {Object.values(tasks).map(({id, text, done}) => {
       const toggle = (newDone: boolean) =>
@@ -89,4 +88,5 @@ TaskList.examples = [
   },
 ];
 
+// @prodo
 export default TaskList;

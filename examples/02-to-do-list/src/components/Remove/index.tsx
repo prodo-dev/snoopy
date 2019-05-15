@@ -6,11 +6,11 @@ export interface Props {
   remove: () => void;
 }
 
-// @prodo
-export const Remove = ({remove}: Props) => (
+const Remove = ({remove}: Props) => (
   <button className="remove" onClick={() => remove()}>
     ×
   </button>
 );
 
+// @prodo
 export default Remove;

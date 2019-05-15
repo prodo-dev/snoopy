@@ -10,8 +10,7 @@ export interface Props {
   edit: (text: string) => void;
 }
 
-// @prodo
-export const Label = ({text, done, editing, startEditing, edit}: Props) => (
+const Label = ({text, done, editing, startEditing, edit}: Props) => (
   <label className="label">
     {editing ? (
       <input
@@ -66,4 +65,5 @@ Label.examples = [
   },
 ];
 
+// @prodo
 export default Label;

@@ -9,8 +9,7 @@ import "./index.css";
 
 const noTasks: Tasks = {};
 
-// @prodo
-export const App = () => {
+const App = () => {
   const [tasks, setTasks] = React.useState(noTasks);
   const [id, setId] = React.useState(0);
   const [editing, setEditing] = React.useState(undefined as (Id | undefined));
@@ -36,4 +35,5 @@ export const App = () => {
   );
 };
 
+// @prodo
 export default App;

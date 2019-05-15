@@ -15,8 +15,7 @@ export interface Props extends Task {
   remove: () => void;
 }
 
-// @prodo
-export const TaskItem = ({
+const TaskItem = ({
   id,
   text,
   done,
@@ -87,4 +86,5 @@ TaskItem.examples = [
   },
 ];
 
+// @prodo
 export default TaskItem;
