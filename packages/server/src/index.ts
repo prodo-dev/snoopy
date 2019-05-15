@@ -29,16 +29,23 @@ export const start = async (
 ) => {
   const app = Express();
 
-  const componentsFile = path.join(
+  const prodoComponentsModule = path.join(
     searchDir,
     "node_modules",
     "@prodo",
     "components",
-    "index.ts",
   );
+  const componentsFile = path.join(prodoComponentsModule, "index.ts");
 
   await makeDir(path.dirname(componentsFile));
   await writeFile(componentsFile, "");
+
+  // Parcel expects folders in node_modules to have package.json
+  const packageFile = path.join(prodoComponentsModule, "package.json");
+  await writeFile(
+    packageFile,
+    JSON.stringify({name: "@prodo/components", main: "index.ts"}),
+  );
 
   const bundler = createBundler({
     clientDir,
