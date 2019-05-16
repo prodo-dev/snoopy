@@ -3,7 +3,7 @@ import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
 import {findExamples} from "./examples";
-import {findComponentExports, findThemeExports} from "./parser";
+import {findComponentExports, findThemeExports} from "./annotations";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
 import {fileGlob, readFileContents, styleFileGlob} from "./utils";
@@ -33,12 +33,13 @@ const inGitIgnore = (() => {
   };
 })();
 
+const getNonNullFiles = (files: Array<File | null>): File[] =>
+  files.filter(i => i != null) as File[];
+
 const getNonNullFilesOfGivenType = (
   files: Array<{[id: string]: File | null}>,
   type: ExtractType,
-): File[] => {
-  return files.map(i => i[type]).filter(i => i != null) as File[];
-};
+): File[] => getNonNullFiles(files.map(i => i[type]));
 
 const getFiles = async (
   directoryToSearch: string,
@@ -104,7 +105,7 @@ export const searchCodebase = async (
     componentFiles: getNonNullFilesOfGivenType(files, "componentFiles"),
     themeFiles: getNonNullFilesOfGivenType(files, "themeFiles"),
     styleFiles: getNonNullFilesOfGivenType(styleFiles, "styleFiles"),
-    examples,
+    examples: getNonNullFiles(examples),
   };
 
   return results;

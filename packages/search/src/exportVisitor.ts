@@ -2,6 +2,7 @@ import {parse} from "@babel/parser";
 import traverse, {Visitor} from "@babel/traverse";
 import * as t from "@babel/types";
 import {File, FileError, FileExport} from "./types";
+import generate from "@babel/generator";
 
 interface VisitorState {
   filepath: string;
@@ -10,12 +11,18 @@ interface VisitorState {
 }
 
 interface VisitorOptions {
-  invalidProdoTagError: string;
+  lineRegex?: RegExp;
+  invalidProdoTagError?: string;
+  ignoreDefaultExport?: boolean;
 }
 
 type ExportVisitor = Visitor<VisitorState>;
 
-const checkComment = (regex: RegExp, comments: readonly t.Comment[]): boolean =>
+const checkComment = (
+  regex: RegExp,
+  comments: readonly t.Comment[] | null,
+): boolean =>
+  comments != null &&
   comments.reduce((acc: boolean, c) => acc || regex.test(c.value), false);
 
 const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
@@ -47,63 +54,67 @@ const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
   return [];
 };
 
-const mkExportVisitor = (
-  lineRegex: RegExp,
-  visitorOptions: VisitorOptions,
-): ExportVisitor => ({
+const getSourceForExport = (
+  node: t.ExportNamedDeclaration,
+): string | undefined => {
+  if (
+    t.isVariableDeclaration(node.declaration) &&
+    node.declaration.declarations.length === 1
+  ) {
+    const decl = node.declaration.declarations[0];
+    if (decl.init) {
+      if (t.isArrowFunctionExpression(decl.init)) {
+        return generate(decl.init.body).code;
+      }
+    }
+  }
+
+  return undefined;
+};
+
+export const mkExportVisitor = (opts: VisitorOptions): ExportVisitor => ({
   enter(path, state) {
-    if (
-      path.node.leadingComments != null &&
-      checkComment(lineRegex, path.node.leadingComments)
-    ) {
+    const visitExport =
+      opts.lineRegex != null
+        ? checkComment(opts.lineRegex, path.node.leadingComments)
+        : true;
+
+    if (visitExport) {
       if (t.isExportNamedDeclaration(path.node)) {
         const exportNames = getExportNames(path.node);
+        const source = getSourceForExport(path.node);
         state.fileExports.push(
           ...exportNames.map(name => {
             const fileExport: FileExport = {
               isDefaultExport: false,
               name,
+              source,
             };
 
             return fileExport;
           }),
         );
-      } else if (t.isExportDefaultDeclaration(path.node)) {
+      } else if (
+        !opts.ignoreDefaultExport &&
+        t.isExportDefaultDeclaration(path.node)
+      ) {
         state.fileExports.push({isDefaultExport: true});
       } else {
-        state.errors.push(
-          new FileError(state.filepath, visitorOptions.invalidProdoTagError),
-        );
+        if (opts.invalidProdoTagError != null) {
+          state.errors.push(
+            new FileError(state.filepath, opts.invalidProdoTagError),
+          );
+        }
       }
     }
   },
 });
-
-const prodoComponentRegex = /^\s*@prodo(\s|$)/;
-const componentVisitor = mkExportVisitor(prodoComponentRegex, {
-  invalidProdoTagError:
-    "The `@prodo` tag must be directly above an exported React component.",
-});
-
-const prodoThemeRegex = /^\s*@prodo:theme\b/;
-const themeVisitor = mkExportVisitor(prodoThemeRegex, {
-  invalidProdoTagError:
-    "The `@prodo:theme` tag must be directly above an exported theme.",
-});
-
-const prodoFileRegex = /\/\/\s*@prodo/;
-const isPossibleProdoFile = (code: string): boolean =>
-  prodoFileRegex.test(code);
 
 export const findFileExports = (
   visitor: ExportVisitor,
   code: string,
   filepath: string,
 ): File | null => {
-  if (!isPossibleProdoFile(code)) {
-    return null;
-  }
-
   let ast: t.File;
   const state: VisitorState = {
     filepath,
@@ -146,9 +157,3 @@ export const findFileExports = (
     errors: state.errors,
   };
 };
-
-export const findComponentExports = (code: string, filepath: string) =>
-  findFileExports(componentVisitor, code, filepath);
-
-export const findThemeExports = (code: string, filepath: string) =>
-  findFileExports(themeVisitor, code, filepath);

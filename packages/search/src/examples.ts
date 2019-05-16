@@ -3,7 +3,9 @@ import * as globby from "globby";
 import * as path from "path";
 import {promisify} from "util";
 import {File} from "./types";
+import {readFileContents} from "./utils";
 import {fileGlob, findProjectRoot} from "./utils";
+import {mkExportVisitor, findFileExports} from "./exportVisitor";
 
 const exists = promisify(fs.exists);
 
@@ -33,14 +35,19 @@ export const findExampleFilePaths = async (
   );
 };
 
+const exampleVisitor = mkExportVisitor({});
+
 export const findExamples = async (
   cwd: string = process.cwd(),
-): Promise<File[]> => {
+): Promise<Array<File | null>> => {
   const exampleFilePaths = await findExampleFilePaths(cwd);
 
-  return exampleFilePaths.map(f => ({
-    filepath: f,
-    fileExports: [],
-    errors: [],
-  }));
+  return Promise.all(
+    exampleFilePaths.map(async filepath => {
+      const contents = await readFileContents(filepath);
+      const file = findFileExports(exampleVisitor, contents, filepath);
+
+      return file;
+    }),
+  );
 };

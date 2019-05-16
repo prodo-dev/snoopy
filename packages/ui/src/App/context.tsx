@@ -2,7 +2,15 @@ import * as _ from "lodash";
 import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
-import {Component, Context, Example, FileError, Style, Theme} from "../models";
+import {
+  Component,
+  Context,
+  ExampleImport,
+  Example,
+  FileError,
+  Style,
+  Theme,
+} from "../models";
 import {paddings} from "../styles";
 
 // tslint:disable-next-line:no-var-requires
@@ -15,26 +23,21 @@ const ThemeProvider =
 const MemoryRouter =
   ReactRouterDOM != null ? ReactRouterDOM.MemoryRouter : React.Fragment;
 
-const findExamplesForComponent = (c: Component) => {
-  const exampleFileExport = userImport.examples.filter(
-    (ex: any) => ex.default !== null && ex.default === c.component,
+const exampleImports: ExampleImport[] = userImport.examples;
+
+const findExamplesForComponent = (c: Component): Example[] => {
+  const exampleFileExport = exampleImports.filter(
+    ex => ex.forComponent !== null && ex.forComponent === c.component,
   )[0];
 
   if (!exampleFileExport) {
     return [];
   }
 
-  const examples = Object.keys(
-    _.omit(exampleFileExport, "__esModule", "default"),
-  ).map(exportName => {
-    const exampleReactComponent = exampleFileExport[exportName];
-    return {
-      title: exampleReactComponent.title || exportName,
-      component: exampleReactComponent,
-    };
-  });
-
-  return examples;
+  return exampleFileExport.examples.map(ex => ({
+    ...ex,
+    title: (ex.component as any).title || ex.title,
+  }));
 };
 
 const components = userImport.components.map((c: Component) => ({
@@ -53,6 +56,7 @@ const StyledLog = styled.div`
 `;
 
 const Container = styled.div`
+  margin: 0 auto;
   width: min-content;
 `;
 

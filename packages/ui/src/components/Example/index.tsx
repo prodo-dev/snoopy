@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {renderExample} from "../../App/context";
 import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
+import Highlighter from "../Highlighter";
 
 interface Props {
   example: ExampleModel;
@@ -61,6 +62,9 @@ const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.title}</Title>
     <UserComponentContainer {...props} />
+    {props.example.source != null && (
+      <Highlighter className="language-ts">{props.example.source}</Highlighter>
+    )}
   </StyledExample>
 );
 
