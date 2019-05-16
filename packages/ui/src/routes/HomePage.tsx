@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
 import styled from "styled-components";
+import Readme from "../../README.mdx";
 import ComponentList from "../components/ComponentList";
 import Highlighter from "../components/Highlighter";
 import {StyledPage, StyledPageContents} from "../components/Page";
@@ -49,11 +50,7 @@ const HomePage = ({context}: Props) => {
             )}
             <MDXProvider components={mdxComponents}>
               <StyledMarkdown>
-                <p>
-                  <a href="https://github.com/prodo-ai/snoopy">
-                    View the docs here.
-                  </a>
-                </p>
+                <Readme />
               </StyledMarkdown>
             </MDXProvider>
           </React.Fragment>
