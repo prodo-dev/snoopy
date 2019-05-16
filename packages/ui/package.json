@@ -1,6 +1,6 @@
 {
   "name": "@prodo-ai/snoopy-ui",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "public/index.html",
   "license": "MIT",
   "homepage": "https://github.com/prodo-ai/snoopy",
