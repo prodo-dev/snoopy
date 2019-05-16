@@ -21,7 +21,6 @@
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
-    "@mdx-js/parcel-plugin-mdx": "^1.0.18",
     "@prodo-ai/snoopy-api": "^0.1.5",
     "@prodo-ai/snoopy-search": "^0.1.5",
     "@prodo-ai/snoopy-ui": "^0.1.6",
