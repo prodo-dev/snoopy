@@ -79,6 +79,21 @@ export let One = () => {};
   });
 });
 
+test("gets component from function", () => {
+  const contents = `
+// @prodo
+export function One() {}
+`.trim();
+
+  const componentImport = findComponentExports(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [{name: "One", isDefaultExport: false, source: "{}"}],
+    errors: [],
+  });
+});
+
 test("gets component imports for multiple named exports", () => {
   const contents = `
 // @prodo

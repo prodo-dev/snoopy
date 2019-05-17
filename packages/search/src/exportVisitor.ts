@@ -31,7 +31,9 @@ const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
 
   if (
     declaration != null &&
-    (t.isVariableDeclaration(declaration) || t.isClassDeclaration(declaration))
+    (t.isVariableDeclaration(declaration) ||
+      t.isClassDeclaration(declaration) ||
+      t.isFunctionDeclaration(declaration))
   ) {
     const id = t.isVariableDeclaration(declaration)
       ? declaration.declarations[0].id
@@ -60,6 +62,9 @@ const getSourceForArrowFunction = (node: t.ArrowFunctionExpression): string =>
 const getSourceForClassDecl = (node: t.ClassDeclaration): string =>
   generate(node).code;
 
+const getSourceForFunctionDecl = (node: t.FunctionDeclaration): string =>
+  generate(node.body).code;
+
 const getSourceForNamedExport = (
   node: t.ExportNamedDeclaration,
 ): string | undefined => {
@@ -79,6 +84,10 @@ const getSourceForNamedExport = (
     return getSourceForClassDecl(node.declaration);
   }
 
+  if (t.isFunctionDeclaration(node.declaration)) {
+    return getSourceForFunctionDecl(node.declaration);
+  }
+
   return undefined;
 };
 
@@ -87,8 +96,14 @@ const getSourceForDefaultExport = (
 ): string | undefined => {
   if (t.isArrowFunctionExpression(node.declaration)) {
     return getSourceForArrowFunction(node.declaration);
-  } else if (t.isClassDeclaration(node.declaration)) {
+  }
+
+  if (t.isClassDeclaration(node.declaration)) {
     return getSourceForClassDecl(node.declaration);
+  }
+
+  if (t.isFunctionDeclaration(node.declaration)) {
+    return getSourceForFunctionDecl(node.declaration);
   }
 
   return undefined;
