@@ -54,7 +54,13 @@ const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
   return [];
 };
 
-const getSourceForExport = (
+const getSourceForArrowFunction = (node: t.ArrowFunctionExpression): string =>
+  generate(node.body).code;
+
+const getSourceForClassDecl = (node: t.ClassDeclaration): string =>
+  generate(node).code;
+
+const getSourceForNamedExport = (
   node: t.ExportNamedDeclaration,
 ): string | undefined => {
   if (
@@ -64,13 +70,36 @@ const getSourceForExport = (
     const decl = node.declaration.declarations[0];
     if (decl.init) {
       if (t.isArrowFunctionExpression(decl.init)) {
-        return generate(decl.init.body).code;
+        return getSourceForArrowFunction(decl.init);
       }
     }
   }
 
+  if (t.isClassDeclaration(node.declaration)) {
+    return getSourceForClassDecl(node.declaration);
+  }
+
   return undefined;
 };
+
+const getSourceForDefaultExport = (
+  node: t.ExportDefaultDeclaration,
+): string | undefined => {
+  if (t.isArrowFunctionExpression(node.declaration)) {
+    return getSourceForArrowFunction(node.declaration);
+  } else if (t.isClassDeclaration(node.declaration)) {
+    return getSourceForClassDecl(node.declaration);
+  }
+
+  return undefined;
+};
+
+const getSourceForExport = (
+  node: t.ExportNamedDeclaration | t.ExportDefaultDeclaration,
+): string | undefined =>
+  t.isExportNamedDeclaration(node)
+    ? getSourceForNamedExport(node)
+    : getSourceForDefaultExport(node);
 
 export const mkExportVisitor = (opts: VisitorOptions): ExportVisitor => ({
   enter(path, state) {
@@ -81,8 +110,8 @@ export const mkExportVisitor = (opts: VisitorOptions): ExportVisitor => ({
 
     if (visitExport) {
       if (t.isExportNamedDeclaration(path.node)) {
-        const exportNames = getExportNames(path.node);
         const source = getSourceForExport(path.node);
+        const exportNames = getExportNames(path.node);
         state.fileExports.push(
           ...exportNames.map(name => {
             const fileExport: FileExport = {
@@ -98,7 +127,8 @@ export const mkExportVisitor = (opts: VisitorOptions): ExportVisitor => ({
         !opts.ignoreDefaultExport &&
         t.isExportDefaultDeclaration(path.node)
       ) {
-        state.fileExports.push({isDefaultExport: true});
+        const source = getSourceForExport(path.node);
+        state.fileExports.push({isDefaultExport: true, source});
       } else {
         if (opts.invalidProdoTagError != null) {
           state.errors.push(

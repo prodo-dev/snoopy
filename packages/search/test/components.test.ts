@@ -1,4 +1,4 @@
-import {findComponentExports} from "../src/parser";
+import {findComponentExports} from "../src/annotations";
 import {FileError} from "../src/types";
 
 test("gets component imports for single named export", () => {
@@ -29,7 +29,22 @@ export default App;
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
-    fileExports: [{name: "App", isDefaultExport: false}],
+    fileExports: [
+      {
+        name: "App",
+        isDefaultExport: false,
+        source: `
+{
+  const [count, setCount] = React.useState(0);
+  return <div className="app">
+      <Decrement setCount={setCount} />
+      <Counter count={count} />
+      <Increment setCount={setCount} />
+    </div>;
+}
+`.trim(),
+      },
+    ],
     errors: [],
   });
 });
@@ -44,7 +59,7 @@ export var One = () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
-    fileExports: [{name: "One", isDefaultExport: false}],
+    fileExports: [{name: "One", isDefaultExport: false, source: "{}"}],
     errors: [],
   });
 });
@@ -59,7 +74,7 @@ export let One = () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
-    fileExports: [{name: "One", isDefaultExport: false}],
+    fileExports: [{name: "One", isDefaultExport: false, source: "{}"}],
     errors: [],
   });
 });
@@ -80,8 +95,8 @@ export const Three = () => {};
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
     fileExports: [
-      {name: "One", isDefaultExport: false},
-      {name: "Three", isDefaultExport: false},
+      {name: "One", isDefaultExport: false, source: "{}"},
+      {name: "Three", isDefaultExport: false, source: "{}"},
     ],
     errors: [],
   });
@@ -100,7 +115,7 @@ export const One = () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{name: "One", isDefaultExport: false}],
+    fileExports: [{name: "One", isDefaultExport: false, source: "{}"}],
     errors: [],
   });
 });
@@ -118,7 +133,7 @@ export default () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/Button.ts",
-    fileExports: [{isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true, source: "{}"}],
     errors: [],
   });
 });
@@ -136,7 +151,7 @@ export default () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/Button/index.ts",
-    fileExports: [{isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true, source: "{}"}],
     errors: [],
   });
 });
@@ -154,7 +169,7 @@ export const O______ne = () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{name: "O______ne", isDefaultExport: false}],
+    fileExports: [{name: "O______ne", isDefaultExport: false, source: "{}"}],
     errors: [],
   });
 });
@@ -172,7 +187,7 @@ export const One111 = () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{name: "One111", isDefaultExport: false}],
+    fileExports: [{name: "One111", isDefaultExport: false, source: "{}"}],
     errors: [],
   });
 });
@@ -226,10 +241,10 @@ export const Five = () => {};
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
     fileExports: [
-      {name: "One", isDefaultExport: false},
-      {name: "Two", isDefaultExport: false},
-      {name: "Three", isDefaultExport: false},
-      {name: "Four", isDefaultExport: false},
+      {name: "One", isDefaultExport: false, source: "{}"},
+      {name: "Two", isDefaultExport: false, source: "{}"},
+      {name: "Three", isDefaultExport: false, source: "{}"},
+      {name: "Four", isDefaultExport: false, source: "{}"},
     ],
     errors: [],
   });
@@ -248,7 +263,7 @@ export default () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{isDefaultExport: true}],
+    fileExports: [{isDefaultExport: true, source: "{}"}],
     errors: [],
   });
 });
@@ -266,7 +281,13 @@ export class Button extends React.Component {}
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{name: "Button", isDefaultExport: false}],
+    fileExports: [
+      {
+        name: "Button",
+        isDefaultExport: false,
+        source: "class Button extends React.Component {}",
+      },
+    ],
     errors: [],
   });
 });
@@ -287,7 +308,7 @@ export const Theme = () => {};
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{name: "Button", isDefaultExport: false}],
+    fileExports: [{name: "Button", isDefaultExport: false, source: "{}"}],
     errors: [],
   });
 });
@@ -308,7 +329,7 @@ const s = \`
   expect(componentImport).toBe(null);
 });
 
-test("gets component imports for multiple named exports", () => {
+test("gets component imports for named exports as", () => {
   const contents = `
 const Foo = () => {};
 const Bar = () => {};
@@ -322,8 +343,8 @@ export { Foo as One, Bar }
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
     fileExports: [
-      {name: "One", isDefaultExport: false},
-      {name: "Bar", isDefaultExport: false},
+      {name: "One", isDefaultExport: false, source: undefined},
+      {name: "Bar", isDefaultExport: false, source: undefined},
     ],
     errors: [],
   });

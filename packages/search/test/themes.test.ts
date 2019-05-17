@@ -1,4 +1,4 @@
-import {findThemeExports} from "../src/parser";
+import {findThemeExports} from "../src/annotations";
 import {FileError} from "../src/types";
 
 test("gets theme imports for single named export", () => {
