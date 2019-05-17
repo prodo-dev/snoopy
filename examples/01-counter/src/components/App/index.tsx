@@ -5,7 +5,6 @@ import Increment from "../Increment";
 
 import "./index.css";
 
-// @prodo
 export const App = () => {
   const [count, setCount] = React.useState(0);
   return (

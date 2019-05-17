@@ -38,5 +38,4 @@ const TaskItem = ({
   </li>
 );
 
-// @prodo
 export default TaskItem;
