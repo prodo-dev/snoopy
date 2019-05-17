@@ -37,7 +37,6 @@ describe("get source from exports", () => {
   render() {
     return <div onClick={() => alert("test")} />;
   }
-
 }`;
     const source = getSource(`
     export ${body}`);

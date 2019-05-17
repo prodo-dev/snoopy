@@ -5,8 +5,8 @@ import backgroundImage from "../media/transparent_background.png";
 import {
   Component,
   Context,
-  ExampleImport,
   Example,
+  ExampleImport,
   FileError,
   Style,
   Theme,

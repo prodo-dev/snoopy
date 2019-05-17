@@ -2,10 +2,9 @@ import * as fs from "fs";
 import * as globby from "globby";
 import * as path from "path";
 import {promisify} from "util";
+import {findFileExports, mkExportVisitor} from "./exportVisitor";
 import {File} from "./types";
-import {readFileContents} from "./utils";
-import {fileGlob, findProjectRoot} from "./utils";
-import {mkExportVisitor, findFileExports} from "./exportVisitor";
+import {fileGlob, findProjectRoot, readFileContents} from "./utils";
 
 const exists = promisify(fs.exists);
 

@@ -1,8 +1,9 @@
+import generate from "@babel/generator";
 import {parse} from "@babel/parser";
 import traverse, {Visitor} from "@babel/traverse";
 import * as t from "@babel/types";
+import {format} from "./format";
 import {File, FileError, FileExport} from "./types";
-import generate from "@babel/generator";
 
 interface VisitorState {
   filepath: string;
@@ -111,10 +112,21 @@ const getSourceForDefaultExport = (
 
 const getSourceForExport = (
   node: t.ExportNamedDeclaration | t.ExportDefaultDeclaration,
-): string | undefined =>
-  t.isExportNamedDeclaration(node)
+): string | undefined => {
+  const source = t.isExportNamedDeclaration(node)
     ? getSourceForNamedExport(node)
     : getSourceForDefaultExport(node);
+
+  if (source == null) {
+    return undefined;
+  }
+
+  try {
+    return format(source);
+  } catch (e) {
+    return source;
+  }
+};
 
 export const mkExportVisitor = (opts: VisitorOptions): ExportVisitor => ({
   enter(path, state) {

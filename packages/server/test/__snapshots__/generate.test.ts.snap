@@ -70,7 +70,7 @@ export const styles = [
 
 export const examples = [
   {forComponent: Example0, examples: [
-    {component: Example1, title: \\"basic\\", source: \\"<NamedExport>Foo</NamedExport>\\"}
+    {component: Example1, title: \\"basic\\", source: \\"<NamedExport>Foo</NamedExport>;\\"}
   ]}
 ];
 "
