@@ -44,7 +44,7 @@ const Component = (props: Props) => {
             example={{
               title: "Default",
               component: () => <Comp />,
-              source: `<${props.component.name} />`,
+              source: `<${props.component.name} />;`,
             }}
             allStyles={props.allStyles}
           />
