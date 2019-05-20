@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 2rem;
+  background: #282c34;
+  color: #f8f8f2;
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-family: monospace;
+  font-size: 4rem;
+  margin: 4rem 0;
+}
+
+p {
+  margin: 2rem 0;
+}
+
+.code {
+  border: solid 1px #444851;
+  border-radius: 4px;
+  padding: 0.5rem;
+  background: #31353f;
+  color: white;
+}
+
+code {
+  font-family: monospace;
+}
