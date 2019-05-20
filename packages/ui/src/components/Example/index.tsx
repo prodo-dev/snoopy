@@ -27,6 +27,8 @@ const Title = styled.div`
   color: ${props => props.theme.colors.text};
 `;
 
+const CodeContainer = styled.div``;
+
 const randId = () =>
   Math.random()
     .toString(36)
@@ -63,7 +65,11 @@ const Example = (props: Props) => (
     <Title className="example-title">{props.example.title}</Title>
     <UserComponentContainer {...props} />
     {props.example.source != null && (
-      <Highlighter className="language-ts">{props.example.source}</Highlighter>
+      <CodeContainer>
+        <Highlighter className="language-jsx">
+          {props.example.source}
+        </Highlighter>
+      </CodeContainer>
     )}
   </StyledExample>
 );

@@ -181,7 +181,6 @@ const generateExamplesArray = (files: FileWithExportId[]): string =>
         .join(",\n    ")}\n  ]}`;
     })
     .join(",\n  ");
-// files.map(({id}) => id).join(",\n  ");
 
 export const generateComponentsFileContents = async (
   clientDir: string,
