@@ -72,6 +72,8 @@ export const start = async (
       }
     });
 
+  process.stdout.write(`Starting server on port ${port}...\n`);
+
   const server = new http.Server(app);
   const ws = registerWebsockets(server);
 
@@ -89,7 +91,7 @@ export const start = async (
         );
       })
       .on("error", e => {
-        if (portNumber - port > portTriesLimit) {
+        if (portNumber - startingPort > portTriesLimit) {
           process.stdout.write(`Tried ${portTriesLimit} ports, giving up.`);
         } else if ((e as any).code === "EADDRINUSE") {
           process.stdout.write(
@@ -102,5 +104,5 @@ export const start = async (
       });
   };
 
-  listen(port);
+  listen(startingPort);
 };
