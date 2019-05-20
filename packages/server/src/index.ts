@@ -64,11 +64,16 @@ export const start = async (
   chokidar
     .watch(".", {ignored: /(^|[\/\\])\../})
     .on("all", async (_, filename) => {
-      const matches = await checkMatch(filename);
-      if (matches) {
-        // We need to do this to avoid compiling and pushing `filename` at the
-        // same time as `componentsFile`.
-        await (bundler as any).onChange(componentsFile);
+      try {
+        const matches = await checkMatch(filename);
+        if (matches) {
+          // We need to do this to avoid compiling and pushing `filename` at the
+          // same time as `componentsFile`.
+          await (bundler as any).onChange(componentsFile);
+        }
+      } catch (e) {
+        // tslint:disable-next-line:no-console
+        console.warn("Error handling file change\n", filename, e);
       }
     });
 
