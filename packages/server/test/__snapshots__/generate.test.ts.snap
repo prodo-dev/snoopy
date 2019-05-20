@@ -6,6 +6,7 @@ import Component1 from \\"example/components/DefaultExport.tsx\\";
 import {Button2 as Component2} from \\"example/components/Mixed.tsx\\";
 import Component3, {Button as Component4, Button2 as Component5} from \\"example/components/MultipleExports.tsx\\";
 import {Button as Component6} from \\"example/components/NamedExport.tsx\\";
+import Example0, {basic as Example1} from \\"example/examples/NamedExport.example.tsx\\";
 import {Button as Component7} from \\"example/index.jsx\\";
 import {Button as Component8} from \\"example/javascript.jsx\\";
 import {Button as Component9, theme as Theme0} from \\"example/mixed.tsx\\";
@@ -14,7 +15,6 @@ import {theme2 as Theme2} from \\"example/themes/mixed.ts\\";
 import Theme3, {theme as Theme4, theme2 as Theme5} from \\"example/themes/multiple-exports.ts\\";
 import {theme as Theme6} from \\"example/themes/named-export.ts\\";
 import {Button as Component10} from \\"example/typescript.tsx\\";
-import * as Example0 from \\"example/examples/NamedExport.example.tsx\\"
 
 import * as React from \\"react\\";
 import * as ReactDOM from \\"react-dom\\";
@@ -37,9 +37,9 @@ try {
 
 export const components = [
   {path: \\"components/BadExport.tsx\\", name: \\"Button\\", component: Component0},
-  {path: \\"components/DefaultExport.tsx\\", name: \\"default\\", component: Component1},
+  {path: \\"components/DefaultExport.tsx\\", name: \\"DefaultExport\\", component: Component1},
   {path: \\"components/Mixed.tsx\\", name: \\"Button2\\", component: Component2},
-  {path: \\"components/MultipleExports.tsx\\", name: \\"default\\", component: Component3},
+  {path: \\"components/MultipleExports.tsx\\", name: \\"MultipleExports\\", component: Component3},
   {path: \\"components/MultipleExports.tsx\\", name: \\"Button\\", component: Component4},
   {path: \\"components/MultipleExports.tsx\\", name: \\"Button2\\", component: Component5},
   {path: \\"components/NamedExport.tsx\\", name: \\"Button\\", component: Component6},
@@ -69,7 +69,9 @@ export const styles = [
 ]:
 
 export const examples = [
-  Example0
+  {forComponent: Example0, examples: [
+    {component: Example1, title: \\"basic\\", source: \\"<NamedExport>Foo</NamedExport>;\\"}
+  ]}
 ];
 "
 `;
