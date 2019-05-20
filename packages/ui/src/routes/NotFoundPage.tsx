@@ -17,9 +17,9 @@ const NotFoundPage = (props: Props) => (
   <StyledPage>
     <StyledPageContents>
       <h2>
-        Path <StyledPath>{props.filepath}</StyledPath> does not exist
+        Path <StyledPath>{props.filepath}</StyledPath> does not exist.
       </h2>
-      <h4>Load a different component</h4>
+      <h4>Load a different component:</h4>
       <ComponentList components={props.context.components} full />
     </StyledPageContents>
   </StyledPage>
