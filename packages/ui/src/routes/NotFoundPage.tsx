@@ -1,8 +1,8 @@
 import * as React from "react";
-import {StyledPage, StyledPageContents} from "../components/Page";
-import {Context} from "../models";
 import styled from "styled-components";
 import ComponentList from "../components/ComponentList";
+import {StyledPage, StyledPageContents} from "../components/Page";
+import {Context} from "../models";
 
 interface Props {
   filepath: string;

@@ -5,8 +5,8 @@ import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import {ThemeProvider} from "styled-components";
 import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
-import NotFoundPage from "../routes/NotFoundPage";
 import HomePage from "../routes/HomePage";
+import NotFoundPage from "../routes/NotFoundPage";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
 
