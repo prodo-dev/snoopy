@@ -89,7 +89,7 @@ export const start = async (
         );
       })
       .on("error", e => {
-        if (portNumber - startingPort > portTriesLimit) {
+        if (portNumber - port > portTriesLimit) {
           process.stdout.write(`Tried ${portTriesLimit} ports, giving up.`);
         } else if ((e as any).code === "EADDRINUSE") {
           process.stdout.write(
@@ -102,5 +102,5 @@ export const start = async (
       });
   };
 
-  listen(startingPort);
+  listen(port);
 };
