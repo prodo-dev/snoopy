@@ -16,7 +16,7 @@ exports[`Storyshots Component List multiple items 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-bwzfXH hIsscp"
       selected={false}
     >
       bar
@@ -36,7 +36,7 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kbXlZN"
+      className="sc-bwzfXH heyDVA"
       selected={true}
     >
       bar
@@ -56,7 +56,7 @@ exports[`Storyshots Component List single item 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kkmwXZ"
+      className="sc-bwzfXH hIsscp"
       selected={false}
     >
       bar
@@ -76,7 +76,7 @@ exports[`Storyshots Component List single item with selection 1`] = `
     onClick={[Function]}
   >
     <div
-      className="sc-bwzfXH kbXlZN"
+      className="sc-bwzfXH heyDVA"
       selected={true}
     >
       bar
@@ -186,7 +186,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
       onClick={[Function]}
     >
       <div
-        className="sc-bwzfXH kkmwXZ"
+        className="sc-bwzfXH hIsscp"
         selected={false}
       >
         bar

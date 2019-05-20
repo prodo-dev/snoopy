@@ -6,6 +6,7 @@ import {ThemeProvider} from "styled-components";
 import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
+import NotFoundPage from "../routes/NotFoundPage";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
 
@@ -29,15 +30,16 @@ const ComponentPageWithProps = (
     path: string;
   }>,
 ) => {
-  const components = props.context.components.filter(
-    c => c.path === props.match.params.path,
-  );
+  const path = props.match.params.path;
+  const components = props.context.components.filter(c => c.path === path);
 
-  const fileError = props.context.errors.filter(
-    c => c.path === props.match.params.path,
-  );
+  const fileError = props.context.errors.filter(c => c.path === path);
 
   const errors = fileError.length !== 0 ? fileError[0].errors : [];
+
+  if (components.length === 0) {
+    return <NotFoundPage filepath={path} context={props.context} />;
+  }
 
   return (
     <ComponentPage
