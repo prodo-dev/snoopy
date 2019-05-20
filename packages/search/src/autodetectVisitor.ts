@@ -4,14 +4,14 @@ import pluginTransformReactJsx from "@babel/plugin-transform-react-jsx";
 import {NodePath} from "@babel/traverse";
 import * as t from "@babel/types";
 import * as path from "path";
+import {Declarations, File, FileError, FileExport, VisitorState} from "./types";
 import {
   getExportNames,
   getSourceForClassDecl,
   getSourceForDefaultExport,
   getSourceForFunctionDecl,
   getSourceForVariableDecl,
-} from "./exportVisitor";
-import {Declarations, File, FileError, FileExport, VisitorState} from "./types";
+} from "./utils/visitor";
 
 const isReactElement = (node: t.Node) => {
   if (t.isCallExpression(node) && t.isMemberExpression(node.callee)) {
