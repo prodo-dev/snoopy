@@ -4,6 +4,7 @@ import pluginTransformReactJsx from "@babel/plugin-transform-react-jsx";
 import {NodePath} from "@babel/traverse";
 import * as t from "@babel/types";
 import * as path from "path";
+import {format} from "./format";
 import {Declarations, File, FileError, FileExport, VisitorState} from "./types";
 import {
   getExportNames,
@@ -48,9 +49,19 @@ const declaresReactElement = (
     const target: t.Expression | null = declarator.init;
     const elem = t.isArrowFunctionExpression(target) ? target.body : target;
     return name && target && elem && returnsReactElement(elem);
-  } else {
+  } else if (t.isFunctionDeclaration(node)) {
     return returnsReactElement(node.body);
+  } else if (
+    t.isClassDeclaration(node) &&
+    t.isMemberExpression(node.superClass)
+  ) {
+    return (
+      t.isIdentifier(node.superClass.object) &&
+      node.superClass.object.name === "React" &&
+      node.superClass.property.name === "Component"
+    );
   }
+  return false;
 };
 
 const declarationDetection = (declarations: Declarations) => () => ({
@@ -59,25 +70,31 @@ const declarationDetection = (declarations: Declarations) => () => ({
       const declarator: t.VariableDeclarator = nodePath.node.declarations[0];
       const name = t.isIdentifier(declarator.id) && declarator.id.name;
       if (name) {
-        declarations[name] = getSourceForVariableDecl(nodePath.node);
+        declarations[name] = format(
+          getSourceForVariableDecl(nodePath.node) || "",
+        );
       }
     },
     ExportDefaultDeclaration(nodePath: NodePath<t.ExportDefaultDeclaration>) {
       const declaration = nodePath.node.declaration;
       if (!t.isIdentifier(declaration)) {
-        declarations.default = getSourceForDefaultExport(nodePath.node);
+        declarations.default = format(
+          getSourceForDefaultExport(nodePath.node) || "",
+        );
       }
     },
     FunctionDeclaration(nodePath: NodePath<t.FunctionDeclaration>) {
       const name = t.isIdentifier(nodePath.node.id) && nodePath.node.id.name;
       if (name) {
-        declarations[name] = getSourceForFunctionDecl(nodePath.node);
+        declarations[name] = format(
+          getSourceForFunctionDecl(nodePath.node) || "",
+        );
       }
     },
     ClassDeclaration(nodePath: NodePath<t.ClassDeclaration>) {
       const name = t.isIdentifier(nodePath.node.id) && nodePath.node.id.name;
       if (name) {
-        declarations[name] = getSourceForClassDecl(nodePath.node);
+        declarations[name] = format(getSourceForClassDecl(nodePath.node) || "");
       }
     },
   },
@@ -92,7 +109,9 @@ const exportDetection = (
       const exportNames = getExportNames(nodePath.node);
       const declaration = nodePath.node.declaration;
       if (
-        t.isVariableDeclaration(declaration) &&
+        (t.isVariableDeclaration(declaration) ||
+          t.isFunctionDeclaration(declaration) ||
+          t.isClassDeclaration(declaration)) &&
         declaresReactElement(declaration)
       ) {
         state.fileExports.push(
@@ -105,6 +124,32 @@ const exportDetection = (
             return fileExport;
           }),
         );
+      } else if (!declaration && nodePath.node.specifiers) {
+        if (nodePath.node.specifiers) {
+          const exportNameMappings: {
+            [key: string]: string;
+          } = nodePath.node.specifiers.reduce(
+            (names: {[key: string]: string}, s) => {
+              if (t.isExportSpecifier(s)) {
+                names[s.exported.name] = s.local.name;
+                return names;
+              }
+
+              return names;
+            },
+            {},
+          );
+          for (const name of Object.keys(exportNameMappings)) {
+            if (declarations[exportNameMappings[name]]) {
+              const fileExport: FileExport = {
+                isDefaultExport: false,
+                name,
+                source: declarations[exportNameMappings[name]],
+              };
+              state.fileExports.push(fileExport);
+            }
+          }
+        }
       }
     },
     ExportDefaultDeclaration(nodePath: NodePath<t.ExportDefaultDeclaration>) {
