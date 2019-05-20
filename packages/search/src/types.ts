@@ -12,10 +12,11 @@ export interface File {
 }
 
 export type FileExport =
-  | {isDefaultExport: true}
+  | {isDefaultExport: true; source?: string}
   | {
       isDefaultExport: false;
       name: string;
+      source?: string;
     };
 
 export class FileError extends Error {
