@@ -9,6 +9,7 @@ import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
 import registerWebsockets from "./websockets";
+import * as chokidar from "chokidar";
 
 const writeFile = promisify(fs.writeFile);
 
@@ -60,17 +61,16 @@ export const start = async (
 
   app.use(Express.static(outDir));
 
-  fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
-    // TODO: Try/catch?
-    const matches = await checkMatch(filename);
-    if (matches) {
-      // We need to do this to avoid compiling and pushing `filename` at the
-      // same time as `componentsFile`.
-      await (bundler as any).onChange(componentsFile);
-    }
-  });
-
-  process.stdout.write(`Starting server on port ${port}...\n`);
+  chokidar
+    .watch(".", {ignored: /(^|[\/\\])\../})
+    .on("all", async (_, filename) => {
+      const matches = await checkMatch(filename);
+      if (matches) {
+        // We need to do this to avoid compiling and pushing `filename` at the
+        // same time as `componentsFile`.
+        await (bundler as any).onChange(componentsFile);
+      }
+    });
 
   const server = new http.Server(app);
   const ws = registerWebsockets(server);
@@ -89,7 +89,7 @@ export const start = async (
         );
       })
       .on("error", e => {
-        if (portNumber - startingPort > portTriesLimit) {
+        if (portNumber - port > portTriesLimit) {
           process.stdout.write(`Tried ${portTriesLimit} ports, giving up.`);
         } else if ((e as any).code === "EADDRINUSE") {
           process.stdout.write(
@@ -102,5 +102,5 @@ export const start = async (
       });
   };
 
-  listen(startingPort);
+  listen(port);
 };
