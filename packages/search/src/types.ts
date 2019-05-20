@@ -32,11 +32,15 @@ export class FileError extends Error {
 
 export type ExtractType = "styleFiles" | "componentFiles" | "themeFiles";
 
+export interface Declarations {
+  [name: string]: string | undefined;
+}
+
 export interface VisitorState {
   filepath: string;
   fileExports: FileExport[];
   errors: FileError[];
-  componentNames: string[];
+  detectedComponents?: Declarations;
 }
 
 export interface VisitorOptions {

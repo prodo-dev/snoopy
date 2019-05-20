@@ -19,7 +19,7 @@ const checkComment = (
   comments != null &&
   comments.reduce((acc: boolean, c) => acc || regex.test(c.value), false);
 
-const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
+export const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
   const declaration = node.declaration;
   const specifiers = node.specifiers;
 
@@ -59,19 +59,26 @@ const getSourceForClassDecl = (node: t.ClassDeclaration): string =>
 const getSourceForFunctionDecl = (node: t.FunctionDeclaration): string =>
   generate(node.body).code;
 
-const getSourceForNamedExport = (
-  node: t.ExportNamedDeclaration,
+export const getSourceForVariableDecl = (
+  node: t.VariableDeclaration,
 ): string | undefined => {
-  if (
-    t.isVariableDeclaration(node.declaration) &&
-    node.declaration.declarations.length === 1
-  ) {
-    const decl = node.declaration.declarations[0];
+  if (node.declarations.length === 1) {
+    const decl = node.declarations[0];
     if (decl.init) {
       if (t.isArrowFunctionExpression(decl.init)) {
         return getSourceForArrowFunction(decl.init);
       }
     }
+  }
+
+  return undefined;
+};
+
+const getSourceForNamedExport = (
+  node: t.ExportNamedDeclaration,
+): string | undefined => {
+  if (t.isVariableDeclaration(node.declaration)) {
+    return getSourceForVariableDecl(node.declaration);
   }
 
   if (t.isClassDeclaration(node.declaration)) {
@@ -85,7 +92,7 @@ const getSourceForNamedExport = (
   return undefined;
 };
 
-const getSourceForDefaultExport = (
+export const getSourceForDefaultExport = (
   node: t.ExportDefaultDeclaration,
 ): string | undefined => {
   if (t.isArrowFunctionExpression(node.declaration)) {
@@ -103,7 +110,7 @@ const getSourceForDefaultExport = (
   return undefined;
 };
 
-const getSourceForExport = (
+export const getSourceForExport = (
   node: t.ExportNamedDeclaration | t.ExportDefaultDeclaration,
 ): string | undefined => {
   const source = t.isExportNamedDeclaration(node)
@@ -170,7 +177,6 @@ export const findFileExports = (
     filepath,
     fileExports: [],
     errors: [],
-    componentNames: [],
   };
 
   try {

@@ -2,8 +2,8 @@ import * as findUp from "find-up";
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
-import {findThemeExports} from "./annotations";
-import {detectAndFindComponentExports} from "./detectExports";
+import {findComponentExports, findThemeExports} from "./annotations";
+import {autodetectComponentExports} from "./autodetect";
 import {findExamples} from "./examples";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
@@ -78,6 +78,39 @@ const getFiles = async (
   );
 
   return files;
+};
+
+const detectAndFindComponentExports = (code: string, filepath: string) => {
+  const emptyResult = {
+    filepath,
+    fileExports: [],
+    errors: [],
+  };
+  const detectedExports =
+    autodetectComponentExports(code, filepath) || emptyResult;
+  const manualExports = findComponentExports(code, filepath) || emptyResult;
+  // The parsed source isn't always exactly the same
+  // so combine carefully to avoid duplicates
+  const hasDefaultExport =
+    manualExports.fileExports.filter(x => x.isDefaultExport).length > 0;
+  const manualExportNames = manualExports.fileExports
+    .filter(x => !x.isDefaultExport)
+    .map(x => (x as any).name);
+  const combinedExports = manualExports.fileExports;
+  for (const ex of detectedExports.fileExports) {
+    if (
+      (ex.isDefaultExport && !hasDefaultExport) ||
+      (!ex.isDefaultExport && manualExportNames.indexOf(ex.name) < 0)
+    ) {
+      combinedExports.push(ex);
+    }
+  }
+
+  return {
+    filepath,
+    fileExports: combinedExports,
+    errors: detectedExports.errors.concat(manualExports.errors),
+  };
 };
 
 export const searchCodebase = async (

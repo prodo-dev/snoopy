@@ -8,6 +8,7 @@ export const exampleFileGlob = [
   `**/*.{${fileExtensions.join(",")}}`,
   "!**/flycheck_*.*",
   "!node_modules/**/*",
+  "!**/test/**/*",
 ];
 export const fileGlob = exampleFileGlob.concat(["!**/*.example.tsx"]);
 export const styleFileExtensions = ["css", "less"];
