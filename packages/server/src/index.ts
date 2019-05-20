@@ -1,4 +1,5 @@
 import {checkMatch} from "@prodo-ai/snoopy-search";
+import * as chokidar from "chokidar";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
@@ -9,7 +10,6 @@ import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
 import registerWebsockets from "./websockets";
-import * as chokidar from "chokidar";
 
 const writeFile = promisify(fs.writeFile);
 
