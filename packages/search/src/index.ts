@@ -3,7 +3,7 @@ import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
 import {findComponentExports, findThemeExports} from "./annotations";
-import {autodetectComponentExports} from "./autodetect";
+import {autodetectComponentExports} from "./autodetectVisitor";
 import {findExamples} from "./examples";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";

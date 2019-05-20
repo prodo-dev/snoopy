@@ -6,7 +6,9 @@ import * as t from "@babel/types";
 import * as path from "path";
 import {
   getExportNames,
+  getSourceForClassDecl,
   getSourceForDefaultExport,
+  getSourceForFunctionDecl,
   getSourceForVariableDecl,
 } from "./exportVisitor";
 import {Declarations, File, FileError, FileExport, VisitorState} from "./types";
@@ -35,27 +37,47 @@ const returnsReactElement = (node: t.Node): boolean => {
   return false;
 };
 
-const declaresReactElement = (node: t.VariableDeclaration) => {
-  const declarator: t.VariableDeclarator = node.declarations[0];
-  const name: string = t.isIdentifier(declarator.id) ? declarator.id.name : "";
-  const target: t.Expression | null = declarator.init;
-  const elem = t.isArrowFunctionExpression(target) ? target.body : target;
-  return name && target && elem && returnsReactElement(elem);
+const declaresReactElement = (
+  node: t.VariableDeclaration | t.FunctionDeclaration | t.ClassDeclaration,
+) => {
+  if (t.isVariableDeclaration(node)) {
+    const declarator: t.VariableDeclarator = node.declarations[0];
+    const name: string = t.isIdentifier(declarator.id)
+      ? declarator.id.name
+      : "";
+    const target: t.Expression | null = declarator.init;
+    const elem = t.isArrowFunctionExpression(target) ? target.body : target;
+    return name && target && elem && returnsReactElement(elem);
+  } else {
+    return returnsReactElement(node.body);
+  }
 };
 
-const variableDetection = (variables: Declarations) => () => ({
+const declarationDetection = (declarations: Declarations) => () => ({
   visitor: {
     VariableDeclaration(nodePath: NodePath<t.VariableDeclaration>) {
       const declarator: t.VariableDeclarator = nodePath.node.declarations[0];
       const name = t.isIdentifier(declarator.id) && declarator.id.name;
       if (name) {
-        variables[name] = getSourceForVariableDecl(nodePath.node);
+        declarations[name] = getSourceForVariableDecl(nodePath.node);
       }
     },
     ExportDefaultDeclaration(nodePath: NodePath<t.ExportDefaultDeclaration>) {
       const declaration = nodePath.node.declaration;
       if (!t.isIdentifier(declaration)) {
-        variables.default = getSourceForDefaultExport(nodePath.node);
+        declarations.default = getSourceForDefaultExport(nodePath.node);
+      }
+    },
+    FunctionDeclaration(nodePath: NodePath<t.FunctionDeclaration>) {
+      const name = t.isIdentifier(nodePath.node.id) && nodePath.node.id.name;
+      if (name) {
+        declarations[name] = getSourceForFunctionDecl(nodePath.node);
+      }
+    },
+    ClassDeclaration(nodePath: NodePath<t.ClassDeclaration>) {
+      const name = t.isIdentifier(nodePath.node.id) && nodePath.node.id.name;
+      if (name) {
+        declarations[name] = getSourceForClassDecl(nodePath.node);
       }
     },
   },
@@ -63,7 +85,7 @@ const variableDetection = (variables: Declarations) => () => ({
 
 const exportDetection = (
   state: VisitorState,
-  variables: Declarations,
+  declarations: Declarations,
 ) => () => ({
   visitor: {
     ExportNamedDeclaration(nodePath: NodePath<t.ExportNamedDeclaration>) {
@@ -78,7 +100,7 @@ const exportDetection = (
             const fileExport: FileExport = {
               isDefaultExport: false,
               name,
-              source: variables[name],
+              source: declarations[name],
             };
             return fileExport;
           }),
@@ -103,7 +125,7 @@ const exportDetection = (
         if (returnsReactElement(target)) {
           state.fileExports.push({
             isDefaultExport: true,
-            source: variables.default,
+            source: declarations.default,
           });
         }
       }
@@ -113,7 +135,23 @@ const exportDetection = (
         const declarator: t.VariableDeclarator = nodePath.node.declarations[0];
         const name = t.isIdentifier(declarator.id) && declarator.id.name;
         if (name) {
-          state.detectedComponents![name] = variables[name];
+          state.detectedComponents![name] = declarations[name];
+        }
+      }
+    },
+    FunctionDeclaration(nodePath: NodePath<t.FunctionDeclaration>) {
+      if (declaresReactElement(nodePath.node)) {
+        const name = t.isIdentifier(nodePath.node.id) && nodePath.node.id.name;
+        if (name) {
+          state.detectedComponents![name] = declarations[name];
+        }
+      }
+    },
+    ClassDeclaration(nodePath: NodePath<t.ClassDeclaration>) {
+      if (declaresReactElement(nodePath.node)) {
+        const name = t.isIdentifier(nodePath.node.id) && nodePath.node.id.name;
+        if (name) {
+          state.detectedComponents![name] = declarations[name];
         }
       }
     },
@@ -136,11 +174,11 @@ export const autodetectComponentExports = (
       path.extname(filepath) === ".tsx"
         ? [[pluginSyntaxTypescript, {isTSX: true}]]
         : [];
-    const variables = {};
+    const declarations = {};
     const transformed = transform(code, {
       sourceType: "module",
       plugins: [
-        variableDetection(variables),
+        declarationDetection(declarations),
         ...plugins,
         pluginTransformReactJsx,
       ],
@@ -148,7 +186,7 @@ export const autodetectComponentExports = (
     if (transformed && transformed.code) {
       transform(transformed.code, {
         sourceType: "module",
-        plugins: [...plugins, exportDetection(state, variables)],
+        plugins: [...plugins, exportDetection(state, declarations)],
       });
     }
   } catch (e) {

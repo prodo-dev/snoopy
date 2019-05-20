@@ -53,10 +53,10 @@ export const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
 const getSourceForArrowFunction = (node: t.ArrowFunctionExpression): string =>
   generate(node.body).code;
 
-const getSourceForClassDecl = (node: t.ClassDeclaration): string =>
+export const getSourceForClassDecl = (node: t.ClassDeclaration): string =>
   generate(node).code;
 
-const getSourceForFunctionDecl = (node: t.FunctionDeclaration): string =>
+export const getSourceForFunctionDecl = (node: t.FunctionDeclaration): string =>
   generate(node.body).code;
 
 export const getSourceForVariableDecl = (
