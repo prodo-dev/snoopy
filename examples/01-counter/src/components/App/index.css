@@ -1,5 +1,11 @@
+/* @prodo:styles */
+
 .app {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+body {
+  background-color: white;
 }

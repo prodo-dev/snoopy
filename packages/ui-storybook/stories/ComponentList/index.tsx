@@ -1,7 +1,7 @@
 // tslint:disable:no-submodule-imports
-import ComponentList from "@prodo/snoopy-ui/src/components/ComponentList";
-import {Component as ComponentModel} from "@prodo/snoopy-ui/src/models";
-import {darkTheme} from "@prodo/snoopy-ui/src/styles/theme";
+import ComponentList from "@prodo-ai/snoopy-ui/src/components/ComponentList";
+import {Component as ComponentModel} from "@prodo-ai/snoopy-ui/src/models";
+import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
 // tslint:enable
 
 import {storiesOf} from "@storybook/react";
@@ -14,6 +14,7 @@ const OneModel: ComponentModel = {
   path: "foo/bar",
   name: "One",
   component: One,
+  examples: [],
 };
 
 const Two = () => <div />;
@@ -21,6 +22,7 @@ const TwoModel: ComponentModel = {
   path: "foo/bar",
   name: "Two",
   component: Two,
+  examples: [],
 };
 
 const Three = () => <div />;
@@ -28,6 +30,7 @@ const ThreeModel: ComponentModel = {
   path: "foo/bar",
   name: "Three",
   component: Three,
+  examples: [],
 };
 
 storiesOf("Component List", module)

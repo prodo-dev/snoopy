@@ -1,14 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import {
-  CounterModel,
-  HelloNameModel,
-  HelloWorldModel,
-} from "../../../test/fixtures";
-import {
-  Component as ComponentModel,
-  Example as ExampleModel,
-} from "../../models";
+import {Component as ComponentModel} from "../../models";
 import {paddings} from "../../styles";
 import {StyledError} from "../ErrorBoundary";
 import Example from "../Example";
@@ -25,11 +17,11 @@ const ExamplesContainer = styled.div`
 interface Props {
   component: ComponentModel;
   userTheme?: any;
+  allStyles?: string;
 }
 
 const Component = (props: Props) => {
-  const examples: ExampleModel[] | undefined =
-    props.component.component && (props.component.component as any).examples;
+  const examples = props.component.examples;
 
   const Comp =
     props.component.component ||
@@ -40,36 +32,27 @@ const Component = (props: Props) => {
         {examples && examples.length > 0 ? (
           examples.map(example => (
             <Example
-              key={example.name}
+              key={example.title}
               userTheme={props.userTheme}
               example={example}
+              allStyles={props.allStyles}
             />
           ))
         ) : (
           <Example
             userTheme={props.userTheme}
-            example={{name: "Default", jsx: <Comp />}}
+            example={{
+              title: "Default",
+              component: () => <Comp />,
+              source: `<${props.component.name} />;`,
+            }}
+            allStyles={props.allStyles}
           />
         )}
       </ExamplesContainer>
     </StyledComponent>
   );
 };
-
-Component.examples = [
-  {
-    name: "Default",
-    jsx: <Component component={HelloWorldModel} />,
-  },
-  {
-    name: "Examples provided",
-    jsx: <Component component={HelloNameModel} />,
-  },
-  {
-    name: "With React state",
-    jsx: <Component component={CounterModel} />,
-  },
-];
 
 // @prodo
 export default Component;

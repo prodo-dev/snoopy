@@ -1,16 +1,29 @@
 {
-  "name": "@prodo/snoopy-cli",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy",
+  "version": "0.1.8",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://github.com/prodo-ai/snoopy",
+  "bugs": "https://github.com/prodo-ai/snoopy/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodo-ai/snoopy.git",
+    "directory": "packages/cli"
+  },
+  "bin": {
+    "snoopy": "./lib/index.js"
+  },
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
-    "clean": "rm -rf lib",
+    "clean": "rm -rf lib *.tsbuildinfo",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
-    "@prodo/snoopy-server": "1.0.0",
+    "@prodo-ai/snoopy-server": "^0.1.8",
     "yargs": "^13.2.2"
   },
   "devDependencies": {

@@ -1,0 +1,25 @@
+.task-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  position: relative;
+  border-bottom: 1px solid lightgrey;
+}
+
+.task-item .toggle {
+  flex-shrink: 0;
+}
+
+.task-item .label {
+  flex-grow: 1;
+}
+
+.task-item .destroy {
+  display: none;
+  flex-shrink: 0;
+}
+
+.task-item:hover .destroy {
+  display: inherit;
+}

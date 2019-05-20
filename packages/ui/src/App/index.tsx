@@ -1,4 +1,4 @@
-import {WebSocketEvents} from "@prodo/snoopy-api";
+import {WebSocketEvents} from "@prodo-ai/snoopy-api";
 import {createBrowserHistory} from "history";
 import * as React from "react";
 import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
@@ -32,10 +32,18 @@ const ComponentPageWithProps = (
   const components = props.context.components.filter(
     c => c.path === props.match.params.path,
   );
+
+  const fileError = props.context.errors.filter(
+    c => c.path === props.match.params.path,
+  );
+
+  const errors = fileError.length !== 0 ? fileError[0].errors : [];
+
   return (
     <ComponentPage
       path={props.match.params.path}
       components={components}
+      errors={errors}
       {...props}
     />
   );

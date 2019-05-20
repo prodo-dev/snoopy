@@ -1,17 +1,27 @@
 {
-  "name": "@prodo/snoopy-ui",
-  "version": "1.0.0",
+  "name": "@prodo-ai/snoopy-ui",
+  "version": "0.1.8",
   "main": "public/index.html",
   "license": "MIT",
+  "homepage": "https://github.com/prodo-ai/snoopy",
+  "bugs": "https://github.com/prodo-ai/snoopy/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodo-ai/snoopy.git",
+    "directory": "packages/ui"
+  },
   "files": [
     "public",
-    "src"
+    "src",
+    "test",
+    "tsconfig.json",
+    "README.mdx"
   ],
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",
-    "clean": "rm -rf dist",
-    "test": "PRODO_COMPONENTS_FILE=@prodo/components jest",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "test": "PRODO_COMPONENTS_FILE=@prodo-ai/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
@@ -19,9 +29,12 @@
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@hot-loader/react-dom": "^16.8.6",
-    "@prodo/snoopy-api": "^1.0.0",
+    "@mdx-js/parcel-plugin-mdx": "^1.0.18",
+    "@mdx-js/react": "^1.0.0-rc.5",
+    "@prodo-ai/snoopy-api": "^0.1.5",
     "history": "^4.9.0",
     "lodash": "^4.17.11",
+    "prism-react-renderer": "^0.1.6",
     "react": "^16.8.6",
     "react-hot-loader": "^4.8.4",
     "react-responsive": "^6.1.1",
@@ -55,7 +68,7 @@
     "moduleNameMapper": {
       "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
-      "@prodo/components$": "<rootDir>/__mocks__/componentsMock.ts"
+      "@prodo-ai/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
   },
   "alias": {

@@ -1,6 +1,8 @@
 export interface SearchResult {
   componentFiles: File[];
   themeFiles: File[];
+  styleFiles: File[];
+  examples: File[];
 }
 
 export interface File {
@@ -10,10 +12,11 @@ export interface File {
 }
 
 export type FileExport =
-  | {isDefaultExport: true}
+  | {isDefaultExport: true; source?: string}
   | {
       isDefaultExport: false;
       name: string;
+      source?: string;
     };
 
 export class FileError extends Error {
@@ -24,3 +27,5 @@ export class FileError extends Error {
     this.filepath = filepath;
   }
 }
+
+export type ExtractType = "styleFiles" | "componentFiles" | "themeFiles";

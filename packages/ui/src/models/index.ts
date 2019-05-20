@@ -4,11 +4,23 @@ export interface Component {
   path: string;
   name: string;
   component: React.ComponentType<any>;
+  examples: Example[];
+}
+
+export interface FileError {
+  path: string;
+  errors: string[];
+}
+
+export interface ExampleImport {
+  forComponent: React.ComponentType<any>;
+  examples: Example[];
 }
 
 export interface Example {
-  name: string;
-  jsx: React.ReactNode;
+  title: string;
+  component: React.ComponentType<any>;
+  source?: string;
 }
 
 export interface Theme {
@@ -16,7 +28,15 @@ export interface Theme {
   theme: any;
 }
 
+export interface Style {
+  name: string;
+  style: string;
+  path: string;
+}
+
 export interface Context {
   themes: Theme[];
   components: Component[];
+  styles: Style[];
+  errors: FileError[];
 }

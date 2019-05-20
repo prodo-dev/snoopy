@@ -2,7 +2,6 @@ import * as _ from "lodash";
 import * as React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import {testComponents} from "../../../test/fixtures";
 import {Component} from "../../models";
 import {paddings} from "../../styles";
 
@@ -44,7 +43,7 @@ interface Props {
 const ComponentList = (props: Props) => {
   const files = _.uniq(props.components.map(({path}) => path)).map(path => ({
     path,
-    name: _.last(path.split("/")),
+    name: _.last(path.replace(/\/index\.(t|j)sx?$/, "").split("/")),
   }));
 
   return (
@@ -59,39 +58,6 @@ const ComponentList = (props: Props) => {
     </StyledComponentList>
   );
 };
-
-ComponentList.examples = [
-  {
-    name: "Empty",
-    jsx: <ComponentList components={[]} />,
-  },
-  {
-    name: "Single item",
-    jsx: <ComponentList components={[testComponents[0]]} />,
-  },
-  {
-    name: "Single item with selection",
-    jsx: (
-      <ComponentList
-        components={[testComponents[0]]}
-        selected={testComponents[0].path}
-      />
-    ),
-  },
-  {
-    name: "Multiple items",
-    jsx: <ComponentList components={testComponents} />,
-  },
-  {
-    name: "Multiple items with selection",
-    jsx: (
-      <ComponentList
-        components={testComponents}
-        selected={testComponents[0].path}
-      />
-    ),
-  },
-];
 
 // @prodo
 export default ComponentList;

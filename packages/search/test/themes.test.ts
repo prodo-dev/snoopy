@@ -1,4 +1,4 @@
-import {getThemesFile} from "../src/themes";
+import {findThemeExports} from "../src/annotations";
 import {FileError} from "../src/types";
 
 test("gets theme imports for single named export", () => {
@@ -7,7 +7,7 @@ test("gets theme imports for single named export", () => {
   export const pinkTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file.ts",
@@ -22,7 +22,7 @@ test("gets component imports for 'export var'", () => {
 export var pinkTheme = {}
 `.trim();
 
-  const componentImport = getThemesFile(contents, "/path/to/file.ts");
+  const componentImport = findThemeExports(contents, "/path/to/file.ts");
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
@@ -37,7 +37,7 @@ test("gets component imports for 'export let'", () => {
 export let pinkTheme = {}
 `.trim();
 
-  const componentImport = getThemesFile(contents, "/path/to/file.ts");
+  const componentImport = findThemeExports(contents, "/path/to/file.ts");
 
   expect(componentImport).toEqual({
     filepath: "/path/to/file.ts",
@@ -57,7 +57,7 @@ export const greenTheme = {}
 export const darkTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file.ts",
@@ -75,27 +75,10 @@ test("gets theme imports for single named export in index.ts file", () => {
 export const pinkTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/index.ts",
-    fileExports: [{name: "pinkTheme", isDefaultExport: false}],
-    errors: [],
-  });
-});
-
-test("gets theme imports for a predeclared export", () => {
-  const contents = `
-const pinkTheme = {}
-
-// @prodo:theme
-export pinkTheme;
-`.trim();
-
-  const themeImport = getThemesFile(contents, "/path/to/file.ts");
-
-  expect(themeImport).toEqual({
-    filepath: "/path/to/file.ts",
     fileExports: [{name: "pinkTheme", isDefaultExport: false}],
     errors: [],
   });
@@ -112,7 +95,7 @@ export default {
   }
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file/pinkTheme.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file/pinkTheme.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/pinkTheme.ts",
@@ -127,7 +110,7 @@ test("gets theme imports for default export in index.ts file", () => {
 export default {}
 `.trim();
 
-  const themeImport = getThemesFile(
+  const themeImport = findThemeExports(
     contents,
     "/path/to/file/pinkTheme/index.ts",
   );
@@ -145,7 +128,7 @@ test("gets theme imports with an underscore in the name", () => {
 export const pink_theme = {}
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/index.ts",
@@ -160,7 +143,7 @@ test("gets theme imports with a number in the name", () => {
 export const pink1Theme1 = {}
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/index.ts",
@@ -175,7 +158,7 @@ test("catch error when prodo theme comment is on non-export", () => {
 const foo = "bar"
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/index.ts",
@@ -207,7 +190,7 @@ export const lightTheme = {}
 export const otherTheme = {}
 `.trim();
 
-  const themeImport = getThemesFile(contents, "/path/to/file/index.ts");
+  const themeImport = findThemeExports(contents, "/path/to/file/index.ts");
 
   expect(themeImport).toEqual({
     filepath: "/path/to/file/index.ts",
@@ -215,6 +198,7 @@ export const otherTheme = {}
       {name: "pinkTheme", isDefaultExport: false},
       {name: "greenTheme", isDefaultExport: false},
       {name: "darkTheme", isDefaultExport: false},
+      {name: "lightTheme", isDefaultExport: false},
     ],
     errors: [],
   });
