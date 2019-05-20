@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {renderExample} from "../../App/context";
 import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
+import Highlighter from "../Highlighter";
 
 interface Props {
   example: ExampleModel;
@@ -25,6 +26,8 @@ const Title = styled.div`
   margin-bottom: ${margins.small};
   color: ${props => props.theme.colors.text};
 `;
+
+const CodeContainer = styled.div``;
 
 const randId = () =>
   Math.random()
@@ -61,6 +64,13 @@ const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.title}</Title>
     <UserComponentContainer {...props} />
+    {props.example.source != null && (
+      <CodeContainer>
+        <Highlighter className="language-jsx">
+          {props.example.source}
+        </Highlighter>
+      </CodeContainer>
+    )}
   </StyledExample>
 );
 

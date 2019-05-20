@@ -40,7 +40,7 @@ export const darkTheme: Theme = {
   },
   fonts: {
     text: "'Ubuntu', sans-serif",
-    code: "Ubuntu, mononspace",
+    code: "'Consolas', mononspace",
   },
   fontSizes: {
     title: "18pt",
