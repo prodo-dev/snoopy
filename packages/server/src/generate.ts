@@ -7,12 +7,10 @@ import {
 import * as fs from "fs";
 import * as path from "path";
 
-interface FileWithExportId extends File {
-  fileExports: Array<FileExport & {id: string}>;
-}
+type FileExportWithId = FileExport & {id: string};
 
-interface FileWithId extends File {
-  id: string;
+interface FileWithExportId extends File {
+  fileExports: FileExportWithId[];
 }
 
 const by = <T>(transform: (a: T) => string) => (a: T, b: T) =>
@@ -36,16 +34,17 @@ const addFileExportIds = (files: File[], name: string): FileWithExportId[] => {
   }));
 };
 
-const addFileIds = (files: File[], name: string): FileWithId[] => {
-  let counter = 0;
-  return files.sort(by(f => f.filepath)).map(file => ({
-    ...file,
-    id: `${name}${counter++}`,
-  }));
-};
-
 const sortFileErrors = (fileErrors: FileError[]): FileError[] =>
   fileErrors.sort(by(err => err.message));
+
+const getDefaultName = (filepath: string): string => {
+  const basename = path.basename(filepath, path.extname(filepath));
+  if (basename === "index") {
+    return path.basename(path.dirname(filepath));
+  }
+
+  return basename;
+};
 
 const generateNamedAndDefaultImports = (
   files: FileWithExportId[],
@@ -100,17 +99,6 @@ const generateNamedAndDefaultImports = (
   return importLines;
 };
 
-const generateStarAsImports = (
-  files: FileWithId[],
-  clientDir: string,
-): string =>
-  files
-    .sort(by(f => f.filepath))
-    .map(
-      f => `import * as ${f.id} from "${path.relative(clientDir, f.filepath)}"`,
-    )
-    .join("\n");
-
 const generateComponentsArray = (
   files: FileWithExportId[],
   searchDir: string,
@@ -122,7 +110,7 @@ const generateComponentsArray = (
         .map(
           ex =>
             `{path: "${path.relative(searchDir, filepath)}", name: "${
-              ex.isDefaultExport ? "default" : ex.name
+              ex.isDefaultExport ? getDefaultName(filepath) : ex.name
             }", component: ${ex.id}}`,
         )
         .join(",\n  "),
@@ -175,8 +163,24 @@ const generateStylesArray = (files: File[], searchDir: string): string =>
     )
     .join(",\n  ");
 
-const generateExamplesArray = (files: FileWithId[]): string =>
-  files.map(({id}) => id).join(",\n  ");
+const generateExamplesArray = (files: FileWithExportId[]): string =>
+  files
+    .map(({fileExports}) => {
+      const defaultExport = fileExports.filter(ex => ex.isDefaultExport)[0];
+      const namedExports = fileExports.filter(ex => !ex.isDefaultExport);
+      const generateSingleExample = (ex: FileExportWithId): string => {
+        const source = ex.source ? JSON.stringify(ex.source) : undefined;
+        const title = ex.isDefaultExport ? "default" : ex.name;
+        return `{component: ${ex.id}, title: "${title}", source: ${source}}`;
+      };
+
+      return `{forComponent: ${
+        defaultExport.id
+      }, examples: [\n    ${namedExports
+        .map(generateSingleExample)
+        .join(",\n    ")}\n  ]}`;
+    })
+    .join(",\n  ");
 
 export const generateComponentsFileContents = async (
   clientDir: string,
@@ -193,14 +197,13 @@ export const generateComponentsFileContents = async (
       errors: sortFileErrors(file.errors),
     }));
   const themeFiles = addFileExportIds(imports.themeFiles, "Theme");
-  const exampleFiles = addFileIds(imports.examples, "Example");
+  const exampleFiles = addFileExportIds(imports.examples, "Example");
 
   // Generate required imports
   const importLines = generateNamedAndDefaultImports(
-    [...componentFiles, ...themeFiles],
+    [...componentFiles, ...themeFiles, ...exampleFiles],
     clientDir,
   );
-  const exampleImportLines = generateStarAsImports(exampleFiles, clientDir);
 
   // Generate exported array content
   const componentsArrayString = generateComponentsArray(
@@ -217,7 +220,6 @@ export const generateComponentsFileContents = async (
 
   return `
 ${importLines}
-${exampleImportLines}
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";

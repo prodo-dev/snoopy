@@ -12,9 +12,15 @@ export interface FileError {
   errors: string[];
 }
 
+export interface ExampleImport {
+  forComponent: React.ComponentType<any>;
+  examples: Example[];
+}
+
 export interface Example {
   title: string;
   component: React.ComponentType<any>;
+  source?: string;
 }
 
 export interface Theme {

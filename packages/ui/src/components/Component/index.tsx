@@ -41,7 +41,11 @@ const Component = (props: Props) => {
         ) : (
           <Example
             userTheme={props.userTheme}
-            example={{title: "Default", component: () => <Comp />}}
+            example={{
+              title: "Default",
+              component: () => <Comp />,
+              source: `<${props.component.name} />;`,
+            }}
             allStyles={props.allStyles}
           />
         )}

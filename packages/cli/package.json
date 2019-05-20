@@ -1,6 +1,6 @@
 {
   "name": "@prodo-ai/snoopy",
-  "version": "0.1.4",
+  "version": "0.1.8",
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/prodo-ai/snoopy",
@@ -23,7 +23,7 @@
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
-    "@prodo-ai/snoopy-server": "^0.1.4",
+    "@prodo-ai/snoopy-server": "^0.1.8",
     "yargs": "^13.2.2"
   },
   "devDependencies": {

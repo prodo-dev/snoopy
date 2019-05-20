@@ -3,25 +3,16 @@ import {parse} from "@babel/parser";
 import pluginSyntaxJsx from "@babel/plugin-syntax-jsx";
 import pluginSyntaxTypescript from "@babel/plugin-syntax-typescript";
 import pluginTransformReactJsx from "@babel/plugin-transform-react-jsx";
-import traverse, {Visitor} from "@babel/traverse";
+import traverse from "@babel/traverse";
 import * as t from "@babel/types";
-import {File, FileError, FileExport} from "./types";
-
-interface VisitorState {
-  filepath: string;
-  fileExports: FileExport[];
-  errors: FileError[];
-  componentNames: string[];
-}
-
-interface VisitorOptions {
-  invalidProdoTagError: string;
-}
-
-type ExportVisitor = Visitor<VisitorState>;
-
-const checkComment = (regex: RegExp, comments: readonly t.Comment[]): boolean =>
-  comments.reduce((acc: boolean, c) => acc || regex.test(c.value), false);
+import {findComponentExports} from "./annotations";
+import {
+  ExportVisitor,
+  File,
+  FileError,
+  FileExport,
+  VisitorState,
+} from "./types";
 
 const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
   const declaration = node.declaration;
@@ -51,38 +42,6 @@ const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
 
   return [];
 };
-
-const mkExportVisitor = (
-  lineRegex: RegExp,
-  visitorOptions: VisitorOptions,
-): ExportVisitor => ({
-  enter(path, state) {
-    if (
-      path.node.leadingComments != null &&
-      checkComment(lineRegex, path.node.leadingComments)
-    ) {
-      if (t.isExportNamedDeclaration(path.node)) {
-        const exportNames = getExportNames(path.node);
-        state.fileExports.push(
-          ...exportNames.map(name => {
-            const fileExport: FileExport = {
-              isDefaultExport: false,
-              name,
-            };
-
-            return fileExport;
-          }),
-        );
-      } else if (t.isExportDefaultDeclaration(path.node)) {
-        state.fileExports.push({isDefaultExport: true});
-      } else {
-        state.errors.push(
-          new FileError(state.filepath, visitorOptions.invalidProdoTagError),
-        );
-      }
-    }
-  },
-});
 
 const isReactElement = (target: t.Node) => {
   if (t.isCallExpression(target)) {
@@ -189,22 +148,6 @@ const akExportVisitor = (): ExportVisitor => ({
   },
 });
 
-const prodoComponentRegex = /^\s*@prodo(\s|$)/;
-const componentVisitor = mkExportVisitor(prodoComponentRegex, {
-  invalidProdoTagError:
-    "The `@prodo` tag must be directly above an exported React component.",
-});
-
-const prodoThemeRegex = /^\s*@prodo:theme\b/;
-const themeVisitor = mkExportVisitor(prodoThemeRegex, {
-  invalidProdoTagError:
-    "The `@prodo:theme` tag must be directly above an exported theme.",
-});
-
-const prodoFileRegex = /\/\/\s*@prodo/;
-const isPossibleProdoFile = (code: string): boolean =>
-  prodoFileRegex.test(code);
-
 export const autodetectFileExports = (
   visitor: ExportVisitor,
   code: string,
@@ -264,60 +207,10 @@ export const autodetectFileExports = (
   };
 };
 
-export const findFileExports = (
-  visitor: ExportVisitor,
+export const detectAndFindComponentExports = (
   code: string,
   filepath: string,
-): File | null => {
-  if (!isPossibleProdoFile(code)) {
-    return null;
-  }
-
-  let ast: t.File;
-  const state: VisitorState = {
-    filepath,
-    fileExports: [],
-    errors: [],
-    componentNames: [],
-  };
-
-  try {
-    ast = parse(code, {
-      sourceType: "module",
-      plugins: ["jsx", "typescript"],
-    });
-  } catch (e) {
-    return {
-      filepath,
-      fileExports: [],
-      errors: [new FileError(filepath, `Error parsing file: ${e.message}`)],
-    };
-  }
-
-  try {
-    // babel types are broken and does not allow state to be anything
-    // but an ast node.
-    traverse(ast, visitor as any, undefined, state);
-  } catch (e) {
-    return {
-      filepath,
-      fileExports: [],
-      errors: [new FileError(filepath, `Error traversing file: ${e.message}`)],
-    };
-  }
-
-  if (state.fileExports.length === 0 && state.errors.length === 0) {
-    return null;
-  }
-
-  return {
-    filepath,
-    fileExports: state.fileExports,
-    errors: state.errors,
-  };
-};
-
-export const findComponentExports = (code: string, filepath: string) => {
+) => {
   const emptyResult = {
     filepath,
     fileExports: [],
@@ -325,8 +218,7 @@ export const findComponentExports = (code: string, filepath: string) => {
   };
   const detectedExports =
     autodetectFileExports(akExportVisitor(), code, filepath) || emptyResult;
-  const manualExports =
-    findFileExports(componentVisitor, code, filepath) || emptyResult;
+  const manualExports = findComponentExports(code, filepath) || emptyResult;
 
   return {
     filepath,
@@ -334,6 +226,3 @@ export const findComponentExports = (code: string, filepath: string) => {
     errors: detectedExports.errors.concat(manualExports.errors),
   };
 };
-
-export const findThemeExports = (code: string, filepath: string) =>
-  findFileExports(themeVisitor, code, filepath);
