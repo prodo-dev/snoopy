@@ -40,7 +40,10 @@ const findExamplesForComponent = (c: Component): Example[] => {
   }));
 };
 
-const components = userImport.components.map((c: Component) => ({
+const components = _.uniqBy(
+  userImport.components,
+  (c: Component) => c.component,
+).map((c: Component) => ({
   ...c,
   examples: findExamplesForComponent(c),
 }));
