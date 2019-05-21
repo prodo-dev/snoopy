@@ -11,6 +11,7 @@ const StyledComponentList = styled.div`
 `;
 
 const ComponentName = styled.div<{selected?: boolean}>`
+  display: inline-block;
   overflow-x: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
