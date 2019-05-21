@@ -1,17 +1,14 @@
 import {checkMatch} from "@prodo-ai/snoopy-search";
 import * as chokidar from "chokidar";
 import * as Express from "express";
-import * as fs from "fs";
 import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
-import {promisify} from "util";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
+import {exists, writeFile} from "./utils";
 import registerWebsockets from "./websockets";
-
-const writeFile = promisify(fs.writeFile);
 
 const clientDir = path.dirname(
   path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
@@ -23,6 +20,19 @@ const startingPort = process.env.PORT
   ? parseInt(process.env.PORT, 10)
   : defaultPort;
 const portTriesLimit = 100;
+
+const getPublicPath = async (
+  searchDir: string,
+  url: string,
+): Promise<string | null> => {
+  const publicPath = path.join(searchDir, "public", url);
+  const publicFileExists = await exists(publicPath);
+  if (publicFileExists) {
+    return publicPath;
+  }
+
+  return null;
+};
 
 export const start = async (
   port: number = startingPort,
@@ -59,8 +69,6 @@ export const start = async (
 
   await bundler.bundle();
 
-  app.use(Express.static(outDir));
-
   chokidar
     .watch(".", {ignored: /(^|[\/\\])\../})
     .on("all", async (_, filename) => {
@@ -84,7 +92,13 @@ export const start = async (
 
   registerEndpoints(app, ws, searchDir);
 
-  app.get("/*", (_, response) => {
+  app.use(Express.static(outDir));
+
+  app.get("/*", async (req, response) => {
+    const publicPath = await getPublicPath(searchDir, req.path.substring(1));
+    if (publicPath) {
+      return response.sendFile(publicPath);
+    }
     response.sendFile((bundler as any).mainBundle.name);
   });
 
