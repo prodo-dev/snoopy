@@ -20,5 +20,4 @@ const NewTask = ({newTask}: Props) => (
   />
 );
 
-// @prodo
 export default NewTask;

@@ -44,5 +44,4 @@ const TaskList = ({tasks, editing, setTasks, setEditing}: Props) => (
   </ul>
 );
 
-// @prodo
 export default TaskList;

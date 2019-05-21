@@ -4,7 +4,7 @@ import * as path from "path";
 import {promisify} from "util";
 import {findFileExports, mkExportVisitor} from "./exportVisitor";
 import {File} from "./types";
-import {fileGlob, findProjectRoot, readFileContents} from "./utils";
+import {exampleFileGlob, findProjectRoot, readFileContents} from "./utils";
 
 const exists = promisify(fs.exists);
 
@@ -25,7 +25,7 @@ export const findExampleFilePaths = async (
     return [];
   }
 
-  const exampleResult = await globby(fileGlob, {
+  const exampleResult = await globby(exampleFileGlob, {
     cwd: prodoDir,
   });
 
