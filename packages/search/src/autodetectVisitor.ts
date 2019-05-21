@@ -1,6 +1,7 @@
 import {transform} from "@babel/core";
-import pluginSyntaxTypescript from "@babel/plugin-syntax-typescript";
+import pluginSyntaxJsx from "@babel/plugin-syntax-jsx";
 import pluginTransformReactJsx from "@babel/plugin-transform-react-jsx";
+import pluginTransformTypescript from "@babel/plugin-transform-typescript";
 import {NodePath} from "@babel/traverse";
 import * as t from "@babel/types";
 import * as path from "path";
@@ -20,7 +21,10 @@ import {
   getSourceForVariableDecl,
 } from "./utils/visitor";
 
-const isReactElement = (node: t.Node) => {
+const isReactElement = (node: t.Node | null) => {
+  if (node == null) {
+    return false;
+  }
   if (t.isCallExpression(node) && t.isMemberExpression(node.callee)) {
     const calleeObject: t.Expression = node.callee.object;
     return (
@@ -32,13 +36,42 @@ const isReactElement = (node: t.Node) => {
   return false;
 };
 
-const returnsReactElement = (node: t.Node): boolean => {
-  if (isReactElement(node)) {
+const returnsReactElement = (
+  node: t.Node | null,
+  components: string[],
+): boolean => {
+  if (node == null) {
+    return false;
+  } else if (isReactElement(node)) {
     return true;
+  } else if (t.isReturnStatement(node) && node.argument) {
+    return (
+      isReactElement(node.argument) ||
+      (t.isIdentifier(node.argument) &&
+        components.indexOf(node.argument.name) >= 0)
+    );
+  } else if (
+    (t.isVariableDeclaration(node) ||
+      t.isFunctionDeclaration(node) ||
+      t.isClassDeclaration(node)) &&
+    declaresReactElement(node)
+  ) {
+    const id = t.isVariableDeclaration(node)
+      ? node.declarations.length > 0 && node.declarations[0].id
+      : node.id;
+    if (id && t.isIdentifier(id)) {
+      components.push(id.name);
+    }
+  } else if (t.isIfStatement(node)) {
+    return (
+      returnsReactElement(node.consequent, components) ||
+      returnsReactElement(node.alternate, components)
+    );
   } else if (t.isBlockStatement(node)) {
-    const lastStatement = node.body[node.body.length - 1];
-    if (t.isReturnStatement(lastStatement) && lastStatement.argument) {
-      return isReactElement(lastStatement.argument);
+    for (const statement of node.body) {
+      if (returnsReactElement(statement, components)) {
+        return true;
+      }
     }
   }
   return false;
@@ -53,10 +86,10 @@ const declaresReactElement = (
     if (name) {
       const target: t.Expression | null = declarator.init;
       const elem = t.isArrowFunctionExpression(target) ? target.body : target;
-      return target && elem && returnsReactElement(elem);
+      return target && elem && returnsReactElement(elem, []);
     }
   } else if (t.isFunctionDeclaration(node)) {
-    return returnsReactElement(node.body);
+    return returnsReactElement(node.body, []);
   } else if (
     t.isClassDeclaration(node) &&
     t.isMemberExpression(node.superClass)
@@ -86,11 +119,9 @@ const declarationDetection = (declarations: DeclarationSources) => () => ({
     ExportDefaultDeclaration(nodePath: NodePath<t.ExportDefaultDeclaration>) {
       const declaration = nodePath.node.declaration;
       if (!t.isIdentifier(declaration)) {
-        // console.log(declaration);
         declarations.default = format(
           getSourceForDefaultExport(nodePath.node) || "",
         );
-        // console.log(declarations);
       }
     },
     FunctionDeclaration(nodePath: NodePath<t.FunctionDeclaration>) {
@@ -192,7 +223,7 @@ const exportDetection = (
         const target = t.isArrowFunctionExpression(declaration)
           ? declaration.body
           : declaration;
-        if (returnsReactElement(target)) {
+        if (returnsReactElement(target, [])) {
           state.fileExports.push({
             isDefaultExport: true,
             source: declarations.default,
@@ -245,16 +276,22 @@ export const autodetectComponentExports = (
   try {
     const plugins =
       path.extname(filepath) === ".tsx" || path.extname(filepath) === ".ts"
-        ? [[pluginSyntaxTypescript, {isTSX: true}]]
+        ? [[pluginTransformTypescript, {isTSX: true}]]
         : [];
     const declarations = {};
+    const parsed = transform(code, {
+      sourceType: "module",
+      plugins: [...plugins, pluginSyntaxJsx],
+    });
+    if (parsed && parsed.code) {
+      transform(parsed!.code, {
+        sourceType: "module",
+        plugins: [...plugins, declarationDetection(declarations)],
+      });
+    }
     const transformed = transform(code, {
       sourceType: "module",
-      plugins: [
-        declarationDetection(declarations),
-        ...plugins,
-        pluginTransformReactJsx,
-      ],
+      plugins: [...plugins, pluginTransformReactJsx],
     });
     if (transformed && transformed.code) {
       transform(transformed.code, {

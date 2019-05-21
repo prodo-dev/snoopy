@@ -345,3 +345,185 @@ export { Foo as One, Bar }
     errors: [],
   });
 });
+
+test("gets component imports for longer arrow statements", () => {
+  const contents = `
+export const One = () => {
+  const a = 1;
+  return <div />;
+};
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `{
+  const a = 1;
+  return <div />;
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component imports for longer functions", () => {
+  const contents = `
+export function One () {
+  const a = 1;
+  return <div />;
+};
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `{
+  const a = 1;
+  return <div />;
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component imports when component is declared before return statement", () => {
+  const contents = `
+export const One = () => {
+  const Comp = <div />;
+  return Comp;
+};
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `{
+  const Comp = <div />;
+  return Comp;
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component imports when component is returned from all conditionals", () => {
+  const contents = `
+export const One = (x) => {
+  if (x) {
+    return <div>Foo</div>;
+  } else {
+    return <div>Bar</div>;
+  }
+};
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `{
+  if (x) {
+    return <div>Foo</div>;
+  } else {
+    return <div>Bar</div>;
+  }
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component imports when component is returned from one branch", () => {
+  const contents = `
+export const One = (x) => {
+  if (x) {
+    return <div>Foo</div>;
+  }
+};
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `{
+  if (x) {
+    return <div>Foo</div>;
+  }
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("handles '<var> as <type>' syntax", () => {
+  const contents = `
+export function One () {
+  const a = 1 as number;
+  return <div />;
+};
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `{
+  const a = 1;
+  return <div />;
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
