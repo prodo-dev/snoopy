@@ -73,7 +73,7 @@ export const start = async (
         }
       } catch (e) {
         // tslint:disable-next-line:no-console
-        console.warn("Error handling file change\n", filename, e);
+        console.warn("Error handling file change:", filename, "\n", e);
       }
     });
 
