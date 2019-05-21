@@ -58,20 +58,20 @@ describe("generateComponentsFileContents", () => {
     ).toBe(true);
   });
 
-  it("ignores component files with no marked exports", async () => {
+  it("detects components from component files with no marked exports", async () => {
     const contents = await generateComponentsFileContents(clientDir, searchDir);
     expect(
       /import .* from "example\/components\/Unmarked\.tsx";/.test(contents),
-    ).toBe(false);
+    ).toBe(true);
   });
 
-  it("ignores unmarked component exports", async () => {
+  it("detects components from unmarked component exports", async () => {
     const contents = await generateComponentsFileContents(clientDir, searchDir);
     expect(
       /import {Button2 as Component\d+} from "example\/components\/Mixed\.tsx";/.test(
         contents,
       ),
-    ).toBe(true);
+    ).toBe(false);
   });
 
   it("finds named theme exports", async () => {

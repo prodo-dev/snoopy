@@ -23,5 +23,4 @@ function App() {
   );
 }
 
-// @prodo
 export default App;

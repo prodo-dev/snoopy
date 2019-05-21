@@ -1,114 +1,20 @@
-import generate from "@babel/generator";
 import {parse} from "@babel/parser";
-import traverse, {Visitor} from "@babel/traverse";
+import traverse from "@babel/traverse";
 import * as t from "@babel/types";
 import {format} from "./format";
-import {File, FileError, FileExport} from "./types";
-
-interface VisitorState {
-  filepath: string;
-  fileExports: FileExport[];
-  errors: FileError[];
-}
-
-interface VisitorOptions {
-  lineRegex?: RegExp;
-  invalidProdoTagError?: string;
-  ignoreDefaultExport?: boolean;
-}
-
-type ExportVisitor = Visitor<VisitorState>;
-
-const checkComment = (
-  regex: RegExp,
-  comments: readonly t.Comment[] | null,
-): boolean =>
-  comments != null &&
-  comments.reduce((acc: boolean, c) => acc || regex.test(c.value), false);
-
-const getExportNames = (node: t.ExportNamedDeclaration): string[] => {
-  const declaration = node.declaration;
-  const specifiers = node.specifiers;
-
-  if (
-    declaration != null &&
-    (t.isVariableDeclaration(declaration) ||
-      t.isClassDeclaration(declaration) ||
-      t.isFunctionDeclaration(declaration))
-  ) {
-    const id = t.isVariableDeclaration(declaration)
-      ? declaration.declarations[0].id
-      : declaration.id;
-    if (t.isIdentifier(id)) {
-      return [id.name];
-    }
-  }
-
-  if (specifiers) {
-    return specifiers.reduce((names: string[], s) => {
-      if (t.isExportSpecifier(s)) {
-        return [...names, s.exported.name];
-      }
-
-      return names;
-    }, []);
-  }
-
-  return [];
-};
-
-const getSourceForArrowFunction = (node: t.ArrowFunctionExpression): string =>
-  generate(node.body).code;
-
-const getSourceForClassDecl = (node: t.ClassDeclaration): string =>
-  generate(node).code;
-
-const getSourceForFunctionDecl = (node: t.FunctionDeclaration): string =>
-  generate(node.body).code;
-
-const getSourceForNamedExport = (
-  node: t.ExportNamedDeclaration,
-): string | undefined => {
-  if (
-    t.isVariableDeclaration(node.declaration) &&
-    node.declaration.declarations.length === 1
-  ) {
-    const decl = node.declaration.declarations[0];
-    if (decl.init) {
-      if (t.isArrowFunctionExpression(decl.init)) {
-        return getSourceForArrowFunction(decl.init);
-      }
-    }
-  }
-
-  if (t.isClassDeclaration(node.declaration)) {
-    return getSourceForClassDecl(node.declaration);
-  }
-
-  if (t.isFunctionDeclaration(node.declaration)) {
-    return getSourceForFunctionDecl(node.declaration);
-  }
-
-  return undefined;
-};
-
-const getSourceForDefaultExport = (
-  node: t.ExportDefaultDeclaration,
-): string | undefined => {
-  if (t.isArrowFunctionExpression(node.declaration)) {
-    return getSourceForArrowFunction(node.declaration);
-  }
-
-  if (t.isClassDeclaration(node.declaration)) {
-    return getSourceForClassDecl(node.declaration);
-  }
-
-  if (t.isFunctionDeclaration(node.declaration)) {
-    return getSourceForFunctionDecl(node.declaration);
-  }
-
-  return undefined;
-};
+import {
+  ExportVisitor,
+  File,
+  FileError,
+  FileExport,
+  VisitorOptions,
+  VisitorState,
+} from "./types";
+import {
+  getExportNames,
+  getSourceForDefaultExport,
+  getSourceForNamedExport,
+} from "./utils/visitor";
 
 const getSourceForExport = (
   node: t.ExportNamedDeclaration | t.ExportDefaultDeclaration,
@@ -127,6 +33,13 @@ const getSourceForExport = (
     return source;
   }
 };
+
+const checkComment = (
+  regex: RegExp,
+  comments: readonly t.Comment[] | null,
+): boolean =>
+  comments != null &&
+  comments.reduce((acc: boolean, c) => acc || regex.test(c.value), false);
 
 export const mkExportVisitor = (opts: VisitorOptions): ExportVisitor => ({
   enter(path, state) {

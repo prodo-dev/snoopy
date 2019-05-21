@@ -3,6 +3,7 @@ import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
 import {findComponentExports, findThemeExports} from "./annotations";
+import {autodetectComponentExports} from "./autodetectVisitor";
 import {findExamples} from "./examples";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
@@ -79,6 +80,39 @@ const getFiles = async (
   return files;
 };
 
+const detectAndFindComponentExports = (code: string, filepath: string) => {
+  const emptyResult = {
+    filepath,
+    fileExports: [],
+    errors: [],
+  };
+  const detectedExports =
+    autodetectComponentExports(code, filepath) || emptyResult;
+  const manualExports = findComponentExports(code, filepath) || emptyResult;
+  // The parsed source isn't always exactly the same
+  // so combine carefully to avoid duplicates
+  const hasDefaultExport =
+    manualExports.fileExports.filter(x => x.isDefaultExport).length > 0;
+  const manualExportNames = manualExports.fileExports
+    .filter(x => !x.isDefaultExport)
+    .map(x => (x as any).name);
+  const combinedExports = manualExports.fileExports;
+  for (const ex of detectedExports.fileExports) {
+    if (
+      (ex.isDefaultExport && !hasDefaultExport) ||
+      (!ex.isDefaultExport && manualExportNames.indexOf(ex.name) < 0)
+    ) {
+      combinedExports.push(ex);
+    }
+  }
+
+  return {
+    filepath,
+    fileExports: combinedExports,
+    errors: detectedExports.errors.concat(manualExports.errors),
+  };
+};
+
 export const getGlobbyFiles = async (
   globPatterns: string[],
   cwd: string,
@@ -105,7 +139,7 @@ export const searchCodebase = async (
   const filepaths = await getGlobbyFiles(fileGlob, directoryToSearch);
 
   const files = await getFiles(directoryToSearch, filepaths, {
-    componentFiles: findComponentExports,
+    componentFiles: detectAndFindComponentExports,
     themeFiles: findThemeExports,
   });
 

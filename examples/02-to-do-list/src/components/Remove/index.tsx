@@ -12,5 +12,4 @@ const Remove = ({remove}: Props) => (
   </button>
 );
 
-// @prodo
 export default Remove;

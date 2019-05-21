@@ -1,3 +1,5 @@
+import {Visitor} from "@babel/traverse";
+
 export interface SearchResult {
   componentFiles: File[];
   themeFiles: File[];
@@ -29,3 +31,22 @@ export class FileError extends Error {
 }
 
 export type ExtractType = "styleFiles" | "componentFiles" | "themeFiles";
+
+export interface DeclarationSources {
+  [name: string]: string | undefined;
+}
+
+export interface VisitorState {
+  filepath: string;
+  fileExports: FileExport[];
+  errors: FileError[];
+  detectedComponents?: DeclarationSources;
+}
+
+export interface VisitorOptions {
+  lineRegex?: RegExp;
+  invalidProdoTagError?: string;
+  ignoreDefaultExport?: boolean;
+}
+
+export type ExportVisitor = Visitor<VisitorState>;
