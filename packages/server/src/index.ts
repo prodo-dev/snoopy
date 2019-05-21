@@ -1,18 +1,14 @@
 import {checkMatch} from "@prodo-ai/snoopy-search";
 import * as chokidar from "chokidar";
 import * as Express from "express";
-import * as fs from "fs";
 import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
-import {promisify} from "util";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
 import registerWebsockets from "./websockets";
-
-const writeFile = promisify(fs.writeFile);
-const exists = promisify(fs.exists);
+import {writeFile, exists} from "./utils";
 
 const clientDir = path.dirname(
   path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
@@ -99,7 +95,7 @@ export const start = async (
   app.use(Express.static(outDir));
 
   app.get("/*", async (req, response) => {
-    const publicPath = await getPublicPath(searchDir, req.originalUrl);
+    const publicPath = await getPublicPath(searchDir, req.path.substring(1));
     if (publicPath) {
       return response.sendFile(publicPath);
     }
