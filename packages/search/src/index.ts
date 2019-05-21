@@ -79,22 +79,37 @@ const getFiles = async (
   return files;
 };
 
+export const getGlobbyFiles = async (
+  globPatterns: string[],
+  cwd: string,
+): Promise<string[]> => {
+  const filepaths = await globby(globPatterns, {
+    cwd,
+    gitignore: true,
+  });
+
+  const validFilePaths: string[] = [];
+  for (const f of filepaths) {
+    const fileInGitIgnore = await inGitIgnore(f);
+    if (!fileInGitIgnore) {
+      validFilePaths.push(f);
+    }
+  }
+
+  return validFilePaths;
+};
+
 export const searchCodebase = async (
   directoryToSearch: string,
 ): Promise<SearchResult> => {
-  const filepaths = await globby(fileGlob, {
-    cwd: directoryToSearch,
-    gitignore: true,
-  });
+  const filepaths = await getGlobbyFiles(fileGlob, directoryToSearch);
+
   const files = await getFiles(directoryToSearch, filepaths, {
     componentFiles: findComponentExports,
     themeFiles: findThemeExports,
   });
 
-  const styleResult = await globby(styleFileGlob, {
-    cwd: directoryToSearch,
-    gitignore: true,
-  });
+  const styleResult = await getGlobbyFiles(styleFileGlob, directoryToSearch);
   const styleFiles = await getFiles(directoryToSearch, styleResult, {
     styleFiles: getStylesFile,
   });
