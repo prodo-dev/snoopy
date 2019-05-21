@@ -12,6 +12,7 @@ import registerEndpoints from "./rest";
 import registerWebsockets from "./websockets";
 
 const writeFile = promisify(fs.writeFile);
+const exists = promisify(fs.exists);
 
 const clientDir = path.dirname(
   path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
@@ -23,6 +24,19 @@ const startingPort = process.env.PORT
   ? parseInt(process.env.PORT, 10)
   : defaultPort;
 const portTriesLimit = 100;
+
+const getPublicPath = async (
+  searchDir: string,
+  url: string,
+): Promise<string | null> => {
+  const publicPath = path.join(searchDir, "public", url);
+  const publicFileExists = await exists(publicPath);
+  if (publicFileExists) {
+    return publicPath;
+  }
+
+  return null;
+};
 
 export const start = async (
   port: number = startingPort,
@@ -59,8 +73,6 @@ export const start = async (
 
   await bundler.bundle();
 
-  app.use(Express.static(outDir));
-
   chokidar
     .watch(".", {ignored: /(^|[\/\\])\../})
     .on("all", async (_, filename) => {
@@ -84,7 +96,13 @@ export const start = async (
 
   registerEndpoints(app, ws, searchDir);
 
-  app.get("/*", (_, response) => {
+  app.use(Express.static(outDir));
+
+  app.get("/*", async (req, response) => {
+    const publicPath = await getPublicPath(searchDir, req.originalUrl);
+    if (publicPath) {
+      return response.sendFile(publicPath);
+    }
     response.sendFile((bundler as any).mainBundle.name);
   });
 
