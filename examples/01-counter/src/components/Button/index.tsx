@@ -18,8 +18,6 @@ export default (props: Props) => (
   </button>
 );
 
-export const Button = () => <div>Test</div>;
-
 // @prodo:theme
 export const MyTheme = {
   foo: "bar",
