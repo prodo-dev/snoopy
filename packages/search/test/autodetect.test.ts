@@ -127,6 +127,30 @@ export function One() { return <div />; }
   });
 });
 
+test("gets component from export default function", () => {
+  const contents = `
+export default function () { return <div />; }
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        isDefaultExport: true,
+        source: `{
+  return <div />;
+}`,
+      },
+    ],
+    errors: [],
+  });
+});
+
 test("gets component imports for multiple named exports", () => {
   const contents = `
 export const One = () => <div />;
@@ -254,7 +278,7 @@ export default () => <div />;
   });
 });
 
-test("gets component name from class component", () => {
+test("gets component import from class component", () => {
   const contents = `
 export class Button extends React.Component {}
 `.trim();
@@ -270,6 +294,28 @@ export class Button extends React.Component {}
       {
         name: "Button",
         isDefaultExport: false,
+        source: "class Button extends React.Component {}",
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component import from export default class component", () => {
+  const contents = `
+export default class Button extends React.Component {}
+  `.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file/index.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file/index.ts",
+    fileExports: [
+      {
+        isDefaultExport: true,
         source: "class Button extends React.Component {}",
       },
     ],

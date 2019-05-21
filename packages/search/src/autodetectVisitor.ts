@@ -86,9 +86,11 @@ const declarationDetection = (declarations: DeclarationSources) => () => ({
     ExportDefaultDeclaration(nodePath: NodePath<t.ExportDefaultDeclaration>) {
       const declaration = nodePath.node.declaration;
       if (!t.isIdentifier(declaration)) {
+        // console.log(declaration);
         declarations.default = format(
           getSourceForDefaultExport(nodePath.node) || "",
         );
+        // console.log(declarations);
       }
     },
     FunctionDeclaration(nodePath: NodePath<t.FunctionDeclaration>) {
@@ -169,6 +171,21 @@ const exportDetection = (
           state.fileExports.push({
             isDefaultExport: true,
             source: state.detectedComponents![declaration.name],
+          });
+        }
+      } else if (t.isFunctionDeclaration(declaration)) {
+        if (declaresReactElement(declaration)) {
+          state.fileExports.push({
+            isDefaultExport: true,
+            source: declarations.default,
+          });
+        }
+      } else if (t.isClassDeclaration(declaration)) {
+        const name = t.isIdentifier(declaration.id) && declaration.id.name;
+        if (name && declaresReactElement(declaration)) {
+          state.fileExports.push({
+            isDefaultExport: true,
+            source: declarations.default,
           });
         }
       } else {
