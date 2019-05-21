@@ -16,5 +16,4 @@ const Toggle = ({done, toggle}: Props) => (
   />
 );
 
-// @prodo
 export default Toggle;

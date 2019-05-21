@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/prodo-ai/snoopy",
+  "description": "Immediate feedback on your React components, as you develop.",
   "repository": "github:prodo-ai/snoopy",
   "bugs": "https://github.com/prodo-ai/snoopy/issues",
   "private": true,

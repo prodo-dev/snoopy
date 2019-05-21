@@ -1,4 +1,5 @@
 import {checkMatch} from "@prodo-ai/snoopy-search";
+import * as chokidar from "chokidar";
 import * as Express from "express";
 import * as fs from "fs";
 import * as http from "http";
@@ -60,15 +61,21 @@ export const start = async (
 
   app.use(Express.static(outDir));
 
-  fs.watch(process.cwd(), {recursive: true}, async (_, filename) => {
-    // TODO: Try/catch?
-    const matches = await checkMatch(filename);
-    if (matches) {
-      // We need to do this to avoid compiling and pushing `filename` at the
-      // same time as `componentsFile`.
-      await (bundler as any).onChange(componentsFile);
-    }
-  });
+  chokidar
+    .watch(".", {ignored: /(^|[\/\\])\../})
+    .on("all", async (_, filename) => {
+      try {
+        const matches = await checkMatch(filename);
+        if (matches) {
+          // We need to do this to avoid compiling and pushing `filename` at the
+          // same time as `componentsFile`.
+          await (bundler as any).onChange(componentsFile);
+        }
+      } catch (e) {
+        // tslint:disable-next-line:no-console
+        console.warn("Error handling file change:", filename, "\n", e);
+      }
+    });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
 

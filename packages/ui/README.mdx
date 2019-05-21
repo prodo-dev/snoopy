@@ -37,11 +37,12 @@ To interact with the UI, go to [localhost:3042/][local snoopy] (or a different p
 
 ### Components
 
-Add `// @prodo` to any exported component you want to display/preview/visualize
-with Prodo.
+Prodo will detect most exported components automatically.
+If you find any that are missing, add `// @prodo` above the export line to
+display/preview/visualize it (and let us know so we can detect it in the future).
 
-For pure components, that's all you need to do. If your component requires props
-to be passed in, you will need to define examples.
+For pure components, you don't need to do anything else. If your component requires
+props to be passed in, you will need to define examples.
 
 Examples are defined in a separate `examples/` directory at the root of your
 project (where your `package.json` file is). All source files in this directory
@@ -55,7 +56,6 @@ Here is a simple example:
 // src/components/Counter.tsx
 import React from "react";
 
-// @prodo
 export default ({count}) => <p>{count}</p>;
 ```
 
