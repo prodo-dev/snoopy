@@ -5,7 +5,13 @@ import {NodePath} from "@babel/traverse";
 import * as t from "@babel/types";
 import * as path from "path";
 import {format} from "./format";
-import {Declarations, File, FileError, FileExport, VisitorState} from "./types";
+import {
+  DeclarationSources,
+  File,
+  FileError,
+  FileExport,
+  VisitorState,
+} from "./types";
 import {
   getExportNames,
   getSourceForClassDecl,
@@ -16,10 +22,10 @@ import {
 
 const isReactElement = (node: t.Node) => {
   if (t.isCallExpression(node) && t.isMemberExpression(node.callee)) {
-    const object: t.Expression = node.callee.object;
+    const calleeObject: t.Expression = node.callee.object;
     return (
-      t.isIdentifier(object) &&
-      object.name === "React" &&
+      t.isIdentifier(calleeObject) &&
+      calleeObject.name === "React" &&
       node.callee.property.name === "createElement"
     );
   }
@@ -41,14 +47,14 @@ const returnsReactElement = (node: t.Node): boolean => {
 const declaresReactElement = (
   node: t.VariableDeclaration | t.FunctionDeclaration | t.ClassDeclaration,
 ) => {
-  if (t.isVariableDeclaration(node)) {
+  if (t.isVariableDeclaration(node) && node.declarations.length > 0) {
     const declarator: t.VariableDeclarator = node.declarations[0];
-    const name: string = t.isIdentifier(declarator.id)
-      ? declarator.id.name
-      : "";
-    const target: t.Expression | null = declarator.init;
-    const elem = t.isArrowFunctionExpression(target) ? target.body : target;
-    return name && target && elem && returnsReactElement(elem);
+    const name = t.isIdentifier(declarator.id) && declarator.id.name;
+    if (name) {
+      const target: t.Expression | null = declarator.init;
+      const elem = t.isArrowFunctionExpression(target) ? target.body : target;
+      return target && elem && returnsReactElement(elem);
+    }
   } else if (t.isFunctionDeclaration(node)) {
     return returnsReactElement(node.body);
   } else if (
@@ -64,15 +70,17 @@ const declaresReactElement = (
   return false;
 };
 
-const declarationDetection = (declarations: Declarations) => () => ({
+const declarationDetection = (declarations: DeclarationSources) => () => ({
   visitor: {
     VariableDeclaration(nodePath: NodePath<t.VariableDeclaration>) {
-      const declarator: t.VariableDeclarator = nodePath.node.declarations[0];
-      const name = t.isIdentifier(declarator.id) && declarator.id.name;
-      if (name) {
-        declarations[name] = format(
-          getSourceForVariableDecl(nodePath.node) || "",
-        );
+      if (nodePath.node.declarations.length > 0) {
+        const declarator: t.VariableDeclarator = nodePath.node.declarations[0];
+        const name = t.isIdentifier(declarator.id) && declarator.id.name;
+        if (name) {
+          declarations[name] = format(
+            getSourceForVariableDecl(nodePath.node) || "",
+          );
+        }
       }
     },
     ExportDefaultDeclaration(nodePath: NodePath<t.ExportDefaultDeclaration>) {
@@ -102,7 +110,7 @@ const declarationDetection = (declarations: Declarations) => () => ({
 
 const exportDetection = (
   state: VisitorState,
-  declarations: Declarations,
+  declarations: DeclarationSources,
 ) => () => ({
   visitor: {
     ExportNamedDeclaration(nodePath: NodePath<t.ExportNamedDeclaration>) {
@@ -176,7 +184,10 @@ const exportDetection = (
       }
     },
     VariableDeclaration(nodePath: NodePath<t.VariableDeclaration>) {
-      if (declaresReactElement(nodePath.node)) {
+      if (
+        declaresReactElement(nodePath.node) &&
+        nodePath.node.declarations.length
+      ) {
         const declarator: t.VariableDeclarator = nodePath.node.declarations[0];
         const name = t.isIdentifier(declarator.id) && declarator.id.name;
         if (name) {
@@ -216,7 +227,7 @@ export const autodetectComponentExports = (
 
   try {
     const plugins =
-      path.extname(filepath) === ".tsx"
+      path.extname(filepath) === ".tsx" || path.extname(filepath) === ".ts"
         ? [[pluginSyntaxTypescript, {isTSX: true}]]
         : [];
     const declarations = {};

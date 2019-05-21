@@ -32,7 +32,7 @@ export class FileError extends Error {
 
 export type ExtractType = "styleFiles" | "componentFiles" | "themeFiles";
 
-export interface Declarations {
+export interface DeclarationSources {
   [name: string]: string | undefined;
 }
 
@@ -40,7 +40,7 @@ export interface VisitorState {
   filepath: string;
   fileExports: FileExport[];
   errors: FileError[];
-  detectedComponents?: Declarations;
+  detectedComponents?: DeclarationSources;
 }
 
 export interface VisitorOptions {
