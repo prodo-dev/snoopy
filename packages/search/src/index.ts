@@ -8,10 +8,10 @@ import {findExamples} from "./examples";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
 import {
+  exampleFileGlob,
   fileGlob,
   readFileContents,
   styleFileGlob,
-  exampleFileGlob,
 } from "./utils";
 
 export * from "./types";
