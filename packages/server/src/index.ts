@@ -7,8 +7,8 @@ import * as path from "path";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
+import {exists, writeFile} from "./utils";
 import registerWebsockets from "./websockets";
-import {writeFile, exists} from "./utils";
 
 const clientDir = path.dirname(
   path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
