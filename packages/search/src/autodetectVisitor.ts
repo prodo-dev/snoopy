@@ -274,8 +274,9 @@ export const autodetectComponentExports = (
   };
 
   try {
+    const extension = path.extname(filepath);
     const plugins =
-      path.extname(filepath) === ".tsx" || path.extname(filepath) === ".ts"
+      extension === ".tsx" || extension === ".ts"
         ? [[pluginTransformTypescript, {isTSX: true}]]
         : [pluginSyntaxJsx];
     const declarations = {};
