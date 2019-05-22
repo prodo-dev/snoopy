@@ -14,9 +14,11 @@ const StyledFileTree = styled.ul`
 `;
 
 const StyledLink = styled(Link)`
+  display: inline-block;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   text-decoration: none;
   color: ${props => props.theme.colors.text};
-
   &:hover {
     color: ${props => props.theme.colors.textTertiary};
   }
@@ -50,6 +52,7 @@ interface Props {
   components: Component[];
   selected: FilePath[];
   select: (selection: FilePath[]) => any;
+  full?: boolean;
 }
 
 export type FilePath = string;
@@ -118,13 +121,19 @@ const FileTree = ({
                     checked={isSelected}
                     onClick={event => {
                       event.stopPropagation();
+                      event.preventDefault();
                     }}
                     onChange={event => {
                       event.stopPropagation();
+                      event.preventDefault();
                       if (event.target.checked) {
+                        console.log("adding ", selected);
                         add();
+                        console.log("added ", child, selected);
                       } else {
+                        console.log("removing ", selected);
                         remove();
+                        console.log("removed ", child, selected);
                       }
                     }}
                   />{" "}

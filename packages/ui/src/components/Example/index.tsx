@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {renderExample} from "../../App/context";
 import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
+import Highlighter from "../Highlighter";
 
 interface Props {
   example: ExampleModel;
@@ -26,12 +27,14 @@ const Title = styled.div`
   color: ${props => props.theme.colors.text};
 `;
 
+const CodeContainer = styled.div``;
+
 const randId = () =>
   Math.random()
     .toString(36)
     .substr(2, 9);
 
-class NoUpdate extends React.Component<Props> {
+class UserComponentContainer extends React.Component<Props> {
   private id: string = `example-${randId()}`;
 
   public componentDidMount() {
@@ -52,10 +55,6 @@ class NoUpdate extends React.Component<Props> {
     );
   }
 
-  public shouldComponentUpdate(nextProps: Props) {
-    return this.props.userTheme !== nextProps.userTheme;
-  }
-
   public render() {
     return <div id={this.id} />;
   }
@@ -64,7 +63,14 @@ class NoUpdate extends React.Component<Props> {
 const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.title}</Title>
-    <NoUpdate {...props} />
+    <UserComponentContainer {...props} />
+    {props.example.source != null && (
+      <CodeContainer>
+        <Highlighter className="language-jsx">
+          {props.example.source}
+        </Highlighter>
+      </CodeContainer>
+    )}
   </StyledExample>
 );
 

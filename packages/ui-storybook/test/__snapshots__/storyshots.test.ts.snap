@@ -28,7 +28,7 @@ exports[`Storyshots Component List multiple items 1`] = `
       >
         <li>
           <a
-            className="sc-htpNat hzyRhJ"
+            className="sc-htpNat jMtDGO"
             href="/foo/bar"
             onClick={[Function]}
           >
@@ -71,7 +71,7 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
       >
         <li>
           <a
-            className="sc-htpNat hzyRhJ"
+            className="sc-htpNat jMtDGO"
             href="/foo/bar"
             onClick={[Function]}
           >
@@ -114,7 +114,7 @@ exports[`Storyshots Component List single item 1`] = `
       >
         <li>
           <a
-            className="sc-htpNat hzyRhJ"
+            className="sc-htpNat jMtDGO"
             href="/foo/bar"
             onClick={[Function]}
           >
@@ -157,7 +157,7 @@ exports[`Storyshots Component List single item with selection 1`] = `
       >
         <li>
           <a
-            className="sc-htpNat hzyRhJ"
+            className="sc-htpNat jMtDGO"
             href="/foo/bar"
             onClick={[Function]}
           >
@@ -294,7 +294,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
         >
           <li>
             <a
-              className="sc-htpNat hzyRhJ"
+              className="sc-htpNat jMtDGO"
               href="/foo/bar"
               onClick={[Function]}
             >

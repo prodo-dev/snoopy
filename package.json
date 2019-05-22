@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://github.com/prodo-ai/snoopy",
+  "description": "Immediate feedback on your React components, as you develop.",
+  "repository": "github:prodo-ai/snoopy",
+  "bugs": "https://github.com/prodo-ai/snoopy/issues",
   "private": true,
   "scripts": {
-    "start": "yarn workspace @prodo-ai/snoopy-cli start",
     "clean": "wsrun --exclude-missing --serial clean",
     "build": "tsc --build",
     "build:watch": "tsc --build --watch",

@@ -2,17 +2,23 @@ import * as findUp from "find-up";
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
+import {findComponentExports, findThemeExports} from "./annotations";
+import {autodetectComponentExports} from "./autodetectVisitor";
 import {findExamples} from "./examples";
-import {findComponentExports, findThemeExports} from "./parser";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
-import {fileGlob, readFileContents, styleFileGlob} from "./utils";
+import {
+  exampleFileGlob,
+  fileGlob,
+  readFileContents,
+  styleFileGlob,
+} from "./utils";
 
 export * from "./types";
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
   const fileInGitIgnore = await inGitIgnore(filepath);
-  return !fileInGitIgnore && multimatch(filepath, fileGlob).length > 0;
+  return !fileInGitIgnore && multimatch(filepath, exampleFileGlob).length > 0;
 };
 
 const inGitIgnore = (() => {
@@ -33,12 +39,13 @@ const inGitIgnore = (() => {
   };
 })();
 
+const getNonNullFiles = (files: Array<File | null>): File[] =>
+  files.filter(i => i != null) as File[];
+
 const getNonNullFilesOfGivenType = (
   files: Array<{[id: string]: File | null}>,
   type: ExtractType,
-): File[] => {
-  return files.map(i => i[type]).filter(i => i != null) as File[];
-};
+): File[] => getNonNullFiles(files.map(i => i[type]));
 
 const getFiles = async (
   directoryToSearch: string,
@@ -78,22 +85,70 @@ const getFiles = async (
   return files;
 };
 
+const detectAndFindComponentExports = (code: string, filepath: string) => {
+  const emptyResult = {
+    filepath,
+    fileExports: [],
+    errors: [],
+  };
+  const detectedExports =
+    autodetectComponentExports(code, filepath) || emptyResult;
+  const manualExports = findComponentExports(code, filepath) || emptyResult;
+  // The parsed source isn't always exactly the same
+  // so combine carefully to avoid duplicates
+  const hasDefaultExport =
+    manualExports.fileExports.filter(x => x.isDefaultExport).length > 0;
+  const manualExportNames = manualExports.fileExports
+    .filter(x => !x.isDefaultExport)
+    .map(x => (x as any).name);
+  const combinedExports = manualExports.fileExports;
+  for (const ex of detectedExports.fileExports) {
+    if (
+      (ex.isDefaultExport && !hasDefaultExport) ||
+      (!ex.isDefaultExport && manualExportNames.indexOf(ex.name) < 0)
+    ) {
+      combinedExports.push(ex);
+    }
+  }
+
+  return {
+    filepath,
+    fileExports: combinedExports,
+    errors: detectedExports.errors.concat(manualExports.errors),
+  };
+};
+
+export const getGlobbyFiles = async (
+  globPatterns: string[],
+  cwd: string,
+): Promise<string[]> => {
+  const filepaths = await globby(globPatterns, {
+    cwd,
+    gitignore: true,
+  });
+
+  const validFilePaths: string[] = [];
+  for (const f of filepaths) {
+    const fileInGitIgnore = await inGitIgnore(f);
+    if (!fileInGitIgnore) {
+      validFilePaths.push(f);
+    }
+  }
+
+  return validFilePaths;
+};
+
 export const searchCodebase = async (
   directoryToSearch: string,
 ): Promise<SearchResult> => {
-  const filepaths = await globby(fileGlob, {
-    cwd: directoryToSearch,
-    gitignore: true,
-  });
+  const filepaths = await getGlobbyFiles(fileGlob, directoryToSearch);
+
   const files = await getFiles(directoryToSearch, filepaths, {
-    componentFiles: findComponentExports,
+    componentFiles: detectAndFindComponentExports,
     themeFiles: findThemeExports,
   });
 
-  const styleResult = await globby(styleFileGlob, {
-    cwd: directoryToSearch,
-    gitignore: true,
-  });
+  const styleResult = await getGlobbyFiles(styleFileGlob, directoryToSearch);
   const styleFiles = await getFiles(directoryToSearch, styleResult, {
     styleFiles: getStylesFile,
   });
@@ -104,7 +159,7 @@ export const searchCodebase = async (
     componentFiles: getNonNullFilesOfGivenType(files, "componentFiles"),
     themeFiles: getNonNullFilesOfGivenType(files, "themeFiles"),
     styleFiles: getNonNullFilesOfGivenType(styleFiles, "styleFiles"),
-    examples,
+    examples: getNonNullFiles(examples),
   };
 
   return results;

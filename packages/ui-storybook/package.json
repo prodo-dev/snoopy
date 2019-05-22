@@ -1,6 +1,6 @@
 {
   "name": "@prodo-ai/snoopy-ui-storybook",
-  "version": "0.1.1",
+  "version": "0.1.8",
   "main": "index.js",
   "license": "MIT",
   "private": true,
@@ -13,9 +13,10 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@prodo-ai/snoopy-ui": "^0.1.1",
+    "@hot-loader/react-dom": "^16.8.6",
+    "@prodo-ai/snoopy-ui": "^0.1.8",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react-dom": "npm:@hot-loader/react-dom",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0"
   },

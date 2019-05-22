@@ -35,5 +35,4 @@ const App = () => {
   );
 };
 
-// @prodo
 export default App;

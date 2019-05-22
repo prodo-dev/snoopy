@@ -9,6 +9,7 @@ import Sidebar, {SidebarToggle} from "../components/Sidebar";
 import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
+import NotFoundPage from "../routes/NotFoundPage";
 import {NarrowScreenWidth, paddings} from "../styles";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
@@ -38,13 +39,54 @@ const ComponentPageWithProps = (
   const components = props.context.components.filter(matchingPath);
   const fileError = props.context.errors.filter(matchingPath);
   const errors = fileError.length !== 0 ? fileError[0].errors : [];
+  console.log("components:", components);
+
+  if (components.length === 0) {
+    return (
+      <NotFoundPage
+        filepath={props.match.params.path}
+        context={props.context}
+      />
+    );
+  }
+
   return <ComponentPage components={components} errors={errors} {...props} />;
 };
 
 const WithContext = <Props extends {}>(
   ComponentNeedingContext: React.ComponentType<Props>,
+  selectedPaths?: string[],
 ) => (props: Props) => {
-  return <ComponentNeedingContext context={context} {...props} />;
+  return (
+    <ComponentNeedingContext
+      context={context}
+      selectedPaths={selectedPaths}
+      {...props}
+    />
+  );
+};
+
+// const WithSelectedPaths = <Props extends {selectedPaths: string[]}>(
+//   ComponentNeedingSelectedPaths: React.ComponentType<Props>,
+//   selectedPaths: string[],
+// ) => (props: Props) => {
+//   return (
+//     <ComponentNeedingSelectedPaths selectedPaths={selectedPaths} {...props} />
+//   );
+// };
+
+const HomePageWithProps = (props: {
+  context: Context;
+  selectedPaths: string[];
+}) => {
+  const matchingPath = ({path}: {path: string}) =>
+    props.selectedPaths.includes(path);
+  const components = props.context.components.filter(matchingPath);
+  const fileError = props.context.errors.filter(matchingPath);
+  const errors = fileError.length !== 0 ? fileError[0].errors : [];
+  console.log("components:", components);
+
+  return <HomePage components={components} errors={errors} {...props} />;
 };
 
 const App = () => {
@@ -85,7 +127,14 @@ const App = () => {
 
                   <StyledPageContents>
                     <Switch>
-                      <Route path="/" exact component={WithContext(HomePage)} />
+                      <Route
+                        path="/"
+                        exact
+                        component={WithContext(
+                          HomePageWithProps,
+                          selectedPaths,
+                        )}
+                      />
                       <Route
                         path="/:path+"
                         exact

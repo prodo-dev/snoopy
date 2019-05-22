@@ -1,8 +1,15 @@
 {
   "name": "@prodo-ai/snoopy-api",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "main": "lib/index.js",
   "license": "MIT",
+  "homepage": "https://github.com/prodo-ai/snoopy",
+  "bugs": "https://github.com/prodo-ai/snoopy/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodo-ai/snoopy.git",
+    "directory": "packages/api"
+  },
   "files": [
     "lib"
   ],

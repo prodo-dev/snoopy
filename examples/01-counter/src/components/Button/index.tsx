@@ -7,7 +7,6 @@ interface Props {
   children: React.ReactNode;
 }
 
-// @prodo
 export default (props: Props) => (
   <button
     onClick={event => {
@@ -18,9 +17,6 @@ export default (props: Props) => (
     {props.children}
   </button>
 );
-
-// @prodo
-export const Button = () => <div>Test</div>;
 
 // @prodo:theme
 export const MyTheme = {

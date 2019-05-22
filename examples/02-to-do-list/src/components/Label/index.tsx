@@ -26,5 +26,4 @@ const Label = ({text, done, editing, startEditing, edit}: Props) => (
   </label>
 );
 
-// @prodo
 export default Label;
