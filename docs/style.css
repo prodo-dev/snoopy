@@ -1,3 +1,8 @@
+:root {
+  --border-color: #444851;
+  --pop-color: #ec6969;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -13,31 +18,151 @@ body {
   justify-content: center;
   align-items: center;
   margin: 0;
-  padding: 2rem;
+  padding: 6rem 2rem 2rem;
   background: #282c34;
-  color: #f8f8f2;
   font-family: "Ubuntu", sans-serif;
-  text-align: center;
+  color: #f8f8f2;
+}
+
+main {
+  max-width: 800px;
+}
+
+section {
+  margin-top: 4rem;
+  padding-top: 4rem;
+  border-top: 1px solid var(--border-color);
+}
+
+footer {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border-color);
+  font-size: smaller;
+}
+
+h1,
+h2,
+h3 {
+  font-family: monospace;
 }
 
 h1 {
-  font-family: monospace;
-  font-size: 4rem;
   margin: 4rem 0;
+  font-size: 4rem;
+  text-align: center;
+}
+h2 {
+  margin: 4rem 0 2rem;
+  font-size: 2rem;
+  text-align: center;
+  color: var(--pop-color);
 }
 
-p {
+h3 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: var(--pop-color);
+}
+
+main :first-child {
+  margin-top: 0;
+}
+
+main p {
   margin: 2rem 0;
+  line-height: 1.25em;
 }
 
-.code {
-  border: solid 1px #444851;
-  border-radius: 4px;
-  padding: 0.5rem;
-  background: #31353f;
-  color: white;
+footer p:first-child {
+  margin-top: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+a {
+  color: #ffc0c0;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #ff9797;
+}
+
+em {
+  font-style: inherit;
+  color: var(--pop-color);
 }
 
 code {
   font-family: monospace;
+  font-size: 1.2em;
+}
+
+.key-features {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.key-features li {
+  flex-basis: 33%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin: 0 1rem;
+  padding: 1rem;
+  background: #31353f;
+}
+
+.key-features li :last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.statement {
+  text-align: center;
+}
+
+.coming-soon {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.media img {
+  border: 1px solid var(--border-color);
+  max-width: 100%;
+}
+
+.instruction {
+  font-weight: bold;
+}
+
+.code {
+  display: flex;
+  justify-content: center;
+  border: solid 1px var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  background: #31353f;
+  white-space: nowrap;
+}
+
+.code code {
+  display: block;
+}
+
+code .shell::before {
+  content: "$ ";
+  color: var(--pop-color);
+}
+
+code .comment {
+  color: #b8b8b3;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 }
