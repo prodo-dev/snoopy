@@ -1,4 +1,5 @@
 :root {
+  --monospace-font: monospace;
   --border-color: #444851;
   --pop-color: #ec6969;
 }
@@ -20,7 +21,7 @@ body {
   margin: 0;
   padding: 6rem 2rem 2rem;
   background: #282c34;
-  font-family: "Ubuntu", sans-serif;
+  font-family: -apple-system, "Segoe UI", "Ubuntu", "Helvetica", sans-serif;
   color: #f8f8f2;
 }
 
@@ -44,7 +45,7 @@ footer {
 h1,
 h2,
 h3 {
-  font-family: monospace;
+  font-family: var(--monospace-font);
 }
 
 h1 {
@@ -97,7 +98,7 @@ em {
 }
 
 code {
-  font-family: monospace;
+  font-family: var(--monospace-font);
   font-size: 1.2em;
 }
 
