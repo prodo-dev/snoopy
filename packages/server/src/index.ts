@@ -48,12 +48,15 @@ export const start = async (
     "components",
   );
   const componentsFile = path.join(prodoComponentsModule, "index.ts");
+  const libFile = path.join(prodoComponentsModule, "lib.ts");
 
   await makeDir(path.dirname(componentsFile));
   await writeFile(componentsFile, "");
+  await writeFile(libFile, "");
 
   // Parcel expects folders in node_modules to have package.json
   const packageFile = path.join(prodoComponentsModule, "package.json");
+
   await writeFile(
     packageFile,
     JSON.stringify({name: "@prodo/components", main: "index.ts"}),
@@ -70,6 +73,7 @@ export const start = async (
     outFile,
     searchDir,
     componentsFile,
+    libFile,
   });
   applyAliases(bundler);
 

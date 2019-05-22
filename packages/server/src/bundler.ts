@@ -8,12 +8,14 @@ export default (
     outFile,
     searchDir,
     componentsFile,
+    libFile,
   }: {
     clientDir: string;
     outDir: string;
     outFile: string;
     searchDir: string;
     componentsFile: string;
+    libFile: string;
   },
   options?: any,
 ) => {
@@ -24,7 +26,10 @@ export default (
     path.join(clientDir, "src", "App"),
     componentsFile,
   );
-
+  process.env.PRODO_LIB_FILE = path.relative(
+    path.join(clientDir, "src", "App"),
+    libFile,
+  );
   options = {
     outDir,
     outFile,
