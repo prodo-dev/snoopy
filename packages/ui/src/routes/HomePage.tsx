@@ -79,5 +79,4 @@ const HomePage = ({context, components, errors}: Props) => {
   );
 };
 
-// @prodo
 export default HomePage;

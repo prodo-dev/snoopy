@@ -128,7 +128,6 @@ const Overlay = ({
   />
 );
 
-// @prodo
 export const SidebarToggle = ({
   isOpen,
   setSidebarOpen,
@@ -189,5 +188,4 @@ const Sidebar = (props: Props) => (
   </React.Fragment>
 );
 
-// @prodo
 export default Sidebar;
