@@ -1,31 +1,17 @@
-import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
 import styled from "styled-components";
 import {ComponentContainer} from "../components/ComponentContainer";
 import {Readme, Toggle} from "../components/Docs";
 import {Errors} from "../components/Errors";
-import Highlighter from "../components/Highlighter";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {Component as ComponentModel, Context} from "../models";
-import {margins, paddings} from "../styles";
+import {margins} from "../styles";
 
 interface Props {
   components: ComponentModel[];
   errors: string[];
   context: Context;
 }
-
-const StyledMarkdown = styled.div`
-  max-width: 70ch;
-  line-height: 1.4;
-  a {
-    color: ${({theme}) => theme.colors.textSecondary};
-  }
-
-  .mdx a {
-    padding: 0 ${paddings.small};
-  }
-`;
 
 const Components = styled.div`
   display: flex;
@@ -45,21 +31,11 @@ const HomePage = ({context, components, errors}: Props) => {
     return <Readme />;
   }
 
-  const mdxComponents = {code: Highlighter};
-
   return (
     <StyledPage>
       <StyledPageContents>
         <Toggle>
-          <MDXProvider components={mdxComponents}>
-            <StyledMarkdown>
-              <p>
-                <a href="https://github.com/prodo-ai/snoopy">
-                  View the docs here.
-                </a>
-              </p>
-            </StyledMarkdown>
-          </MDXProvider>
+          <Readme />
         </Toggle>
         <Errors errors={errors} />
         <Components className="components">

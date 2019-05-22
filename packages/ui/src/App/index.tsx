@@ -86,9 +86,9 @@ const App = () => {
     context.components.map(x => x.path) as string[],
   );
 
-  if (selectedPaths.length === 1 && window.location.pathname === "/") {
+  if (window.location.pathname === "/" && selectedPaths.length === 1) {
     history.push(`/${selectedPaths[0]}`);
-  } else if (selectedPaths.length !== 1 && window.location.pathname !== "/") {
+  } else if (window.location.pathname !== "/" && selectedPaths.length !== 1) {
     history.push("/");
   }
 

@@ -1,6 +1,7 @@
 import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
 import styled from "styled-components";
+import {paddings} from "../../styles";
 import Highlighter from "../Highlighter";
 
 const StyledMarkdown = styled.div`
@@ -8,6 +9,9 @@ const StyledMarkdown = styled.div`
   line-height: 1.4;
   a {
     color: ${({theme}) => theme.colors.textSecondary};
+  }
+  .mdx a {
+    padding: 0 ${paddings.small};
   }
 `;
 

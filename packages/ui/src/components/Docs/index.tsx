@@ -2,12 +2,13 @@ import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import styled from "styled-components";
-import ReadmeMarkdown from "../../../../../README.mdx";
 import Markdown from "../Markdown";
 
 export const Readme = () => (
   <Markdown>
-    <ReadmeMarkdown />
+    <p>
+      <a href="https://github.com/prodo-ai/snoopy">View the docs here.</a>
+    </p>
   </Markdown>
 );
 
