@@ -14,5 +14,6 @@ module.exports = ({config}) => {
     ],
   });
   config.resolve.extensions.push(".ts", ".tsx");
+  config.resolve.alias["react-dom"] = "@hot-loader/react-dom";
   return config;
 };

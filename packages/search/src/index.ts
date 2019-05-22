@@ -7,13 +7,18 @@ import {autodetectComponentExports} from "./autodetectVisitor";
 import {findExamples} from "./examples";
 import {getStylesFile} from "./styles";
 import {ExtractType, File, FileError, SearchResult} from "./types";
-import {fileGlob, readFileContents, styleFileGlob} from "./utils";
+import {
+  exampleFileGlob,
+  fileGlob,
+  readFileContents,
+  styleFileGlob,
+} from "./utils";
 
 export * from "./types";
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
   const fileInGitIgnore = await inGitIgnore(filepath);
-  return !fileInGitIgnore && multimatch(filepath, fileGlob).length > 0;
+  return !fileInGitIgnore && multimatch(filepath, exampleFileGlob).length > 0;
 };
 
 const inGitIgnore = (() => {
