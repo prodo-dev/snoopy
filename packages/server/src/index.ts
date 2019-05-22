@@ -6,6 +6,7 @@ import makeDir = require("make-dir");
 import * as path from "path";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
+import {generateComponentsFileContents} from "./generate";
 import registerEndpoints from "./rest";
 import {exists, writeFile} from "./utils";
 import registerWebsockets from "./websockets";
@@ -58,6 +59,11 @@ export const start = async (
     JSON.stringify({name: "@prodo/components", main: "index.ts"}),
   );
 
+  let generated = await generateComponentsFileContents(
+    ".",
+    process.env.PRODO_SEARCH_DIR || "",
+  );
+
   const bundler = createBundler({
     clientDir,
     outDir,
@@ -70,14 +76,26 @@ export const start = async (
   await bundler.bundle();
 
   chokidar
-    .watch(".", {ignored: /(^|[\/\\])\../})
+    .watch(".", {
+      cwd: searchDir,
+      ignoreInitial: true,
+      ignored: /node_modules|\.git|flycheck_*/,
+    })
     .on("all", async (_, filename) => {
       try {
         const matches = await checkMatch(filename);
         if (matches) {
-          // We need to do this to avoid compiling and pushing `filename` at the
-          // same time as `componentsFile`.
-          await (bundler as any).onChange(componentsFile);
+          const newGenerated = await generateComponentsFileContents(
+            ".",
+            process.env.PRODO_SEARCH_DIR || "",
+          );
+          if (generated !== newGenerated) {
+            generated = newGenerated;
+
+            // We need to do this to avoid compiling and pushing `filename` at the
+            // same time as `componentsFile`.
+            (bundler as any).onChange(componentsFile);
+          }
         }
       } catch (e) {
         // tslint:disable-next-line:no-console
