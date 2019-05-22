@@ -11,7 +11,7 @@ export const StyledPage = styled.div`
 `;
 
 export const StyledPageContents = styled.div`
-  padding: ${paddings.large};
+  padding: ${paddings.medium};
   flex-grow: 1;
   color: ${props => props.theme.colors.text};
 `;

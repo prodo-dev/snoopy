@@ -2,6 +2,7 @@ import * as React from "react";
 import {ComponentContainer} from "../components/ComponentContainer";
 import {Readme, Toggle} from "../components/Docs";
 import {Errors} from "../components/Errors";
+import {StyledPage, StyledPageContents} from "../components/Page";
 import {Component as ComponentModel, Context} from "../models";
 
 interface Props {
@@ -11,18 +12,19 @@ interface Props {
 }
 
 const ComponentPage = (props: Props) => (
-  <>
-    <Toggle>
-      <Readme />
-    </Toggle>
-
-    <Errors errors={props.errors} />
-    <ComponentContainer
-      component={props.component}
-      themes={props.context.themes}
-      styles={props.context.styles}
-    />
-  </>
+  <StyledPage>
+    <StyledPageContents>
+      <Toggle>
+        <Readme />
+      </Toggle>
+      <Errors errors={props.errors} />
+      <ComponentContainer
+        component={props.component}
+        themes={props.context.themes}
+        styles={props.context.styles}
+      />
+    </StyledPageContents>
+  </StyledPage>
 );
 
 export default ComponentPage;

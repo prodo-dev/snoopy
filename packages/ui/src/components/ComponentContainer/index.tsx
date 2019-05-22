@@ -7,7 +7,7 @@ import {margins, paddings} from "../../styles";
 import Component from "../Component";
 
 const Container = styled.div`
-  padding: ${paddings.medium} ${paddings.large};
+  padding: ${paddings.large} ${paddings.none};
 `;
 
 const StyledTitleContainer = styled.div`
