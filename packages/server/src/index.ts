@@ -103,7 +103,7 @@ export const start = async (
   });
 
   const listen = (portNumber: number) => {
-    app
+    server
       .listen(portNumber, () => {
         process.stdout.write(
           `Server is running at http://localhost:${portNumber}.\n`,
