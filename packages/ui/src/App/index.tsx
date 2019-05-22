@@ -39,7 +39,6 @@ const ComponentPageWithProps = (
   const components = props.context.components.filter(matchingPath);
   const fileError = props.context.errors.filter(matchingPath);
   const errors = fileError.length !== 0 ? fileError[0].errors : [];
-  console.log("components:", components);
 
   if (components.length === 0) {
     return (
@@ -50,7 +49,7 @@ const ComponentPageWithProps = (
     );
   }
 
-  return <ComponentPage components={components} errors={errors} {...props} />;
+  return <ComponentPage component={components[0]} errors={errors} {...props} />;
 };
 
 const WithContext = <Props extends {}>(
@@ -66,25 +65,15 @@ const WithContext = <Props extends {}>(
   );
 };
 
-// const WithSelectedPaths = <Props extends {selectedPaths: string[]}>(
-//   ComponentNeedingSelectedPaths: React.ComponentType<Props>,
-//   selectedPaths: string[],
-// ) => (props: Props) => {
-//   return (
-//     <ComponentNeedingSelectedPaths selectedPaths={selectedPaths} {...props} />
-//   );
-// };
-
 const HomePageWithProps = (props: {
   context: Context;
   selectedPaths: string[];
 }) => {
-  const matchingPath = ({path}: {path: string}) =>
+  const matchingSelectedPaths = ({path}: {path: string}) =>
     props.selectedPaths.includes(path);
-  const components = props.context.components.filter(matchingPath);
-  const fileError = props.context.errors.filter(matchingPath);
+  const components = props.context.components.filter(matchingSelectedPaths);
+  const fileError = props.context.errors.filter(matchingSelectedPaths);
   const errors = fileError.length !== 0 ? fileError[0].errors : [];
-  console.log("components:", components);
 
   return <HomePage components={components} errors={errors} {...props} />;
 };
@@ -93,7 +82,15 @@ const App = () => {
   const [isSidebarOpen, setSidebarOpen] = React.useState(
     window.innerWidth > NarrowScreenWidth,
   );
-  const [selectedPaths, setSelectedPaths] = React.useState([] as string[]);
+  const [selectedPaths, setSelectedPaths] = React.useState(
+    context.components.map(x => x.path) as string[],
+  );
+
+  if (selectedPaths.length === 1 && window.location.pathname === "/") {
+    history.push(`/${selectedPaths[0]}`);
+  } else if (selectedPaths.length !== 1 && window.location.pathname !== "/") {
+    history.push("/");
+  }
 
   return (
     <Router history={history}>
@@ -108,9 +105,7 @@ const App = () => {
                   components={context.components}
                   isOpen={isSidebarOpen}
                   setSidebarOpen={setSidebarOpen}
-                  selected={
-                    match.params.path ? [match.params.path] : selectedPaths
-                  }
+                  selected={selectedPaths}
                   select={setSelectedPaths}
                 />
 
@@ -166,5 +161,4 @@ const HeaderContainer = styled.div`
   }
 `;
 
-// @prodo
 export default App;

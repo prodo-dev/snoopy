@@ -5,29 +5,24 @@ import {Errors} from "../components/Errors";
 import {Component as ComponentModel, Context} from "../models";
 
 interface Props {
-  components: ComponentModel[];
+  component: ComponentModel;
   errors: string[];
   context: Context;
 }
 
-const ComponentPage = (props: Props) => {
-  const component = props.components[0]; // TODO temp
+const ComponentPage = (props: Props) => (
+  <>
+    <Toggle>
+      <Readme />
+    </Toggle>
 
-  return (
-    <>
-      <Toggle>
-        <Readme />
-      </Toggle>
+    <Errors errors={props.errors} />
+    <ComponentContainer
+      component={props.component}
+      themes={props.context.themes}
+      styles={props.context.styles}
+    />
+  </>
+);
 
-      <Errors errors={props.errors} />
-      <ComponentContainer
-        component={component}
-        themes={props.context.themes}
-        styles={props.context.styles}
-      />
-    </>
-  );
-};
-
-// @prodo
 export default ComponentPage;

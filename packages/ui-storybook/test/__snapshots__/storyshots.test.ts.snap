@@ -33,7 +33,7 @@ exports[`Storyshots Component List multiple items 1`] = `
             onClick={[Function]}
           >
             <span
-              className="sc-ifAKCX hnOSUB"
+              className="sc-ifAKCX yaMOr"
               selected={false}
             >
               <input
@@ -76,7 +76,7 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
             onClick={[Function]}
           >
             <span
-              className="sc-ifAKCX dzQAzc"
+              className="sc-ifAKCX yaMOr"
               selected={true}
             >
               <input
@@ -119,7 +119,7 @@ exports[`Storyshots Component List single item 1`] = `
             onClick={[Function]}
           >
             <span
-              className="sc-ifAKCX hnOSUB"
+              className="sc-ifAKCX yaMOr"
               selected={false}
             >
               <input
@@ -162,7 +162,7 @@ exports[`Storyshots Component List single item with selection 1`] = `
             onClick={[Function]}
           >
             <span
-              className="sc-ifAKCX dzQAzc"
+              className="sc-ifAKCX yaMOr"
               selected={true}
             >
               <input
@@ -299,7 +299,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
               onClick={[Function]}
             >
               <span
-                className="sc-ifAKCX hnOSUB"
+                className="sc-ifAKCX yaMOr"
                 selected={false}
               >
                 <input

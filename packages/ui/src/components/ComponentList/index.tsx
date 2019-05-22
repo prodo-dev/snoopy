@@ -45,7 +45,6 @@ const StyledFile = styled.span<FileProps>`
   display: block;
   padding: ${paddings.small};
   padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
-  ${props => props.selected && `background-color: ${props.theme.colors.bg};`}
 `;
 
 interface Props {
@@ -114,7 +113,7 @@ const FileTree = ({
           const remove = () => select(selected.filter(s => s !== child));
           return (
             <li key={segment}>
-              <StyledLink to={child}>
+              <StyledLink to={`/${child}`} onClick={() => select([child])}>
                 <File level={level} selected={isSelected}>
                   <input
                     type="checkbox"
@@ -127,13 +126,9 @@ const FileTree = ({
                       event.stopPropagation();
                       event.preventDefault();
                       if (event.target.checked) {
-                        console.log("adding ", selected);
                         add();
-                        console.log("added ", child, selected);
                       } else {
-                        console.log("removing ", selected);
                         remove();
-                        console.log("removed ", child, selected);
                       }
                     }}
                   />{" "}
@@ -173,5 +168,4 @@ const File = ({
   <StyledFile {...props}>{children}</StyledFile>
 );
 
-// @prodo
 export default ComponentList;
