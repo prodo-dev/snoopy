@@ -112,12 +112,18 @@ code {
   flex-basis: 33%;
   flex-grow: 1;
   flex-shrink: 1;
-  margin: 0 1rem;
+  margin: 0 0.5rem;
   padding: 1rem;
   background: #31353f;
 }
 
-.key-features li :last-child {
+.key-features h3 .emoji {
+  display: block;
+  float: left;
+  padding: 0 1rem 0.5rem 0;
+}
+
+.key-features li > :last-child {
   margin-bottom: 0;
   padding-bottom: 0;
 }
