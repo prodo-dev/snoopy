@@ -102,6 +102,23 @@ export let One = () => <div />;
   });
 });
 
+test("gets component imports for js file", () => {
+  const contents = `
+export var One = () => <div />;
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.js",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.js",
+    fileExports: [{name: "One", isDefaultExport: false, source: "<div />;"}],
+    errors: [],
+  });
+});
+
 test("gets component from function", () => {
   const contents = `
 export function One() { return <div />; }

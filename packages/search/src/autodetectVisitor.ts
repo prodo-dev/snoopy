@@ -277,11 +277,11 @@ export const autodetectComponentExports = (
     const plugins =
       path.extname(filepath) === ".tsx" || path.extname(filepath) === ".ts"
         ? [[pluginTransformTypescript, {isTSX: true}]]
-        : [];
+        : [pluginSyntaxJsx];
     const declarations = {};
     const parsed = transform(code, {
       sourceType: "module",
-      plugins: [...plugins, pluginSyntaxJsx],
+      plugins,
     });
     if (parsed && parsed.code) {
       transform(parsed!.code, {
