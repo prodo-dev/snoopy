@@ -10,6 +10,9 @@ export interface Theme {
     text: Color;
     textSecondary: Color;
     textTertiary: Color;
+    selected: Color;
+    unselected: Color;
+    partiallySelected: Color;
     error: Color;
     errorBg: Color;
   };
@@ -35,6 +38,9 @@ export const darkTheme: Theme = {
     text: "#f8f8f2",
     textSecondary: "#00e3a0",
     textTertiary: "#cfcfc3",
+    selected: "#ec6969",
+    unselected: "#cfcfc3",
+    partiallySelected: "#ff9797",
     error: "#E00700",
     errorBg: "#f8f8f2",
   },

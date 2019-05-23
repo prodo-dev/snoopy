@@ -1,6 +1,5 @@
 import * as _ from "lodash";
 import * as React from "react";
-import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {Component} from "../../models";
 import {paddings} from "../../styles";
@@ -13,26 +12,37 @@ const StyledFileTree = styled.ul`
   list-style: none;
 `;
 
-const StyledLink = styled(Link)`
-  display: inline-block;
+interface FileProps {
+  for?: string;
+  level: number;
+  selected: Selected;
+}
+
+enum Selected {
+  selected,
+  unselected,
+  partiallySelected,
+}
+
+const TreeElement = styled.label<FileProps>`
+  display: block;
+  padding: 0 ${paddings.small} ${paddings.small} 0;
+  padding-left: calc(${paddings.small} * (${props => props.level} + 1));
   overflow-x: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
-  color: ${props => props.theme.colors.text};
+  font-size: ${props => props.theme.fontSizes.normal};
+  font-weight: ${props =>
+    props.selected === Selected.unselected ? "inherit" : "bold"};
+  color: ${props => (props.theme.colors as any)[Selected[props.selected]]};
+  cursor: pointer;
+
   &:hover {
-    color: ${props => props.theme.colors.textTertiary};
+    color: ${props => props.theme.colors.text};
   }
 `;
 
-interface FileProps {
-  level: number;
-  selected?: boolean;
-}
-
-const StyledDirectory = styled.span<FileProps>`
-  display: block;
-  padding: ${paddings.small};
-  padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
+const StyledDirectory = styled(TreeElement)`
   cursor: default;
   color: ${props => props.theme.colors.textTertiary};
 
@@ -41,10 +51,10 @@ const StyledDirectory = styled.span<FileProps>`
   }
 `;
 
-const StyledFile = styled.span<FileProps>`
-  display: block;
-  padding: ${paddings.small};
-  padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
+const StyledFile = styled(TreeElement)``;
+
+const StyledFileSelector = styled.input`
+  float: left;
 `;
 
 interface Props {
@@ -108,39 +118,50 @@ const FileTree = ({
       .map(segment => {
         const child = structure[segment];
         if (typeof child === "string") {
-          const isSelected = selected.includes(child);
+          const elementSelected = selected.includes(child)
+            ? Selected.selected
+            : Selected.unselected;
           const add = () => select(selected.concat([child]).sort());
           const remove = () => select(selected.filter(s => s !== child));
           return (
             <li key={segment}>
-              <StyledLink to={`/${child}`} onClick={() => select([child])}>
-                <File level={level} selected={isSelected}>
-                  <input
-                    type="checkbox"
-                    checked={isSelected}
-                    onClick={event => {
-                      event.stopPropagation();
-                      event.preventDefault();
-                    }}
-                    onChange={event => {
-                      event.stopPropagation();
-                      event.preventDefault();
-                      if (event.target.checked) {
-                        add();
-                      } else {
-                        remove();
-                      }
-                    }}
-                  />{" "}
-                  {segment}
-                </File>
-              </StyledLink>
+              <FileSelector
+                selected={elementSelected}
+                add={add}
+                remove={remove}
+              />
+              <File level={level} selected={elementSelected}>
+                {segment}
+              </File>
             </li>
           );
         } else {
+          const allDescendants = descendantsOf(child);
+          const entirelySelected = allDescendants.every(descendant =>
+            selected.includes(descendant),
+          );
+          const partiallySelected = allDescendants.some(descendant =>
+            selected.includes(descendant),
+          );
+          const elementSelected = entirelySelected
+            ? Selected.selected
+            : partiallySelected
+            ? Selected.partiallySelected
+            : Selected.unselected;
+          const add = () =>
+            select(_.uniq(selected.concat(allDescendants)).sort());
+          const remove = () =>
+            select(selected.filter(s => !allDescendants.includes(s)));
           return (
             <li key={segment}>
-              <Directory level={level}>{segment}</Directory>
+              <FileSelector
+                selected={elementSelected}
+                add={add}
+                remove={remove}
+              />
+              <Directory level={level} selected={elementSelected}>
+                {segment}
+              </Directory>
               <FileTree
                 structure={child}
                 level={level + 1}
@@ -167,5 +188,52 @@ const File = ({
 }: FileProps & {children: React.ReactNode}) => (
   <StyledFile {...props}>{children}</StyledFile>
 );
+
+interface FileSelectorProps {
+  selected: Selected;
+  add: () => void;
+  remove: () => void;
+}
+
+const FileSelector = ({selected, add, remove}: FileSelectorProps) => {
+  const ref = React.useRef<HTMLInputElement | null>(null);
+  React.useEffect(() => {
+    const current = ref.current;
+    if (!current) {
+      return;
+    }
+    current.indeterminate = selected === Selected.partiallySelected;
+  });
+  return (
+    <StyledFileSelector
+      ref={ref}
+      type="checkbox"
+      checked={selected !== Selected.unselected}
+      onClick={event => {
+        event.stopPropagation();
+        event.preventDefault();
+      }}
+      onChange={event => {
+        event.stopPropagation();
+        event.preventDefault();
+        if (selected === Selected.unselected) {
+          add();
+        } else {
+          remove();
+        }
+      }}
+    />
+  );
+};
+
+const descendantsOf = (directory: Directory): FilePath[] =>
+  _.flatMap(Object.keys(directory).sort(), segment => {
+    const child = directory[segment];
+    if (typeof child === "string") {
+      return child;
+    } else {
+      return descendantsOf(child);
+    }
+  });
 
 export default ComponentList;
