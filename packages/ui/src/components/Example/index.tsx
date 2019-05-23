@@ -74,5 +74,4 @@ const Example = (props: Props) => (
   </StyledExample>
 );
 
-// @prodo
 export default Example;

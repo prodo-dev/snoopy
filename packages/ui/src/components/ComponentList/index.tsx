@@ -5,60 +5,167 @@ import styled from "styled-components";
 import {Component} from "../../models";
 import {paddings} from "../../styles";
 
-const StyledComponentList = styled.div`
-  display: flex;
-  flex-direction: column;
+const StyledComponentList = styled.div``;
+
+const StyledFileTree = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
 `;
 
-const ComponentName = styled.div<{selected?: boolean}>`
+const StyledLink = styled(Link)`
   display: inline-block;
   overflow-x: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
-  padding: ${paddings.small} ${paddings.medium};
-  ${props => props.selected && `background-color: ${props.theme.colors.bg}`}
-  font-size: ${props => props.theme.fontSizes.subtitle};
   color: ${props => props.theme.colors.text};
-
   &:hover {
-    color: ${props => props.theme.colors.textSecondary};
+    color: ${props => props.theme.colors.textTertiary};
   }
 `;
 
-const Path = styled.span`
-  font-style: italic;
-  font-weight: lighter;
+interface FileProps {
+  level: number;
+  selected?: boolean;
+}
+
+const StyledDirectory = styled.span<FileProps>`
+  display: block;
+  padding: ${paddings.small};
+  padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
+  cursor: default;
   color: ${props => props.theme.colors.textTertiary};
+
+  &::after {
+    content: "/";
+  }
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
+const StyledFile = styled.span<FileProps>`
+  display: block;
+  padding: ${paddings.small};
+  padding-left: calc(${paddings.medium} * (${props => props.level} + 1));
 `;
 
 interface Props {
-  selected?: string;
-  full?: boolean;
   components: Component[];
+  selected: FilePath[];
+  select: (selection: FilePath[]) => any;
+  full?: boolean;
 }
 
-const ComponentList = (props: Props) => {
-  const files = _.uniq(props.components.map(({path}) => path)).map(path => ({
-    path,
-    name: _.last(path.replace(/\/index\.(t|j)sx?$/, "").split("/")),
-  }));
+export type FilePath = string;
+
+interface Directory {
+  [segment: string]: Directory | FilePath;
+}
+
+const ComponentList = ({components, selected, select}: Props) => {
+  const paths = _.uniq(components.map(({path}) => path));
+  const structure: Directory = {};
+  for (const path of paths) {
+    const segments = path.split("/");
+    let current = structure;
+    for (const segment of segments.slice(0, segments.length - 1)) {
+      if (current[segment] == null) {
+        current[segment] = {};
+      }
+      const child = current[segment];
+      if (typeof child === "string") {
+        throw new Error(`"${segment}" is both a directory and a file.`);
+      }
+      current = child;
+    }
+    current[segments[segments.length - 1]] = path;
+  }
 
   return (
     <StyledComponentList className="component-list">
-      {files.map(({path, name}) => (
-        <StyledLink to={`/${path}`} key={path}>
-          <ComponentName selected={props.selected === path}>
-            {name} {props.full && <Path>({path})</Path>}
-          </ComponentName>
-        </StyledLink>
-      ))}
+      <FileTree
+        structure={structure}
+        level={0}
+        selected={selected}
+        select={select}
+      />
     </StyledComponentList>
   );
 };
 
-// @prodo
+const FileTree = ({
+  structure,
+  level,
+  selected,
+  select,
+}: {
+  structure: Directory;
+  level: number;
+  selected: FilePath[];
+  select: (selection: FilePath[]) => any;
+}) => (
+  <StyledFileTree>
+    {Object.keys(structure)
+      .sort()
+      .map(segment => {
+        const child = structure[segment];
+        if (typeof child === "string") {
+          const isSelected = selected.includes(child);
+          const add = () => select(selected.concat([child]).sort());
+          const remove = () => select(selected.filter(s => s !== child));
+          return (
+            <li key={segment}>
+              <StyledLink to={`/${child}`} onClick={() => select([child])}>
+                <File level={level} selected={isSelected}>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onClick={event => {
+                      event.stopPropagation();
+                      event.preventDefault();
+                    }}
+                    onChange={event => {
+                      event.stopPropagation();
+                      event.preventDefault();
+                      if (event.target.checked) {
+                        add();
+                      } else {
+                        remove();
+                      }
+                    }}
+                  />{" "}
+                  {segment}
+                </File>
+              </StyledLink>
+            </li>
+          );
+        } else {
+          return (
+            <li key={segment}>
+              <Directory level={level}>{segment}</Directory>
+              <FileTree
+                structure={child}
+                level={level + 1}
+                selected={selected}
+                select={select}
+              />
+            </li>
+          );
+        }
+      })}
+  </StyledFileTree>
+);
+
+const Directory = ({
+  children,
+  ...props
+}: FileProps & {children: React.ReactNode}) => (
+  <StyledDirectory {...props}>{children}</StyledDirectory>
+);
+
+const File = ({
+  children,
+  ...props
+}: FileProps & {children: React.ReactNode}) => (
+  <StyledFile {...props}>{children}</StyledFile>
+);
+
 export default ComponentList;

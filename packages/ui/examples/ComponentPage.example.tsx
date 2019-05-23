@@ -12,8 +12,7 @@ export const noThemes = () => (
       styles: testStyles,
       errors: [],
     }}
-    path={testComponents[0].path}
-    components={[testComponents[0]]}
+    component={testComponents[0]}
     errors={[]}
   />
 );
@@ -22,8 +21,7 @@ noThemes.title = "No Themes";
 export const withThemes = () => (
   <ComponentPage
     context={testContext}
-    path={testComponents[0].path}
-    components={[testComponents[0]]}
+    component={testComponents[0]}
     errors={[]}
   />
 );

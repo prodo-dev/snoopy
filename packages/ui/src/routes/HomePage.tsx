@@ -1,79 +1,58 @@
-import {faCaretDown, faCaretRight} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
 import styled from "styled-components";
-import ComponentList from "../components/ComponentList";
-import Highlighter from "../components/Highlighter";
+import {ComponentContainer} from "../components/ComponentContainer";
+import {Readme, Toggle} from "../components/Docs";
+import {Errors} from "../components/Errors";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Context} from "../models";
-import {paddings} from "../styles";
+import {Component as ComponentModel, Context} from "../models";
+import {margins} from "../styles";
 
 interface Props {
+  components: ComponentModel[];
+  errors: string[];
   context: Context;
 }
 
-const StyledMarkdown = styled.div`
-  max-width: 70ch;
-  line-height: 1.4;
-  a {
-    color: ${({theme}) => theme.colors.textSecondary};
-  }
-
-  .mdx a {
-    padding: 0 ${paddings.small};
-  }
+const Components = styled.div`
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 `;
 
-const StyledDocsToggle = styled.div`
-  font-size: ${({theme}) => theme.fontSizes.subtitle};
-  cursor: pointer;
+const Divider = styled.div`
+  margin: 0 ${margins.large};
+  border-bottom: 1px solid ${props => props.theme.colors.border};
 `;
 
-const HomePage = ({context}: Props) => {
-  const [showDocs, setShowDocs] = React.useState(
-    context.components.length === 0,
-  );
+const HomePage = ({context, components, errors}: Props) => {
   const hasComponents = context.components.length > 0;
-  const mdxComponents = {code: Highlighter};
+
+  if (!hasComponents) {
+    return <Readme />;
+  }
 
   return (
     <StyledPage>
       <StyledPageContents>
-        {showDocs ? (
-          <React.Fragment>
-            {hasComponents && (
-              <StyledDocsToggle onClick={() => setShowDocs(false)}>
-                <FontAwesomeIcon icon={faCaretDown} /> Hide documentation
-              </StyledDocsToggle>
-            )}
-            <MDXProvider components={mdxComponents}>
-              <StyledMarkdown>
-                <p>
-                  <a href="https://github.com/prodo-ai/snoopy">
-                    View the docs here.
-                  </a>
-                </p>
-              </StyledMarkdown>
-            </MDXProvider>
-          </React.Fragment>
-        ) : (
-          hasComponents && (
-            <StyledDocsToggle onClick={() => setShowDocs(true)}>
-              <FontAwesomeIcon icon={faCaretRight} /> Show documentation
-            </StyledDocsToggle>
-          )
-        )}
-        {hasComponents && (
-          <>
-            <h2>Your components</h2>
-            <ComponentList components={context.components} full />
-          </>
-        )}
+        <Toggle>
+          <Readme />
+        </Toggle>
+        <Errors errors={errors} />
+        <Components className="components">
+          {components.map((component, i) => (
+            <React.Fragment key={i}>
+              {i > 0 && <Divider />}
+              <ComponentContainer
+                component={component}
+                themes={context.themes}
+                styles={context.styles}
+              />
+            </React.Fragment>
+          ))}
+        </Components>
       </StyledPageContents>
     </StyledPage>
   );
 };
 
-// @prodo
 export default HomePage;
