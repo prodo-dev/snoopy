@@ -4,6 +4,7 @@ import {renderExample} from "../../App/context";
 import {Example as ExampleModel} from "../../models";
 import {margins, paddings} from "../../styles";
 import Highlighter from "../Highlighter";
+import backgroundImage from "../../media/transparent_background.png";
 
 interface Props {
   example: ExampleModel;
@@ -28,6 +29,25 @@ const Title = styled.div`
 `;
 
 const CodeContainer = styled.div``;
+
+const DarkerJsxContainer = styled.div`
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    url(${backgroundImage}) repeat;
+  margin: 0 auto
+  padding: ${paddings.medium};
+  width: fit-content;
+`;
+
+const JsxContainer = styled.div`
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.7)
+    ),
+    url(${backgroundImage}) repeat;
+`;
 
 const randId = () =>
   Math.random()
@@ -63,7 +83,11 @@ class UserComponentContainer extends React.Component<Props> {
 const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.title}</Title>
-    <UserComponentContainer {...props} />
+    <DarkerJsxContainer>
+      <JsxContainer>
+        <UserComponentContainer {...props} />
+      </JsxContainer>
+    </DarkerJsxContainer>
     {props.example.source != null && (
       <CodeContainer>
         <Highlighter className="language-jsx">

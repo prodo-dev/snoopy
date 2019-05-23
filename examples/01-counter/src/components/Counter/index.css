@@ -1,4 +1,5 @@
 .counter {
+  margin: 0;
   padding: 0 2rem;
   font-size: 3em;
 }
