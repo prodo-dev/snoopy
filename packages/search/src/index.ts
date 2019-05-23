@@ -2,7 +2,11 @@ import * as findUp from "find-up";
 import * as globby from "globby";
 import * as multimatch from "multimatch";
 import * as path from "path";
-import {findComponentExports, findThemeExports} from "./annotations";
+import {
+  findComponentExports,
+  findIgnoredExports,
+  findThemeExports,
+} from "./annotations";
 import {autodetectComponentExports} from "./autodetectVisitor";
 import {findExamples} from "./examples";
 import {getStylesFile} from "./styles";
@@ -85,7 +89,20 @@ const getFiles = async (
   return files;
 };
 
-const detectAndFindComponentExports = (code: string, filepath: string) => {
+const hasDefaultExport = (file: File) => {
+  return file.fileExports.filter(x => x.isDefaultExport).length > 0;
+};
+
+const getExportNames = (file: File) => {
+  return file.fileExports
+    .filter(x => !x.isDefaultExport)
+    .map(x => (x as any).name);
+};
+
+export const detectAndFindComponentExports = (
+  code: string,
+  filepath: string,
+) => {
   const emptyResult = {
     filepath,
     fileExports: [],
@@ -94,18 +111,24 @@ const detectAndFindComponentExports = (code: string, filepath: string) => {
   const detectedExports =
     autodetectComponentExports(code, filepath) || emptyResult;
   const manualExports = findComponentExports(code, filepath) || emptyResult;
+  const ignoredExports = findIgnoredExports(code, filepath) || emptyResult;
   // The parsed source isn't always exactly the same
   // so combine carefully to avoid duplicates
-  const hasDefaultExport =
-    manualExports.fileExports.filter(x => x.isDefaultExport).length > 0;
-  const manualExportNames = manualExports.fileExports
-    .filter(x => !x.isDefaultExport)
-    .map(x => (x as any).name);
-  const combinedExports = manualExports.fileExports;
-  for (const ex of detectedExports.fileExports) {
+  const detectedDefaultExport = hasDefaultExport(detectedExports);
+  const ignoreDefaultExport = hasDefaultExport(ignoredExports);
+  const detectedExportNames = getExportNames(detectedExports);
+  const ignoredExportNames = getExportNames(ignoredExports);
+  const combinedExports = detectedExports.fileExports.filter(x =>
+    x.isDefaultExport
+      ? !ignoreDefaultExport
+      : ignoredExportNames.indexOf(x.name) < 0,
+  );
+  for (const ex of manualExports.fileExports) {
     if (
-      (ex.isDefaultExport && !hasDefaultExport) ||
-      (!ex.isDefaultExport && manualExportNames.indexOf(ex.name) < 0)
+      (ex.isDefaultExport && !detectedDefaultExport && !ignoreDefaultExport) ||
+      (!ex.isDefaultExport &&
+        detectedExportNames.indexOf(ex.name) < 0 &&
+        ignoredExportNames.indexOf(ex.name) < 0)
     ) {
       combinedExports.push(ex);
     }

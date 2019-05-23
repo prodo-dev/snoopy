@@ -9,7 +9,6 @@ import Increment from "../Increment";
 
 import "./index.css";
 
-// @snoopy
 export const App = () => {
   const [count, setCount] = React.useState(0);
   return (

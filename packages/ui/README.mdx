@@ -40,6 +40,8 @@ To interact with the UI, go to [localhost:3042/][local snoopy] (or a different p
 Snoopy will detect most exported components automatically.
 If you find any that are missing, add `// @snoopy` above the export line to
 display/preview/visualize it (and let us know so we can detect it in the future).
+If you want Snoopy to ignore your component, put the `// @snoopy:ignore` tag
+above the export line.
 
 For pure components, you don't need to do anything else. If your component requires
 props to be passed in, you will need to define examples.
