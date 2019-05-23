@@ -1,4 +1,6 @@
 import {checkMatch} from "@prodo-ai/snoopy-search";
+// tslint:disable-next-line:no-submodule-imports
+import {ignored} from "@prodo-ai/snoopy-search/src/utils";
 import * as chokidar from "chokidar";
 import {generateComponentsFileContents} from "./generate";
 
@@ -12,7 +14,7 @@ export const watchComponentsFile = async (
     .watch(".", {
       cwd,
       ignoreInitial: true,
-      ignored: /node_modules|\.git|flycheck_*/,
+      ignored,
     })
     .on("all", async (_, filename) => {
       try {

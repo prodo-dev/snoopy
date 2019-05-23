@@ -16,6 +16,15 @@ const reactImport = `import * as React from "react";`;
 const wait = async (delay: number) =>
   new Promise(resolve => setTimeout(resolve, delay));
 
+const waitUntil = async (test: () => boolean) => {
+  await wait(10);
+  if (test()) {
+    return;
+  }
+
+  waitUntil(test);
+};
+
 const writeFileToPath = async (filepath: string, contents: string) => {
   const fullpath = path.join(dir.name, filepath);
   await makeDir(path.dirname(fullpath));
@@ -86,8 +95,7 @@ describe("watchComponentsFile", () => {
     await wait(500);
     await writeExampleFile(`export const basic = () => <div />;`);
 
-    await wait(500);
-    expect(triggered).toBe(true);
+    await waitUntil(() => triggered);
 
     watcher.close();
   });
@@ -104,8 +112,7 @@ describe("watchComponentsFile", () => {
 export default () => <div />;
 export const Test = () => <div />;`);
 
-    await wait(500);
-    expect(triggered).toBe(true);
+    await waitUntil(() => triggered);
 
     watcher.close();
   });
@@ -124,8 +131,7 @@ export const Test = () => <div />;`);
     await wait(500);
     await writeSrcFile(`export default () => <div />;`);
 
-    await wait(500);
-    expect(triggered).toBe(true);
+    waitUntil(() => triggered);
 
     watcher.close();
   });
@@ -139,6 +145,25 @@ export const Test = () => <div />;`);
 
     await wait(500);
     await writeSrcFile(`export default () => <div>changed</div>;`);
+
+    await wait(500);
+    expect(triggered).toBe(false);
+
+    watcher.close();
+  });
+
+  it("does not trigger callback when ignored file changes", async () => {
+    let triggered = false;
+
+    watcher = await watchComponentsFile(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeFileToPath("node_modules/lib/index.js", "");
+    await writeFileToPath("test/lib/index.js", "");
+    await writeFileToPath("src/Button.test.js", "");
+    await writeFileToPath("src/flycheck_Button.js", "");
 
     await wait(500);
     expect(triggered).toBe(false);
