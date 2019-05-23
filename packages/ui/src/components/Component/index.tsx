@@ -54,5 +54,4 @@ const Component = (props: Props) => {
   );
 };
 
-// @prodo
 export default Component;

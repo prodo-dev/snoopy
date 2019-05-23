@@ -48,5 +48,4 @@ const Highlighter = ({
   );
 };
 
-// @prodo
 export default Highlighter;

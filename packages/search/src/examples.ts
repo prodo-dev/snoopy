@@ -19,14 +19,14 @@ export const findExampleFilePaths = async (
     return [];
   }
 
-  const prodoDir = path.resolve(projectRoot, examplesDirectoryName);
-  const prodoDirExists = await exists(prodoDir);
-  if (!prodoDirExists) {
+  const snoopyDir = path.resolve(projectRoot, examplesDirectoryName);
+  const snoopyDirExists = await exists(snoopyDir);
+  if (!snoopyDirExists) {
     return [];
   }
 
   const exampleResult = await globby(exampleFileGlob, {
-    cwd: prodoDir,
+    cwd: snoopyDir,
   });
 
   return exampleResult.map(f =>

@@ -26,7 +26,7 @@ export interface Theme {
   };
 }
 
-// @prodo:theme
+// @snoopy:theme
 export const darkTheme: Theme = {
   colors: {
     bg: "#282c34",
@@ -39,8 +39,8 @@ export const darkTheme: Theme = {
     errorBg: "#f8f8f2",
   },
   fonts: {
-    text: "'Ubuntu', sans-serif",
-    code: "'Source Code Pro', 'Consolas', monospace",
+    text: '-apple-system, "Segoe UI", "Ubuntu", "Helvetica", sans-serif',
+    code: '"Source Code Pro", "Menlo", "Consolas", monospace',
   },
   fontSizes: {
     title: "18pt",

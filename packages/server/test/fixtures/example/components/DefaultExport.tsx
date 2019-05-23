@@ -1,4 +1,4 @@
 import * as React from "react";
 
-// @prodo
+// @snoopy
 export default (props: any) => <button {...props}>{props.children}</button>;

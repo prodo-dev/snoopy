@@ -1,5 +1,8 @@
 import * as path from "path";
-import {generateComponentsFileContents} from "../src/generate";
+import {
+  generateComponentsFileContents,
+  generateLibsFile,
+} from "../src/generate";
 
 const searchDir = path.resolve(__dirname, "fixtures", "example");
 const brokenDir = path.resolve(__dirname, "fixtures", "broken");
@@ -138,8 +141,14 @@ describe("generateComponentsFileContents", () => {
     expect(/import .* from "examples\/broken\.ts";/.test(contents)).toBe(false);
   });
 
-  it("snapshot test", async () => {
+  it("snapshot generate component test", async () => {
     const contents = await generateComponentsFileContents(clientDir, searchDir);
+
+    expect(contents).toMatchSnapshot();
+  });
+
+  it("snapshot generate lib test", async () => {
+    const contents = await generateLibsFile();
 
     expect(contents).toMatchSnapshot();
   });

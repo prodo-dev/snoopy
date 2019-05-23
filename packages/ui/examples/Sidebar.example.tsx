@@ -9,6 +9,10 @@ export const openEmpty = () => (
     isOpen={true}
     setSidebarOpen={() => alert("setSidebarOpen")}
     components={[]}
+    select={() => {
+      alert("select");
+    }}
+    selected={[]}
   />
 );
 openEmpty.title = "Open empty";
@@ -18,6 +22,10 @@ export const closedEmpty = () => (
     isOpen={false}
     setSidebarOpen={() => alert("setSidebarOpen")}
     components={[]}
+    select={() => {
+      alert("select");
+    }}
+    selected={[]}
   />
 );
 closedEmpty.title = "Closed empty";
@@ -27,6 +35,10 @@ export const openWithComponents = () => (
     isOpen={true}
     setSidebarOpen={() => alert("setSidebarOpen")}
     components={testComponents}
+    select={() => {
+      alert("select");
+    }}
+    selected={[]}
   />
 );
 openWithComponents.title = "Open with components";
@@ -36,6 +48,10 @@ export const closedWithComponents = () => (
     isOpen={false}
     setSidebarOpen={() => alert("setSidebarOpen")}
     components={testComponents}
+    select={() => {
+      alert("select");
+    }}
+    selected={[]}
   />
 );
 closedWithComponents.title = "Closed with components";

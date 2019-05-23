@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generateComponentsFileContents snapshot test 1`] = `
+exports[`generateComponentsFileContents snapshot generate component test 1`] = `
 "import {Button as Component0} from \\"example/components/BadExport.tsx\\";
 import Component1 from \\"example/components/DefaultExport.tsx\\";
 import Component2, {Button as Component3, Button2 as Component4} from \\"example/components/Mixed.tsx\\";
@@ -16,25 +16,6 @@ import {theme2 as Theme2} from \\"example/themes/mixed.ts\\";
 import Theme3, {theme as Theme4, theme2 as Theme5} from \\"example/themes/multiple-exports.ts\\";
 import {theme as Theme6} from \\"example/themes/named-export.ts\\";
 import {Button as Component15} from \\"example/typescript.tsx\\";
-
-import * as React from \\"react\\";
-import * as ReactDOM from \\"react-dom\\";
-
-export { React as UserReact, ReactDOM as UserReactDOM };
-
-export let StyledComponents;
-try {
-  StyledComponents = require(\\"styled-components\\");
-} catch (e) {
-  StyledComponents = null;
-}
-
-export let ReactRouterDOM;
-try {
-  ReactRouterDOM = require(\\"react-router-dom\\");
-} catch (e) {
-  ReactRouterDOM = null;
-}
 
 export const components = [
   {path: \\"components/BadExport.tsx\\", name: \\"Button\\", component: Component0},
@@ -56,9 +37,9 @@ export const components = [
 ];
 
 export const errors = [
-  {path: \\"components/BadExport.tsx\\": errors: [\\"The \`@prodo\` tag must be directly above an exported React component.\\"]},
+  {path: \\"components/BadExport.tsx\\": errors: [\\"The \`@snoopy\` tag must be directly above an exported React component.\\"]},
   {path: \\"components/UnParsable.tsx\\": errors: [\\"Error parsing file: Unexpected token, expected \\\\\\";\\\\\\" (2:6)\\",
-  \\"Error processing file: unknown: Unexpected token, expected \\\\\\";\\\\\\" (2:6)\\\\n\\\\n\\\\u001b[0m \\\\u001b[90m 1 | \\\\u001b[39m\\\\u001b[90m// @prodo\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m\\\\u001b[31m\\\\u001b[1m>\\\\u001b[22m\\\\u001b[39m\\\\u001b[90m 2 | \\\\u001b[39mexpor \\\\u001b[36mconst\\\\u001b[39m \\\\u001b[33mUnParsable\\\\u001b[39m () \\\\u001b[33m=>\\\\u001b[39m {}\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m   | \\\\u001b[39m      \\\\u001b[31m\\\\u001b[1m^\\\\u001b[22m\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m 3 | \\\\u001b[39m\\\\u001b[0m\\"]}
+  \\"Error processing file: unknown: Unexpected token, expected \\\\\\";\\\\\\" (2:6)\\\\n\\\\n\\\\u001b[0m \\\\u001b[90m 1 | \\\\u001b[39m\\\\u001b[90m// @snoopy\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m\\\\u001b[31m\\\\u001b[1m>\\\\u001b[22m\\\\u001b[39m\\\\u001b[90m 2 | \\\\u001b[39mexpor \\\\u001b[36mconst\\\\u001b[39m \\\\u001b[33mUnParsable\\\\u001b[39m () \\\\u001b[33m=>\\\\u001b[39m {}\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m   | \\\\u001b[39m      \\\\u001b[31m\\\\u001b[1m^\\\\u001b[22m\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m 3 | \\\\u001b[39m\\\\u001b[0m\\"]}
 ];
 
 export const themes = [
@@ -81,4 +62,25 @@ export const examples = [
   ]}
 ];
 "
+`;
+
+exports[`generateComponentsFileContents snapshot generate lib test 1`] = `
+"import * as React from \\"react\\";
+import * as ReactDOM from \\"react-dom\\";
+
+export { React as UserReact, ReactDOM as UserReactDOM };
+
+export let StyledComponents;
+try {
+  StyledComponents = require(\\"styled-components\\");
+} catch (e) {
+  StyledComponents = null;
+}
+
+export let ReactRouterDOM;
+try {
+  ReactRouterDOM = require(\\"react-router-dom\\");
+} catch (e) {
+  ReactRouterDOM = null;
+}"
 `;

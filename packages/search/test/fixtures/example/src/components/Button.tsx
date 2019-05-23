@@ -2,5 +2,5 @@ import * as React from "react";
 
 const Button = ({children}) => <button>{children}</button>;
 
-// @prodo
+// @snoopy
 export default Button;

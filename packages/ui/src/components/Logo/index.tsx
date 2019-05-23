@@ -10,5 +10,4 @@ const StyledLogo = styled.img`
   cursor: pointer;
 `;
 
-// @prodo
 export default () => <StyledLogo src={logo} alt="" className="logo" />;

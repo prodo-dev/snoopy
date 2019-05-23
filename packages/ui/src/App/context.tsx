@@ -13,10 +13,12 @@ import {
 } from "../models";
 import {paddings} from "../styles";
 
-// tslint:disable-next-line:no-var-requires
+// tslint:disable:no-var-requires
 const userImport = require(process.env.PRODO_COMPONENTS_FILE!);
+const libImport = require(process.env.PRODO_LIB_FILE!);
+// tslint:enable
 
-const {UserReact, UserReactDOM, StyledComponents, ReactRouterDOM} = userImport;
+const {UserReact, UserReactDOM, StyledComponents, ReactRouterDOM} = libImport;
 const React = UserReact;
 const ThemeProvider =
   StyledComponents != null ? StyledComponents.ThemeProvider : null;
@@ -89,7 +91,7 @@ const JsxContainer = styled.div`
   all: initial;
 `;
 
-export const userBodyId = "prodo-user-body";
+export const userBodyId = "snoopy-user-body";
 const ApplyStyles = styled.div<{allStyles: string}>`
   ${props => props.allStyles}
 `;

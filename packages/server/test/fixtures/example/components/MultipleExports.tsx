@@ -1,14 +1,14 @@
 import * as React from "react";
 
-// @prodo
+// @snoopy
 export const Button = (props: any) => (
   <button {...props}>{props.children}</button>
 );
 
-// @prodo
+// @snoopy
 export const Button2 = (props: any) => (
   <button {...props}>{props.children}</button>
 );
 
-// @prodo
+// @snoopy
 export default (props: any) => <button {...props}>{props.children}</button>;
