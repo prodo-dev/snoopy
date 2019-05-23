@@ -33,22 +33,28 @@ storiesOf("Sidebar", module)
   .addDecorator((storyFn: any) => <Router>{storyFn()}</Router>)
   .add("closed", () => (
     <Sidebar
+      components={components}
       isOpen={false}
       setSidebarOpen={action("setSidebarOpen")}
-      components={components}
+      selected={[]}
+      select={action("select")}
     />
   ))
   .add("open and empty", () => (
     <Sidebar
+      components={[]}
       isOpen={true}
       setSidebarOpen={action("setSidebarOpen")}
-      components={[]}
+      selected={[]}
+      select={action("select")}
     />
   ))
   .add("open with components", () => (
     <Sidebar
+      components={components}
       isOpen={true}
       setSidebarOpen={action("setSidebarOpen")}
-      components={components}
+      selected={[]}
+      select={action("select")}
     />
   ));

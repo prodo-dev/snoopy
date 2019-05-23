@@ -4,6 +4,7 @@ import {Component as ComponentModel} from "@prodo-ai/snoopy-ui/src/models";
 import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
 // tslint:enable
 
+import {action} from "@storybook/addon-actions";
 import {storiesOf} from "@storybook/react";
 import * as React from "react";
 import {BrowserRouter as Router} from "react-router-dom";
@@ -38,17 +39,34 @@ storiesOf("Component List", module)
     <ThemeProvider theme={darkTheme}>{storyFn()}</ThemeProvider>
   ))
   .addDecorator(storyFn => <Router>{storyFn()}</Router>)
-  .add("empty", () => <ComponentList components={[]} />)
-  .add("single item", () => <ComponentList components={[OneModel]} />)
+  .add("empty", () => (
+    <ComponentList components={[]} selected={[]} select={action("select")} />
+  ))
+  .add("single item", () => (
+    <ComponentList
+      components={[OneModel]}
+      selected={[]}
+      select={action("select")}
+    />
+  ))
   .add("single item with selection", () => (
-    <ComponentList selected={OneModel.path} components={[OneModel]} />
+    <ComponentList
+      components={[OneModel]}
+      selected={[OneModel.path]}
+      select={action("select")}
+    />
   ))
   .add("multiple items", () => (
-    <ComponentList components={[OneModel, TwoModel, ThreeModel]} />
+    <ComponentList
+      components={[OneModel, TwoModel, ThreeModel]}
+      selected={[]}
+      select={action("select")}
+    />
   ))
   .add("multiple items with selection", () => (
     <ComponentList
-      selected={TwoModel.path}
       components={[OneModel, TwoModel, ThreeModel]}
+      selected={[TwoModel.path]}
+      select={action("select")}
     />
   ));

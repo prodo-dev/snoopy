@@ -12,7 +12,7 @@ import {
   SidebarClosedWidth,
   SidebarWidth,
 } from "../../styles";
-import ComponentList from "../ComponentList";
+import ComponentList, {FilePath} from "../ComponentList";
 import Logo from "../Logo";
 import {NarrowScreen, WideScreen} from "../Responsive";
 
@@ -101,10 +101,11 @@ const SidebarIcon = styled.span`
 `;
 
 interface Props {
-  isOpen: boolean;
-  selected?: string;
-  setSidebarOpen: (open: boolean) => any;
   components: Component[];
+  isOpen: boolean;
+  setSidebarOpen: (open: boolean) => any;
+  selected: FilePath[];
+  select: (selection: FilePath[]) => any;
 }
 
 const Overlay = ({
@@ -127,7 +128,6 @@ const Overlay = ({
   />
 );
 
-// @prodo
 export const SidebarToggle = ({
   isOpen,
   setSidebarOpen,
@@ -168,8 +168,9 @@ const Sidebar = (props: Props) => (
           </HeaderContainer>
           <Separator />
           <ComponentList
-            selected={props.selected}
             components={props.components}
+            selected={props.selected}
+            select={props.select}
           />
         </React.Fragment>
       ) : (
@@ -187,5 +188,4 @@ const Sidebar = (props: Props) => (
   </React.Fragment>
 );
 
-// @prodo
 export default Sidebar;

@@ -55,5 +55,4 @@ class ErrorBoundary extends React.Component<Props> {
   },
 ];
 
-// @prodo
 export default ErrorBoundary;

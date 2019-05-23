@@ -6,10 +6,12 @@ export const StyledPage = styled.div`
   margin: ${margins.none};
   width: 100%;
   min-height: 100vh;
+  display: flex;
   background-color: ${props => props.theme.colors.bg};
 `;
 
 export const StyledPageContents = styled.div`
-  padding: ${paddings.large};
+  padding: ${paddings.medium};
+  flex-grow: 1;
   color: ${props => props.theme.colors.text};
 `;
