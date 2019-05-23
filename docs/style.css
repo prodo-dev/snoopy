@@ -62,7 +62,7 @@ h2 {
 
 h3 {
   margin: 0 0 1rem;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--pop-color);
 }
 
@@ -102,6 +102,10 @@ code {
   font-size: 1.2em;
 }
 
+.opening {
+  font-size: 1.5rem;
+}
+
 .key-features {
   display: flex;
   margin: 0;
@@ -124,8 +128,8 @@ code {
   padding: 0 1rem 0.5rem 0;
 }
 
-.key-features li > :last-child {
-  margin-bottom: 0;
+.key-features p {
+  margin: 1rem 0 0;
   padding-bottom: 0;
 }
 
