@@ -5,10 +5,10 @@ import {generateComponentsFileContents} from "./generate";
 export const watchComponentsFile = async (
   cwd: string,
   onComponentsFileChange: () => void,
-) => {
+): Promise<chokidar.FSWatcher> => {
   let generated = await generateComponentsFileContents(".", cwd);
 
-  chokidar
+  return chokidar
     .watch(".", {
       cwd,
       ignoreInitial: true,
