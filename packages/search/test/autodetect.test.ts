@@ -9,7 +9,6 @@ import Increment from "../Increment";
 
 import "./index.css";
 
-// @prodo
 export const App = () => {
   const [count, setCount] = React.useState(0);
   return (
@@ -279,7 +278,7 @@ export const One111 = () => <div />;
 
 test("component name is capitalized when directory name is not", () => {
   const contents = `
-// @prodo
+// @snoopy
 export default () => <div />;
 `.trim();
 

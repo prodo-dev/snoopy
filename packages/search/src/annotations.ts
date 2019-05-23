@@ -1,23 +1,30 @@
 import {findFileExports, mkExportVisitor} from "./exportVisitor";
 import {File} from "./types";
 
-const prodoComponentRegex = /^\s*@prodo(\s|$)/;
+const snoopyComponentRegex = /^\s*@snoopy(\s|$)/;
 const componentVisitor = mkExportVisitor({
-  lineRegex: prodoComponentRegex,
+  lineRegex: snoopyComponentRegex,
   invalidProdoTagError:
-    "The `@prodo` tag must be directly above an exported React component.",
+    "The `@snoopy` tag must be directly above an exported React component.",
 });
 
-const prodoThemeRegex = /^\s*@prodo:theme\b/;
+const snoopyComponentIgnoreRegex = /^\s*@snoopy:ignore\b/;
+const componentIgnoreVisitor = mkExportVisitor({
+  lineRegex: snoopyComponentIgnoreRegex,
+  invalidProdoTagError:
+    "The `@snoopy:ignore` tag must be directly above an exported React component.",
+});
+
+const snoopyThemeRegex = /^\s*@snoopy:theme\b/;
 const themeVisitor = mkExportVisitor({
-  lineRegex: prodoThemeRegex,
+  lineRegex: snoopyThemeRegex,
   invalidProdoTagError:
-    "The `@prodo:theme` tag must be directly above an exported theme.",
+    "The `@snoopy:theme` tag must be directly above an exported theme.",
 });
 
-const prodoFileRegex = /\/\/\s*@prodo/;
+const snoopyFileRegex = /\/\/\s*@snoopy/;
 const isPossibleProdoFile = (code: string): boolean =>
-  prodoFileRegex.test(code);
+  snoopyFileRegex.test(code);
 
 export const findComponentExports = (
   code: string,
@@ -39,4 +46,15 @@ export const findThemeExports = (
   }
 
   return findFileExports(themeVisitor, code, filepath);
+};
+
+export const findIgnoredExports = (
+  code: string,
+  filepath: string,
+): File | null => {
+  if (!isPossibleProdoFile(code)) {
+    return null;
+  }
+
+  return findFileExports(componentIgnoreVisitor, code, filepath);
 };

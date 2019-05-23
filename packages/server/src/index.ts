@@ -39,25 +39,25 @@ export const start = async (
 ) => {
   const app = Express();
 
-  const prodoComponentsModule = path.join(
+  const snoopyComponentsModule = path.join(
     searchDir,
     "node_modules",
-    "@prodo",
+    "@snoopy",
     "components",
   );
-  const componentsFile = path.join(prodoComponentsModule, "index.ts");
-  const libFile = path.join(prodoComponentsModule, "lib.ts");
+  const componentsFile = path.join(snoopyComponentsModule, "index.ts");
+  const libFile = path.join(snoopyComponentsModule, "lib.ts");
 
   await makeDir(path.dirname(componentsFile));
   await writeFile(componentsFile, "");
   await writeFile(libFile, "");
 
   // Parcel expects folders in node_modules to have package.json
-  const packageFile = path.join(prodoComponentsModule, "package.json");
+  const packageFile = path.join(snoopyComponentsModule, "package.json");
 
   await writeFile(
     packageFile,
-    JSON.stringify({name: "@prodo/components", main: "index.ts"}),
+    JSON.stringify({name: "@snoopy/components", main: "index.ts"}),
   );
 
   const bundler = createBundler({

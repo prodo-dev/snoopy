@@ -18,7 +18,7 @@ export default (props: Props) => (
   </button>
 );
 
-// @prodo:theme
+// @snoopy:theme
 export const MyTheme = {
   foo: "bar",
 };

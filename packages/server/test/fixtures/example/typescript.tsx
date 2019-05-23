@@ -1,6 +1,6 @@
 import * as React from "react";
 
-// @prodo
+// @snoopy
 export const Button = (props: any) => (
   <button {...props}>{props.children}</button>
 );
