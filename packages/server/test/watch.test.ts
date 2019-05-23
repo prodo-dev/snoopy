@@ -110,6 +110,26 @@ export const Test = () => <div />;`);
     watcher.close();
   });
 
+  it("does trigger callback when component removed", async () => {
+    let triggered = false;
+
+    await writeSrcFile(`
+export default () => <div />;
+export const Test = () => <div />;`);
+
+    watcher = await watchComponentsFile(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeSrcFile(`export default () => <div />;`);
+
+    await wait(500);
+    expect(triggered).toBe(true);
+
+    watcher.close();
+  });
+
   it("does not trigger callback when source changes", async () => {
     let triggered = false;
 
@@ -118,7 +138,7 @@ export const Test = () => <div />;`);
     });
 
     await wait(500);
-    await writeSrcFile(`export default () => <p />;`);
+    await writeSrcFile(`export default () => <div>changed</div>;`);
 
     await wait(500);
     expect(triggered).toBe(false);
