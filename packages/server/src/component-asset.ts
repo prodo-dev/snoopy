@@ -1,5 +1,5 @@
 import * as path from "path";
-import {generateComponentsFileContents, generateLibs} from "./generate";
+import {generateComponentsFileContents, generateLibsFile} from "./generate";
 
 // tslint:disable-next-line:no-submodule-imports
 import TypeScriptAsset = require("parcel-bundler/src/assets/TypeScriptAsset");
@@ -18,7 +18,7 @@ class ComponentAsset extends TypeScriptAsset {
 
       return this.contents;
     } else if (libsFileRegex.test(this.name)) {
-      this.contents = generateLibs();
+      this.contents = generateLibsFile();
       return this.contents;
     }
 

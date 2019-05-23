@@ -243,7 +243,7 @@ export const examples = [
 `.trimLeft();
 };
 
-export const generateLibs = (): string =>
+export const generateLibsFile = (): string =>
   `
 import * as React from "react";
 import * as ReactDOM from "react-dom";
