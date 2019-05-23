@@ -71,8 +71,5 @@
       "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/__mocks__/fileMock.js",
       "@prodo-ai/components$": "<rootDir>/__mocks__/componentsMock.ts"
     }
-  },
-  "alias": {
-    "react-dom": "@hot-loader/react-dom"
   }
 }

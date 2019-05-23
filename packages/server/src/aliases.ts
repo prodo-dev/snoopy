@@ -5,11 +5,17 @@ interface Alias {
   getNewFilename: (oldFilename: string, parent: string) => string;
 }
 
+const snoopyPackage = (name: string) => (_: string, parent: string) =>
+  path.relative(path.dirname(parent), require.resolve(name));
+
 const aliases: Alias[] = [
   {
     regex: /^styled-components$/,
-    getNewFilename: (_: string, parent: string) =>
-      path.relative(path.dirname(parent), require.resolve("styled-components")),
+    getNewFilename: snoopyPackage("styled-components"),
+  },
+  {
+    regex: /^react-dom$/,
+    getNewFilename: snoopyPackage("@hot-loader/react-dom"),
   },
 ];
 
