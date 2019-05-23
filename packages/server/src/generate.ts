@@ -221,25 +221,6 @@ export const generateComponentsFileContents = async (
   return `
 ${importLines}
 
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-
-export { React as UserReact, ReactDOM as UserReactDOM };
-
-export let StyledComponents;
-try {
-  StyledComponents = require("styled-components");
-} catch (e) {
-  StyledComponents = null;
-}
-
-export let ReactRouterDOM;
-try {
-  ReactRouterDOM = require("react-router-dom");
-} catch (e) {
-  ReactRouterDOM = null;
-}
-
 export const components = [
   ${componentsArrayString}
 ];
@@ -261,3 +242,25 @@ export const examples = [
 ];
 `.trimLeft();
 };
+
+export const generateLibsFile = (): string =>
+  `
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+
+export { React as UserReact, ReactDOM as UserReactDOM };
+
+export let StyledComponents;
+try {
+  StyledComponents = require("styled-components");
+} catch (e) {
+  StyledComponents = null;
+}
+
+export let ReactRouterDOM;
+try {
+  ReactRouterDOM = require("react-router-dom");
+} catch (e) {
+  ReactRouterDOM = null;
+}
+`.trim();

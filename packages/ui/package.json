@@ -20,8 +20,8 @@
   "scripts": {
     "start": "parcel public/index.html",
     "build": "tsc --build",
-    "clean": "rm -rf dist *.tsbuildinfo",
-    "test": "PRODO_COMPONENTS_FILE=@prodo-ai/components jest",
+    "clean": "rm -rf build dist *.tsbuildinfo",
+    "test": "PRODO_COMPONENTS_FILE=@prodo-ai/components PRODO_LIB_FILE=@prodo-ai/components jest",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
