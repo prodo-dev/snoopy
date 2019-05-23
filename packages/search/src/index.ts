@@ -1,5 +1,6 @@
 import * as findUp from "find-up";
 import * as globby from "globby";
+import * as _ from "lodash";
 import * as multimatch from "multimatch";
 import * as path from "path";
 import {
@@ -112,27 +113,17 @@ export const detectAndFindComponentExports = (
     autodetectComponentExports(code, filepath) || emptyResult;
   const manualExports = findComponentExports(code, filepath) || emptyResult;
   const ignoredExports = findIgnoredExports(code, filepath) || emptyResult;
-  // The parsed source isn't always exactly the same
-  // so combine carefully to avoid duplicates
-  const detectedDefaultExport = hasDefaultExport(detectedExports);
   const ignoreDefaultExport = hasDefaultExport(ignoredExports);
-  const detectedExportNames = getExportNames(detectedExports);
   const ignoredExportNames = getExportNames(ignoredExports);
-  const combinedExports = detectedExports.fileExports.filter(x =>
+  const allExports = _.uniqBy(
+    detectedExports.fileExports.concat(manualExports.fileExports),
+    x => x.isDefaultExport || (!x.isDefaultExport && x.name),
+  );
+  const combinedExports = allExports.filter(x =>
     x.isDefaultExport
       ? !ignoreDefaultExport
       : ignoredExportNames.indexOf(x.name) < 0,
   );
-  for (const ex of manualExports.fileExports) {
-    if (
-      (ex.isDefaultExport && !detectedDefaultExport && !ignoreDefaultExport) ||
-      (!ex.isDefaultExport &&
-        detectedExportNames.indexOf(ex.name) < 0 &&
-        ignoredExportNames.indexOf(ex.name) < 0)
-    ) {
-      combinedExports.push(ex);
-    }
-  }
 
   return {
     filepath,
