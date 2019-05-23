@@ -91,7 +91,7 @@ const JsxContainer = styled.div`
   all: initial;
 `;
 
-export const userBodyId = "prodo-user-body";
+export const userBodyId = "snoopy-user-body";
 const ApplyStyles = styled.div<{allStyles: string}>`
   ${props => props.allStyles}
 `;

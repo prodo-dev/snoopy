@@ -1,5 +1,5 @@
-// @prodo
+// @snoopy
 export const Button = () => {};
 
-// @prodo
+// @snoopy
 const x = 2;

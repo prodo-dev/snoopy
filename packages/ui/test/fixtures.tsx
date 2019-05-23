@@ -79,7 +79,7 @@ export const testStyles = [
     name: "testStyles",
     path: "index.css",
     style: `
-/* @prodo:styles */
+/* @snoopy:styles */
 body {
   font-style: italic;
 }

@@ -38,7 +38,7 @@ To interact with the UI, go to [localhost:3042/][local snoopy] (or a different p
 ### Components
 
 Snoopy will detect most exported components automatically.
-If you find any that are missing, add `// @prodo` above the export line to
+If you find any that are missing, add `// @snoopy` above the export line to
 display/preview/visualize it (and let us know so we can detect it in the future).
 
 For pure components, you don't need to do anything else. If your component requires
@@ -77,10 +77,10 @@ You can also use Snoopy with TypeScript.
 ### Styles & Themes
 
 If you use the `styled-components` ThemeProvider, you can also annotate your
-exported themes with `// @prodo:theme` to visualize your components in different
+exported themes with `// @snoopy:theme` to visualize your components in different
 themes.
 
-If you want to include any application-level CSS files, just put a `/* @prodo:styles */` comment anywhere inside the file, and they will be applied to
+If you want to include any application-level CSS files, just put a `/* @snoopy:styles */` comment anywhere inside the file, and they will be applied to
 all your examples.
 
 ## What is and isn't supported yet

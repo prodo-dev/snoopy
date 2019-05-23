@@ -3,7 +3,7 @@ import {FileError} from "../src/types";
 
 test("gets theme imports for single named export", () => {
   const contents = `
-  // @prodo:theme
+  // @snoopy:theme
   export const pinkTheme = {}
 `.trim();
 
@@ -18,7 +18,7 @@ test("gets theme imports for single named export", () => {
 
 test("gets component imports for 'export var'", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export var pinkTheme = {}
 `.trim();
 
@@ -33,7 +33,7 @@ export var pinkTheme = {}
 
 test("gets component imports for 'export let'", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export let pinkTheme = {}
 `.trim();
 
@@ -48,12 +48,12 @@ export let pinkTheme = {}
 
 test("gets theme imports for multiple named exports", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export const pinkTheme = {}
 
 export const greenTheme = {}
 
-// @prodo:theme
+// @snoopy:theme
 export const darkTheme = {}
 `.trim();
 
@@ -71,7 +71,7 @@ export const darkTheme = {}
 
 test("gets theme imports for single named export in index.ts file", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export const pinkTheme = {}
 `.trim();
 
@@ -86,7 +86,7 @@ export const pinkTheme = {}
 
 test("gets theme imports for default export", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export default {
     colors: {
       bg: "#662a48",
@@ -106,7 +106,7 @@ export default {
 
 test("gets theme imports for default export in index.ts file", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export default {}
 `.trim();
 
@@ -124,7 +124,7 @@ export default {}
 
 test("gets theme imports with an underscore in the name", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export const pink_theme = {}
 `.trim();
 
@@ -139,7 +139,7 @@ export const pink_theme = {}
 
 test("gets theme imports with a number in the name", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export const pink1Theme1 = {}
 `.trim();
 
@@ -152,9 +152,9 @@ export const pink1Theme1 = {}
   });
 });
 
-test("catch error when prodo theme comment is on non-export", () => {
+test("catch error when snoopy theme comment is on non-export", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 const foo = "bar"
 `.trim();
 
@@ -166,27 +166,27 @@ const foo = "bar"
     errors: [
       new FileError(
         "/path/to/file/index.ts",
-        "The `@prodo:theme` tag must be directly above an exported theme.",
+        "The `@snoopy:theme` tag must be directly above an exported theme.",
       ),
     ],
   });
 });
 
-test("gets theme with various types of prodo comments", () => {
+test("gets theme with various types of snoopy comments", () => {
   const contents = `
-// @prodo:theme
+// @snoopy:theme
 export const pinkTheme = {}
 
-//@prodo:theme
+//@snoopy:theme
 export const greenTheme = {}
 
-//    @prodo:theme
+//    @snoopy:theme
 export const darkTheme = {}
 
-    //  @prodo:theme
+    //  @snoopy:theme
 export const lightTheme = {}
 
-//  @prodobot
+//  @snoopy
 export const otherTheme = {}
 `.trim();
 
