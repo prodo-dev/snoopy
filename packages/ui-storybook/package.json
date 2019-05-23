@@ -13,10 +13,9 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^16.8.6",
     "@prodo-ai/snoopy-ui": "^0.1.8",
     "react": "^16.8.6",
-    "react-dom": "npm:@hot-loader/react-dom",
+    "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0"
   },
