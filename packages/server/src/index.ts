@@ -6,8 +6,8 @@ import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
 import {exists, writeFile} from "./utils";
-import registerWebsockets from "./websockets";
 import {watchComponentsFile} from "./watch";
+import registerWebsockets from "./websockets";
 
 const clientDir = path.dirname(
   path.dirname(require.resolve("@prodo-ai/snoopy-ui")),
