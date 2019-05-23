@@ -8,6 +8,13 @@ const componentVisitor = mkExportVisitor({
     "The `@snoopy` tag must be directly above an exported React component.",
 });
 
+const snoopyComponentIgnoreRegex = /^\s*@snoopy:ignore\b/;
+const componentIgnoreVisitor = mkExportVisitor({
+  lineRegex: snoopyComponentIgnoreRegex,
+  invalidProdoTagError:
+    "The `@snoopy:ignore` tag must be directly above an exported React component.",
+});
+
 const snoopyThemeRegex = /^\s*@snoopy:theme\b/;
 const themeVisitor = mkExportVisitor({
   lineRegex: snoopyThemeRegex,
@@ -39,4 +46,15 @@ export const findThemeExports = (
   }
 
   return findFileExports(themeVisitor, code, filepath);
+};
+
+export const findIgnoredExports = (
+  code: string,
+  filepath: string,
+): File | null => {
+  if (!isPossibleProdoFile(code)) {
+    return null;
+  }
+
+  return findFileExports(componentIgnoreVisitor, code, filepath);
 };

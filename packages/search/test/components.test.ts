@@ -1,4 +1,4 @@
-import {findComponentExports} from "../src/annotations";
+import {findComponentExports, findIgnoredExports} from "../src/annotations";
 import {FileError} from "../src/types";
 
 test("gets component imports for single named export", () => {
@@ -373,6 +373,21 @@ export { Foo as One, Bar }
       {name: "One", isDefaultExport: false, source: undefined},
       {name: "Bar", isDefaultExport: false, source: undefined},
     ],
+    errors: [],
+  });
+});
+
+test("finds component imports tagged with @snoopy:ignore", () => {
+  const contents = `
+// @snoopy:ignore
+export const One = () => <div />;
+`.trim();
+
+  const componentImport = findIgnoredExports(contents, "/path/to/file.ts");
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [{name: "One", isDefaultExport: false, source: "<div />;"}],
     errors: [],
   });
 });
