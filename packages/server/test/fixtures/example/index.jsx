@@ -1,4 +1,4 @@
 import React from "react";
 
-// @prodo
+// @snoopy
 export const Button = props => <button {...props}>{props.children}</button>;

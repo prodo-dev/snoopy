@@ -1,14 +1,14 @@
-// @prodo:theme
+// @snoopy:theme
 export const theme = {
   color: "black",
 };
 
-// @prodo:theme
+// @snoopy:theme
 export const theme2 = {
   color: "black",
 };
 
-// @prodo:theme
+// @snoopy:theme
 export default {
   color: "black",
 };

@@ -26,7 +26,7 @@ export interface Theme {
   };
 }
 
-// @prodo:theme
+// @snoopy:theme
 export const darkTheme: Theme = {
   colors: {
     bg: "#282c34",

@@ -4,8 +4,8 @@ import {generateComponentsFileContents, generateLibsFile} from "./generate";
 // tslint:disable-next-line:no-submodule-imports
 import TypeScriptAsset = require("parcel-bundler/src/assets/TypeScriptAsset");
 
-const componentsFileRegex = /@prodo\/components\/index\.ts$/;
-const libsFileRegex = /@prodo\/components\/lib.ts$/;
+const componentsFileRegex = /@snoopy\/components\/index\.ts$/;
+const libsFileRegex = /@snoopy\/components\/lib.ts$/;
 
 class ComponentAsset extends TypeScriptAsset {
   public async load() {

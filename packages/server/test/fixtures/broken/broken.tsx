@@ -1,2 +1,2 @@
-// @prodo
+// @snoopy
 cnst foo = () => <div>

@@ -1,4 +1,4 @@
-// @prodo:theme
+// @snoopy:theme
 export default {
   color: "black",
 };

@@ -1,9 +1,9 @@
-// @prodo
+// @snoopy
 export const Button = (props: any) => (
   <button {...props}>{props.children}</button>
 );
 
-// @prodo:theme
+// @snoopy:theme
 export const theme = {
   color: "black",
 };

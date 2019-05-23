@@ -10,7 +10,7 @@ import Increment from "../Increment";
 
 import "./index.css";
 
-// @prodo
+// @snoopy
 export const App = () => {
   const [count, setCount] = React.useState(0);
   return (
@@ -53,7 +53,7 @@ export default App;
 
 test("gets component imports for 'export var'", () => {
   const contents = `
-// @prodo
+// @snoopy
 export var One = () => <div />;
 `.trim();
 
@@ -68,7 +68,7 @@ export var One = () => <div />;
 
 test("gets component imports for 'export let'", () => {
   const contents = `
-// @prodo
+// @snoopy
 export let One = () => <div />;
 `.trim();
 
@@ -83,7 +83,7 @@ export let One = () => <div />;
 
 test("gets component from function", () => {
   const contents = `
-// @prodo
+// @snoopy
 export function One() { return <div />; }
 `.trim();
 
@@ -106,12 +106,12 @@ export function One() { return <div />; }
 
 test("gets component imports for multiple named exports", () => {
   const contents = `
-// @prodo
+// @snoopy
 export const One = () => <div />;
 
 export const Two = () => <div />;
 
-// @prodo
+// @snoopy
 export const Three = () => <div />;
 `.trim();
 
@@ -129,7 +129,7 @@ export const Three = () => <div />;
 
 test("gets component imports for single named export in index.ts file", () => {
   const contents = `
-// @prodo
+// @snoopy
 export const One = () => <div />;
 `.trim();
 
@@ -147,7 +147,7 @@ export const One = () => <div />;
 
 test("gets component imports for default export", () => {
   const contents = `
-// @prodo
+// @snoopy
 export default () => <div />;
 `.trim();
 
@@ -165,7 +165,7 @@ export default () => <div />;
 
 test("gets component imports for default export in index.ts file", () => {
   const contents = `
-// @prodo
+// @snoopy
 export default () => <div />;
 `.trim();
 
@@ -183,7 +183,7 @@ export default () => <div />;
 
 test("gets component imports with an underscore in the name", () => {
   const contents = `
-// @prodo
+// @snoopy
 export const O______ne = () => <div />;
 `.trim();
 
@@ -203,7 +203,7 @@ export const O______ne = () => <div />;
 
 test("gets component imports with a number in the name", () => {
   const contents = `
-// @prodo
+// @snoopy
 export const One111 = () => <div />;
 `.trim();
 
@@ -219,9 +219,9 @@ export const One111 = () => <div />;
   });
 });
 
-test("catch error when prodo comment is on non-export", () => {
+test("catch error when snoopy comment is on non-export", () => {
   const contents = `
-// @prodo
+// @snoopy
 const foo = "bar"
 `.trim();
 
@@ -236,27 +236,27 @@ const foo = "bar"
     errors: [
       new FileError(
         "/path/to/file/index.ts",
-        "The `@prodo` tag must be directly above an exported React component.",
+        "The `@snoopy` tag must be directly above an exported React component.",
       ),
     ],
   });
 });
 
-test("gets component with various types of prodo comments", () => {
+test("gets component with various types of snoopy comments", () => {
   const contents = `
-// @prodo
+// @snoopy
 export const One = () => <div />;
 
-//@prodo
+//@snoopy
 export const Two = () => <div />;
 
-//     @prodo
+//     @snoopy
 export const Three = () => <div />;
 
-    // @prodo
+    // @snoopy
 export const Four = () => <div />;
 
-// @prodobot
+// @snoopybot
 export const Five = () => <div />;
 `.trim();
 
@@ -279,7 +279,7 @@ export const Five = () => <div />;
 
 test("component name is capitalized when directory name is not", () => {
   const contents = `
-// @prodo
+// @snoopy
 export default () => <div />;
 `.trim();
 
@@ -297,7 +297,7 @@ export default () => <div />;
 
 test("gets component name from class component", () => {
   const contents = `
-// @prodo
+// @snoopy
 export class Button extends React.Component {}
 `.trim();
 
@@ -321,10 +321,10 @@ export class Button extends React.Component {}
 
 test("doesn't match themes", () => {
   const contents = `
-// @prodo
+// @snoopy
 export const Button = () => <div />;
 
-// @prodo:theme
+// @snoopy:theme
 export const Theme = () => <div />;
 `.trim();
 
@@ -343,7 +343,7 @@ export const Theme = () => <div />;
 test("doesn't match comment in string", () => {
   const contents = `
 const s = \`
-  // @prodo
+  // @snoopy
   export const Hello = () => <div />;
 \`
 `.trim();
@@ -361,7 +361,7 @@ test("gets component imports for named exports as", () => {
 const Foo = () => <div />;
 const Bar = () => <div />;
 
-// @prodo
+// @snoopy
 export { Foo as One, Bar }
 `.trim();
 
