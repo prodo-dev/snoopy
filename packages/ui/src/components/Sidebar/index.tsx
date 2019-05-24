@@ -104,8 +104,8 @@ interface Props {
   components: Component[];
   isOpen: boolean;
   setSidebarOpen: (open: boolean) => any;
-  selected: FilePath[];
-  select: (selection: FilePath[]) => any;
+  selected: Set<FilePath>;
+  select: (selection: Set<FilePath>) => any;
 }
 
 const Overlay = ({

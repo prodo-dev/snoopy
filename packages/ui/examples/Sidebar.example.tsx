@@ -12,7 +12,7 @@ export const openEmpty = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 openEmpty.title = "Open empty";
@@ -25,7 +25,7 @@ export const closedEmpty = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 closedEmpty.title = "Closed empty";
@@ -38,7 +38,7 @@ export const openWithComponents = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 openWithComponents.title = "Open with components";
@@ -51,7 +51,7 @@ export const openWithSelectedComponents = () => (
     select={() => {
       alert("select");
     }}
-    selected={["Counter/index.tsx", "HelloWorld.tsx", "index.tsx"]}
+    selected={new Set(["Counter/index.tsx", "HelloWorld.tsx", "index.tsx"])}
   />
 );
 openWithSelectedComponents.title = "Open with selected components";
@@ -64,7 +64,7 @@ export const closedWithComponents = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 closedWithComponents.title = "Closed with components";

@@ -60,8 +60,8 @@ const StyledFileSelector = styled.input`
 
 interface Props {
   components: Component[];
-  selected: FilePath[];
-  select: (selection: FilePath[]) => any;
+  selected: Set<FilePath>;
+  select: (selection: Set<FilePath>) => any;
   full?: boolean;
 }
 
@@ -131,8 +131,8 @@ const FileTree = ({
 }: {
   structure: Directory;
   level: number;
-  selected: FilePath[];
-  select: (selection: FilePath[]) => any;
+  selected: Set<FilePath>;
+  select: (selection: Set<FilePath>) => any;
 }) => (
   <StyledFileTree>
     {Object.keys(structure.children)
@@ -140,11 +140,11 @@ const FileTree = ({
       .map(segment => {
         const child = structure.children[segment];
         if (child.type === "file") {
-          const elementSelected = selected.includes(child.path)
+          const elementSelected = selected.has(child.path)
             ? Selected.selected
             : Selected.unselected;
-          const add = () => select(selected.concat([child.path]).sort());
-          const remove = () => select(selected.filter(s => s !== child.path));
+          const add = () => select(setUnion(selected, [child.path]));
+          const remove = () => select(setDifference(selected, [child.path]));
           return (
             <li key={segment}>
               <FileSelector
@@ -160,20 +160,18 @@ const FileTree = ({
         } else {
           const allDescendants = descendantsOf(child);
           const entirelySelected = allDescendants.every(descendant =>
-            selected.includes(descendant),
+            selected.has(descendant),
           );
           const partiallySelected = allDescendants.some(descendant =>
-            selected.includes(descendant),
+            selected.has(descendant),
           );
           const elementSelected = entirelySelected
             ? Selected.selected
             : partiallySelected
             ? Selected.partiallySelected
             : Selected.unselected;
-          const add = () =>
-            select(_.uniq(selected.concat(allDescendants)).sort());
-          const remove = () =>
-            select(selected.filter(s => !allDescendants.includes(s)));
+          const add = () => select(setUnion(selected, allDescendants));
+          const remove = () => select(setDifference(selected, allDescendants));
           return (
             <li key={segment}>
               <FileSelector
@@ -257,5 +255,21 @@ const descendantsOf = (directory: Directory): FilePath[] =>
       return descendantsOf(child);
     }
   });
+
+function setUnion<T>(a: Iterable<T>, b: Iterable<T>): Set<T> {
+  const result = new Set(a);
+  for (const value of b) {
+    result.add(value);
+  }
+  return result;
+}
+
+function setDifference<T>(a: Iterable<T>, b: Iterable<T>): Set<T> {
+  const result = new Set(a);
+  for (const value of b) {
+    result.delete(value);
+  }
+  return result;
+}
 
 export default ComponentTree;

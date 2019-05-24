@@ -3,6 +3,7 @@ import {createBrowserHistory} from "history";
 import * as React from "react";
 import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import styled, {ThemeProvider} from "styled-components";
+import {FilePath} from "../components/ComponentTree";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar, {SidebarToggle} from "../components/Sidebar";
@@ -54,7 +55,7 @@ const ComponentPageWithProps = (
 
 const WithContext = <Props extends {}>(
   ComponentNeedingContext: React.ComponentType<Props>,
-  selectedPaths?: string[],
+  selectedPaths?: Set<FilePath>,
 ) => (props: Props) => {
   return (
     <ComponentNeedingContext
@@ -67,10 +68,10 @@ const WithContext = <Props extends {}>(
 
 const HomePageWithProps = (props: {
   context: Context;
-  selectedPaths: string[];
+  selectedPaths: Set<FilePath>;
 }) => {
   const matchingSelectedPaths = ({path}: {path: string}) =>
-    props.selectedPaths.includes(path);
+    props.selectedPaths.has(path);
   const components = props.context.components.filter(matchingSelectedPaths);
   const fileError = props.context.errors.filter(matchingSelectedPaths);
   const errors = fileError.length !== 0 ? fileError[0].errors : [];
@@ -83,12 +84,12 @@ const App = () => {
     window.innerWidth > NarrowScreenWidth,
   );
   const [selectedPaths, setSelectedPaths] = React.useState(
-    context.components.map(x => x.path) as string[],
+    new Set(context.components.map(x => x.path) as string[]),
   );
 
-  if (window.location.pathname === "/" && selectedPaths.length === 1) {
-    history.push(`/${selectedPaths[0]}`);
-  } else if (window.location.pathname !== "/" && selectedPaths.length !== 1) {
+  if (window.location.pathname === "/" && selectedPaths.size === 1) {
+    history.push(`/${selectedPaths[Symbol.iterator]().next().value}`);
+  } else if (window.location.pathname !== "/" && selectedPaths.size !== 1) {
     history.push("/");
   }
 

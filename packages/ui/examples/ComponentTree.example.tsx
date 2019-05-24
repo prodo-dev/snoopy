@@ -10,7 +10,7 @@ export const Empty = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 
@@ -20,7 +20,7 @@ export const singleItem = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 singleItem.title = "Single Item";
@@ -28,7 +28,7 @@ singleItem.title = "Single Item";
 export const singleItemWithSelection = () => (
   <ComponentTree
     components={[testComponents[0]]}
-    selected={[testComponents[0].path]}
+    selected={new Set([testComponents[0].path])}
     select={() => {
       alert("select");
     }}
@@ -42,7 +42,7 @@ export const multipleItems = () => (
     select={() => {
       alert("select");
     }}
-    selected={[]}
+    selected={new Set()}
   />
 );
 multipleItems.title = "Multiple items";
@@ -50,7 +50,7 @@ multipleItems.title = "Multiple items";
 export const multipleItemsWithSelection = () => (
   <ComponentTree
     components={testComponents}
-    selected={[testComponents[0].path]}
+    selected={new Set([testComponents[0].path])}
     select={() => {
       alert("select");
     }}
