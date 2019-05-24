@@ -648,3 +648,72 @@ export function One() {
     errors: [],
   });
 });
+
+test("gets component imports when component is returned from first part of conditional expression", () => {
+  const contents = `
+export const One = x => x ? <div /> : null;
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `x ? <div /> : null;`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component imports when component is returned from second part of conditional expression", () => {
+  const contents = `
+export const One = x => x ? null : <div />;
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `x ? null : <div />;`,
+      },
+    ],
+    errors: [],
+  });
+});
+
+test("gets component imports when component is returned from a logical expression", () => {
+  const contents = `
+export const One = x => x && <div />;
+`.trim();
+
+  const componentImport = autodetectComponentExports(
+    contents,
+    "/path/to/file.ts",
+  );
+
+  expect(componentImport).toEqual({
+    filepath: "/path/to/file.ts",
+    fileExports: [
+      {
+        name: "One",
+        isDefaultExport: false,
+        source: `x && <div />;`,
+      },
+    ],
+    errors: [],
+  });
+});

@@ -1,6 +1,6 @@
 # Snoopy
 
-<p className="mdx">
+<p className="markdown">
   <a href="https://circleci.com/gh/prodo-ai/snoopy/tree/master">
     <img
       src="https://circleci.com/gh/prodo-ai/snoopy/tree/master.svg?style=svg"
