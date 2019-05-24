@@ -22,8 +22,9 @@ import {
 export * from "./types";
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
+  const matchingFileGlob = exampleFileGlob.concat(styleFileGlob);
   const fileInGitIgnore = await inGitIgnore(filepath);
-  return !fileInGitIgnore && multimatch(filepath, exampleFileGlob).length > 0;
+  return !fileInGitIgnore && multimatch(filepath, matchingFileGlob).length > 0;
 };
 
 const inGitIgnore = (() => {

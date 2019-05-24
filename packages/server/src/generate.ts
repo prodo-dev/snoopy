@@ -151,10 +151,7 @@ const generateStylesArray = (files: File[], searchDir: string): string =>
     .map(({filepath, fileExports}) =>
       fileExports
         .map(ex => {
-          const contents = fs.readFileSync(
-            path.resolve(path.relative(searchDir, filepath)),
-            "utf8",
-          );
+          const contents = fs.readFileSync(filepath, "utf8");
           return `{path: "${path.relative(searchDir, filepath)}", name: "${
             ex.isDefaultExport ? "default" : ex.name
           }", style: \`${contents}\`}`;

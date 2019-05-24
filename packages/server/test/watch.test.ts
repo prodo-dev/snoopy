@@ -55,6 +55,11 @@ ${contents}`,
   );
 };
 
+const writeStyleFile = async (contents: string) => {
+  const filepath = "src/style.css";
+  return writeFileToPath(filepath, contents);
+};
+
 const writeProjectRoot = async () => {
   const filepath = "package.json";
   return writeFileToPath(filepath, `{}`);
@@ -68,6 +73,7 @@ const createAndPopulateTmpDir = async () => {
   await writeSrcFile(`export default () => <div />;`);
   await writeExampleFile(`export const basic = () => <Button />`);
   await writeProjectRoot();
+  await writeStyleFile("");
 };
 
 beforeEach(async () => {
@@ -167,6 +173,21 @@ export const Test = () => <div />;`);
 
     await wait(500);
     expect(triggered).toBe(false);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation added to css file", async () => {
+    let triggered = false;
+
+    watcher = await watchComponentsFile(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeStyleFile("/* @snoopy:styles */");
+
+    await waitUntil(() => triggered);
 
     watcher.close();
   });
