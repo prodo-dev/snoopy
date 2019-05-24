@@ -1,5 +1,5 @@
-import {MDXProvider} from "@mdx-js/react";
 import * as React from "react";
+import ReactHtmlParser from "react-html-parser";
 import styled from "styled-components";
 import {paddings} from "../../styles";
 import Highlighter from "../Highlighter";
@@ -10,19 +10,28 @@ const StyledMarkdown = styled.div`
   a {
     color: ${({theme}) => theme.colors.textSecondary};
   }
-  .mdx a {
+
+  .markdown a {
     padding: 0 ${paddings.small};
   }
 `;
 
-const Markdown = ({children}: {children: React.ReactNode}) => {
-  const mdxComponents = {code: Highlighter};
-
-  return (
-    <MDXProvider components={mdxComponents}>
-      <StyledMarkdown>{children}</StyledMarkdown>
-    </MDXProvider>
+const Markdown = ({source}: {source: string}) => {
+  const elements = ReactHtmlParser(source);
+  const highlighted = elements.map((el: React.ReactElement, idx: number) =>
+    el.type === "pre" && el.props.children.length > 0 ? (
+      <Highlighter
+        className={el.props.children[0].props.className}
+        key={el.key || idx}
+      >
+        {el.props.children[0].props.children.toString()}
+      </Highlighter>
+    ) : (
+      el
+    ),
   );
+
+  return <StyledMarkdown>{highlighted}</StyledMarkdown>;
 };
 
 export default Markdown;
