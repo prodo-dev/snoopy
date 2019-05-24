@@ -68,26 +68,47 @@ interface Props {
 export type FilePath = string;
 
 interface Directory {
-  [segment: string]: Directory | FilePath;
+  type: "directory";
+  path: FilePath;
+  children: {
+    [segment: string]: Directory | File;
+  };
+}
+
+interface File {
+  type: "file";
+  path: FilePath;
 }
 
 const ComponentTree = ({components, selected, select}: Props) => {
   const paths = _.uniq(components.map(({path}) => path));
-  const structure: Directory = {};
+  const structure: Directory = {
+    type: "directory",
+    path: "",
+    children: {},
+  };
   for (const path of paths) {
     const segments = path.split("/");
     let current = structure;
-    for (const segment of segments.slice(0, segments.length - 1)) {
-      if (current[segment] == null) {
-        current[segment] = {};
+    for (let i = 0; i < segments.length - 1; i++) {
+      const segment = segments[i];
+      if (current.children[segment] == null) {
+        current.children[segment] = {
+          type: "directory",
+          path: segments.slice(0, i + 1).join("/"),
+          children: {},
+        };
       }
-      const child = current[segment];
-      if (typeof child === "string") {
+      const child = current.children[segment];
+      if (child.type === "file") {
         throw new Error(`"${segment}" is both a directory and a file.`);
       }
       current = child;
     }
-    current[segments[segments.length - 1]] = path;
+    current.children[segments[segments.length - 1]] = {
+      type: "file",
+      path,
+    };
   }
 
   return (
@@ -114,16 +135,16 @@ const FileTree = ({
   select: (selection: FilePath[]) => any;
 }) => (
   <StyledFileTree>
-    {Object.keys(structure)
+    {Object.keys(structure.children)
       .sort()
       .map(segment => {
-        const child = structure[segment];
-        if (typeof child === "string") {
-          const elementSelected = selected.includes(child)
+        const child = structure.children[segment];
+        if (child.type === "file") {
+          const elementSelected = selected.includes(child.path)
             ? Selected.selected
             : Selected.unselected;
-          const add = () => select(selected.concat([child]).sort());
-          const remove = () => select(selected.filter(s => s !== child));
+          const add = () => select(selected.concat([child.path]).sort());
+          const remove = () => select(selected.filter(s => s !== child.path));
           return (
             <li key={segment}>
               <FileSelector
@@ -228,10 +249,10 @@ const FileSelector = ({selected, add, remove}: FileSelectorProps) => {
 };
 
 const descendantsOf = (directory: Directory): FilePath[] =>
-  _.flatMap(Object.keys(directory).sort(), segment => {
-    const child = directory[segment];
-    if (typeof child === "string") {
-      return child;
+  _.flatMap(Object.keys(directory.children).sort(), segment => {
+    const child = directory.children[segment];
+    if (child.type === "file") {
+      return child.path;
     } else {
       return descendantsOf(child);
     }
