@@ -18,17 +18,18 @@ const StyledMarkdown = styled.div`
 
 const Markdown = ({source}: {source: string}) => {
   const elements = ReactHtmlParser(source);
-  const highlighted = elements.map((el: React.ReactElement, idx: number) =>
-    el.type === "pre" && el.props.children.length > 0 ? (
-      <Highlighter
-        className={el.props.children[0].props.className}
-        key={el.key || idx}
-      >
-        {el.props.children[0].props.children.toString()}
-      </Highlighter>
-    ) : (
-      el
-    ),
+  const highlighted = elements.map(
+    (element: React.ReactElement, index: number) =>
+      element.type === "pre" && element.props.children.length > 0 ? (
+        <Highlighter
+          className={element.props.children[0].props.className}
+          key={element.key ? `key_${element.key}` : index}
+        >
+          {element.props.children[0].props.children.toString()}
+        </Highlighter>
+      ) : (
+        element
+      ),
   );
 
   return <StyledMarkdown>{highlighted}</StyledMarkdown>;
