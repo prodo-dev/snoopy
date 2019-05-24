@@ -4,7 +4,9 @@ import styled from "styled-components";
 import {Component} from "../../models";
 import {paddings} from "../../styles";
 
-const StyledComponentList = styled.div``;
+const StyledComponentList = styled.div`
+  padding: ${paddings.small};
+`;
 
 const StyledFileTree = styled.ul`
   margin: 0;
