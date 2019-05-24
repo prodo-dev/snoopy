@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import ErrorBoundary from "../components/ErrorBoundary";
+import backgroundImage from "../media/transparent_background.png";
 import {
   Component,
   Context,
@@ -54,8 +55,41 @@ const errors: FileError[] = userImport.errors;
 
 export const context: Context = {components, themes, styles, errors};
 
+const DarkerJsxContainer = ({children}: any) => (
+  <div
+    style={{
+      background: `linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+  ),
+  url(${backgroundImage}) repeat`,
+      padding: paddings.medium,
+      width: "fit-content",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const JsxContainer = ({children}: any) => (
+  <div
+    style={{
+      background: `linear-gradient(
+  rgba(255, 255, 255, 0.7),
+  rgba(255, 255, 255, 0.7)
+  ),
+  url(${backgroundImage}) repeat`,
+      all: "initial",
+    }}
+  >
+    {children}
+  </div>
+);
+
 const StyledLog = ({children}: any) => (
-  <div style={{paddingTop: paddings.small}}>{children}</div>
+  <div style={{paddingTop: paddings.small}} color="black">
+    {children}
+  </div>
 );
 
 const LogRoute = (props: any) => (
@@ -109,33 +143,33 @@ export const renderExample = (
               width: "min-content",
             }}
           >
-            <ApplyStyles css={allStyles}>
-              <div id={userBodyId}>
-                {theme && ThemeProvider ? (
-                  <ThemeProvider theme={theme as any}>
-                    <ExampleComponent />
-                  </ThemeProvider>
-                ) : (
-                  <ExampleComponent />
-                )}
-              </div>
-            </ApplyStyles>
-
-            {ReactRouterDOM != null && (
-              <React.Fragment>
-                <ReactRouterDOM.Route
-                  path="/"
-                  exact
-                  component={() => <StyledLog />}
-                />
-                <ReactRouterDOM.Route
-                  path="/:link+"
-                  exact
-                  component={LogRoute}
-                />
-              </React.Fragment>
-            )}
+            <DarkerJsxContainer>
+              <JsxContainer className="example-contents">
+                <ApplyStyles css={allStyles}>
+                  <div id={userBodyId}>
+                    {theme && ThemeProvider ? (
+                      <ThemeProvider theme={theme as any}>
+                        <ExampleComponent />
+                      </ThemeProvider>
+                    ) : (
+                      <ExampleComponent />
+                    )}
+                  </div>
+                </ApplyStyles>
+              </JsxContainer>
+            </DarkerJsxContainer>
           </div>
+
+          {ReactRouterDOM != null && (
+            <React.Fragment>
+              <ReactRouterDOM.Route
+                path="/"
+                exact
+                component={() => <StyledLog />}
+              />
+              <ReactRouterDOM.Route path="/:link+" exact component={LogRoute} />
+            </React.Fragment>
+          )}
         </MemoryRouter>
       </ErrorBoundary>
     );

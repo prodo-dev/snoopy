@@ -30,25 +30,6 @@ const Title = styled.div`
 
 const CodeContainer = styled.div``;
 
-const DarkerJsxContainer = styled.div`
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.2)
-    ),
-    url(${backgroundImage}) repeat;
-  margin: 0 auto
-  padding: ${paddings.medium};
-  width: fit-content;
-`;
-
-const JsxContainer = styled.div`
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.7)
-    ),
-    url(${backgroundImage}) repeat;
-`;
-
 const randId = () =>
   Math.random()
     .toString(36)
@@ -83,11 +64,7 @@ class UserComponentContainer extends React.Component<Props> {
 const Example = (props: Props) => (
   <StyledExample>
     <Title className="example-title">{props.example.title}</Title>
-    <DarkerJsxContainer>
-      <JsxContainer>
-        <UserComponentContainer {...props} />
-      </JsxContainer>
-    </DarkerJsxContainer>
+    <UserComponentContainer {...props} />
     {props.example.source != null && (
       <CodeContainer>
         <Highlighter className="language-jsx">
