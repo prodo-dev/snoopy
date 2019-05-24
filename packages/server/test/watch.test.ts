@@ -1,10 +1,10 @@
-import {watchComponentsFile} from "../src/watch";
-import * as tmp from "tmp";
-import * as path from "path";
-import * as makeDir from "make-dir";
-import * as fs from "fs";
 import * as chokidar from "chokidar";
+import * as fs from "fs";
+import * as makeDir from "make-dir";
+import * as path from "path";
+import * as tmp from "tmp";
 import {promisify} from "util";
+import {watchComponentsFile} from "../src/watch";
 
 const writeFile = promisify(fs.writeFile);
 

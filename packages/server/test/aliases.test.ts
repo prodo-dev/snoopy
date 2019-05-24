@@ -1,5 +1,5 @@
-import applyAliases from "../src/aliases";
 import * as path from "path";
+import applyAliases from "../src/aliases";
 
 describe("aliases", () => {
   it("correctly resolves path to styled-components", async () => {
