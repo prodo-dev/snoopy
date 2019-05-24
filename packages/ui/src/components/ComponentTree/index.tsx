@@ -81,36 +81,9 @@ interface File {
 }
 
 const ComponentTree = ({components, selected, select}: Props) => {
-  const paths = _.uniq(components.map(({path}) => path)).sort();
-  const structure: Directory = {
-    type: "directory",
-    path: "",
-    children: {},
-  };
-  for (const path of paths) {
-    const segments = path.split("/");
-
-    let current = structure;
-    for (let i = 0; i < segments.length - 1; i++) {
-      const segment = segments[i];
-      if (current.children[segment] == null) {
-        current.children[segment] = {
-          type: "directory",
-          path: segments.slice(0, i + 1).join("/"),
-          children: {},
-        };
-      }
-      const child = current.children[segment];
-      if (child.type === "file") {
-        throw new Error(`"${segment}" is both a directory and a file.`);
-      }
-      current = child;
-    }
-    current.children[segments[segments.length - 1]] = {
-      type: "file",
-      path,
-    };
-  }
+  const [paths, structure] = React.useMemo(() => createFileTree(components), [
+    components,
+  ]);
 
   return (
     <StyledComponentTree className="component-list">
@@ -137,18 +110,16 @@ const FileTree = ({
   level: number;
   selected: Set<FilePath>;
   select: (selection: Set<FilePath>) => any;
-}) => (
-  <StyledFileTree>
-    {Object.keys(structure.children)
-      .sort()
-      .map(segment => {
-        const child = structure.children[segment];
+}) => {
+  const childParameters = React.useMemo(
+    () => createChildParameters(structure, paths, selected, select),
+    [structure, paths, selected, select],
+  );
+
+  return (
+    <StyledFileTree>
+      {childParameters.map(({child, segment, elementSelected, add, remove}) => {
         if (child.type === "file") {
-          const elementSelected = selected.has(child.path)
-            ? Selected.selected
-            : Selected.unselected;
-          const add = () => select(setUnion(selected, [child.path]));
-          const remove = () => select(setDifference(selected, [child.path]));
           return (
             <li key={segment}>
               <FileSelector
@@ -162,22 +133,6 @@ const FileTree = ({
             </li>
           );
         } else {
-          const allDescendants = paths.filter(path =>
-            path.startsWith(child.path),
-          );
-          const entirelySelected = allDescendants.every(descendant =>
-            selected.has(descendant),
-          );
-          const partiallySelected = allDescendants.some(descendant =>
-            selected.has(descendant),
-          );
-          const elementSelected = entirelySelected
-            ? Selected.selected
-            : partiallySelected
-            ? Selected.partiallySelected
-            : Selected.unselected;
-          const add = () => select(setUnion(selected, allDescendants));
-          const remove = () => select(setDifference(selected, allDescendants));
           return (
             <li key={segment}>
               <FileSelector
@@ -199,8 +154,9 @@ const FileTree = ({
           );
         }
       })}
-  </StyledFileTree>
-);
+    </StyledFileTree>
+  );
+};
 
 const Directory = ({
   children,
@@ -252,6 +208,84 @@ const FileSelector = ({selected, add, remove}: FileSelectorProps) => {
     />
   );
 };
+
+const createFileTree = (components: Component[]): [FilePath[], Directory] => {
+  const paths = _.uniq(components.map(({path}) => path)).sort();
+  const structure: Directory = {
+    type: "directory",
+    path: "",
+    children: {},
+  };
+  for (const path of paths) {
+    const segments = path.split("/");
+
+    let current = structure;
+    for (let i = 0; i < segments.length - 1; i++) {
+      const segment = segments[i];
+      if (current.children[segment] == null) {
+        current.children[segment] = {
+          type: "directory",
+          path: segments.slice(0, i + 1).join("/"),
+          children: {},
+        };
+      }
+      const child = current.children[segment];
+      if (child.type === "file") {
+        throw new Error(`"${segment}" is both a directory and a file.`);
+      }
+      current = child;
+    }
+    current.children[segments[segments.length - 1]] = {
+      type: "file",
+      path,
+    };
+  }
+  return [paths, structure];
+};
+
+const createChildParameters = (
+  directory: Directory,
+  paths: FilePath[],
+  selected: Set<FilePath>,
+  select: (selection: Set<FilePath>) => void,
+): Array<{
+  child: Directory | File;
+  segment: string;
+  elementSelected: Selected;
+  add: () => void;
+  remove: () => void;
+}> =>
+  Object.keys(directory.children)
+    .sort()
+    .map(segment => {
+      const child = directory.children[segment];
+      if (child.type === "file") {
+        const elementSelected = selected.has(child.path)
+          ? Selected.selected
+          : Selected.unselected;
+        const add = () => select(setUnion(selected, [child.path]));
+        const remove = () => select(setDifference(selected, [child.path]));
+        return {child, segment, elementSelected, add, remove};
+      } else {
+        const allDescendants = paths.filter(path =>
+          path.startsWith(child.path),
+        );
+        const entirelySelected = allDescendants.every(descendant =>
+          selected.has(descendant),
+        );
+        const partiallySelected = allDescendants.some(descendant =>
+          selected.has(descendant),
+        );
+        const elementSelected = entirelySelected
+          ? Selected.selected
+          : partiallySelected
+          ? Selected.partiallySelected
+          : Selected.unselected;
+        const add = () => select(setUnion(selected, allDescendants));
+        const remove = () => select(setDifference(selected, allDescendants));
+        return {child, segment, elementSelected, add, remove};
+      }
+    });
 
 function setUnion<T>(a: Iterable<T>, b: Iterable<T>): Set<T> {
   const result = new Set(a);
