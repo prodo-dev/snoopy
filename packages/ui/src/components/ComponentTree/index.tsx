@@ -36,12 +36,6 @@ const TreeElement = styled.label<FileProps>`
   font-size: ${props => props.theme.fontSizes.normal};
   font-weight: ${props =>
     props.selected === Selected.unselected ? "inherit" : "bold"};
-  color: ${props => (props.theme.colors as any)[Selected[props.selected]]};
-  cursor: pointer;
-
-  &:hover {
-    color: ${props => props.theme.colors.text};
-  }
 `;
 
 const StyledDirectory = styled(TreeElement)`
@@ -53,7 +47,12 @@ const StyledDirectory = styled(TreeElement)`
   }
 `;
 
-const StyledFile = styled(TreeElement)``;
+const StyledFile = styled(TreeElement)`
+  color: ${props =>
+    props.selected === Selected.selected
+      ? props.theme.colors.selected
+      : props.theme.colors.unselected};
+`;
 
 const StyledFileSelector = styled.input`
   float: left;

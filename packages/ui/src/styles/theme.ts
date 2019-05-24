@@ -12,7 +12,6 @@ export interface Theme {
     textTertiary: Color;
     selected: Color;
     unselected: Color;
-    partiallySelected: Color;
     error: Color;
     errorBg: Color;
   };
@@ -40,7 +39,6 @@ export const darkTheme: Theme = {
     textTertiary: "#cfcfc3",
     selected: "#ec6969",
     unselected: "#cfcfc3",
-    partiallySelected: "#ff9797",
     error: "#E00700",
     errorBg: "#f8f8f2",
   },
