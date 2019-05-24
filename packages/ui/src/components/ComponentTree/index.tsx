@@ -217,7 +217,7 @@ const FileSelector = ({selected, add, remove}: FileSelectorProps) => {
       onChange={event => {
         event.stopPropagation();
         event.preventDefault();
-        if (selected === Selected.unselected) {
+        if (selected !== Selected.selected) {
           add();
         } else {
           remove();
