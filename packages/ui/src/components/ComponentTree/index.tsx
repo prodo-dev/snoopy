@@ -81,7 +81,7 @@ interface File {
 }
 
 const ComponentTree = ({components, selected, select}: Props) => {
-  const paths = _.uniq(components.map(({path}) => path));
+  const paths = _.uniq(components.map(({path}) => path)).sort();
   const structure: Directory = {
     type: "directory",
     path: "",
@@ -89,6 +89,7 @@ const ComponentTree = ({components, selected, select}: Props) => {
   };
   for (const path of paths) {
     const segments = path.split("/");
+
     let current = structure;
     for (let i = 0; i < segments.length - 1; i++) {
       const segment = segments[i];
@@ -114,6 +115,7 @@ const ComponentTree = ({components, selected, select}: Props) => {
   return (
     <StyledComponentTree className="component-list">
       <FileTree
+        paths={paths}
         structure={structure}
         level={0}
         selected={selected}
@@ -124,11 +126,13 @@ const ComponentTree = ({components, selected, select}: Props) => {
 };
 
 const FileTree = ({
+  paths,
   structure,
   level,
   selected,
   select,
 }: {
+  paths: FilePath[];
   structure: Directory;
   level: number;
   selected: Set<FilePath>;
@@ -158,7 +162,9 @@ const FileTree = ({
             </li>
           );
         } else {
-          const allDescendants = descendantsOf(child);
+          const allDescendants = paths.filter(path =>
+            path.startsWith(child.path),
+          );
           const entirelySelected = allDescendants.every(descendant =>
             selected.has(descendant),
           );
@@ -183,6 +189,7 @@ const FileTree = ({
                 {segment}
               </Directory>
               <FileTree
+                paths={paths}
                 structure={child}
                 level={level + 1}
                 selected={selected}
@@ -245,16 +252,6 @@ const FileSelector = ({selected, add, remove}: FileSelectorProps) => {
     />
   );
 };
-
-const descendantsOf = (directory: Directory): FilePath[] =>
-  _.flatMap(Object.keys(directory.children).sort(), segment => {
-    const child = directory.children[segment];
-    if (child.type === "file") {
-      return child.path;
-    } else {
-      return descendantsOf(child);
-    }
-  });
 
 function setUnion<T>(a: Iterable<T>, b: Iterable<T>): Set<T> {
   const result = new Set(a);
