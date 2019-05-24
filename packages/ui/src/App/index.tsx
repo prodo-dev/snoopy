@@ -161,4 +161,5 @@ const HeaderContainer = styled.div`
   }
 `;
 
+// @snoopy:ignore
 export default App;
