@@ -12,7 +12,7 @@ import {
   SidebarClosedWidth,
   SidebarWidth,
 } from "../../styles";
-import ComponentList, {FilePath} from "../ComponentList";
+import ComponentTree, {FilePath} from "../ComponentTree";
 import Logo from "../Logo";
 import {NarrowScreen, WideScreen} from "../Responsive";
 
@@ -104,8 +104,8 @@ interface Props {
   components: Component[];
   isOpen: boolean;
   setSidebarOpen: (open: boolean) => any;
-  selected: FilePath[];
-  select: (selection: FilePath[]) => any;
+  selected: Set<FilePath>;
+  select: (selection: Set<FilePath>) => any;
 }
 
 const Overlay = ({
@@ -167,7 +167,7 @@ const Sidebar = (props: Props) => (
             </WideScreen>
           </HeaderContainer>
           <Separator />
-          <ComponentList
+          <ComponentTree
             components={props.components}
             selected={props.selected}
             select={props.select}

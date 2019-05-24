@@ -36,7 +36,7 @@ storiesOf("Sidebar", module)
       components={components}
       isOpen={false}
       setSidebarOpen={action("setSidebarOpen")}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ))
@@ -45,7 +45,7 @@ storiesOf("Sidebar", module)
       components={[]}
       isOpen={true}
       setSidebarOpen={action("setSidebarOpen")}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ))
@@ -54,7 +54,7 @@ storiesOf("Sidebar", module)
       components={components}
       isOpen={true}
       setSidebarOpen={action("setSidebarOpen")}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ));
