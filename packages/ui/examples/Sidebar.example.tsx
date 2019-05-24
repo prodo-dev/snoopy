@@ -43,6 +43,19 @@ export const openWithComponents = () => (
 );
 openWithComponents.title = "Open with components";
 
+export const openWithSelectedComponents = () => (
+  <Sidebar
+    isOpen={true}
+    setSidebarOpen={() => alert("setSidebarOpen")}
+    components={testComponents}
+    select={() => {
+      alert("select");
+    }}
+    selected={["Counter/index.tsx", "HelloWorld.tsx", "index.tsx"]}
+  />
+);
+openWithSelectedComponents.title = "Open with selected components";
+
 export const closedWithComponents = () => (
   <Sidebar
     isOpen={false}
