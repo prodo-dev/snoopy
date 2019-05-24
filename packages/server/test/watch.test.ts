@@ -4,7 +4,7 @@ import * as makeDir from "make-dir";
 import * as path from "path";
 import * as tmp from "tmp";
 import {promisify} from "util";
-import {watchComponentsFile} from "../src/watch";
+import {watchForComponentsFileChanges} from "../src/watch";
 
 const writeFile = promisify(fs.writeFile);
 
@@ -84,11 +84,11 @@ afterEach(() => {
   }
 });
 
-describe("watchComponentsFile", () => {
+describe("watchForComponentsFileChanges", () => {
   it("triggers callback when examples change", async () => {
     let triggered = false;
 
-    watcher = await watchComponentsFile(dir.name, () => {
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
       triggered = true;
     });
 
@@ -103,7 +103,7 @@ describe("watchComponentsFile", () => {
   it("does trigger callback when new component found", async () => {
     let triggered = false;
 
-    watcher = await watchComponentsFile(dir.name, () => {
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
       triggered = true;
     });
 
@@ -124,7 +124,7 @@ export const Test = () => <div />;`);
 export default () => <div />;
 export const Test = () => <div />;`);
 
-    watcher = await watchComponentsFile(dir.name, () => {
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
       triggered = true;
     });
 
@@ -139,7 +139,7 @@ export const Test = () => <div />;`);
   it("does not trigger callback when source changes", async () => {
     let triggered = false;
 
-    watcher = await watchComponentsFile(dir.name, () => {
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
       triggered = true;
     });
 
@@ -155,7 +155,7 @@ export const Test = () => <div />;`);
   it("does not trigger callback when ignored file changes", async () => {
     let triggered = false;
 
-    watcher = await watchComponentsFile(dir.name, () => {
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
       triggered = true;
     });
 
