@@ -2,7 +2,7 @@
 
 exports[`Storyshots Component List empty 1`] = `
 <div
-  className="component-list sc-bdVaJa bDWFJH"
+  className="component-list sc-bdVaJa gSvyBK"
 >
   <ul
     className="sc-bwzfXH iOBFVD"
@@ -12,40 +12,42 @@ exports[`Storyshots Component List empty 1`] = `
 
 exports[`Storyshots Component List multiple items 1`] = `
 <div
-  className="component-list sc-bdVaJa bDWFJH"
+  className="component-list sc-bdVaJa gSvyBK"
 >
   <ul
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <span
-        className="sc-bxivhb gjJDQW"
+      <input
+        checked={false}
+        className="sc-EHOje dfgQRE"
+        onChange={[Function]}
+        onClick={[Function]}
+        type="checkbox"
+      />
+      <label
+        className="sc-htpNat sc-bxivhb gDktNR"
+        selected={1}
       >
         foo
-      </span>
+      </label>
       <ul
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <a
-            className="sc-htpNat jMtDGO"
-            href="/foo/bar"
+          <input
+            checked={false}
+            className="sc-EHOje dfgQRE"
+            onChange={[Function]}
             onClick={[Function]}
+            type="checkbox"
+          />
+          <label
+            className="sc-htpNat sc-ifAKCX oATfq"
+            selected={1}
           >
-            <span
-              className="sc-ifAKCX yaMOr"
-              selected={false}
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                onClick={[Function]}
-                type="checkbox"
-              />
-               
-              bar
-            </span>
-          </a>
+            bar
+          </label>
         </li>
       </ul>
     </li>
@@ -55,40 +57,42 @@ exports[`Storyshots Component List multiple items 1`] = `
 
 exports[`Storyshots Component List multiple items with selection 1`] = `
 <div
-  className="component-list sc-bdVaJa bDWFJH"
+  className="component-list sc-bdVaJa gSvyBK"
 >
   <ul
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <span
-        className="sc-bxivhb gjJDQW"
+      <input
+        checked={true}
+        className="sc-EHOje dfgQRE"
+        onChange={[Function]}
+        onClick={[Function]}
+        type="checkbox"
+      />
+      <label
+        className="sc-htpNat sc-bxivhb gAXdb"
+        selected={0}
       >
         foo
-      </span>
+      </label>
       <ul
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <a
-            className="sc-htpNat jMtDGO"
-            href="/foo/bar"
+          <input
+            checked={true}
+            className="sc-EHOje dfgQRE"
+            onChange={[Function]}
             onClick={[Function]}
+            type="checkbox"
+          />
+          <label
+            className="sc-htpNat sc-ifAKCX cyJoFk"
+            selected={0}
           >
-            <span
-              className="sc-ifAKCX yaMOr"
-              selected={true}
-            >
-              <input
-                checked={true}
-                onChange={[Function]}
-                onClick={[Function]}
-                type="checkbox"
-              />
-               
-              bar
-            </span>
-          </a>
+            bar
+          </label>
         </li>
       </ul>
     </li>
@@ -98,40 +102,42 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
 
 exports[`Storyshots Component List single item 1`] = `
 <div
-  className="component-list sc-bdVaJa bDWFJH"
+  className="component-list sc-bdVaJa gSvyBK"
 >
   <ul
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <span
-        className="sc-bxivhb gjJDQW"
+      <input
+        checked={false}
+        className="sc-EHOje dfgQRE"
+        onChange={[Function]}
+        onClick={[Function]}
+        type="checkbox"
+      />
+      <label
+        className="sc-htpNat sc-bxivhb gDktNR"
+        selected={1}
       >
         foo
-      </span>
+      </label>
       <ul
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <a
-            className="sc-htpNat jMtDGO"
-            href="/foo/bar"
+          <input
+            checked={false}
+            className="sc-EHOje dfgQRE"
+            onChange={[Function]}
             onClick={[Function]}
+            type="checkbox"
+          />
+          <label
+            className="sc-htpNat sc-ifAKCX oATfq"
+            selected={1}
           >
-            <span
-              className="sc-ifAKCX yaMOr"
-              selected={false}
-            >
-              <input
-                checked={false}
-                onChange={[Function]}
-                onClick={[Function]}
-                type="checkbox"
-              />
-               
-              bar
-            </span>
-          </a>
+            bar
+          </label>
         </li>
       </ul>
     </li>
@@ -141,40 +147,42 @@ exports[`Storyshots Component List single item 1`] = `
 
 exports[`Storyshots Component List single item with selection 1`] = `
 <div
-  className="component-list sc-bdVaJa bDWFJH"
+  className="component-list sc-bdVaJa gSvyBK"
 >
   <ul
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <span
-        className="sc-bxivhb gjJDQW"
+      <input
+        checked={true}
+        className="sc-EHOje dfgQRE"
+        onChange={[Function]}
+        onClick={[Function]}
+        type="checkbox"
+      />
+      <label
+        className="sc-htpNat sc-bxivhb gAXdb"
+        selected={0}
       >
         foo
-      </span>
+      </label>
       <ul
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <a
-            className="sc-htpNat jMtDGO"
-            href="/foo/bar"
+          <input
+            checked={true}
+            className="sc-EHOje dfgQRE"
+            onChange={[Function]}
             onClick={[Function]}
+            type="checkbox"
+          />
+          <label
+            className="sc-htpNat sc-ifAKCX cyJoFk"
+            selected={0}
           >
-            <span
-              className="sc-ifAKCX yaMOr"
-              selected={true}
-            >
-              <input
-                checked={true}
-                onChange={[Function]}
-                onClick={[Function]}
-                type="checkbox"
-              />
-               
-              bar
-            </span>
-          </a>
+            bar
+          </label>
         </li>
       </ul>
     </li>
@@ -184,13 +192,13 @@ exports[`Storyshots Component List single item with selection 1`] = `
 
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-bZQynM eTiRMk"
+  className="sidebar sc-gzVnrw dCrXjW"
 >
   <div
-    className="sc-gZMcBi dcMSXI"
+    className="sc-gqjmRU dgXNLS"
   >
     <span
-      className="sidebar-toggle sc-gqjmRU dHZIyZ"
+      className="sidebar-toggle sc-VigVT iRYffN"
       onClick={[Function]}
     >
       <svg
@@ -217,32 +225,32 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open and empty 1`] = `
 <div
-  className="sidebar sc-bZQynM dZUEhg"
+  className="sidebar sc-gzVnrw dFHQZO"
 >
   <div
-    className="sc-gZMcBi dcMSXI"
+    className="sc-gqjmRU dgXNLS"
   >
     <a
-      className="sc-htoDjs jssEWI"
+      className="sc-dnqmqq kjNnRX"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-dnqmqq cfRcuF"
+        className="title sc-iwsKbI khxTXx"
       >
         <img
           alt=""
-          className="logo sc-EHOje eJwasB"
+          className="logo sc-bZQynM dODJLW"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-iwsKbI cIVfWq"
+    className="sc-gZMcBi cwrhUs"
   />
   <div
-    className="component-list sc-bdVaJa bDWFJH"
+    className="component-list sc-bdVaJa gSvyBK"
   >
     <ul
       className="sc-bwzfXH iOBFVD"
@@ -253,65 +261,67 @@ exports[`Storyshots Sidebar open and empty 1`] = `
 
 exports[`Storyshots Sidebar open with components 1`] = `
 <div
-  className="sidebar sc-bZQynM dZUEhg"
+  className="sidebar sc-gzVnrw dFHQZO"
 >
   <div
-    className="sc-gZMcBi dcMSXI"
+    className="sc-gqjmRU dgXNLS"
   >
     <a
-      className="sc-htoDjs jssEWI"
+      className="sc-dnqmqq kjNnRX"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-dnqmqq cfRcuF"
+        className="title sc-iwsKbI khxTXx"
       >
         <img
           alt=""
-          className="logo sc-EHOje eJwasB"
+          className="logo sc-bZQynM dODJLW"
         />
         Snoopy
       </div>
     </a>
   </div>
   <hr
-    className="sc-iwsKbI cIVfWq"
+    className="sc-gZMcBi cwrhUs"
   />
   <div
-    className="component-list sc-bdVaJa bDWFJH"
+    className="component-list sc-bdVaJa gSvyBK"
   >
     <ul
       className="sc-bwzfXH iOBFVD"
     >
       <li>
-        <span
-          className="sc-bxivhb gjJDQW"
+        <input
+          checked={false}
+          className="sc-EHOje dfgQRE"
+          onChange={[Function]}
+          onClick={[Function]}
+          type="checkbox"
+        />
+        <label
+          className="sc-htpNat sc-bxivhb gDktNR"
+          selected={1}
         >
           foo
-        </span>
+        </label>
         <ul
           className="sc-bwzfXH iOBFVD"
         >
           <li>
-            <a
-              className="sc-htpNat jMtDGO"
-              href="/foo/bar"
+            <input
+              checked={false}
+              className="sc-EHOje dfgQRE"
+              onChange={[Function]}
               onClick={[Function]}
+              type="checkbox"
+            />
+            <label
+              className="sc-htpNat sc-ifAKCX oATfq"
+              selected={1}
             >
-              <span
-                className="sc-ifAKCX yaMOr"
-                selected={false}
-              >
-                <input
-                  checked={false}
-                  onChange={[Function]}
-                  onClick={[Function]}
-                  type="checkbox"
-                />
-                 
-                bar
-              </span>
-            </a>
+              bar
+            </label>
           </li>
         </ul>
       </li>

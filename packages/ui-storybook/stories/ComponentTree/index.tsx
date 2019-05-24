@@ -40,33 +40,37 @@ storiesOf("Component List", module)
   ))
   .addDecorator(storyFn => <Router>{storyFn()}</Router>)
   .add("empty", () => (
-    <ComponentTree components={[]} selected={[]} select={action("select")} />
+    <ComponentTree
+      components={[]}
+      selected={new Set()}
+      select={action("select")}
+    />
   ))
   .add("single item", () => (
     <ComponentTree
       components={[OneModel]}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ))
   .add("single item with selection", () => (
     <ComponentTree
       components={[OneModel]}
-      selected={[OneModel.path]}
+      selected={new Set([OneModel.path])}
       select={action("select")}
     />
   ))
   .add("multiple items", () => (
     <ComponentTree
       components={[OneModel, TwoModel, ThreeModel]}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ))
   .add("multiple items with selection", () => (
     <ComponentTree
       components={[OneModel, TwoModel, ThreeModel]}
-      selected={[TwoModel.path]}
+      selected={new Set([TwoModel.path])}
       select={action("select")}
     />
   ));
