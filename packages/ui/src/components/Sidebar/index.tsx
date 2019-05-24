@@ -12,7 +12,7 @@ import {
   SidebarClosedWidth,
   SidebarWidth,
 } from "../../styles";
-import ComponentList, {FilePath} from "../ComponentList";
+import ComponentTree, {FilePath} from "../ComponentTree";
 import Logo from "../Logo";
 import {NarrowScreen, WideScreen} from "../Responsive";
 
@@ -167,7 +167,7 @@ const Sidebar = (props: Props) => (
             </WideScreen>
           </HeaderContainer>
           <Separator />
-          <ComponentList
+          <ComponentTree
             components={props.components}
             selected={props.selected}
             select={props.select}

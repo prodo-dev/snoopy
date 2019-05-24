@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {Component} from "../../models";
 import {paddings} from "../../styles";
 
-const StyledComponentList = styled.div`
+const StyledComponentTree = styled.div`
   padding: ${paddings.small};
 `;
 
@@ -72,7 +72,7 @@ interface Directory {
   [segment: string]: Directory | FilePath;
 }
 
-const ComponentList = ({components, selected, select}: Props) => {
+const ComponentTree = ({components, selected, select}: Props) => {
   const paths = _.uniq(components.map(({path}) => path));
   const structure: Directory = {};
   for (const path of paths) {
@@ -92,14 +92,14 @@ const ComponentList = ({components, selected, select}: Props) => {
   }
 
   return (
-    <StyledComponentList className="component-list">
+    <StyledComponentTree className="component-list">
       <FileTree
         structure={structure}
         level={0}
         selected={selected}
         select={select}
       />
-    </StyledComponentList>
+    </StyledComponentTree>
   );
 };
 
@@ -238,4 +238,4 @@ const descendantsOf = (directory: Directory): FilePath[] =>
     }
   });
 
-export default ComponentList;
+export default ComponentTree;
