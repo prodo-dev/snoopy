@@ -22,7 +22,7 @@ const waitUntil = async (test: () => boolean) => {
     return;
   }
 
-  waitUntil(test);
+  await waitUntil(test);
 };
 
 const writeFileToPath = async (filepath: string, contents: string) => {
@@ -131,7 +131,7 @@ export const Test = () => <div />;`);
     await wait(500);
     await writeSrcFile(`export default () => <div />;`);
 
-    waitUntil(() => triggered);
+    await waitUntil(() => triggered);
 
     watcher.close();
   });
