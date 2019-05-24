@@ -62,10 +62,15 @@ const returnsReactElement = (
     if (id && t.isIdentifier(id)) {
       components.push(id.name);
     }
-  } else if (t.isIfStatement(node)) {
+  } else if (t.isIfStatement(node) || t.isConditionalExpression(node)) {
     return (
       returnsReactElement(node.consequent, components) ||
       returnsReactElement(node.alternate, components)
+    );
+  } else if (t.isLogicalExpression(node)) {
+    return (
+      returnsReactElement(node.left, components) ||
+      returnsReactElement(node.right, components)
     );
   } else if (t.isBlockStatement(node)) {
     for (const statement of node.body) {
