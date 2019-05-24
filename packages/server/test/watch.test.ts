@@ -60,6 +60,11 @@ const writeStyleFile = async (contents: string) => {
   return writeFileToPath(filepath, contents);
 };
 
+const writeThemeFile = async (contents: string) => {
+  const filepath = "src/theme.js";
+  return writeFileToPath(filepath, contents);
+};
+
 const writeProjectRoot = async () => {
   const filepath = "package.json";
   return writeFileToPath(filepath, `{}`);
@@ -74,6 +79,7 @@ const createAndPopulateTmpDir = async () => {
   await writeExampleFile(`export const basic = () => <Button />`);
   await writeProjectRoot();
   await writeStyleFile("");
+  await writeThemeFile("const theme = {}");
 };
 
 beforeEach(async () => {
@@ -186,6 +192,22 @@ export const Test = () => <div />;`);
 
     await wait(500);
     await writeStyleFile("/* @snoopy:styles */");
+
+    await waitUntil(() => triggered);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation added to theme", async () => {
+    let triggered = false;
+
+    watcher = await watchComponentsFile(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeThemeFile(`// @snoopy:theme
+export const theme = {}`);
 
     await waitUntil(() => triggered);
 
