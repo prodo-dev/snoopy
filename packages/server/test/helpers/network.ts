@@ -10,9 +10,9 @@ export const findFreePort = (): Promise<number> =>
       }
       const address = server.address() as net.AddressInfo;
       const port = address.port;
-      server.close((error?: Error) => {
-        if (error) {
-          reject(error);
+      server.close((err?: Error) => {
+        if (err) {
+          reject(err);
           return;
         }
         resolve(port);

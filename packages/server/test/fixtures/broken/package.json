@@ -1,5 +1,5 @@
 {
-  "name": "server fixture example",
+  "name": "server_fixture_broken",
   "dependencies": {
     "react": "^16.8.6"
   }
