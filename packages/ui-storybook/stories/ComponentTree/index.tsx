@@ -1,5 +1,5 @@
 // tslint:disable:no-submodule-imports
-import ComponentList from "@prodo-ai/snoopy-ui/src/components/ComponentList";
+import ComponentTree from "@prodo-ai/snoopy-ui/src/components/ComponentTree";
 import {Component as ComponentModel} from "@prodo-ai/snoopy-ui/src/models";
 import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
 // tslint:enable
@@ -40,33 +40,37 @@ storiesOf("Component List", module)
   ))
   .addDecorator(storyFn => <Router>{storyFn()}</Router>)
   .add("empty", () => (
-    <ComponentList components={[]} selected={[]} select={action("select")} />
+    <ComponentTree
+      components={[]}
+      selected={new Set()}
+      select={action("select")}
+    />
   ))
   .add("single item", () => (
-    <ComponentList
+    <ComponentTree
       components={[OneModel]}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ))
   .add("single item with selection", () => (
-    <ComponentList
+    <ComponentTree
       components={[OneModel]}
-      selected={[OneModel.path]}
+      selected={new Set([OneModel.path])}
       select={action("select")}
     />
   ))
   .add("multiple items", () => (
-    <ComponentList
+    <ComponentTree
       components={[OneModel, TwoModel, ThreeModel]}
-      selected={[]}
+      selected={new Set()}
       select={action("select")}
     />
   ))
   .add("multiple items with selection", () => (
-    <ComponentList
+    <ComponentTree
       components={[OneModel, TwoModel, ThreeModel]}
-      selected={[TwoModel.path]}
+      selected={new Set([TwoModel.path])}
       select={action("select")}
     />
   ));

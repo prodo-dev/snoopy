@@ -1,5 +1,4 @@
 import * as _ from "lodash";
-import styled from "styled-components";
 import ErrorBoundary from "../components/ErrorBoundary";
 import backgroundImage from "../media/transparent_background.png";
 import {
@@ -56,14 +55,42 @@ const errors: FileError[] = userImport.errors;
 
 export const context: Context = {components, themes, styles, errors};
 
-const StyledLog = styled.div`
-  padding-top: ${paddings.small};
-`;
+const DarkerJsxContainer = ({children}: any) => (
+  <div
+    style={{
+      background: `linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+  ),
+  url(${backgroundImage}) repeat`,
+      padding: paddings.medium,
+      width: "fit-content",
+    }}
+  >
+    {children}
+  </div>
+);
 
-const Container = styled.div`
-  margin: 0 auto;
-  width: min-content;
-`;
+const JsxContainer = ({children}: any) => (
+  <div
+    style={{
+      background: `linear-gradient(
+  rgba(255, 255, 255, 0.7),
+  rgba(255, 255, 255, 0.7)
+  ),
+  url(${backgroundImage}) repeat`,
+      all: "initial",
+    }}
+  >
+    {children}
+  </div>
+);
+
+const StyledLog = ({children}: any) => (
+  <div style={{paddingTop: paddings.small}} color="black">
+    {children}
+  </div>
+);
 
 const LogRoute = (props: any) => (
   <StyledLog>
@@ -72,29 +99,31 @@ const LogRoute = (props: any) => (
   </StyledLog>
 );
 
-const DarkerJsxContainer = styled.div`
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.2)
-    ),
-    url(${backgroundImage}) repeat;
-  padding: ${paddings.medium};
-  width: fit-content;
-`;
-
-const JsxContainer = styled.div`
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.7)
-    ),
-    url(${backgroundImage}) repeat;
-  all: initial;
-`;
-
 export const userBodyId = "snoopy-user-body";
-const ApplyStyles = styled.div<{allStyles: string}>`
-  ${props => props.allStyles}
-`;
+class ApplyStylesClass extends React.Component<{
+  css: string;
+  children: React.ReactNode;
+}> {
+  public componentDidMount() {
+    let styleEl = document.querySelector(
+      'style[generated-by="snoopy"][type="text/css"]',
+    ) as HTMLStyleElement;
+
+    if (!styleEl) {
+      styleEl = document.createElement("style");
+      styleEl.setAttribute("generated-by", "snoopy");
+      styleEl.setAttribute("type", "text/css");
+      styleEl.innerHTML = this.props.css;
+      document.head.appendChild(styleEl);
+    }
+  }
+
+  public render() {
+    return this.props.children;
+  }
+}
+
+const ApplyStyles = ApplyStylesClass as any;
 
 export const renderExample = (
   example: Example,
@@ -108,10 +137,15 @@ export const renderExample = (
     return (
       <ErrorBoundary>
         <MemoryRouter>
-          <Container>
+          <div
+            style={{
+              all: "initial",
+              width: "min-content",
+            }}
+          >
             <DarkerJsxContainer>
               <JsxContainer className="example-contents">
-                <ApplyStyles allStyles={allStyles}>
+                <ApplyStyles css={allStyles}>
                   <div id={userBodyId}>
                     {theme && ThemeProvider ? (
                       <ThemeProvider theme={theme as any}>
@@ -124,21 +158,18 @@ export const renderExample = (
                 </ApplyStyles>
               </JsxContainer>
             </DarkerJsxContainer>
-            {ReactRouterDOM != null && (
-              <React.Fragment>
-                <ReactRouterDOM.Route
-                  path="/"
-                  exact
-                  component={() => <StyledLog />}
-                />
-                <ReactRouterDOM.Route
-                  path="/:link+"
-                  exact
-                  component={LogRoute}
-                />
-              </React.Fragment>
-            )}
-          </Container>
+          </div>
+
+          {ReactRouterDOM != null && (
+            <React.Fragment>
+              <ReactRouterDOM.Route
+                path="/"
+                exact
+                component={() => <StyledLog />}
+              />
+              <ReactRouterDOM.Route path="/:link+" exact component={LogRoute} />
+            </React.Fragment>
+          )}
         </MemoryRouter>
       </ErrorBoundary>
     );
