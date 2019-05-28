@@ -38,8 +38,8 @@ export const components = [
 
 export const errors = [
   {path: \\"components/BadExport.tsx\\": errors: [\\"The \`@snoopy\` tag must be directly above an exported React component.\\"]},
-  {path: \\"components/UnParsable.tsx\\": errors: [\\"Error parsing file: Unexpected token, expected \\\\\\";\\\\\\" (2:6)\\",
-  \\"Error processing file: unknown: Unexpected token, expected \\\\\\";\\\\\\" (2:6)\\\\n\\\\n\\\\u001b[0m \\\\u001b[90m 1 | \\\\u001b[39m\\\\u001b[90m// @snoopy\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m\\\\u001b[31m\\\\u001b[1m>\\\\u001b[22m\\\\u001b[39m\\\\u001b[90m 2 | \\\\u001b[39mexpor \\\\u001b[36mconst\\\\u001b[39m \\\\u001b[33mUnParsable\\\\u001b[39m () \\\\u001b[33m=>\\\\u001b[39m {}\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m   | \\\\u001b[39m      \\\\u001b[31m\\\\u001b[1m^\\\\u001b[22m\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m 3 | \\\\u001b[39m\\\\u001b[0m\\"]}
+  {path: \\"components/UnParsable.tsx\\": errors: [\\"Error parsing file: Unexpected token, expected \\\\\\";\\\\\\" (3:6)\\",
+  \\"Error processing file: unknown: Unexpected token, expected \\\\\\";\\\\\\" (3:6)\\\\n\\\\n\\\\u001b[0m \\\\u001b[90m 1 | \\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m 2 | \\\\u001b[39m\\\\u001b[90m// @snoopy\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m\\\\u001b[31m\\\\u001b[1m>\\\\u001b[22m\\\\u001b[39m\\\\u001b[90m 3 | \\\\u001b[39mexpor \\\\u001b[36mconst\\\\u001b[39m \\\\u001b[33mUnParsable\\\\u001b[39m () \\\\u001b[33m=>\\\\u001b[39m {}\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m   | \\\\u001b[39m      \\\\u001b[31m\\\\u001b[1m^\\\\u001b[22m\\\\u001b[39m\\\\u001b[0m\\\\n\\\\u001b[0m \\\\u001b[90m 4 | \\\\u001b[39m\\\\u001b[0m\\"]}
 ];
 
 export const themes = [
@@ -58,7 +58,7 @@ export const styles = [
 
 export const examples = [
   {forComponent: Example0, examples: [
-    {component: Example1, title: \\"basic\\", source: \\"<NamedExport>Foo</NamedExport>;\\"}
+    {component: Example1, title: \\"basic\\", source: \\"<Button>Foo</Button>;\\"}
   ]}
 ];
 "

@@ -3,4 +3,4 @@ import {Button} from "../components/NamedExport";
 
 export default Button;
 
-export const basic = () => <NamedExport>Foo</NamedExport>;
+export const basic = () => <Button>Foo</Button>;

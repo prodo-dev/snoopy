@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 // @snoopy
 export const Button = () => {};
 
