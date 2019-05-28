@@ -1,6 +1,6 @@
 import * as path from "path";
+import {examplesDirectoryName, findExampleFilePaths} from "../src/examples";
 import {findProjectRoot} from "../src/utils";
-import {findExampleFilePaths, examplesDirectoryName} from "../src/examples";
 
 const exampleDir = path.resolve(__dirname, "fixtures", "example");
 const noExamplesDir = path.resolve(__dirname, "fixures", "no-examples");

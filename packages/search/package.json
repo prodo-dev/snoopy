@@ -17,7 +17,7 @@
     "start": "ts-node src/index.ts",
     "build": "tsc --build",
     "clean": "rm -rf .cache lib *.tsbuildinfo",
-    "test": "jest",
+    "test": "jest test/*",
     "lint": "set -ex; tsc --build; tslint --project ."
   },
   "dependencies": {
