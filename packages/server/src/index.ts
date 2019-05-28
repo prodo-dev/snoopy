@@ -1,14 +1,12 @@
-import {checkMatch} from "@prodo-ai/snoopy-search";
-import * as chokidar from "chokidar";
 import * as Express from "express";
 import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
-import {generateComponentsFileContents} from "./generate";
 import registerEndpoints from "./rest";
 import {exists, writeFile} from "./utils";
+import {watchForComponentsFileChanges} from "./watch";
 import registerWebsockets from "./websockets";
 
 const clientDir = path.dirname(
@@ -62,11 +60,6 @@ export const start = async (
     JSON.stringify({name: "@snoopy/components", main: "index.ts"}),
   );
 
-  let generated = await generateComponentsFileContents(
-    ".",
-    process.env.PRODO_SEARCH_DIR || "",
-  );
-
   const bundler = createBundler({
     clientDir,
     outDir,
@@ -79,33 +72,11 @@ export const start = async (
 
   await bundler.bundle();
 
-  chokidar
-    .watch(".", {
-      cwd: searchDir,
-      ignoreInitial: true,
-      ignored: /node_modules|\.git|flycheck_*/,
-    })
-    .on("all", async (_, filename) => {
-      try {
-        const matches = await checkMatch(filename);
-        if (matches) {
-          const newGenerated = await generateComponentsFileContents(
-            ".",
-            process.env.PRODO_SEARCH_DIR || "",
-          );
-          if (generated !== newGenerated) {
-            generated = newGenerated;
-
-            // We need to do this to avoid compiling and pushing `filename` at the
-            // same time as `componentsFile`.
-            (bundler as any).onChange(componentsFile);
-          }
-        }
-      } catch (e) {
-        // tslint:disable-next-line:no-console
-        console.warn("Error handling file change:", filename, "\n", e);
-      }
-    });
+  await watchForComponentsFileChanges(searchDir, () => {
+    // We need to do this to avoid compiling and pushing `filename` at the
+    // same time as `componentsFile`.
+    (bundler as any).onChange(componentsFile);
+  });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
 

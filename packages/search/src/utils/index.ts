@@ -4,14 +4,18 @@ import * as path from "path";
 import {promisify} from "util";
 
 export const fileExtensions = ["ts", "tsx", "js", "jsx"];
-export const exampleFileGlob = [
-  `**/*.{${fileExtensions.join(",")}}`,
+export const ignored = [
   "!**/flycheck_*.*",
   "!node_modules/**/*",
   "!**/test/**/*",
   "!**/*.test.*",
 ];
+
+export const exampleFileGlob = [`**/*.{${fileExtensions.join(",")}}`].concat(
+  ignored,
+);
 export const fileGlob = exampleFileGlob.concat(["!**/*.example.*"]);
+
 export const styleFileExtensions = ["css", "less"];
 export const styleFileGlob = [
   `**/*.{${styleFileExtensions.join(",")}}`,
