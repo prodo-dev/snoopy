@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import {start} from "@prodo-ai/snoopy-server";
+// tslint:disable-next-line:no-submodule-imports
+import {start} from "@prodo-ai/snoopy-server/src";
 import * as yargs from "yargs";
 
 // tslint:disable-next-line:no-var-requires

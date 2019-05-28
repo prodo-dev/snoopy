@@ -3,7 +3,7 @@ import {
   FileError,
   FileExport,
   searchCodebase,
-} from "@prodo-ai/snoopy-search";
+} from "@prodo-ai/snoopy-search/src"; // tslint:disable-line:no-submodule-imports
 import * as fs from "fs";
 import * as path from "path";
 

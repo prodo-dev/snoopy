@@ -1,4 +1,5 @@
-import {checkMatch} from "@prodo-ai/snoopy-search";
+// tslint:disable-next-line:no-submodule-imports
+import {checkMatch} from "@prodo-ai/snoopy-search/src";
 // tslint:disable-next-line:no-submodule-imports
 import {ignored} from "@prodo-ai/snoopy-search/src/utils";
 import * as chokidar from "chokidar";
