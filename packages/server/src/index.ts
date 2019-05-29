@@ -2,6 +2,7 @@ import * as Express from "express";
 import * as http from "http";
 import makeDir = require("make-dir");
 import * as path from "path";
+import * as portfinder from "portfinder";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
@@ -95,26 +96,20 @@ export const start = async (
     response.sendFile((bundler as any).mainBundle.name);
   });
 
-  const listen = (portNumber: number) => {
-    app
-      .listen(portNumber, () => {
-        process.stdout.write(
-          `Server is running at http://localhost:${portNumber}.\n`,
-        );
-      })
-      .on("error", e => {
-        if (portNumber - port > portTriesLimit) {
-          process.stdout.write(`Tried ${portTriesLimit} ports, giving up.`);
-        } else if ((e as any).code === "EADDRINUSE") {
-          process.stdout.write(
-            `Port ${portNumber} is busy, trying ${portNumber + 1}...\n`,
-          );
-          listen(portNumber + 1);
-        } else {
-          process.stdout.write(`${e.message}\n`);
-        }
-      });
-  };
+  const actualPort = await portfinder.getPortPromise({
+    port,
+    stopPort: port + portTriesLimit,
+  });
 
-  listen(port);
+  if (actualPort !== port) {
+    process.stdout.write(
+      `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
+    );
+  }
+
+  server.listen(actualPort, () => {
+    process.stdout.write(
+      `Server is running at http://localhost:${actualPort}.\n`,
+    );
+  });
 };
