@@ -6,7 +6,7 @@ import applyAliases from "./aliases";
 import createBundler from "./bundler";
 import registerEndpoints from "./rest";
 import {exists, writeFile} from "./utils";
-import {watchComponentsFile} from "./watch";
+import {watchForComponentsFileChanges} from "./watch";
 import registerWebsockets from "./websockets";
 
 const clientDir = path.dirname(
@@ -72,7 +72,7 @@ export const start = async (
 
   await bundler.bundle();
 
-  await watchComponentsFile(searchDir, () => {
+  await watchForComponentsFileChanges(searchDir, () => {
     // We need to do this to avoid compiling and pushing `filename` at the
     // same time as `componentsFile`.
     (bundler as any).onChange(componentsFile);

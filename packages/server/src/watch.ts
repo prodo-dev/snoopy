@@ -4,7 +4,7 @@ import {ignored} from "@prodo-ai/snoopy-search/src/utils";
 import * as chokidar from "chokidar";
 import {generateComponentsFileContents} from "./generate";
 
-export const watchComponentsFile = async (
+export const watchForComponentsFileChanges = async (
   cwd: string,
   onComponentsFileChange: () => void,
 ): Promise<chokidar.FSWatcher> => {

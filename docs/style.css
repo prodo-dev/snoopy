@@ -27,6 +27,23 @@ body {
 
 main {
   max-width: 800px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+header main,
+header aside {
+  margin: 1rem;
+  flex-basis: 600px;
+}
+
+header aside {
+  flex-grow: 1;
 }
 
 section {
@@ -142,7 +159,12 @@ code {
   text-transform: uppercase;
 }
 
-.media img {
+.media {
+  text-align: center;
+}
+
+.media img,
+.media video {
   border: 1px solid var(--border-color);
   max-width: 100%;
 }
