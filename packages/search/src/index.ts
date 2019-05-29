@@ -15,9 +15,9 @@ import {ExtractType, File, FileError, SearchResult} from "./types";
 import {
   exampleFileGlob,
   fileGlob,
+  ignored,
   readFileContents,
   styleFileGlob,
-  ignored,
 } from "./utils";
 
 export * from "./types";
