@@ -15,15 +15,18 @@ import {ExtractType, File, FileError, SearchResult} from "./types";
 import {
   exampleFileGlob,
   fileGlob,
+  ignored,
   readFileContents,
   styleFileGlob,
 } from "./utils";
 
 export * from "./types";
+export {ignored};
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
+  const matchingFileGlob = exampleFileGlob.concat(styleFileGlob);
   const fileInGitIgnore = await inGitIgnore(filepath);
-  return !fileInGitIgnore && multimatch(filepath, exampleFileGlob).length > 0;
+  return !fileInGitIgnore && multimatch(filepath, matchingFileGlob).length > 0;
 };
 
 const inGitIgnore = (() => {
@@ -176,5 +179,19 @@ export const searchCodebase = async (
     examples: getNonNullFiles(examples),
   };
 
+  displayErrorsForFiles(results.componentFiles);
+  displayErrorsForFiles(results.themeFiles);
+  displayErrorsForFiles(results.styleFiles);
+  displayErrorsForFiles(results.examples);
+
   return results;
+};
+
+const displayErrorsForFiles = (files: File[]) => {
+  for (const file of files) {
+    for (const error of file.errors) {
+      // tslint:disable-next-line:no-console
+      console.log(`Error in ${file.filepath}:`, error.message);
+    }
+  }
 };

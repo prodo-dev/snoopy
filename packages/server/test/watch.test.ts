@@ -55,6 +55,16 @@ ${contents}`,
   );
 };
 
+const writeStyleFile = async (contents: string) => {
+  const filepath = "src/style.css";
+  return writeFileToPath(filepath, contents);
+};
+
+const writeThemeFile = async (contents: string) => {
+  const filepath = "src/theme.js";
+  return writeFileToPath(filepath, contents);
+};
+
 const writeProjectRoot = async () => {
   const filepath = "package.json";
   return writeFileToPath(filepath, `{}`);
@@ -68,6 +78,8 @@ const createAndPopulateTmpDir = async () => {
   await writeSrcFile(`export default () => <div />;`);
   await writeExampleFile(`export const basic = () => <Button />`);
   await writeProjectRoot();
+  await writeStyleFile("");
+  await writeThemeFile("const theme = {}");
 };
 
 beforeEach(async () => {
@@ -167,6 +179,70 @@ export const Test = () => <div />;`);
 
     await wait(500);
     expect(triggered).toBe(false);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation added to css file", async () => {
+    let triggered = false;
+
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeStyleFile("/* @snoopy:styles */");
+
+    await waitUntil(() => triggered);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation removed from css file", async () => {
+    let triggered = false;
+
+    await writeStyleFile("/* @snoopy:styles */");
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeStyleFile("");
+
+    await waitUntil(() => triggered);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation added to theme", async () => {
+    let triggered = false;
+
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeThemeFile(`// @snoopy:theme
+export const theme = {}`);
+
+    await waitUntil(() => triggered);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation removed from theme", async () => {
+    let triggered = false;
+
+    await writeThemeFile(`// @snoopy:theme
+export const theme = {}`);
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeThemeFile(`export const theme = {}`);
+
+    await waitUntil(() => triggered);
 
     watcher.close();
   });
