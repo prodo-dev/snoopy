@@ -179,5 +179,19 @@ export const searchCodebase = async (
     examples: getNonNullFiles(examples),
   };
 
+  displayErrorsForFiles(results.componentFiles);
+  displayErrorsForFiles(results.themeFiles);
+  displayErrorsForFiles(results.styleFiles);
+  displayErrorsForFiles(results.examples);
+
   return results;
+};
+
+const displayErrorsForFiles = (files: File[]) => {
+  for (const file of files) {
+    for (const error of file.errors) {
+      // tslint:disable-next-line:no-console
+      console.log(`Error in ${file.filepath}:`, error.message);
+    }
+  }
 };
