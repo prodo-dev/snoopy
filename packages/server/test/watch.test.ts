@@ -198,6 +198,22 @@ export const Test = () => <div />;`);
     watcher.close();
   });
 
+  it("does trigger callback when annotation removed from css file", async () => {
+    let triggered = false;
+
+    await writeStyleFile("/* @snoopy:styles */");
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeStyleFile("");
+
+    await waitUntil(() => triggered);
+
+    watcher.close();
+  });
+
   it("does trigger callback when annotation added to theme", async () => {
     let triggered = false;
 
@@ -208,6 +224,23 @@ export const Test = () => <div />;`);
     await wait(500);
     await writeThemeFile(`// @snoopy:theme
 export const theme = {}`);
+
+    await waitUntil(() => triggered);
+
+    watcher.close();
+  });
+
+  it("does trigger callback when annotation removed from theme", async () => {
+    let triggered = false;
+
+    await writeThemeFile(`// @snoopy:theme
+export const theme = {}`);
+    watcher = await watchForComponentsFileChanges(dir.name, () => {
+      triggered = true;
+    });
+
+    await wait(500);
+    await writeThemeFile(`export const theme = {}`);
 
     await waitUntil(() => triggered);
 
