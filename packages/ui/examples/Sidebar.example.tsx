@@ -1,5 +1,5 @@
 import * as React from "react";
-import Sidebar from "../src/components/Sidebar";
+import {Sidebar} from "../src/components/Sidebar";
 import {testComponents} from "../test/fixtures";
 
 export default Sidebar;

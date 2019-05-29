@@ -1,9 +1,12 @@
 import {faCaretLeft, faList} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
 import {Component} from "../../models";
+import {State} from "../../store";
+import {actions} from "../../store/app";
 import {
   forNarrowScreen,
   forWideScreen,
@@ -102,10 +105,13 @@ const SidebarIcon = styled.span`
 
 interface Props {
   components: Component[];
-  isOpen: boolean;
-  setSidebarOpen: (open: boolean) => any;
   selected: Set<FilePath>;
   select: (selection: Set<FilePath>) => any;
+}
+
+interface EnhancedProps extends Props {
+  isOpen: boolean;
+  setSidebarOpen: (open: boolean) => any;
 }
 
 const Overlay = ({
@@ -152,7 +158,7 @@ const Header = () => (
   </StyledLink>
 );
 
-const Sidebar = (props: Props) => (
+export const Sidebar = (props: EnhancedProps) => (
   <React.Fragment>
     <StyledSidebar isOpen={props.isOpen} className="sidebar">
       {props.isOpen ? (
@@ -188,4 +194,12 @@ const Sidebar = (props: Props) => (
   </React.Fragment>
 );
 
-export default Sidebar;
+// @snoopy:ignore
+export default connect(
+  (state: State) => ({
+    isOpen: state.app.isSidebarOpen,
+  }),
+  dispatch => ({
+    setSidebarOpen: (value: boolean) => dispatch(actions.setSidebarOpen(value)),
+  }),
+)(Sidebar);

@@ -1,6 +1,7 @@
 import {WebSocketEvents} from "@prodo-ai/snoopy-api";
 import {createBrowserHistory} from "history";
 import * as React from "react";
+import {Provider} from "react-redux";
 import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import styled, {ThemeProvider} from "styled-components";
 import {FilePath} from "../components/ComponentTree";
@@ -11,6 +12,7 @@ import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import NotFoundPage from "../routes/NotFoundPage";
+import {store} from "../store";
 import {NarrowScreenWidth, paddings} from "../styles";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
@@ -96,53 +98,53 @@ const App = () => {
   return (
     <Router history={history}>
       <ThemeProvider theme={darkTheme}>
-        <StyledPage>
-          <Route
-            path="/:path*"
-            exact
-            component={({match}: RouteComponentProps<{path: string}>) => (
-              <>
-                <Sidebar
-                  components={context.components}
-                  isOpen={isSidebarOpen}
-                  setSidebarOpen={setSidebarOpen}
-                  selected={selectedPaths}
-                  select={setSelectedPaths}
-                />
+        <Provider store={store}>
+          <StyledPage>
+            <Route
+              path="/:path*"
+              exact
+              component={({match}: RouteComponentProps<{path: string}>) => (
+                <>
+                  <Sidebar
+                    components={context.components}
+                    selected={selectedPaths}
+                    select={setSelectedPaths}
+                  />
 
-                <ContentContainer>
-                  <HeaderContainer>
-                    <NarrowScreen>
-                      <SidebarToggle
-                        isOpen={isSidebarOpen}
-                        setSidebarOpen={setSidebarOpen}
-                      />
-                    </NarrowScreen>
-                    {match.params.path || "Snoopy, by Prodo"}
-                  </HeaderContainer>
+                  <ContentContainer>
+                    <HeaderContainer>
+                      <NarrowScreen>
+                        <SidebarToggle
+                          isOpen={isSidebarOpen}
+                          setSidebarOpen={setSidebarOpen}
+                        />
+                      </NarrowScreen>
+                      {match.params.path || "Snoopy, by Prodo"}
+                    </HeaderContainer>
 
-                  <StyledPageContents>
-                    <Switch>
-                      <Route
-                        path="/"
-                        exact
-                        component={WithContext(
-                          HomePageWithProps,
-                          selectedPaths,
-                        )}
-                      />
-                      <Route
-                        path="/:path+"
-                        exact
-                        component={WithContext(ComponentPageWithProps)}
-                      />
-                    </Switch>
-                  </StyledPageContents>
-                </ContentContainer>
-              </>
-            )}
-          />
-        </StyledPage>
+                    <StyledPageContents>
+                      <Switch>
+                        <Route
+                          path="/"
+                          exact
+                          component={WithContext(
+                            HomePageWithProps,
+                            selectedPaths,
+                          )}
+                        />
+                        <Route
+                          path="/:path+"
+                          exact
+                          component={WithContext(ComponentPageWithProps)}
+                        />
+                      </Switch>
+                    </StyledPageContents>
+                  </ContentContainer>
+                </>
+              )}
+            />
+          </StyledPage>
+        </Provider>
       </ThemeProvider>
     </Router>
   );
