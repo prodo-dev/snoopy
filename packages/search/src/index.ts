@@ -17,9 +17,11 @@ import {
   fileGlob,
   readFileContents,
   styleFileGlob,
+  ignored,
 } from "./utils";
 
 export * from "./types";
+export {ignored};
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
   const matchingFileGlob = exampleFileGlob.concat(styleFileGlob);
