@@ -30,38 +30,48 @@ socket.addEventListener("message", event => {
   }
 });
 
+const WithContextProvider = <Props extends {}>(
+  ComponentNeedingContext: React.ComponentType<Props>,
+) => (props: Props) => (
+  <Provider store={store}>
+    <ComponentNeedingContext {...props} />
+  </Provider>
+);
+
+const AppPage = WithContextProvider(() => (
+  <StyledPage>
+    <Route
+      path="/:path*"
+      exact
+      component={({match}: RouteComponentProps<{path: string}>) => (
+        <>
+          <Sidebar />
+
+          <ContentContainer>
+            <HeaderContainer>
+              <NarrowScreen>
+                <ConnectedSidebarToggle />
+              </NarrowScreen>
+              {match.params.path || "Snoopy, by Prodo"}
+            </HeaderContainer>
+
+            <StyledPageContents>
+              <Switch>
+                <Route path="/*" component={HomePage} />
+              </Switch>
+            </StyledPageContents>
+          </ContentContainer>
+        </>
+      )}
+    />
+  </StyledPage>
+));
+
 const App = () => {
   return (
     <Router history={history}>
       <ThemeProvider theme={darkTheme}>
-        <Provider store={store}>
-          <StyledPage>
-            <Route
-              path="/:path*"
-              exact
-              component={({match}: RouteComponentProps<{path: string}>) => (
-                <>
-                  <Sidebar />
-
-                  <ContentContainer>
-                    <HeaderContainer>
-                      <NarrowScreen>
-                        <ConnectedSidebarToggle />
-                      </NarrowScreen>
-                      {match.params.path || "Snoopy, by Prodo"}
-                    </HeaderContainer>
-
-                    <StyledPageContents>
-                      <Switch>
-                        <Route path="/*" component={HomePage} />
-                      </Switch>
-                    </StyledPageContents>
-                  </ContentContainer>
-                </>
-              )}
-            />
-          </StyledPage>
-        </Provider>
+        <AppPage />
       </ThemeProvider>
     </Router>
   );
