@@ -4,11 +4,14 @@ import {Context} from "../models";
 import appReducer, {
   initialState as appInitialState,
   State as AppState,
+  Action as AppAction,
 } from "./app";
 
 export interface State {
   app: AppState;
 }
+
+export type Action = AppAction;
 
 export default (context: Context) => {
   const initialState: State = {
