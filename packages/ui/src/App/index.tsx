@@ -6,7 +6,7 @@ import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import styled, {ThemeProvider} from "styled-components";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
-import Sidebar, {SidebarToggle} from "../components/Sidebar";
+import Sidebar, {ConnectedSidebarToggle} from "../components/Sidebar";
 import HomePage from "../routes/HomePage";
 import createStore from "../store";
 import {paddings} from "../styles";
@@ -46,7 +46,7 @@ const App = () => {
                   <ContentContainer>
                     <HeaderContainer>
                       <NarrowScreen>
-                        <SidebarToggle />
+                        <ConnectedSidebarToggle />
                       </NarrowScreen>
                       {match.params.path || "Snoopy, by Prodo"}
                     </HeaderContainer>

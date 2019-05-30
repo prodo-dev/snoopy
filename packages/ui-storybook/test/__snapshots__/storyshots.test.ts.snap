@@ -18,13 +18,14 @@ exports[`Storyshots Component List multiple items 1`] = `
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <input
-        checked={false}
-        className="sc-EHOje dfgQRE"
-        onChange={[Function]}
-        onClick={[Function]}
-        type="checkbox"
-      />
+      <span>
+        <input
+          checked={false}
+          className="sc-EHOje dfgQRE"
+          onChange={[Function]}
+          type="checkbox"
+        />
+      </span>
       <label
         className="sc-htpNat sc-bxivhb gDktNR"
         selected={1}
@@ -35,13 +36,14 @@ exports[`Storyshots Component List multiple items 1`] = `
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <input
-            checked={false}
-            className="sc-EHOje dfgQRE"
-            onChange={[Function]}
-            onClick={[Function]}
-            type="checkbox"
-          />
+          <span>
+            <input
+              checked={false}
+              className="sc-EHOje dfgQRE"
+              onChange={[Function]}
+              type="checkbox"
+            />
+          </span>
           <label
             className="sc-htpNat sc-ifAKCX oATfq"
             selected={1}
@@ -63,13 +65,14 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <input
-        checked={true}
-        className="sc-EHOje dfgQRE"
-        onChange={[Function]}
-        onClick={[Function]}
-        type="checkbox"
-      />
+      <span>
+        <input
+          checked={true}
+          className="sc-EHOje dfgQRE"
+          onChange={[Function]}
+          type="checkbox"
+        />
+      </span>
       <label
         className="sc-htpNat sc-bxivhb gAXdb"
         selected={0}
@@ -80,13 +83,14 @@ exports[`Storyshots Component List multiple items with selection 1`] = `
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <input
-            checked={true}
-            className="sc-EHOje dfgQRE"
-            onChange={[Function]}
-            onClick={[Function]}
-            type="checkbox"
-          />
+          <span>
+            <input
+              checked={true}
+              className="sc-EHOje dfgQRE"
+              onChange={[Function]}
+              type="checkbox"
+            />
+          </span>
           <label
             className="sc-htpNat sc-ifAKCX cyJoFk"
             selected={0}
@@ -108,13 +112,14 @@ exports[`Storyshots Component List single item 1`] = `
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <input
-        checked={false}
-        className="sc-EHOje dfgQRE"
-        onChange={[Function]}
-        onClick={[Function]}
-        type="checkbox"
-      />
+      <span>
+        <input
+          checked={false}
+          className="sc-EHOje dfgQRE"
+          onChange={[Function]}
+          type="checkbox"
+        />
+      </span>
       <label
         className="sc-htpNat sc-bxivhb gDktNR"
         selected={1}
@@ -125,13 +130,14 @@ exports[`Storyshots Component List single item 1`] = `
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <input
-            checked={false}
-            className="sc-EHOje dfgQRE"
-            onChange={[Function]}
-            onClick={[Function]}
-            type="checkbox"
-          />
+          <span>
+            <input
+              checked={false}
+              className="sc-EHOje dfgQRE"
+              onChange={[Function]}
+              type="checkbox"
+            />
+          </span>
           <label
             className="sc-htpNat sc-ifAKCX oATfq"
             selected={1}
@@ -153,13 +159,14 @@ exports[`Storyshots Component List single item with selection 1`] = `
     className="sc-bwzfXH iOBFVD"
   >
     <li>
-      <input
-        checked={true}
-        className="sc-EHOje dfgQRE"
-        onChange={[Function]}
-        onClick={[Function]}
-        type="checkbox"
-      />
+      <span>
+        <input
+          checked={true}
+          className="sc-EHOje dfgQRE"
+          onChange={[Function]}
+          type="checkbox"
+        />
+      </span>
       <label
         className="sc-htpNat sc-bxivhb gAXdb"
         selected={0}
@@ -170,13 +177,14 @@ exports[`Storyshots Component List single item with selection 1`] = `
         className="sc-bwzfXH iOBFVD"
       >
         <li>
-          <input
-            checked={true}
-            className="sc-EHOje dfgQRE"
-            onChange={[Function]}
-            onClick={[Function]}
-            type="checkbox"
-          />
+          <span>
+            <input
+              checked={true}
+              className="sc-EHOje dfgQRE"
+              onChange={[Function]}
+              type="checkbox"
+            />
+          </span>
           <label
             className="sc-htpNat sc-ifAKCX cyJoFk"
             selected={0}
@@ -192,13 +200,13 @@ exports[`Storyshots Component List single item with selection 1`] = `
 
 exports[`Storyshots Sidebar closed 1`] = `
 <div
-  className="sidebar sc-gzVnrw dCrXjW"
+  className="sidebar sc-htoDjs kQVtiY"
 >
   <div
-    className="sc-gqjmRU dgXNLS"
+    className="sc-VigVT eMNzRy"
   >
     <span
-      className="sidebar-toggle sc-VigVT iRYffN"
+      className="sidebar-toggle sc-gzVnrw IhFnc"
       onClick={[Function]}
     >
       <svg
@@ -225,18 +233,18 @@ exports[`Storyshots Sidebar closed 1`] = `
 
 exports[`Storyshots Sidebar open and empty 1`] = `
 <div
-  className="sidebar sc-gzVnrw dFHQZO"
+  className="sidebar sc-htoDjs kYzvFo"
 >
   <div
-    className="sc-gqjmRU dgXNLS"
+    className="sc-VigVT eMNzRy"
   >
     <a
-      className="sc-dnqmqq kjNnRX"
+      className="sc-iwsKbI kBaOMJ"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-iwsKbI khxTXx"
+        className="title sc-gZMcBi gyNktx"
       >
         <img
           alt=""
@@ -247,7 +255,7 @@ exports[`Storyshots Sidebar open and empty 1`] = `
     </a>
   </div>
   <hr
-    className="sc-gZMcBi cwrhUs"
+    className="sc-gqjmRU gmhXcr"
   />
   <div
     className="component-list sc-bdVaJa gSvyBK"
@@ -261,18 +269,18 @@ exports[`Storyshots Sidebar open and empty 1`] = `
 
 exports[`Storyshots Sidebar open with components 1`] = `
 <div
-  className="sidebar sc-gzVnrw dFHQZO"
+  className="sidebar sc-htoDjs kYzvFo"
 >
   <div
-    className="sc-gqjmRU dgXNLS"
+    className="sc-VigVT eMNzRy"
   >
     <a
-      className="sc-dnqmqq kjNnRX"
+      className="sc-iwsKbI kBaOMJ"
       href="/"
       onClick={[Function]}
     >
       <div
-        className="title sc-iwsKbI khxTXx"
+        className="title sc-gZMcBi gyNktx"
       >
         <img
           alt=""
@@ -283,7 +291,7 @@ exports[`Storyshots Sidebar open with components 1`] = `
     </a>
   </div>
   <hr
-    className="sc-gZMcBi cwrhUs"
+    className="sc-gqjmRU gmhXcr"
   />
   <div
     className="component-list sc-bdVaJa gSvyBK"
@@ -292,13 +300,14 @@ exports[`Storyshots Sidebar open with components 1`] = `
       className="sc-bwzfXH iOBFVD"
     >
       <li>
-        <input
-          checked={false}
-          className="sc-EHOje dfgQRE"
-          onChange={[Function]}
-          onClick={[Function]}
-          type="checkbox"
-        />
+        <span>
+          <input
+            checked={false}
+            className="sc-EHOje dfgQRE"
+            onChange={[Function]}
+            type="checkbox"
+          />
+        </span>
         <label
           className="sc-htpNat sc-bxivhb gDktNR"
           selected={1}
@@ -309,13 +318,14 @@ exports[`Storyshots Sidebar open with components 1`] = `
           className="sc-bwzfXH iOBFVD"
         >
           <li>
-            <input
-              checked={false}
-              className="sc-EHOje dfgQRE"
-              onChange={[Function]}
-              onClick={[Function]}
-              type="checkbox"
-            />
+            <span>
+              <input
+                checked={false}
+                className="sc-EHOje dfgQRE"
+                onChange={[Function]}
+                type="checkbox"
+              />
+            </span>
             <label
               className="sc-htpNat sc-ifAKCX oATfq"
               selected={1}

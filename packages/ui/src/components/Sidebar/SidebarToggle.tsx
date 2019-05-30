@@ -18,13 +18,12 @@ const SidebarIcon = styled.span`
   margin: ${margins.small} ${margins.medium};
 `;
 
-export const SidebarToggle = ({
-  isOpen,
-  setSidebarOpen,
-}: {
+export interface Props {
   isOpen: boolean;
   setSidebarOpen: (open: boolean) => any;
-}) => (
+}
+
+export const SidebarToggle = ({isOpen, setSidebarOpen}: Props) => (
   <SidebarIcon
     onClick={() => setSidebarOpen(!isOpen)}
     className="sidebar-toggle"
@@ -33,8 +32,7 @@ export const SidebarToggle = ({
   </SidebarIcon>
 );
 
-// @snoopy:ignore
-export default connect(
+export const ConnectedSidebarToggle = connect(
   (state: State) => ({
     isOpen: state.app.isSidebarOpen,
   }),
@@ -42,3 +40,5 @@ export default connect(
     setSidebarOpen: (value: boolean) => dispatch(actions.setSidebarOpen(value)),
   }),
 )(SidebarToggle);
+
+export default SidebarToggle;

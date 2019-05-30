@@ -16,9 +16,9 @@ import {
 import ComponentTree from "../ComponentTree";
 import Logo from "../Logo";
 import {NarrowScreen, WideScreen} from "../Responsive";
-import SidebarToggle from "./SidebarToggle";
+import SidebarToggle, {ConnectedSidebarToggle} from "./SidebarToggle";
 
-export {SidebarToggle};
+export {SidebarToggle, ConnectedSidebarToggle};
 
 const StyledSidebar = styled.div<{isOpen: boolean}>`
   position: sticky;
@@ -138,7 +138,10 @@ export const Sidebar = (props: EnhancedProps) => (
           <HeaderContainer>
             <Header />
             <WideScreen>
-              <SidebarToggle />
+              <SidebarToggle
+                isOpen={props.isOpen}
+                setSidebarOpen={props.setSidebarOpen}
+              />
             </WideScreen>
           </HeaderContainer>
           <Separator />
@@ -150,7 +153,10 @@ export const Sidebar = (props: EnhancedProps) => (
         </React.Fragment>
       ) : (
         <HeaderContainer>
-          <SidebarToggle />
+          <SidebarToggle
+            isOpen={props.isOpen}
+            setSidebarOpen={props.setSidebarOpen}
+          />
         </HeaderContainer>
       )}
     </StyledSidebar>

@@ -1,5 +1,5 @@
 // tslint:disable:no-submodule-imports
-import Sidebar from "@prodo-ai/snoopy-ui/src/components/Sidebar";
+import {Sidebar} from "@prodo-ai/snoopy-ui/src/components/Sidebar";
 import {darkTheme} from "@prodo-ai/snoopy-ui/src/styles/theme";
 import {Component as ComponentModel} from "@prodo-ai/snoopy-ui/src/models";
 // tslint:enable
