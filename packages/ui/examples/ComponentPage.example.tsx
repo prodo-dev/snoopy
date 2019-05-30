@@ -14,6 +14,8 @@ export const noThemes = () => (
     }}
     filepath=""
     selectedPaths={new Set([])}
+    selectedTheme={null}
+    setSelectedTheme={() => alert("setting theme")}
   />
 );
 noThemes.title = "No Themes";
@@ -23,6 +25,8 @@ export const withThemes = () => (
     context={testContext}
     filepath=""
     selectedPaths={new Set([])}
+    selectedTheme={null}
+    setSelectedTheme={() => alert("setting theme")}
   />
 );
 withThemes.title = "With Themes";

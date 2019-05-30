@@ -1,4 +1,4 @@
-import {Context, emptyContext, FilePath} from "../../models";
+import {Context, emptyContext, Theme, FilePath} from "../../models";
 
 export type Action =
   | {
@@ -8,22 +8,33 @@ export type Action =
   | {
       type: "app/SET_SELECTED_PATHS";
       paths: Set<FilePath>;
+    }
+  | {
+      type: "app/SET_SELECTED_THEME";
+      theme: Theme;
     };
 
 export interface State {
   isSidebarOpen: boolean;
   selectedPaths: Set<FilePath>;
+  selectedTheme: Theme | null;
   context: Context;
 }
 
 export const initialState = (
   context: Context,
-  selectedPaths: Set<FilePath> = new Set(context.components.map(c => c.path)),
-): State => ({
-  isSidebarOpen: true,
-  selectedPaths,
-  context,
-});
+  selectedPaths?: Set<FilePath>,
+): State => {
+  const selectedTheme = context.themes.length !== 0 ? context.themes[0] : null;
+
+  return {
+    isSidebarOpen: true,
+    selectedPaths:
+      selectedPaths || new Set(context.components.map(c => c.path)),
+    selectedTheme,
+    context,
+  };
+};
 
 export const setSidebarOpen = (value: boolean): Action => ({
   type: "app/SET_SIDEBAR_OPEN",
@@ -35,9 +46,15 @@ export const setSelectedPaths = (paths: Set<FilePath>): Action => ({
   paths,
 });
 
+export const setSelectedTheme = (theme: Theme): Action => ({
+  type: "app/SET_SELECTED_THEME",
+  theme,
+});
+
 export const actions = {
   setSidebarOpen,
   setSelectedPaths,
+  setSelectedTheme,
 };
 
 export default (
@@ -53,6 +70,11 @@ export default (
     return {
       ...state,
       selectedPaths: action.paths,
+    };
+  } else if (action.type === "app/SET_SELECTED_THEME") {
+    return {
+      ...state,
+      selectedTheme: action.theme,
     };
   }
 

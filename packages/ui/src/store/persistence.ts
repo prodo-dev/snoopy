@@ -4,7 +4,11 @@ interface State {
 
 export const STORAGE_KEY = "redux";
 
-export const PERSISTENCE_PATHS = ["app.selectedPaths", "app.isSidebarOpen"];
+export const PERSISTENCE_PATHS = [
+  "app.selectedPaths",
+  "app.isSidebarOpen",
+  "app.selectedTheme",
+];
 
 const addToSelection = (
   selection: State,

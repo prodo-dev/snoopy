@@ -29,19 +29,34 @@ width: 150px;
 margin-left: ${margins.large}
 `;
 
+interface Option {
+  value: number;
+  label: string;
+  theme: Theme;
+}
+
+export interface Props {
+  component: ComponentModel;
+  themes: Theme[];
+  styles: Style[];
+  selectedTheme: Theme | null;
+  setSelectedTheme: (theme: Theme) => any;
+}
+
 export const ComponentContainer = ({
   component,
   themes,
   styles,
-}: {
-  component: ComponentModel;
-  themes: Theme[];
-  styles: Style[];
-}) => {
-  const [selectedTheme, setSelectedTheme] = React.useState(0);
-  const options = themes.map((theme, idx) => {
-    return {value: idx, label: theme.name};
+  selectedTheme,
+  setSelectedTheme,
+}: Props) => {
+  const options: Option[] = themes.map((theme, idx) => {
+    return {value: idx, label: theme.name, theme};
   });
+
+  const selectedOption =
+    selectedTheme && options.filter(o => o.label === selectedTheme.name);
+
   const allStyles = styles
     .map(x => x.style.replace(/\bbody\b/, `#${userBodyId}`))
     .join("\n");
@@ -52,21 +67,15 @@ export const ComponentContainer = ({
         <StyledTitle>{component.name}</StyledTitle>
         {themes.length > 0 && (
           <StyledSelect
-            defaultValue={options[selectedTheme]}
-            onChange={(selectedOption: any) =>
-              setSelectedTheme(selectedOption.value)
-            }
+            defaultValue={selectedOption}
+            onChange={(selected: Option) => setSelectedTheme(selected.theme)}
             options={options}
           />
         )}
       </StyledTitleContainer>
       <Component
         component={component}
-        userTheme={
-          themes.length > 0 &&
-          themes[selectedTheme] &&
-          themes[selectedTheme].theme
-        }
+        userTheme={selectedTheme && selectedTheme.theme}
         allStyles={allStyles}
       />
     </Container>
