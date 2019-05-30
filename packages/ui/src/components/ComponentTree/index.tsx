@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import * as React from "react";
 import styled from "styled-components";
-import {Component} from "../../models";
+import {Component, Directory, File, FilePath} from "../../models";
 import {paddings} from "../../styles";
 
 const StyledComponentTree = styled.div`
@@ -63,21 +63,6 @@ interface Props {
   selected: Set<FilePath>;
   select: (selection: Set<FilePath>) => any;
   full?: boolean;
-}
-
-export type FilePath = string;
-
-interface Directory {
-  type: "directory";
-  path: FilePath;
-  children: {
-    [segment: string]: Directory | File;
-  };
-}
-
-interface File {
-  type: "file";
-  path: FilePath;
 }
 
 const ComponentTree = ({components, selected, select}: Props) => {

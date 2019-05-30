@@ -4,22 +4,21 @@ import * as React from "react";
 import {Provider} from "react-redux";
 import {Route, RouteComponentProps, Router, Switch} from "react-router-dom";
 import styled, {ThemeProvider} from "styled-components";
-import {FilePath} from "../components/ComponentTree";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar, {SidebarToggle} from "../components/Sidebar";
-import {Context} from "../models";
 import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
-import NotFoundPage from "../routes/NotFoundPage";
-import {store} from "../store";
-import {NarrowScreenWidth, paddings} from "../styles";
+import createStore from "../store";
+import {paddings} from "../styles";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
 
 import "./index.css";
 
 const history = createBrowserHistory();
+
+const store = createStore(context);
 
 const socket = new WebSocket(location.origin.replace(/^http(s?):/, "ws$1:"));
 socket.addEventListener("message", event => {
@@ -32,69 +31,11 @@ socket.addEventListener("message", event => {
   }
 });
 
-const ComponentPageWithProps = (
-  props: {context: Context} & RouteComponentProps<{
-    path: string;
-  }>,
-) => {
-  const matchingPath = ({path}: {path: string}) =>
-    path === props.match.params.path;
-  const components = props.context.components.filter(matchingPath);
-  const fileError = props.context.errors.filter(matchingPath);
-  const errors = fileError.length !== 0 ? fileError[0].errors : [];
-
-  if (components.length === 0) {
-    return (
-      <NotFoundPage
-        filepath={props.match.params.path}
-        context={props.context}
-      />
-    );
-  }
-
-  return <ComponentPage component={components[0]} errors={errors} {...props} />;
-};
-
-const WithContext = <Props extends {}>(
-  ComponentNeedingContext: React.ComponentType<Props>,
-  selectedPaths?: Set<FilePath>,
-) => (props: Props) => {
-  return (
-    <ComponentNeedingContext
-      context={context}
-      selectedPaths={selectedPaths}
-      {...props}
-    />
-  );
-};
-
-const HomePageWithProps = (props: {
-  context: Context;
-  selectedPaths: Set<FilePath>;
-}) => {
-  const matchingSelectedPaths = ({path}: {path: string}) =>
-    props.selectedPaths.has(path);
-  const components = props.context.components.filter(matchingSelectedPaths);
-  const fileError = props.context.errors.filter(matchingSelectedPaths);
-  const errors = fileError.length !== 0 ? fileError[0].errors : [];
-
-  return <HomePage components={components} errors={errors} {...props} />;
-};
+const ComponentPageWithProps = (props: RouteComponentProps<{path: string}>) => (
+  <ComponentPage {...props} filepath={props.match.params.path} />
+);
 
 const App = () => {
-  const [isSidebarOpen, setSidebarOpen] = React.useState(
-    window.innerWidth > NarrowScreenWidth,
-  );
-  const [selectedPaths, setSelectedPaths] = React.useState(
-    new Set(context.components.map(x => x.path) as string[]),
-  );
-
-  if (window.location.pathname === "/" && selectedPaths.size === 1) {
-    history.push(`/${selectedPaths[Symbol.iterator]().next().value}`);
-  } else if (window.location.pathname !== "/" && selectedPaths.size !== 1) {
-    history.push("/");
-  }
-
   return (
     <Router history={history}>
       <ThemeProvider theme={darkTheme}>
@@ -105,37 +46,23 @@ const App = () => {
               exact
               component={({match}: RouteComponentProps<{path: string}>) => (
                 <>
-                  <Sidebar
-                    components={context.components}
-                    selected={selectedPaths}
-                    select={setSelectedPaths}
-                  />
+                  <Sidebar />
 
                   <ContentContainer>
                     <HeaderContainer>
                       <NarrowScreen>
-                        <SidebarToggle
-                          isOpen={isSidebarOpen}
-                          setSidebarOpen={setSidebarOpen}
-                        />
+                        <SidebarToggle />
                       </NarrowScreen>
                       {match.params.path || "Snoopy, by Prodo"}
                     </HeaderContainer>
 
                     <StyledPageContents>
                       <Switch>
-                        <Route
-                          path="/"
-                          exact
-                          component={WithContext(
-                            HomePageWithProps,
-                            selectedPaths,
-                          )}
-                        />
+                        <Route path="/" exact component={HomePage} />
                         <Route
                           path="/:path+"
                           exact
-                          component={WithContext(ComponentPageWithProps)}
+                          component={ComponentPageWithProps}
                         />
                       </Switch>
                     </StyledPageContents>

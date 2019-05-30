@@ -1,16 +1,17 @@
 import * as React from "react";
+import {connect} from "react-redux";
 import styled from "styled-components";
 import {ComponentContainer} from "../components/ComponentContainer";
 import {Readme, Toggle} from "../components/Docs";
 import {Errors} from "../components/Errors";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Component as ComponentModel, Context} from "../models";
+import {Context, FilePath} from "../models";
+import {State} from "../store";
 import {margins} from "../styles";
 
-interface Props {
-  components: ComponentModel[];
-  errors: string[];
+interface EnhancedProps {
   context: Context;
+  selectedPaths: Set<FilePath>;
 }
 
 const Components = styled.div`
@@ -24,8 +25,13 @@ const Divider = styled.div`
   border-bottom: 1px solid ${props => props.theme.colors.border};
 `;
 
-const HomePage = ({context, components, errors}: Props) => {
-  const hasComponents = context.components.length > 0;
+export const HomePage = ({context, selectedPaths}: EnhancedProps) => {
+  const matchingSelectedPaths = ({path}: {path: string}) =>
+    selectedPaths === null || selectedPaths.has(path);
+  const components = context.components.filter(matchingSelectedPaths);
+  const fileError = context.errors.filter(matchingSelectedPaths);
+  const errors = fileError.length !== 0 ? fileError[0].errors : [];
+  const hasComponents = context.components.length !== 0;
 
   if (!hasComponents) {
     return <Readme />;
@@ -55,4 +61,8 @@ const HomePage = ({context, components, errors}: Props) => {
   );
 };
 
-export default HomePage;
+// @snoopy:ignore
+export default connect((state: State) => ({
+  context: state.app.context,
+  selectedPaths: state.app.selectedPaths,
+}))(HomePage);

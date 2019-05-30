@@ -40,3 +40,25 @@ export interface Context {
   styles: Style[];
   errors: FileError[];
 }
+
+export type FilePath = string;
+
+export interface Directory {
+  type: "directory";
+  path: FilePath;
+  children: {
+    [segment: string]: Directory | File;
+  };
+}
+
+export interface File {
+  type: "file";
+  path: FilePath;
+}
+
+export const emptyContext: Context = {
+  themes: [],
+  components: [],
+  styles: [],
+  errors: [],
+};
