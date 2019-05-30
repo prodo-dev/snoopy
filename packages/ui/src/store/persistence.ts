@@ -43,3 +43,22 @@ export const select = (state: State, paths: string[]) => {
   paths.forEach(path => addToSelection(selection, path.split("."), state));
   return selection;
 };
+
+export const saveState = (state: State) => {
+  const stateToSave = select(state, PERSISTENCE_PATHS);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+};
+
+export const getState = (): State => {
+  const item = localStorage.getItem(STORAGE_KEY);
+
+  if (item == null) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(item);
+  } catch (err) {
+    return {};
+  }
+};
