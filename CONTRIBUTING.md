@@ -45,6 +45,14 @@ node ../../packages/cli/lib/index.js
 You should see that the server has started on some port (default 3042). You can
 navigate to `localhost:PORT` and Snoopy should be running.
 
+You can also run Snoopy on the Snoopy UI itself, by navigating to the
+`packages/ui` directory and running it from there.
+
+```
+cd packages/ui
+node ../cli/lib/index.js
+```
+
 ## Making changes
 
 When you make a change to any package that is not the UI, make sure that the
