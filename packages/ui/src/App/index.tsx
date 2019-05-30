@@ -7,7 +7,6 @@ import styled, {ThemeProvider} from "styled-components";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar, {SidebarToggle} from "../components/Sidebar";
-import ComponentPage from "../routes/ComponentPage";
 import HomePage from "../routes/HomePage";
 import createStore from "../store";
 import {paddings} from "../styles";
@@ -30,10 +29,6 @@ socket.addEventListener("message", event => {
     }
   }
 });
-
-const ComponentPageWithProps = (props: RouteComponentProps<{path: string}>) => (
-  <ComponentPage {...props} filepath={props.match.params.path} />
-);
 
 const App = () => {
   return (
@@ -58,12 +53,7 @@ const App = () => {
 
                     <StyledPageContents>
                       <Switch>
-                        <Route path="/" exact component={HomePage} />
-                        <Route
-                          path="/:path+"
-                          exact
-                          component={ComponentPageWithProps}
-                        />
+                        <Route path="/*" component={HomePage} />
                       </Switch>
                     </StyledPageContents>
                   </ContentContainer>
