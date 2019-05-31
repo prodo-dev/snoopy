@@ -170,7 +170,7 @@ export const Sidebar = (props: EnhancedProps) => (
 export default connect(
   (state: State) => ({
     isOpen: state.app.isSidebarOpen,
-    components: state.app.context.components,
+    components: state.context.components,
     selected: new Set(state.app.selectedPaths),
   }),
   dispatch => ({

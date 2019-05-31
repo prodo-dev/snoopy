@@ -74,7 +74,7 @@ export const HomePage = ({
 // @snoopy:ignore
 export default connect(
   (state: State) => ({
-    context: state.app.context,
+    context: state.context,
     selectedPaths: new Set(state.app.selectedPaths),
     selectedTheme: state.app.selectedTheme,
   }),

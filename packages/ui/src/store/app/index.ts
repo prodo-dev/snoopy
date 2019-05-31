@@ -18,20 +18,19 @@ export interface State {
   isSidebarOpen: boolean;
   selectedPaths: FilePath[];
   selectedTheme: Theme | null;
-  context: Context;
 }
 
 export const initialState = (
   context: Context,
-  selectedPaths?: FilePath[],
+  savedAppState: Partial<State> = {},
 ): State => {
   const selectedTheme = context.themes.length !== 0 ? context.themes[0] : null;
 
   return {
     isSidebarOpen: true,
-    selectedPaths: selectedPaths || context.components.map(c => c.path),
+    selectedPaths: context.components.map(c => c.path),
     selectedTheme,
-    context,
+    ...savedAppState,
   };
 };
 

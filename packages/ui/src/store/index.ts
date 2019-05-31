@@ -7,30 +7,37 @@ import appReducer, {
   initialState as appInitialState,
   State as AppState,
 } from "./app";
+import contextReducer, {
+  initialState as contextInitialState,
+  State as ContextState,
+} from "./context";
 import {getState, saveState} from "./persistence";
 
 export interface State {
   app: AppState;
+  context: ContextState;
 }
 
 export type Action = AppAction;
 
-const SAVE_STATE_THROTTLE = 500;
+const SAVE_STATE_THROTTLE = 500; // ms
 
 export default (context: Context) => {
-  const initialState: State = {
-    app: appInitialState(context),
-  };
   const savedState = getState();
-  const newInitialState = _.mergeWith(initialState, savedState, (_, srcValue) =>
-    Array.isArray(srcValue) ? srcValue : undefined,
-  );
+
+  const initialState: State = {
+    app: appInitialState(context, savedState.app || {}),
+    context: contextInitialState(context),
+  };
 
   const middleware = [createLogger()];
 
   const store = createStore(
-    combineReducers({app: appReducer}),
-    newInitialState,
+    combineReducers<State>({
+      app: appReducer,
+      context: contextReducer,
+    }),
+    initialState,
     applyMiddleware(...middleware),
   );
 
