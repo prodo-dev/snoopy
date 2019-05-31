@@ -273,7 +273,6 @@ const createChildParameters = (
         return {child, segment, elementSelected, add, remove};
       } else if (onlyContainsIndexFile(child)) {
         const onlyChild = child.children[Object.keys(child.children)[0]];
-
         const elementSelected = selected.has(onlyChild.path)
           ? Selected.selected
           : Selected.unselected;
