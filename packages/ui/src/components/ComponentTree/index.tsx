@@ -98,6 +98,11 @@ const ComponentTree = ({components, selected, select}: Props) => {
   );
 };
 
+const onlyContainsIndexFile = (directory: Directory) => {
+  const keys = Object.keys(directory.children);
+  return keys.length === 1 && /^index\.(j|t)sx?$/.test(keys[0]);
+};
+
 const FileTree = ({
   paths,
   structure,
@@ -119,7 +124,7 @@ const FileTree = ({
   return (
     <StyledFileTree>
       {childParameters.map(({child, segment, elementSelected, add, remove}) => {
-        if (child.type === "file") {
+        if (child.type === "file" || onlyContainsIndexFile(child)) {
           return (
             <li key={segment}>
               <FileSelector
@@ -265,7 +270,28 @@ const createChildParameters = (
           : Selected.unselected;
         const add = () => select(setUnion(selected, [child.path]));
         const remove = () => select(setDifference(selected, [child.path]));
-        return {child, segment, elementSelected, add, remove};
+        return {
+          child,
+          segment,
+          elementSelected,
+          add,
+          remove,
+        };
+      } else if (child.type === "directory" && onlyContainsIndexFile(child)) {
+        const onlyChild = child.children[Object.keys(child.children)[0]];
+
+        const elementSelected = selected.has(onlyChild.path)
+          ? Selected.selected
+          : Selected.unselected;
+        const add = () => select(setUnion(selected, [onlyChild.path]));
+        const remove = () => select(setDifference(selected, [onlyChild.path]));
+        return {
+          child,
+          segment,
+          elementSelected,
+          add,
+          remove,
+        };
       } else {
         const allDescendants = paths.filter(path =>
           path.startsWith(child.path),
@@ -283,7 +309,13 @@ const createChildParameters = (
           : Selected.unselected;
         const add = () => select(setUnion(selected, allDescendants));
         const remove = () => select(setDifference(selected, allDescendants));
-        return {child, segment, elementSelected, add, remove};
+        return {
+          child,
+          segment,
+          elementSelected,
+          add,
+          remove,
+        };
       }
     });
 
