@@ -1,4 +1,4 @@
-import {Context, emptyContext, Theme, FilePath} from "../../models";
+import {Context, emptyContext, FilePath, Theme} from "../../models";
 
 export type Action =
   | {
@@ -7,7 +7,7 @@ export type Action =
     }
   | {
       type: "app/SET_SELECTED_PATHS";
-      paths: Set<FilePath>;
+      paths: FilePath[];
     }
   | {
       type: "app/SET_SELECTED_THEME";
@@ -16,21 +16,20 @@ export type Action =
 
 export interface State {
   isSidebarOpen: boolean;
-  selectedPaths: Set<FilePath>;
+  selectedPaths: FilePath[];
   selectedTheme: Theme | null;
   context: Context;
 }
 
 export const initialState = (
   context: Context,
-  selectedPaths?: Set<FilePath>,
+  selectedPaths?: FilePath[],
 ): State => {
   const selectedTheme = context.themes.length !== 0 ? context.themes[0] : null;
 
   return {
     isSidebarOpen: true,
-    selectedPaths:
-      selectedPaths || new Set(context.components.map(c => c.path)),
+    selectedPaths: selectedPaths || context.components.map(c => c.path),
     selectedTheme,
     context,
   };
@@ -41,7 +40,7 @@ export const setSidebarOpen = (value: boolean): Action => ({
   value,
 });
 
-export const setSelectedPaths = (paths: Set<FilePath>): Action => ({
+export const setSelectedPaths = (paths: FilePath[]): Action => ({
   type: "app/SET_SELECTED_PATHS",
   paths,
 });

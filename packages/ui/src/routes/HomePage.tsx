@@ -1,6 +1,5 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {actions} from "../store/app";
 import styled from "styled-components";
 import {ComponentContainer} from "../components/ComponentContainer";
 import {Readme, Toggle} from "../components/Docs";
@@ -8,6 +7,7 @@ import {Errors} from "../components/Errors";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {Context, FilePath, Theme} from "../models";
 import {State} from "../store";
+import {actions} from "../store/app";
 import {margins} from "../styles";
 
 interface EnhancedProps {
@@ -75,7 +75,7 @@ export const HomePage = ({
 export default connect(
   (state: State) => ({
     context: state.app.context,
-    selectedPaths: state.app.selectedPaths,
+    selectedPaths: new Set(state.app.selectedPaths),
     selectedTheme: state.app.selectedTheme,
   }),
   dispatch => ({

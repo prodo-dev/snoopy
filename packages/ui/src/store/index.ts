@@ -21,14 +21,16 @@ export default (context: Context) => {
   const initialState: State = {
     app: appInitialState(context),
   };
+  const savedState = getState();
+  const newInitialState = _.mergeWith(initialState, savedState, (_, srcValue) =>
+    Array.isArray(srcValue) ? srcValue : undefined,
+  );
 
   const middleware = [createLogger()];
 
-  const savedState = getState();
-
   const store = createStore(
     combineReducers({app: appReducer}),
-    _.merge(initialState, savedState),
+    newInitialState,
     applyMiddleware(...middleware),
   );
 

@@ -2,11 +2,11 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {ComponentContainer} from "../components/ComponentContainer";
 import {Readme, Toggle} from "../components/Docs";
-import {actions} from "../store/app";
 import {Errors} from "../components/Errors";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {Context, FilePath, Theme} from "../models";
 import {State} from "../store";
+import {actions} from "../store/app";
 import NotFoundPage from "./NotFoundPage";
 
 interface Props {
