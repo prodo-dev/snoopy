@@ -270,14 +270,8 @@ const createChildParameters = (
           : Selected.unselected;
         const add = () => select(setUnion(selected, [child.path]));
         const remove = () => select(setDifference(selected, [child.path]));
-        return {
-          child,
-          segment,
-          elementSelected,
-          add,
-          remove,
-        };
-      } else if (child.type === "directory" && onlyContainsIndexFile(child)) {
+        return {child, segment, elementSelected, add, remove};
+      } else if (onlyContainsIndexFile(child)) {
         const onlyChild = child.children[Object.keys(child.children)[0]];
 
         const elementSelected = selected.has(onlyChild.path)
@@ -285,13 +279,7 @@ const createChildParameters = (
           : Selected.unselected;
         const add = () => select(setUnion(selected, [onlyChild.path]));
         const remove = () => select(setDifference(selected, [onlyChild.path]));
-        return {
-          child,
-          segment,
-          elementSelected,
-          add,
-          remove,
-        };
+        return {child, segment, elementSelected, add, remove};
       } else {
         const allDescendants = paths.filter(path =>
           path.startsWith(child.path),
@@ -309,13 +297,7 @@ const createChildParameters = (
           : Selected.unselected;
         const add = () => select(setUnion(selected, allDescendants));
         const remove = () => select(setDifference(selected, allDescendants));
-        return {
-          child,
-          segment,
-          elementSelected,
-          add,
-          remove,
-        };
+        return {child, segment, elementSelected, add, remove};
       }
     });
 
