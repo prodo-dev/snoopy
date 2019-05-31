@@ -11,20 +11,38 @@ export type Action =
     }
   | {
       type: "app/SET_SELECTED_THEME";
-      theme: Theme;
+      selectedTheme: string;
     };
 
 export interface State {
   isSidebarOpen: boolean;
   selectedPaths: FilePath[];
-  selectedTheme: Theme | null;
+  selectedTheme: string | null;
 }
+
+const getSelectedThemeKey = (
+  themes: {[name: string]: Theme},
+  savedThemeKey: string | null,
+): string | null => {
+  if (Object.keys(themes).length === 0) {
+    return null;
+  }
+
+  const firstThemeKey = Object.keys(themes)[0];
+  const savedThemeExists =
+    savedThemeKey != null && themes[savedThemeKey] != null;
+
+  return savedThemeExists ? savedThemeKey : firstThemeKey;
+};
 
 export const initialState = (
   context: Context,
   savedAppState: Partial<State> = {},
 ): State => {
-  const selectedTheme = context.themes.length !== 0 ? context.themes[0] : null;
+  const selectedTheme = getSelectedThemeKey(
+    context.themes,
+    savedAppState.selectedTheme || null,
+  );
 
   return {
     isSidebarOpen: true,
@@ -44,9 +62,9 @@ export const setSelectedPaths = (paths: FilePath[]): Action => ({
   paths,
 });
 
-export const setSelectedTheme = (theme: Theme): Action => ({
+export const setSelectedTheme = (selectedTheme: string): Action => ({
   type: "app/SET_SELECTED_THEME",
-  theme,
+  selectedTheme,
 });
 
 export const actions = {
@@ -72,7 +90,7 @@ export default (
   } else if (action.type === "app/SET_SELECTED_THEME") {
     return {
       ...state,
-      selectedTheme: action.theme,
+      selectedTheme: action.selectedTheme,
     };
   }
 

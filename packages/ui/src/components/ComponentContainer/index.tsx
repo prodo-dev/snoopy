@@ -37,22 +37,29 @@ interface Option {
 
 export interface Props {
   component: ComponentModel;
-  themes: Theme[];
+  themes: {[name: string]: Theme};
   styles: Style[];
-  selectedTheme: Theme | null;
-  setSelectedTheme: (theme: Theme) => any;
+  selectedThemeKey: string | null;
+  setSelectedTheme: (selectedTheme: string) => any;
 }
 
 export const ComponentContainer = ({
   component,
   themes,
   styles,
-  selectedTheme,
+  selectedThemeKey,
   setSelectedTheme,
 }: Props) => {
-  const options: Option[] = themes.map((theme, idx) => {
+  const options: Option[] = Object.values(themes).map((theme, idx) => {
     return {value: idx, label: theme.name, theme};
   });
+
+  const selectedTheme =
+    selectedThemeKey != null && themes[selectedThemeKey] != null
+      ? themes[selectedThemeKey]
+      : Object.values(themes).length !== 0
+      ? Object.values(themes)[0]
+      : null;
 
   const selectedOption =
     selectedTheme && options.filter(o => o.label === selectedTheme.name);
@@ -65,17 +72,19 @@ export const ComponentContainer = ({
     <Container key={component.name}>
       <StyledTitleContainer>
         <StyledTitle>{component.name}</StyledTitle>
-        {themes.length > 0 && (
+        {Object.values(themes).length > 0 && (
           <StyledSelect
             defaultValue={selectedOption}
-            onChange={(selected: Option) => setSelectedTheme(selected.theme)}
+            onChange={(selected: Option) =>
+              setSelectedTheme(selected.theme.name)
+            }
             options={options}
           />
         )}
       </StyledTitleContainer>
       <Component
         component={component}
-        userTheme={selectedTheme && selectedTheme.theme}
+        userTheme={selectedTheme}
         allStyles={allStyles}
       />
     </Container>

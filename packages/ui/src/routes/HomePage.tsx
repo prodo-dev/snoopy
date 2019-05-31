@@ -5,7 +5,7 @@ import {ComponentContainer} from "../components/ComponentContainer";
 import {Readme, Toggle} from "../components/Docs";
 import {Errors} from "../components/Errors";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Context, FilePath, Theme} from "../models";
+import {Context, FilePath} from "../models";
 import {State} from "../store";
 import {actions} from "../store/app";
 import {margins} from "../styles";
@@ -13,8 +13,8 @@ import {margins} from "../styles";
 interface EnhancedProps {
   context: Context;
   selectedPaths: Set<FilePath>;
-  selectedTheme: Theme | null;
-  setSelectedTheme: (theme: Theme) => any;
+  selectedTheme: string | null;
+  setSelectedTheme: (selectedTheme: string) => any;
 }
 
 const Components = styled.div`
@@ -60,7 +60,7 @@ export const HomePage = ({
                 component={component}
                 themes={context.themes}
                 styles={context.styles}
-                selectedTheme={selectedTheme}
+                selectedThemeKey={selectedTheme}
                 setSelectedTheme={setSelectedTheme}
               />
             </React.Fragment>
@@ -79,7 +79,7 @@ export default connect(
     selectedTheme: state.app.selectedTheme,
   }),
   dispatch => ({
-    setSelectedTheme: (theme: Theme) =>
-      dispatch(actions.setSelectedTheme(theme)),
+    setSelectedTheme: (selectedTheme: string) =>
+      dispatch(actions.setSelectedTheme(selectedTheme)),
   }),
 )(HomePage);

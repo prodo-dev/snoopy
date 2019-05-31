@@ -22,3 +22,6 @@ export default (props: Props) => (
 export const MyTheme = {
   foo: "bar",
 };
+
+// @snoopy:theme
+export const anotherTheme = {};

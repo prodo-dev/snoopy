@@ -35,7 +35,7 @@ export interface Style {
 }
 
 export interface Context {
-  themes: Theme[];
+  themes: {[name: string]: Theme};
   components: Component[];
   styles: Style[];
   errors: FileError[];
@@ -57,7 +57,7 @@ export interface File {
 }
 
 export const emptyContext: Context = {
-  themes: [],
+  themes: {},
   components: [],
   styles: [],
   errors: [],
