@@ -44,12 +44,28 @@ export const select = (state: State, paths: string[]) => {
   return selection;
 };
 
+const getLocalStorage = () => {
+  try {
+    return (window as any).localStorage;
+  } catch (err) {
+    return null;
+  }
+};
 export const saveState = (state: State) => {
   const stateToSave = select(state, PERSISTENCE_PATHS);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+  const localStorage = getLocalStorage();
+  if (localStorage) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+  }
 };
 
 export const getState = (): State => {
+  const localStorage = getLocalStorage();
+
+  if (!localStorage) {
+    return {};
+  }
+
   const item = localStorage.getItem(STORAGE_KEY);
 
   if (item == null) {
