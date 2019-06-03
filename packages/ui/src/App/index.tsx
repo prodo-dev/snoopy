@@ -10,6 +10,7 @@ import Sidebar, {ConnectedSidebarToggle} from "../components/Sidebar";
 import HomePage from "../routes/HomePage";
 import NotFoundPage from "../routes/NotFoundPage";
 import createStore from "../store";
+import {actions} from "../store/app";
 import {paddings} from "../styles";
 import {darkTheme} from "../styles/theme";
 import {context} from "./context";
@@ -26,7 +27,7 @@ socket.addEventListener("message", event => {
   if (data.type === WebSocketEvents.OPEN_FILE) {
     const file = data.file;
     if (context.components.map(component => component.path).includes(file)) {
-      history.push(`/${file}`);
+      store.dispatch(actions.setSelectedPaths([file]));
     }
   }
 });
