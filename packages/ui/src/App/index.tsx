@@ -8,6 +8,7 @@ import {StyledPage, StyledPageContents} from "../components/Page";
 import {NarrowScreen} from "../components/Responsive";
 import Sidebar, {ConnectedSidebarToggle} from "../components/Sidebar";
 import HomePage from "../routes/HomePage";
+import NotFoundPage from "../routes/NotFoundPage";
 import createStore from "../store";
 import {paddings} from "../styles";
 import {darkTheme} from "../styles/theme";
@@ -57,7 +58,8 @@ const AppPage = WithContextProvider(() => (
 
             <StyledPageContents>
               <Switch>
-                <Route path="/*" component={HomePage} />
+                <Route path="/" exact component={HomePage} />
+                <Route path="*" component={NotFoundPage} />
               </Switch>
             </StyledPageContents>
           </ContentContainer>
