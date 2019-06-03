@@ -22,6 +22,7 @@ import {
 
 export * from "./types";
 export {ignored};
+export {findProjectRoot} from "./utils";
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
   const matchingFileGlob = exampleFileGlob.concat(styleFileGlob);
