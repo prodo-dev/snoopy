@@ -77,8 +77,6 @@ export const start = async (
     (bundler as any).onChange(componentsFile);
   });
 
-  process.stdout.write(`Starting server on port ${port}...\n`);
-
   const server = new http.Server(app);
   const ws = registerWebsockets(server);
 
@@ -98,27 +96,25 @@ export const start = async (
     stopPort: port + portTriesLimit,
   });
 
-  if (actualPort !== port) {
-    process.stdout.write(
-      `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
-    );
-  }
-
   let started = false;
   bundler.on("bundled", () => {
     if (!started) {
       started = true;
+
+      process.stdout.write(`Starting server on port ${port}...\n`);
+
+      if (actualPort !== port) {
+        process.stdout.write(
+          `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
+        );
+      }
+
       server.listen(actualPort, () => {
         process.stdout.write(
           `Server is running at http://localhost:${actualPort}.\n`,
         );
       });
     }
-  });
-
-  bundler.on("buildError", () => {
-    console.log("Snoopy could not be started.");
-    process.exit(1);
   });
 
   await bundler.bundle();
