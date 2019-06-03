@@ -103,6 +103,12 @@ const getExportNames = (file: File) => {
     .map(x => (x as any).name);
 };
 
+export const findModuleRoot = async (cwd: string): Promise<string> => {
+  const packageRoot = await findUp("package.json", {cwd, type: "file"});
+
+  return packageRoot ? path.dirname(packageRoot) : cwd;
+};
+
 export const detectAndFindComponentExports = (
   code: string,
   filepath: string,
