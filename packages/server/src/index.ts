@@ -102,26 +102,25 @@ export const start = async (
     stopPort: port + portTriesLimit,
   });
 
-  let started = false;
-  bundler.on("bundled", () => {
-    if (!started) {
-      started = true;
+  const startServer = () => {
+    bundler.off("bundled", startServer);
 
-      process.stdout.write(`Starting server on port ${port}...\n`);
+    process.stdout.write(`Starting server on port ${port}...\n`);
 
-      if (actualPort !== port) {
-        process.stdout.write(
-          `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
-        );
-      }
-
-      server.listen(actualPort, () => {
-        process.stdout.write(
-          `Server is running at http://localhost:${actualPort}.\n`,
-        );
-      });
+    if (actualPort !== port) {
+      process.stdout.write(
+        `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
+      );
     }
-  });
+
+    server.listen(actualPort, () => {
+      process.stdout.write(
+        `Server is running at http://localhost:${actualPort}.\n`,
+      );
+    });
+  };
+
+  bundler.on("bundled", startServer);
 
   await bundler.bundle();
 };
