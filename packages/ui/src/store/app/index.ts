@@ -85,7 +85,7 @@ export default (
   } else if (action.type === "app/SET_SELECTED_PATHS") {
     return {
       ...state,
-      selectedPaths: action.paths,
+      selectedPaths: [...action.paths],
     };
   } else if (action.type === "app/SET_SELECTED_THEME") {
     return {
