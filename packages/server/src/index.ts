@@ -71,8 +71,6 @@ export const start = async (
   });
   applyAliases(bundler);
 
-  await bundler.bundle();
-
   await watchForComponentsFileChanges(searchDir, () => {
     // We need to do this to avoid compiling and pushing `filename` at the
     // same time as `componentsFile`.
@@ -85,7 +83,6 @@ export const start = async (
   const ws = registerWebsockets(server);
 
   registerEndpoints(app, ws, searchDir);
-
   app.use(Express.static(outDir));
 
   app.get("/*", async (req, response) => {
@@ -107,9 +104,22 @@ export const start = async (
     );
   }
 
-  server.listen(actualPort, () => {
-    process.stdout.write(
-      `Server is running at http://localhost:${actualPort}.\n`,
-    );
+  let started = false;
+  bundler.on("bundled", () => {
+    if (!started) {
+      started = true;
+      server.listen(actualPort, () => {
+        process.stdout.write(
+          `Server is running at http://localhost:${actualPort}.\n`,
+        );
+      });
+    }
   });
+
+  bundler.on("buildError", () => {
+    console.log("Snoopy could not be started.");
+    process.exit(1);
+  });
+
+  await bundler.bundle();
 };
