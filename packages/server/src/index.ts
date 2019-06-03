@@ -1,3 +1,4 @@
+import {findProjectRoot} from "@prodo-ai/snoopy-search";
 import * as Express from "express";
 import * as http from "http";
 import makeDir = require("make-dir");
@@ -36,8 +37,13 @@ const getPublicPath = async (
 
 export const start = async (
   port: number = startingPort,
-  searchDir = process.cwd(),
+  searchDirOption?: string,
 ) => {
+  const searchDir =
+    searchDirOption || (await findProjectRoot(process.cwd())) || process.cwd();
+
+  process.stdout.write(`Searching ${searchDir} for components...\n`);
+
   const app = Express();
 
   const snoopyComponentsModule = path.join(
