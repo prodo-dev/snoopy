@@ -22,6 +22,7 @@ import {
 
 export * from "./types";
 export {ignored};
+export {findProjectRoot} from "./utils";
 
 export const checkMatch = async (filepath: string): Promise<boolean> => {
   const matchingFileGlob = exampleFileGlob.concat(styleFileGlob);
@@ -101,12 +102,6 @@ const getExportNames = (file: File) => {
   return file.fileExports
     .filter(x => !x.isDefaultExport)
     .map(x => (x as any).name);
-};
-
-export const findModuleRoot = async (cwd: string): Promise<string> => {
-  const packageRoot = await findUp("package.json", {cwd, type: "file"});
-
-  return packageRoot ? path.dirname(packageRoot) : cwd;
 };
 
 export const detectAndFindComponentExports = (
