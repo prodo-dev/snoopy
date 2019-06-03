@@ -6,6 +6,7 @@ import * as path from "path";
 import * as portfinder from "portfinder";
 import applyAliases from "./aliases";
 import createBundler from "./bundler";
+import {generateComponentsFileContents, generateLibsFile} from "./generate";
 import registerEndpoints from "./rest";
 import {exists, writeFile} from "./utils";
 import {watchForComponentsFileChanges} from "./watch";
@@ -35,6 +36,28 @@ const getPublicPath = async (
   return null;
 };
 
+// These environment variables  are used in the Snoopy UI  and must be
+// set before bundling
+export const setEnvVars = ({
+  searchDir,
+  componentsFile,
+  libFile,
+}: {
+  searchDir: string;
+  componentsFile: string;
+  libFile: string;
+}) => {
+  process.env.PRODO_SEARCH_DIRECTORY = searchDir;
+  process.env.PRODO_COMPONENTS_FILE = path.relative(
+    path.join(clientDir, "src", "App"),
+    componentsFile,
+  );
+  process.env.PRODO_LIB_FILE = path.relative(
+    path.join(clientDir, "src", "App"),
+    libFile,
+  );
+};
+
 export const start = async (
   port: number = startingPort,
   searchDirOption?: string,
@@ -46,21 +69,31 @@ export const start = async (
 
   const app = Express();
 
-  const snoopyComponentsModule = path.join(
+  const snoopyModule = path.join(
     searchDir,
     "node_modules",
     "@snoopy",
     "components",
   );
-  const componentsFile = path.join(snoopyComponentsModule, "index.ts");
-  const libFile = path.join(snoopyComponentsModule, "lib.ts");
+  const componentsFile = path.join(snoopyModule, "index.ts");
+  const libFile = path.join(snoopyModule, "lib.ts");
+
+  setEnvVars({searchDir, componentsFile, libFile});
+
+  let componentsFileContents = await generateComponentsFileContents(
+    snoopyModule,
+    searchDir,
+  );
+
+  const libFileContents = await generateLibsFile();
 
   await makeDir(path.dirname(componentsFile));
-  await writeFile(componentsFile, "");
-  await writeFile(libFile, "");
+
+  await writeFile(componentsFile, componentsFileContents);
+  await writeFile(libFile, libFileContents);
 
   // Parcel expects folders in node_modules to have package.json
-  const packageFile = path.join(snoopyComponentsModule, "package.json");
+  const packageFile = path.join(snoopyModule, "package.json");
 
   await writeFile(
     packageFile,
@@ -71,18 +104,21 @@ export const start = async (
     clientDir,
     outDir,
     outFile,
-    searchDir,
-    componentsFile,
-    libFile,
   });
   applyAliases(bundler);
 
   await bundler.bundle();
 
-  await watchForComponentsFileChanges(searchDir, () => {
-    // We need to do this to avoid compiling and pushing `filename` at the
-    // same time as `componentsFile`.
-    (bundler as any).onChange(componentsFile);
+  await watchForComponentsFileChanges(searchDir, async () => {
+    const newComponentsFileContents = await generateComponentsFileContents(
+      snoopyModule,
+      searchDir,
+    );
+    if (newComponentsFileContents !== componentsFileContents) {
+      componentsFileContents = newComponentsFileContents;
+
+      await writeFile(componentsFile, componentsFileContents);
+    }
   });
 
   process.stdout.write(`Starting server on port ${port}...\n`);
