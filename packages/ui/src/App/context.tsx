@@ -41,19 +41,34 @@ const findExamplesForComponent = (c: Component): Example[] => {
   }));
 };
 
-const components = _.uniqBy(
-  userImport.components,
-  (c: Component) => c.component,
-).map((c: Component) => ({
-  ...c,
-  examples: findExamplesForComponent(c),
-}));
+const createContext = (
+  components: Component[],
+  themes: Theme[],
+  styles: Style[],
+  errors: FileError[],
+): Context => {
+  const keyedThemes: {[name: string]: Theme} = _.transform(
+    themes,
+    (result, theme) => {
+      result[theme.name] = theme;
+    },
+    {},
+  );
 
-const themes: Theme[] = userImport.themes;
-const styles: Style[] = userImport.styles;
-const errors: FileError[] = userImport.errors;
+  return {components, themes: keyedThemes, styles, errors};
+};
 
-export const context: Context = {components, themes, styles, errors};
+export const context: Context = createContext(
+  _.uniqBy(userImport.components, (c: Component) => c.component).map(
+    (c: Component) => ({
+      ...c,
+      examples: findExamplesForComponent(c),
+    }),
+  ) as Component[],
+  userImport.themes as Theme[],
+  userImport.styles as Style[],
+  userImport.errors as FileError[],
+);
 
 const DarkerJsxContainer = ({children}: any) => (
   <div

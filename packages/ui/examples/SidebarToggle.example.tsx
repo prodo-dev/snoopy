@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SidebarToggle} from "../src/components/Sidebar";
+import {SidebarToggle} from "../src/components/Sidebar/SidebarToggle";
 
 export default SidebarToggle;
 

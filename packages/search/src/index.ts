@@ -191,8 +191,10 @@ export const searchCodebase = async (
 const displayErrorsForFiles = (files: File[]) => {
   for (const file of files) {
     for (const error of file.errors) {
-      // tslint:disable-next-line:no-console
-      console.log(`Error in ${file.filepath}:`, error.message);
+      if (process.env.NODE_ENV !== "test") {
+        // tslint:disable-next-line:no-console
+        console.log(`Error in ${file.filepath}:`, error.message);
+      }
     }
   }
 };

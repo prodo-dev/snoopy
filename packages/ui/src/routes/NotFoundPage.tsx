@@ -1,24 +1,12 @@
 import * as React from "react";
-import styled from "styled-components";
+import {Link} from "../components/Link";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Context} from "../models";
 
-interface Props {
-  filepath: string;
-  context: Context;
-}
-
-const StyledPath = styled.span`
-  color: ${props => props.theme.colors.textSecondary};
-`;
-
-const NotFoundPage = (props: Props) => (
+const NotFoundPage = () => (
   <StyledPage>
     <StyledPageContents>
-      <h2>
-        Path <StyledPath>{props.filepath}</StyledPath> does not exist.
-      </h2>
-      <h4>Please choose a component from the sidebar.</h4>
+      <h2>This page does not exist.</h2>
+      <Link to="/">Head home.</Link>
     </StyledPageContents>
   </StyledPage>
 );
