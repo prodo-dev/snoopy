@@ -1,11 +1,9 @@
 import * as React from "react";
 import styled from "styled-components";
 import {StyledPage, StyledPageContents} from "../components/Page";
-import {Context} from "../models";
 
 interface Props {
   filepath: string;
-  context: Context;
 }
 
 const StyledPath = styled.span`

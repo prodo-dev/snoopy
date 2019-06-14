@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import * as React from "react";
 import styled from "styled-components";
-import {Component} from "../../models";
+import {Component, Directory, File, FilePath} from "../../models";
 import {paddings} from "../../styles";
 
 const StyledComponentTree = styled.div`
@@ -65,25 +65,8 @@ interface Props {
   full?: boolean;
 }
 
-export type FilePath = string;
-
-interface Directory {
-  type: "directory";
-  path: FilePath;
-  children: {
-    [segment: string]: Directory | File;
-  };
-}
-
-interface File {
-  type: "file";
-  path: FilePath;
-}
-
 const ComponentTree = ({components, selected, select}: Props) => {
-  const [paths, structure] = React.useMemo(() => createFileTree(components), [
-    components,
-  ]);
+  const [paths, structure] = createFileTree(components);
 
   return (
     <StyledComponentTree className="component-list">
@@ -116,9 +99,11 @@ const FileTree = ({
   selected: Set<FilePath>;
   select: (selection: Set<FilePath>) => any;
 }) => {
-  const childParameters = React.useMemo(
-    () => createChildParameters(structure, paths, selected, select),
-    [structure, paths, selected, select],
+  const childParameters = createChildParameters(
+    structure,
+    paths,
+    selected,
+    select,
   );
 
   return (
@@ -191,26 +176,23 @@ const FileSelector = ({selected, add, remove}: FileSelectorProps) => {
       return;
     }
     current.indeterminate = selected === Selected.partiallySelected;
-  });
+  }, [selected]);
+
   return (
-    <StyledFileSelector
-      ref={ref}
-      type="checkbox"
-      checked={selected !== Selected.unselected}
-      onClick={event => {
-        event.stopPropagation();
-        event.preventDefault();
-      }}
-      onChange={event => {
-        event.stopPropagation();
-        event.preventDefault();
-        if (selected !== Selected.selected) {
-          add();
-        } else {
-          remove();
-        }
-      }}
-    />
+    <span>
+      <StyledFileSelector
+        ref={ref}
+        type="checkbox"
+        checked={selected !== Selected.unselected}
+        onChange={() => {
+          if (selected !== Selected.selected) {
+            add();
+          } else {
+            remove();
+          }
+        }}
+      />
+    </span>
   );
 };
 

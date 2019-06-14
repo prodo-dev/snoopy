@@ -1,9 +1,10 @@
-import {faCaretLeft, faList} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
-import {Component} from "../../models";
+import {Component, FilePath} from "../../models";
+import {State} from "../../store";
+import {actions} from "../../store/app";
 import {
   forNarrowScreen,
   forWideScreen,
@@ -12,9 +13,12 @@ import {
   SidebarClosedWidth,
   SidebarWidth,
 } from "../../styles";
-import ComponentTree, {FilePath} from "../ComponentTree";
+import ComponentTree from "../ComponentTree";
 import Logo from "../Logo";
 import {NarrowScreen, WideScreen} from "../Responsive";
+import SidebarToggle, {ConnectedSidebarToggle} from "./SidebarToggle";
+
+export {SidebarToggle, ConnectedSidebarToggle};
 
 const StyledSidebar = styled.div<{isOpen: boolean}>`
   position: sticky;
@@ -89,23 +93,12 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
 `;
 
-const SidebarIcon = styled.span`
-  cursor: pointer;
-
-  color: ${props => props.theme.colors.text};
-  &:hover {
-    color: ${props => props.theme.colors.textSecondary};
-  }
-
-  margin: ${margins.small} ${margins.medium};
-`;
-
-interface Props {
+interface EnhancedProps {
   components: Component[];
   isOpen: boolean;
   setSidebarOpen: (open: boolean) => any;
   selected: Set<FilePath>;
-  select: (selection: Set<FilePath>) => any;
+  select: (selectedPaths: Set<FilePath>) => any;
 }
 
 const Overlay = ({
@@ -128,21 +121,6 @@ const Overlay = ({
   />
 );
 
-export const SidebarToggle = ({
-  isOpen,
-  setSidebarOpen,
-}: {
-  isOpen: boolean;
-  setSidebarOpen: (open: boolean) => any;
-}) => (
-  <SidebarIcon
-    onClick={() => setSidebarOpen(!isOpen)}
-    className="sidebar-toggle"
-  >
-    <FontAwesomeIcon icon={isOpen ? faCaretLeft : faList} size="lg" />
-  </SidebarIcon>
-);
-
 const Header = () => (
   <StyledLink to="/">
     <Title className="title">
@@ -152,7 +130,7 @@ const Header = () => (
   </StyledLink>
 );
 
-const Sidebar = (props: Props) => (
+export const Sidebar = (props: EnhancedProps) => (
   <React.Fragment>
     <StyledSidebar isOpen={props.isOpen} className="sidebar">
       {props.isOpen ? (
@@ -188,4 +166,16 @@ const Sidebar = (props: Props) => (
   </React.Fragment>
 );
 
-export default Sidebar;
+// @snoopy:ignore
+export default connect(
+  (state: State) => ({
+    isOpen: state.app.isSidebarOpen,
+    components: state.app.context.components,
+    selected: state.app.selectedPaths,
+  }),
+  dispatch => ({
+    setSidebarOpen: (value: boolean) => dispatch(actions.setSidebarOpen(value)),
+    select: (selectedPaths: Set<FilePath>) =>
+      dispatch(actions.setSelectedPaths(selectedPaths)),
+  }),
+)(Sidebar);
