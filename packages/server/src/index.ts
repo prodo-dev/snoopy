@@ -121,13 +121,10 @@ export const start = async (
     }
   });
 
-  process.stdout.write(`Starting server on port ${port}...\n`);
-
   const server = new http.Server(app);
   const ws = registerWebsockets(server);
 
   registerEndpoints(app, ws, searchDir);
-
   app.use(Express.static(outDir));
 
   app.get("/*", async (req, response) => {
@@ -143,15 +140,25 @@ export const start = async (
     stopPort: port + portTriesLimit,
   });
 
-  if (actualPort !== port) {
-    process.stdout.write(
-      `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
-    );
-  }
+  const startServer = () => {
+    bundler.off("bundled", startServer);
 
-  server.listen(actualPort, () => {
-    process.stdout.write(
-      `Server is running at http://localhost:${actualPort}.\n`,
-    );
-  });
+    process.stdout.write(`Starting server on port ${port}...\n`);
+
+    if (actualPort !== port) {
+      process.stdout.write(
+        `Port ${port} is already taken. Starting server on port ${actualPort} instead.\n`,
+      );
+    }
+
+    server.listen(actualPort, () => {
+      process.stdout.write(
+        `Server is running at http://localhost:${actualPort}.\n`,
+      );
+    });
+  };
+
+  bundler.on("bundled", startServer);
+
+  await bundler.bundle();
 };
