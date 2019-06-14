@@ -1,3 +1,5 @@
+import {faSync} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon as Icon} from "@fortawesome/react-fontawesome";
 import * as React from "react";
 import styled from "styled-components";
 import {renderExample} from "../../App/context";
@@ -27,6 +29,30 @@ const Title = styled.div`
   color: ${props => props.theme.colors.text};
 `;
 
+const ReloadButton = styled.div`
+  background-color: #efefef99;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid ${props => props.theme.colors.unselected};
+  border-radius: 4px;
+  padding: ${paddings.small};
+  margin: ${margins.small};
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ec696999;
+    border: 1px solid ${props => props.theme.colors.selected};
+    svg {
+      color: ${props => props.theme.colors.selected};
+    }
+  }
+
+  &:active {
+    box-shadow: inset 0px 0px 5px #808080;
+  }
+`;
+
 const CodeContainer = styled.div``;
 
 const randId = () =>
@@ -38,25 +64,37 @@ class UserComponentContainer extends React.Component<Props> {
   private id: string = `example-${randId()}`;
 
   public componentDidMount() {
-    renderExample(
-      this.props.example,
-      this.props.userTheme,
-      this.id,
-      this.props.allStyles || "",
-    );
+    this.rerender();
   }
 
   public componentDidUpdate() {
+    this.rerender();
+  }
+
+  public render() {
+    return (
+      <div style={{position: "relative"}}>
+        <div id={this.id} />
+        <ReloadButton onClick={this.onClickReload}>
+          <Icon icon={faSync} color={"grey"} />
+        </ReloadButton>
+      </div>
+    );
+  }
+
+  private onClickReload = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.rerender();
+  };
+
+  private rerender() {
     renderExample(
       this.props.example,
       this.props.userTheme,
       this.id,
       this.props.allStyles || "",
     );
-  }
-
-  public render() {
-    return <div id={this.id} />;
   }
 }
 

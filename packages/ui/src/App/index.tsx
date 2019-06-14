@@ -42,9 +42,8 @@ const App = () => {
               path="/:path*"
               exact
               component={({match}: RouteComponentProps<{path: string}>) => (
-                <>
+                <React.Fragment>
                   <Sidebar />
-
                   <ContentContainer>
                     <HeaderContainer>
                       <NarrowScreen>
@@ -52,7 +51,6 @@ const App = () => {
                       </NarrowScreen>
                       {match.params.path || "Snoopy, by Prodo"}
                     </HeaderContainer>
-
                     <StyledPageContents>
                       <Switch>
                         <Route path="/" exact component={HomePage} />
@@ -60,7 +58,7 @@ const App = () => {
                       </Switch>
                     </StyledPageContents>
                   </ContentContainer>
-                </>
+                </React.Fragment>
               )}
             />
           </StyledPage>
