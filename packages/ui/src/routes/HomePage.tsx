@@ -7,11 +7,14 @@ import {Errors} from "../components/Errors";
 import {StyledPage, StyledPageContents} from "../components/Page";
 import {Context, FilePath} from "../models";
 import {State} from "../store";
+import {actions} from "../store/app";
 import {margins} from "../styles";
 
 interface EnhancedProps {
   context: Context;
   selectedPaths: Set<FilePath>;
+  selectedTheme: string | null;
+  setSelectedTheme: (selectedTheme: string) => any;
 }
 
 const Components = styled.div`
@@ -25,7 +28,12 @@ const Divider = styled.div`
   border-bottom: 1px solid ${props => props.theme.colors.border};
 `;
 
-export const HomePage = ({context, selectedPaths}: EnhancedProps) => {
+export const HomePage = ({
+  context,
+  selectedPaths,
+  selectedTheme,
+  setSelectedTheme,
+}: EnhancedProps) => {
   const matchingSelectedPaths = ({path}: {path: string}) =>
     selectedPaths === null || selectedPaths.has(path);
   const components = context.components.filter(matchingSelectedPaths);
@@ -52,6 +60,8 @@ export const HomePage = ({context, selectedPaths}: EnhancedProps) => {
                 component={component}
                 themes={context.themes}
                 styles={context.styles}
+                selectedThemeKey={selectedTheme}
+                setSelectedTheme={setSelectedTheme}
               />
             </React.Fragment>
           ))}
@@ -62,7 +72,14 @@ export const HomePage = ({context, selectedPaths}: EnhancedProps) => {
 };
 
 // @snoopy:ignore
-export default connect((state: State) => ({
-  context: state.app.context,
-  selectedPaths: state.app.selectedPaths,
-}))(HomePage);
+export default connect(
+  (state: State) => ({
+    context: state.context,
+    selectedPaths: new Set(state.app.selectedPaths),
+    selectedTheme: state.app.selectedTheme,
+  }),
+  dispatch => ({
+    setSelectedTheme: (selectedTheme: string) =>
+      dispatch(actions.setSelectedTheme(selectedTheme)),
+  }),
+)(HomePage);

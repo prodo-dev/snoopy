@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import {Component, Context} from "../src/models";
+import {Component, Context, Theme} from "../src/models";
 
 const Root = () => <p>I am root.</p>;
 export const RootModel: Component = {
@@ -69,10 +69,16 @@ export const testComponents = [
   CounterModel,
 ];
 
-export const testThemes = [
-  {name: "darkTheme", theme: {}},
-  {name: "lightTheme", theme: {}},
-];
+export const testThemes: {[name: string]: Theme} = {
+  darkTheme: {
+    name: "darkTheme",
+    theme: {},
+  },
+  lightTheme: {
+    name: "lightTheme",
+    theme: {},
+  },
+};
 
 export const testStyles = [
   {
@@ -89,7 +95,7 @@ body {
 
 export const emptyContext: Context = {
   components: [],
-  themes: [],
+  themes: {},
   styles: [],
   errors: [],
 };

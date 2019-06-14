@@ -170,12 +170,12 @@ export const Sidebar = (props: EnhancedProps) => (
 export default connect(
   (state: State) => ({
     isOpen: state.app.isSidebarOpen,
-    components: state.app.context.components,
-    selected: state.app.selectedPaths,
+    components: state.context.components,
+    selected: new Set(state.app.selectedPaths),
   }),
   dispatch => ({
     setSidebarOpen: (value: boolean) => dispatch(actions.setSidebarOpen(value)),
     select: (selectedPaths: Set<FilePath>) =>
-      dispatch(actions.setSelectedPaths(selectedPaths)),
+      dispatch(actions.setSelectedPaths(Array.from(selectedPaths))),
   }),
 )(Sidebar);

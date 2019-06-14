@@ -29,19 +29,41 @@ width: 150px;
 margin-left: ${margins.large}
 `;
 
+interface Option {
+  value: number;
+  label: string;
+  theme: Theme;
+}
+
+export interface Props {
+  component: ComponentModel;
+  themes: {[name: string]: Theme};
+  styles: Style[];
+  selectedThemeKey: string | null;
+  setSelectedTheme: (selectedTheme: string) => any;
+}
+
 export const ComponentContainer = ({
   component,
   themes,
   styles,
-}: {
-  component: ComponentModel;
-  themes: Theme[];
-  styles: Style[];
-}) => {
-  const [selectedTheme, setSelectedTheme] = React.useState(0);
-  const options = themes.map((theme, idx) => {
-    return {value: idx, label: theme.name};
+  selectedThemeKey,
+  setSelectedTheme,
+}: Props) => {
+  const options: Option[] = Object.values(themes).map((theme, idx) => {
+    return {value: idx, label: theme.name, theme};
   });
+
+  const selectedTheme =
+    selectedThemeKey != null && themes[selectedThemeKey] != null
+      ? themes[selectedThemeKey]
+      : Object.values(themes).length !== 0
+      ? Object.values(themes)[0]
+      : null;
+
+  const selectedOption =
+    selectedTheme && options.filter(o => o.label === selectedTheme.name);
+
   const allStyles = styles
     .map(x => x.style.replace(/\bbody\b/, `#${userBodyId}`))
     .join("\n");
@@ -50,11 +72,11 @@ export const ComponentContainer = ({
     <Container key={component.name}>
       <StyledTitleContainer>
         <StyledTitle>{component.name}</StyledTitle>
-        {themes.length > 0 && (
+        {Object.values(themes).length > 0 && (
           <StyledSelect
-            defaultValue={options[selectedTheme]}
-            onChange={(selectedOption: any) =>
-              setSelectedTheme(selectedOption.value)
+            defaultValue={selectedOption}
+            onChange={(selected: Option) =>
+              setSelectedTheme(selected.theme.name)
             }
             options={options}
           />
@@ -62,11 +84,7 @@ export const ComponentContainer = ({
       </StyledTitleContainer>
       <Component
         component={component}
-        userTheme={
-          themes.length > 0 &&
-          themes[selectedTheme] &&
-          themes[selectedTheme].theme
-        }
+        userTheme={selectedTheme}
         allStyles={allStyles}
       />
     </Container>
